@@ -10,6 +10,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/ai-governance", label: "AI Governance" },
   { href: "/ai-solutions", label: "AI Solutions" },
+  { href: "/ai-governance-course", label: "Course" },
   { href: "/insights", label: "Insights" },
 ];
 

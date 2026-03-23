@@ -29,6 +29,12 @@ export function Footer() {
         </div>
         <div className="flex flex-wrap items-center justify-center gap-5 sm:justify-end">
           <Link
+            href="/ai-governance-course"
+            className="transition-colors hover:text-[var(--color-text-secondary)]"
+          >
+            AI Governance Course
+          </Link>
+          <Link
             href="/ai-governance"
             className="transition-colors hover:text-[var(--color-text-secondary)]"
           >
