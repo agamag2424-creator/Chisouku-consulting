@@ -69,7 +69,7 @@ export default function ContactPage() {
           <div className="md:w-1/2 w-full">
             <div
               className="calendly-inline-widget"
-              data-url="https://calendly.com/chisokulab/discovery"
+              data-url="https://calendly.com/agam-agrawwal/discovery-call"
               style={{ minWidth: 320, height: 630 }}
             />
             {/* Simple fallback form for when Calendly cannot load */}
