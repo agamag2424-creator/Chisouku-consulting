@@ -10,6 +10,8 @@ type WaitlistPayload = {
   experienceYears?: string;
   whyJoining?: string;
   consent?: boolean;
+  optInFutureModules?: boolean;
+  optInFreeTemplates?: boolean;
   website?: string;
 };
 
@@ -64,6 +66,15 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+    if (!appScriptUrl.includes("/exec")) {
+      return NextResponse.json(
+        {
+          error:
+            "Waitlist endpoint looks invalid. Use the Apps Script Web App URL ending with /exec.",
+        },
+        { status: 500 },
+      );
+    }
 
     const forwardPayload = {
       ...body,
@@ -77,11 +88,21 @@ export async function POST(request: Request) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(forwardPayload),
       cache: "no-store",
+      redirect: "follow",
     });
 
     if (!forwardResponse.ok) {
+      const status = forwardResponse.status;
+      const statusMessage =
+        status === 401 || status === 403
+          ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
+          : status === 404
+            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
+            : "Apps Script returned an unexpected response.";
       return NextResponse.json(
-        { error: "Failed to save nomination. Please try again." },
+        {
+          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+        },
         { status: 502 },
       );
     }

@@ -11,6 +11,8 @@ type FormData = {
   experienceYears: string;
   whyJoining: string;
   consent: boolean;
+  optInFutureModules: boolean;
+  optInFreeTemplates: boolean;
   website: string; // honeypot
 };
 
@@ -24,6 +26,8 @@ const INITIAL_FORM: FormData = {
   experienceYears: "",
   whyJoining: "",
   consent: false,
+  optInFutureModules: false,
+  optInFreeTemplates: false,
   website: "",
 };
 
@@ -118,8 +122,9 @@ export function CourseWaitlistForm() {
           You are on the waitlist.
         </p>
         <p className="mt-2 text-body">
-          Thank you for your nomination. We will review applications and contact
-          you with upcoming cohort details.
+          Thank you for your Module 01 nomination. You are on the priority list
+          for launch access. If you opted in, you will also receive no-cost
+          updates for future modules and free resources.
         </p>
       </div>
     );
@@ -254,11 +259,33 @@ export function CourseWaitlistForm() {
           className="mt-[2px] h-4 w-4"
         />
         <span>
-          I consent to ChisokuLab storing my details to evaluate my waitlist
-          nomination and to contact me about upcoming cohorts.
+          I want to join the Module 01 waitlist and consent to ChisokuLab
+          storing my details to process my nomination.
         </span>
       </label>
       {errors.consent && <p className={errorClass}>{errors.consent}</p>}
+
+      <label className="flex items-start gap-3 text-[12px] text-[var(--color-text-secondary)]">
+        <input
+          type="checkbox"
+          checked={formData.optInFutureModules}
+          onChange={onChange("optInFutureModules")}
+          className="mt-[2px] h-4 w-4"
+        />
+        <span>
+          Notify me about upcoming modules (02-07) at no extra cost.
+        </span>
+      </label>
+
+      <label className="flex items-start gap-3 text-[12px] text-[var(--color-text-secondary)]">
+        <input
+          type="checkbox"
+          checked={formData.optInFreeTemplates}
+          onChange={onChange("optInFreeTemplates")}
+          className="mt-[2px] h-4 w-4"
+        />
+        <span>Send me free tools/templates related to future modules.</span>
+      </label>
 
       {submitError && (
         <p className="text-[12px] text-[var(--color-red)]">{submitError}</p>

@@ -18,6 +18,8 @@ Create a new Google Sheet with this header row:
 - `experienceYears`
 - `whyJoining`
 - `consent`
+- `optInFutureModules`
+- `optInFreeTemplates`
 - `userAgent`
 
 ## 2) Add Apps Script
@@ -45,6 +47,8 @@ function doPost(e) {
       body.experienceYears || "",
       body.whyJoining || "",
       body.consent ? "true" : "false",
+      body.optInFutureModules ? "true" : "false",
+      body.optInFreeTemplates ? "true" : "false",
       body.userAgent || "",
     ]);
 
