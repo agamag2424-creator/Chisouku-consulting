@@ -8,6 +8,7 @@ import { cn } from "../../lib/utils";
 
 const links = [
   { href: "/", label: "Home" },
+  { href: "/aeva", label: "AEVA" },
   { href: "/ai-governance", label: "AI Governance" },
   { href: "/ai-solutions", label: "AI Solutions" },
   { href: "/ai-governance-course", label: "Course" },
