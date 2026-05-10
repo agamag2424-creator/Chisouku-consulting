@@ -1,18 +1,18 @@
 const problemCards = [
   {
+    icon: "🔄",
+    title: "Pilot Purgatory",
+    body: "AI initiatives proliferate at the pilot stage — funded, celebrated, announced — but fail consistently at the transition to production. Not because the technology is insufficient. Because the governance infrastructure does not exist.",
+  },
+  {
     icon: "⚠️",
     title: "Shadow AI Proliferation",
-    body: "Employees adopt AI tools outside sanctioned channels. No visibility, no risk assessment, no audit trail. It spreads before anyone has named it.",
+    body: "Employees adopt AI tools outside sanctioned channels before governance exists. No visibility, no risk assessment, no audit trail. Directly observed at Yamaha Motor Solutions — across 5 departments simultaneously.",
   },
   {
-    icon: "🔀",
-    title: "Agentic Workflow Risk",
-    body: "AI agents make decisions autonomously across systems. Without a governance layer, no one knows what decisions were made, by whom, or why.",
-  },
-  {
-    icon: "📉",
-    title: "Policy-Delivery Gap",
-    body: "AI policies exist on paper. Delivery teams ignore them under pressure. The gap between what is written and what is practiced grows with every sprint.",
+    icon: "📐",
+    title: "Broken Agile Assumptions",
+    body: "Story points assume human effort as the production variable. Sprint cadences assume human velocity as the constraint. None of these assumptions hold in an AI-augmented delivery environment. Every ceremony requires structural rethinking.",
   },
 ];
 
@@ -22,8 +22,14 @@ export function AevaProblem() {
       <div className="mx-auto w-full max-w-[var(--content-max-width)] px-[var(--content-padding-x-mobile)] md:px-[var(--content-padding-x)]">
         <p className="text-label text-[#00d4ff]">THE PROBLEM</p>
         <h2 className="mt-4 max-w-4xl text-display text-[#dde6f0]">
-          Enterprises are adopting AI faster than their governance can keep up
+          Enterprises are not failing at AI because the technology is insufficient
         </h2>
+        <p className="mt-6 max-w-4xl text-body-lg text-[#6b8aaa]">
+          They are failing at the specific, repeatable transition from pilot to
+          production — because the governance, methodology, and team architecture
+          required to productionise AI capability do not exist in most
+          organisations.
+        </p>
 
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {problemCards.map((card) => (
@@ -39,7 +45,8 @@ export function AevaProblem() {
         </div>
 
         <p className="mt-8 text-h3 text-[#f59e0b]">
-          AEVA was built to close all three gaps — simultaneously.
+          AEVA provides the governance infrastructure. The methodology. The team
+          architecture. All three — simultaneously.
         </p>
       </div>
     </section>

@@ -16,10 +16,12 @@ export function AevaFinalCTA() {
           <h2
             className={`${syne.className} max-w-[24ch] text-balance text-[2rem] font-[700] leading-[1.12] tracking-[-0.005em] text-[#dde6f0] md:max-w-[20ch] md:text-[2.9rem]`}
           >
-            Is your organisation ready for what happens when AI scales faster
-            than governance?
+            Is your organisation still running AI pilots that never reach
+            production?
           </h2>
           <p className="mt-5 max-w-3xl text-body-lg text-[#6b8aaa]">
+            Pilot Purgatory is not a technology problem. It is a governance
+            infrastructure problem — and governance infrastructure can be built.
             AEVA has been deployed at enterprise scale across manufacturing and
             aviation. If you are building or hiring for an AI governance
             function, I would like to hear from you.
@@ -41,7 +43,8 @@ export function AevaFinalCTA() {
           </div>
 
           <p className="mt-6 text-[12px] text-[#6b8aaa]">
-            Agam Agrawwal · Founder, ChisokuLab · Creator of AEVA Framework
+            Agam Agrawwal · Founder, ChisokuLab · Creator of AEVA Framework ·
+            Patent Pending IPO 2026
           </p>
         </div>
       </div>

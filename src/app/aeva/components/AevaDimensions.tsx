@@ -2,32 +2,32 @@ import Link from "next/link";
 
 const dimensionCards = [
   {
-    letter: "A",
+    number: "01",
     color: "#4A90D9",
-    title: "Agile Governance Layer",
+    title: "Ceremony Restructuring",
     description:
-      "Embeds governance into existing agile ceremonies without slowing delivery.",
+      "Six core Agile ceremonies evolved into AI-era equivalents — each with an original name. DataRetro. Precision Backlog Refinement. Increment Planning. Pulse Sync. Increment Governance Review. Feature Clearance.",
   },
   {
-    letter: "E",
+    number: "02",
     color: "#E8902A",
-    title: "Enterprise AI Visibility",
+    title: "Lean AI-Era Team Structure",
     description:
-      "Maps every AI tool in use — sanctioned and unsanctioned — across the organisation.",
+      "Role evolution map for every Agile role. Four newly defined roles not existing in any prior framework. Junior-senior hierarchy inversion. Approximately 40% headcount reduction at equivalent output.",
   },
   {
-    letter: "V",
+    number: "03",
     color: "#5BBF8A",
-    title: "Velocity Preservation",
+    title: "Velocity Recalibration and Financial Model",
     description:
-      "Governance designed to add structure without adding friction.",
+      "Decision Complexity Index — a 16-point scoring system replacing story points. DCI Governance Shield preventing gaming. 88% per-project cost reduction. Up to 12 projects per year where traditional teams deliver 2.",
   },
   {
-    letter: "A",
+    number: "04",
     color: "#C96DD8",
-    title: "Alignment Architecture",
+    title: "Five Transition Risks",
     description:
-      "Connects AI tool usage to strategy, risk appetite, and regulatory requirements.",
+      "The predictable failure patterns that destroy AI adoption programmes before production scale. Governance Lag. Governance Drag. Shadow AI Proliferation. The Identity Crisis. Strategic Blindness. Each named, defined, and mitigated.",
   },
 ];
 
@@ -37,7 +37,7 @@ export function AevaDimensions() {
       <div className="mx-auto w-full max-w-[var(--content-max-width)] px-[var(--content-padding-x-mobile)] md:px-[var(--content-padding-x)]">
         <p className="text-label text-[#00d4ff]">THE FRAMEWORK</p>
         <h2 className="mt-4 text-display text-[#dde6f0]">
-          Four dimensions. One governance system.
+          Four dimensions. Fourteen original IP contributions.
         </h2>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2">
@@ -46,8 +46,11 @@ export function AevaDimensions() {
               key={card.title}
               className="rounded-[20px] border border-[#1a2d45] bg-[#0c1620] p-6"
             >
-              <p className="text-stat-lg font-bold" style={{ color: card.color }}>
-                {card.letter}
+              <p
+                className="text-stat-lg font-bold"
+                style={{ color: card.color }}
+              >
+                {card.number}
               </p>
               <h3 className="mt-4 text-h2 text-[#dde6f0]">{card.title}</h3>
               <p className="mt-3 text-body text-[#6b8aaa]">{card.description}</p>

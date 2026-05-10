@@ -10,38 +10,35 @@ export function AevaHero() {
       <div className="relative z-10 mx-auto w-full max-w-[var(--content-max-width)] px-[var(--content-padding-x-mobile)] md:px-[var(--content-padding-x)]">
         <div className="max-w-4xl">
           <p className="text-[11px] font-bold tracking-[0.2em] text-[#00d4ff]">
-            PATENT-PENDING · INDIAN PATENT OFFICE 2026
+            PATENT-PENDING · INDIAN PATENT OFFICE 2026 · COPYRIGHT LD-14934/2026-CO
           </p>
-          <h1 className="mt-5">
-            <span className="block text-[2.2rem] font-[700] leading-[1.06] tracking-[-0.005em] text-[#dde6f0] md:text-[3.8rem]">
-              The Governance Framework
-            </span>
-            <span className="mt-3 block text-[0.98rem] font-[700] uppercase leading-[1.28] tracking-[0.08em] text-[#9edff0] md:text-[1.2rem]">
-              Built for the{" "}
-              <span className="inline-flex items-center rounded-full border border-[#00d4ff4d] bg-[#00d4ff1a] px-3 py-0.5 font-[700] tracking-[0.06em] text-[#b9f1ff]">
-                AI-Augmented
-              </span>{" "}
-              Enterprise
-            </span>
+          <h1 className="mt-5 text-[2.2rem] font-[700] leading-[1.06] tracking-[-0.005em] text-[#dde6f0] md:text-[3.8rem]">
+            The Governance Framework Built for the AI-Augmented Enterprise
           </h1>
           <p className="mt-6 max-w-3xl text-body-lg text-[#6b8aaa]">
-            AEVA was developed from first-hand observation of AI failure modes
-            in live enterprise PMOs — Shadow AI proliferation, agentic workflow
-            risk, and the alignment breakdown that happens when AI tools outpace
-            policy.
+            Enterprises are trapped in Pilot Purgatory — AI capability is racing
+            ahead while governance, methodology, and adoption infrastructure
+            remain frozen. AEVA is the infrastructure designed to close that
+            gap.
           </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
             <article className="rounded-[20px] border border-[#1a2d45] bg-[#0c1620]/80 p-6">
               <p className="text-stat-lg text-[#22c55e]">900+</p>
               <p className="mt-2 text-body text-[#6b8aaa]">
-                hours recovered across deployments
+                hours recovered across Yamaha and Etihad deployments
               </p>
             </article>
             <article className="rounded-[20px] border border-[#1a2d45] bg-[#0c1620]/80 p-6">
-              <p className="text-stat-lg text-[#00d4ff]">5</p>
+              <p className="text-stat-lg text-[#00d4ff]">14</p>
               <p className="mt-2 text-body text-[#6b8aaa]">
-                departments governed in first deployment
+                original IP contributions across four dimensions
+              </p>
+            </article>
+            <article className="rounded-[20px] border border-[#1a2d45] bg-[#0c1620]/80 p-6">
+              <p className="text-stat-lg text-[#f59e0b]">88%</p>
+              <p className="mt-2 text-body text-[#6b8aaa]">
+                per-project cost reduction in financial model
               </p>
             </article>
           </div>
