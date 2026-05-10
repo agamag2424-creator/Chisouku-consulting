@@ -36,32 +36,49 @@ export function AevaDimensions() {
     <section className="bg-[#050a12] py-[var(--section-padding-y-mobile)] md:py-[var(--section-padding-y)]">
       <div className="mx-auto w-full max-w-[var(--content-max-width)] px-[var(--content-padding-x-mobile)] md:px-[var(--content-padding-x)]">
         <p className="text-label text-[#00d4ff]">THE FRAMEWORK</p>
-        <h2 className="mt-4 text-display text-[#dde6f0]">
-          Four dimensions. Fourteen original IP contributions.
+        <h2 className="mt-4 max-w-4xl text-display text-[#dde6f0]">
+          Four dimensions.{" "}
+          <span className="bg-gradient-to-r from-[#7dd3fc] to-[#a5f3fc] bg-clip-text text-transparent">
+            Fourteen
+          </span>{" "}
+          original IP contributions.
         </h2>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {dimensionCards.map((card) => (
             <article
               key={card.title}
-              className="rounded-[20px] border border-[#1a2d45] bg-[#0c1620] p-6"
+              className="group relative overflow-hidden rounded-[20px] border border-[#1a2d45] bg-[#0c1620] p-6 shadow-[0_20px_48px_rgba(0,0,0,0.22)] transition hover:-translate-y-[2px] hover:border-[#334e6b] md:p-7"
             >
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-[3px]"
+                style={{
+                  background: `linear-gradient(90deg, ${card.color}, ${card.color}44, transparent)`,
+                  boxShadow: `0 0 24px ${card.color}40`,
+                }}
+              />
+              <div
+                className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-[0.12] blur-3xl"
+                style={{ backgroundColor: card.color }}
+              />
               <p
-                className="text-stat-lg font-bold"
+                className="relative text-stat-lg font-bold tabular-nums"
                 style={{ color: card.color }}
               >
                 {card.number}
               </p>
-              <h3 className="mt-4 text-h2 text-[#dde6f0]">{card.title}</h3>
-              <p className="mt-3 text-body text-[#6b8aaa]">{card.description}</p>
+              <h3 className="relative mt-4 text-h2 text-[#dde6f0]">{card.title}</h3>
+              <p className="relative mt-3 text-body leading-relaxed text-[#6b8aaa]">
+                {card.description}
+              </p>
             </article>
           ))}
         </div>
 
-        <div className="mt-8">
+        <div className="mt-10">
           <Link
             href="/aeva/framework"
-            className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#00d4ff] hover:text-[#72e5ff]"
+            className="inline-flex w-fit items-center justify-center rounded-full border border-[#00d4ff]/50 bg-[#00d4ff]/[0.08] px-7 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#00d4ff] shadow-[0_0_28px_rgba(0,212,255,0.15)] transition hover:border-[#00d4ff] hover:bg-[#00d4ff]/15"
           >
             See the full framework →
           </Link>
