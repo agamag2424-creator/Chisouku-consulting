@@ -242,42 +242,145 @@ const credentials = [
   {
     title: "Provisional Patent Pending",
     body: "Filed with the Indian Patent Office, 2026. Fourteen claims covering ceremony architecture, DCI framework, DCI Governance Shield, team structure, financial model, and Five Transition Risk taxonomy.",
+    icon: "📜",
   },
   {
     title: "Copyright Registration",
     body: "Copyright Diary No. LD-14934/2026-CO. Registered under Agam Agrawwal, 2026. Reproduction prohibited without written consent.",
+    icon: "📄",
   },
   {
     title: "Production Deployment",
     body: "AEVA is not theoretical. It has been deployed in production enterprise environments across manufacturing (Yamaha Motor Solutions India) and aviation (Etihad Airways, Dubai Airports).",
+    icon: "✈️",
   },
 ];
 
-export default function AevaFrameworkPage() {
+function FrameworkPageHero() {
+  const pillars = [
+    {
+      num: "01",
+      label: "Ceremony restructuring",
+      color: "#4A90D9",
+    },
+    {
+      num: "02",
+      label: "Lean AI-era team structure",
+      color: "#E8902A",
+    },
+    {
+      num: "03",
+      label: "Velocity & financial model",
+      color: "#5BBF8A",
+    },
+    {
+      num: "04",
+      label: "Five transition risks",
+      color: "#C96DD8",
+    },
+  ];
+
   return (
-    <section className="bg-[#050a12] py-[var(--section-padding-y-mobile)] md:py-[var(--section-padding-y)]">
-      <div className="mx-auto w-full max-w-[var(--content-max-width)] px-[var(--content-padding-x-mobile)] md:px-[var(--content-padding-x)]">
+    <div className="relative mb-10 overflow-hidden rounded-[24px] border border-[#1a2d45] bg-[#050a12] md:mb-14">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.92]">
+        <div className="absolute inset-0 animate-[aevaGradientShift_24s_ease_infinite] bg-[radial-gradient(circle_at_15%_20%,rgba(74,144,217,0.18),transparent_45%),radial-gradient(circle_at_92%_18%,rgba(232,144,42,0.12),transparent_48%),radial-gradient(circle_at_78%_85%,rgba(200,109,216,0.14),transparent_50%),linear-gradient(158deg,#050a12,#081624,#050a12)] [background-size:180%_180%]" />
+      </div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#050a12]/25 to-[#050a12]" />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+        }}
+      />
+
+      <div className="relative z-10 px-5 py-9 md:px-9 md:py-11 lg:px-11 lg:py-12">
         <nav className="text-[11px] uppercase tracking-[0.12em] text-[#6b8aaa]">
-          <Link href="/" className="hover:text-[#dde6f0]">
+          <Link href="/" className="transition-colors hover:text-[#dde6f0]">
             ChisokuLab
           </Link>{" "}
           →{" "}
-          <Link href="/aeva" className="hover:text-[#dde6f0]">
+          <Link href="/aeva" className="transition-colors hover:text-[#dde6f0]">
             AEVA
           </Link>{" "}
           → <span className="text-[#dde6f0]">Framework</span>
         </nav>
 
-        <p className="mt-6 text-label text-[#00d4ff]">METHODOLOGY</p>
-        <h1 className="mt-3 text-display text-[#dde6f0]">How AEVA Works</h1>
-        <p className="mt-5 max-w-4xl text-body-lg text-[#6b8aaa]">
-          Fourteen original intellectual contributions across four dimensions —
-          developed from eleven years of field observation across nine countries
-          and four industry verticals. Every element is implementable by a
-          delivery team without requiring external consultancy to interpret.
-        </p>
+        <div className="mt-8 flex flex-col gap-10 lg:mt-10 lg:flex-row lg:items-stretch lg:justify-between lg:gap-14">
+          <div className="min-w-0 flex-1">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#00d4ff]/35 bg-[#00d4ff]/[0.07] px-3.5 py-1.5 shadow-[0_0_28px_rgba(0,212,255,0.14)]">
+              <span
+                className="relative flex h-2 w-2 rounded-full bg-[#00d4ff]"
+                style={{ boxShadow: "0 0 14px #00d4ff" }}
+              >
+                <span className="absolute inset-0 animate-ping rounded-full bg-[#00d4ff] opacity-35" />
+              </span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#7ee9ff]">
+                Methodology
+              </span>
+            </div>
 
-        <div className="mt-10 space-y-6">
+            <h1 className="mt-6 max-w-[20ch] text-display font-semibold leading-[1.06] tracking-[-0.02em] text-[#dde6f0] md:max-w-none lg:max-w-[18ch]">
+              How{" "}
+              <span className="bg-gradient-to-r from-[#7dd3fc] via-[#a5f3fc] to-[#22d3ee] bg-clip-text text-transparent">
+                AEVA
+              </span>{" "}
+              Works
+            </h1>
+
+            <p className="mt-6 max-w-2xl border-l-2 border-[#00d4ff]/35 pl-5 text-[17px] leading-relaxed text-[#9eb6d2] md:text-[18px]">
+              Fourteen original intellectual contributions across four dimensions —
+              developed from eleven years of field observation across nine countries
+              and four industry verticals. Every element is implementable by a
+              delivery team without requiring external consultancy to interpret.
+            </p>
+          </div>
+
+          <aside className="flex w-full shrink-0 flex-col justify-between rounded-[18px] border border-[#1a2d45]/90 bg-[#060d15]/80 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md lg:max-w-[320px]">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6b8aaa]">
+                Four dimensions
+              </p>
+              <p className="mt-1 text-[12px] leading-snug text-[#8aa4bf]">
+                Scroll for full depth on each — ceremonies through risks.
+              </p>
+            </div>
+            <ul className="mt-5 space-y-2.5">
+              {pillars.map((p) => (
+                <li
+                  key={p.num}
+                  className="flex items-center gap-3 rounded-[12px] border border-[#1a2d45]/85 bg-[#050a12]/70 py-2 pl-2.5 pr-3"
+                >
+                  <span
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold tabular-nums text-[#050a12]"
+                    style={{
+                      backgroundColor: p.color,
+                      boxShadow: `0 4px 18px ${p.color}40`,
+                    }}
+                  >
+                    {p.num}
+                  </span>
+                  <span className="text-[13px] font-medium leading-snug text-[#c5d7ea]">
+                    {p.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function AevaFrameworkPage() {
+  return (
+    <section className="bg-[#050a12] py-[var(--section-padding-y-mobile)] md:py-[var(--section-padding-y)]">
+      <div className="mx-auto w-full max-w-[var(--content-max-width)] px-[var(--content-padding-x-mobile)] md:px-[var(--content-padding-x)]">
+        <FrameworkPageHero />
+
+        <div className="space-y-8 md:space-y-10">
           {/* Dimension 01 */}
           <DimensionCard
             dimensionNumber="01"
@@ -519,43 +622,64 @@ export default function AevaFrameworkPage() {
           </DimensionCard>
         </div>
 
-        <section className="mt-14">
-          <h2 className="text-h1 text-[#dde6f0]">Intellectual Property</h2>
-          <p className="mt-4 max-w-4xl text-body-lg text-[#6b8aaa]">
-            Fourteen original IP claims across ceremony architecture, governance
-            systems, team structure, financial modelling, and risk taxonomy.
-            Filed under provisional patent protection.
-          </p>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            {credentials.map((credential) => (
-              <article
-                key={credential.title}
-                className="rounded-[16px] border border-[#1a2d45] bg-[#0c1620] p-5"
-              >
-                <h3 className="text-h3 text-[#dde6f0]">{credential.title}</h3>
-                <p className="mt-2 text-body text-[#6b8aaa]">{credential.body}</p>
-              </article>
-            ))}
+        <section className="relative mt-16 overflow-hidden rounded-[24px] border border-[#1a2d45] bg-[#070f18] md:mt-20">
+          <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-[#a855f7]/12 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -right-16 h-64 w-64 rounded-full bg-[#00d4ff]/10 blur-3xl" />
+
+          <div className="relative px-6 py-10 md:px-10 md:py-12">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+              <h2 className="text-h1 text-[#dde6f0]">Intellectual Property</h2>
+              <p className="max-w-xl text-body-lg leading-relaxed text-[#6b8aaa] lg:max-w-[28rem] lg:text-right">
+                Fourteen original IP claims across ceremony architecture,
+                governance systems, team structure, financial modelling, and risk
+                taxonomy. Filed under provisional patent protection.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {credentials.map((credential) => (
+                <article
+                  key={credential.title}
+                  className="group relative overflow-hidden rounded-[18px] border border-[#1a2d45] bg-[#0c1620]/95 p-5 transition duration-200 hover:-translate-y-[3px] hover:border-[#334e6b] hover:shadow-[0_20px_48px_rgba(0,0,0,0.38)] md:p-6"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#1a2d45] bg-[#050a12] text-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition group-hover:border-[#00d4ff]/35">
+                    {credential.icon}
+                  </div>
+                  <h3 className="mt-5 text-h3 text-[#dde6f0]">
+                    {credential.title}
+                  </h3>
+                  <p className="mt-2 text-body text-[#6b8aaa]">
+                    {credential.body}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="mt-14 rounded-[20px] border border-[#1a2d45] bg-[#0c1620] p-6 md:p-8">
-          <h2 className="text-h1 text-[#dde6f0]">
-            See how AEVA applies to your delivery environment
-          </h2>
-          <div className="mt-6 flex flex-wrap gap-4">
-            <Link
-              href="/aeva/case-studies"
-              className="inline-flex items-center justify-center rounded-full bg-[#00d4ff] px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#050a12]"
-            >
-              View Deployment Evidence →
-            </Link>
-            <Link
-              href="/aeva/book"
-              className="inline-flex items-center justify-center rounded-full border border-[#00d4ff] bg-transparent px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#00d4ff]"
-            >
-              Book a Call →
-            </Link>
+        <section className="relative mt-14 overflow-hidden rounded-[24px] border border-[#00d4ff]/35 md:mt-16">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#00d4ff]/[0.12] via-[#050a12] to-[#a855f7]/[0.08]" />
+          <div className="pointer-events-none absolute -right-12 -top-12 h-56 w-56 rounded-full bg-[#00d4ff]/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-16 -left-8 h-48 w-48 rounded-full bg-[#a855f7]/15 blur-3xl" />
+
+          <div className="relative flex flex-col gap-8 p-8 md:flex-row md:items-center md:justify-between md:gap-12 md:p-10">
+            <h2 className="max-w-xl text-balance text-h1 leading-[1.12] text-[#dde6f0]">
+              See how AEVA applies to your delivery environment
+            </h2>
+            <div className="flex shrink-0 flex-wrap gap-4">
+              <Link
+                href="/aeva/case-studies"
+                className="inline-flex items-center justify-center rounded-full bg-[#00d4ff] px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#050a12] shadow-[0_8px_28px_rgba(0,212,255,0.35)] transition hover:-translate-y-px hover:brightness-110"
+              >
+                View Deployment Evidence →
+              </Link>
+              <Link
+                href="/aeva/book"
+                className="inline-flex items-center justify-center rounded-full border border-[#00d4ff] bg-[#050a12]/40 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#00d4ff] backdrop-blur-sm transition hover:bg-[#00d4ff]/10"
+              >
+                Book a Call →
+              </Link>
+            </div>
           </div>
         </section>
       </div>
