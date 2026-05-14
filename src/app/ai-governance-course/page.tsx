@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: "Unshakeable Decisions | Module 1 Waitlist",
   description:
     "Join the waitlist for Module 1 of ChisokuLab's Unshakeable Decisions program and get informed about upcoming modules in the pipeline.",
+  keywords: [
+    "AI-led PMO",
+    "AI project management",
+    "enterprise AI briefings",
+    "ChisokuLab",
+  ],
 };
 
 const moduleOneChapters = [

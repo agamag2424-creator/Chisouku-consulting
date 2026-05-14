@@ -18,38 +18,35 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const siteUrl = "https://chisokulab.com";
+const siteUrl = "https://chisokulabs.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "ChisokuLab | AI Governance & AI Solutions Consulting",
+    default: "AI-Led PMO & Enterprise Transformation | ChisokuLab",
     template: "%s | ChisokuLab",
   },
   description:
-    "ChisokuLab helps mid-market companies govern AI and build AI solutions — from shadow AI chaos to governed intelligence and measurable business value.",
+    "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery — turning AI investment into measurable execution outcomes.",
   keywords: [
-    "AI governance",
-    "AI consulting",
-    "AI solutions",
-    "shadow IT",
-    "shadow AI",
-    "PMO modernization",
-    "responsible AI",
+    "AI-led PMO",
+    "AI project management",
+    "AI enterprise transformation",
+    "ChisokuLab",
   ],
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "ChisokuLab | AI Governance & AI Solutions Consulting",
+    title: "AI-Led PMO & Enterprise Transformation | ChisokuLab",
     description:
-      "ChisokuLab helps mid-market companies govern AI and build AI solutions — from shadow AI chaos to governed intelligence and measurable business value.",
+      "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery — turning AI investment into measurable execution outcomes.",
     siteName: "ChisokuLab",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ChisokuLab | AI Governance & AI Solutions Consulting",
+    title: "AI-Led PMO & Enterprise Transformation | ChisokuLab",
     description:
-      "ChisokuLab helps mid-market companies govern AI and build AI solutions — from shadow AI chaos to governed intelligence and measurable business value.",
+      "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery — turning AI investment into measurable execution outcomes.",
   },
 };
 
@@ -72,7 +69,7 @@ export default function RootLayout({
               name: "ChisokuLab",
               url: siteUrl,
               description:
-                "ChisokuLab helps mid-market companies govern AI and build AI solutions.",
+                "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery.",
               sameAs: [],
               logo: `${siteUrl}/icon.png`,
             }),
@@ -92,7 +89,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Service",
-              serviceType: "AI Governance & AI Solutions Consulting",
+              serviceType: "AI-Led PMO & Enterprise Transformation",
               provider: {
                 "@type": "Organization",
                 name: "ChisokuLab",

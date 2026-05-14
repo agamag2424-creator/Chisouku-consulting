@@ -20,14 +20,14 @@ export function LeadMagnetsSection() {
               {/* Checklist mockup */}
               <div className="space-y-2">
                 {[
-                  { checked: true, width: "70%" },
-                  { checked: true, width: "82%" },
-                  { checked: false, width: "65%" },
-                  { checked: false, width: "55%" },
+                  { checked: true, fill: 0.7 },
+                  { checked: true, fill: 0.82 },
+                  { checked: false, fill: 0.65 },
+                  { checked: false, fill: 0.55 },
                 ].map((row, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
+                  <div key={idx} className="flex min-w-0 flex-1 items-center gap-3">
                     <div
-                      className="flex h-[14px] w-[14px] items-center justify-center rounded-[3px] border"
+                      className="flex h-[14px] w-[14px] shrink-0 items-center justify-center rounded-[3px] border"
                       style={{
                         borderColor: row.checked
                           ? "var(--color-cyan)"
@@ -41,10 +41,12 @@ export function LeadMagnetsSection() {
                         <div className="h-[8px] w-[8px] rounded-[2px] bg-[var(--color-cyan)]" />
                       )}
                     </div>
-                    <div
-                      className="h-[6px] rounded-full bg-[var(--color-border-light)]"
-                      style={{ width: row.width }}
-                    />
+                    <div className="h-[6px] min-w-[80px] flex-1 overflow-hidden rounded-full bg-[rgba(122,139,168,0.2)]">
+                      <div
+                        className="h-full w-full origin-left rounded-full bg-[var(--color-border-light)]"
+                        style={{ transform: `scaleX(${row.fill})` }}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>

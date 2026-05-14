@@ -5,9 +5,18 @@ import { SectionLabel } from "../../components/ui/SectionLabel";
 import { InsightsWaitlistForm } from "../../components/insights/InsightsWaitlistForm";
 
 export const metadata: Metadata = {
-  title: "Insights",
+  title: "AI-Led PMO Insights & Briefings",
   description:
     "AI governance insights, PMO modernization strategies, and AI solution case studies from ChisokuLab.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+  keywords: [
+    "AI PMO insights",
+    "enterprise AI briefings",
+    "AI transformation",
+  ],
 };
 
 export default function InsightsPage() {

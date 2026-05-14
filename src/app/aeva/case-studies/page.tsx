@@ -2,9 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "AEVA in Production",
+  title: "AEVA in Production — AI Governance Case Studies",
   description:
     "Two enterprise deployments. Real governance challenges. Measurable outcomes — manufacturing and aviation case studies.",
+  keywords: [
+    "AEVA framework",
+    "AI governance framework",
+    "enterprise AI governance",
+  ],
 };
 
 const yamahaStats = [

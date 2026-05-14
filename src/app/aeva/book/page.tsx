@@ -2,9 +2,14 @@ import type { Metadata } from "next";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Book an AEVA Call",
+  title: "Book an AI Governance Discovery Call",
   description:
     "Book a 30-minute conversation to assess how AEVA can apply to your organisation.",
+  keywords: [
+    "AI governance consultant",
+    "book discovery call",
+    "ChisokuLab contact",
+  ],
 };
 
 const expectations = [

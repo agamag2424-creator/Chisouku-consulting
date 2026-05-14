@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   title: "AI Governance Consulting & PMO Modernization",
   description:
     "ChisokuLab helps you audit, design, and deploy AI governance frameworks so shadow AI is brought under control and your PMO is ready for the AI era.",
+  keywords: [
+    "AI governance consulting",
+    "responsible AI",
+    "shadow AI",
+    "AI risk management",
+  ],
 };
 
 export default function AiGovernancePage() {

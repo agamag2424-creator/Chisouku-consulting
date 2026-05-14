@@ -39,8 +39,11 @@ export function ThreatLevelBar() {
         <div className="flex flex-1 items-center gap-3">
           <div className="relative h-[8px] flex-1 overflow-hidden rounded-full bg-[rgba(255,59,59,0.12)]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[var(--color-amber)] via-[var(--color-red)] to-[var(--color-red)]"
-              style={{ width: `${percent}%`, transition: "width 0.15s linear" }}
+              className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-gradient-to-r from-[var(--color-amber)] via-[var(--color-red)] to-[var(--color-red)]"
+              style={{
+                transform: `scaleX(${percent / 100})`,
+                transition: "transform 0.15s linear",
+              }}
             />
             {/* Alert markers */}
             {[25, 50, 75].map((mark) => (

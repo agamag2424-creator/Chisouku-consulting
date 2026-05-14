@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Privacy Policy & Terms of Service",
   description:
     "ChisokuLab privacy policy, terms of service, and cookie policy.",
+  keywords: ["ChisokuLab", "privacy policy", "terms of service"],
 };
 
 export default function PrivacyPage() {

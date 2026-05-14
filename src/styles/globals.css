@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/*
+ * Font loading: this file has no @font-face rules. Outfit and JetBrains Mono
+ * use next/font/google in src/app/layout.tsx with display: "swap" — equivalent
+ * to font-display: swap for FOUT/CLS behaviour.
+ */
+
 :root {
   /* ─── Colors ─── */
   --color-void: #050a12;
@@ -25,8 +31,9 @@
   --color-green-glow: rgba(0, 255, 136, 0.2);
 
   --color-text-primary: #e8edf5;
-  --color-text-secondary: #7a8ba8;
-  --color-text-muted: #4a5a73;
+  /* WCAG AA-friendly on #050a12 (nudged from audit greys) */
+  --color-text-secondary: #8aa0bd;
+  --color-text-muted: #5c6d88;
 
   --color-border: rgba(122, 139, 168, 0.08);
   --color-border-light: rgba(122, 139, 168, 0.15);
@@ -183,10 +190,10 @@ body::before {
 
 @keyframes scanline {
   0% {
-    top: -2px;
+    transform: translateY(-2px);
   }
   100% {
-    top: 100vh;
+    transform: translateY(100vh);
   }
 }
 
@@ -196,22 +203,28 @@ body::before {
   }
 }
 
+.scanline {
+  top: 0;
+  will-change: transform;
+}
+
 /* ─── Glow Button Pulse ─── */
 
 @keyframes glow-pulse {
-  0% {
-    box-shadow: 0 0 0 rgba(0, 212, 255, 0.0);
+  0%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px var(--color-cyan));
   }
   50% {
-    box-shadow: 0 0 36px var(--color-cyan-glow);
-  }
-  100% {
-    box-shadow: 0 0 0 rgba(0, 212, 255, 0.0);
+    opacity: 0.88;
+    filter: drop-shadow(0 0 16px var(--color-cyan));
   }
 }
 
 .glow-button-pulsing {
   animation: glow-pulse 2.2s ease-in-out infinite;
+  will-change: opacity, filter;
 }
 
 @keyframes ticker-scroll {

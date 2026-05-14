@@ -8,7 +8,12 @@ import { AevaFinalCTA } from "./components/AevaFinalCTA";
 export const metadata: Metadata = {
   title: "AEVA Framework — AI Governance for the Enterprise",
   description:
-    "AEVA is a patent-pending AI governance framework built to contain Shadow AI proliferation, govern agentic workflows, and align AI delivery with enterprise risk policy.",
+    "AEVA is a patent-pending framework that governs AI proliferation, orchestrates agentic workflows, and aligns AI delivery with enterprise risk policy.",
+  keywords: [
+    "AEVA framework",
+    "AI governance framework",
+    "enterprise AI governance",
+  ],
 };
 
 export default function AevaPage() {

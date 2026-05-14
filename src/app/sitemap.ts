@@ -1,34 +1,26 @@
 import type { MetadataRoute } from "next";
 
+const base = "https://chisokulabs.com";
+
+const paths = [
+  "/",
+  "/ai-governance",
+  "/ai-solutions",
+  "/ai-governance-course",
+  "/contact",
+  "/insights",
+  "/privacy",
+  "/aeva",
+  "/aeva/framework",
+  "/aeva/case-studies",
+  "/aeva/90-day-plan",
+  "/aeva/book",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: "https://chisokulab.com/",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://chisokulab.com/ai-governance",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://chisokulab.com/ai-solutions",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://chisokulab.com/ai-governance-course",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://chisokulab.com/contact",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://chisokulab.com/insights",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://chisokulab.com/privacy",
-      lastModified: new Date(),
-    },
-  ];
+  const lastModified = new Date();
+  return paths.map((path) => ({
+    url: `${base}${path === "/" ? "/" : path}`,
+    lastModified,
+  }));
 }

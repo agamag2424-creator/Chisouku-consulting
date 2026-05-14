@@ -11,9 +11,15 @@ import { FinalCtaSection } from "../components/homepage/FinalCtaSection";
 import { GridColorScroll } from "../components/homepage/GridColorScroll";
 
 export const metadata: Metadata = {
-  title: "AI Governance & AI Solutions for Mid-Market Companies",
+  title: "AI-Led PMO & Enterprise Transformation",
   description:
-    "Homepage for ChisokuLab — a boutique partner that helps mid-market organizations govern AI safely and deploy high-impact AI solutions.",
+    "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery — turning AI investment into measurable execution outcomes.",
+  keywords: [
+    "AI-led PMO",
+    "AI project management",
+    "AI enterprise transformation",
+    "ChisokuLab",
+  ],
 };
 
 export default function Home() {

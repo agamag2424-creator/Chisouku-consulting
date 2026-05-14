@@ -3,9 +3,14 @@ import Link from "next/link";
 import { DimensionCard } from "./components/DimensionCard";
 
 export const metadata: Metadata = {
-  title: "How AEVA Works",
+  title: "How the AEVA Framework Works — AI Governance Architecture",
   description:
-    "Fourteen original intellectual contributions across four dimensions — ceremony restructuring, lean AI-era teams, velocity recalibration, and five transition risks.",
+    "Fourteen original IP contributions across four dimensions — ceremony restructuring, lean AI-era teams, velocity recalibration, and five transition risks.",
+  keywords: [
+    "AEVA framework",
+    "AI governance framework",
+    "enterprise AI governance",
+  ],
 };
 
 const ceremoniesDim1 = [

@@ -1,12 +1,20 @@
-'use client';
+"use client";
 
 import * as React from "react";
+import dynamic from "next/dynamic";
 import { SectionLabel } from "../ui/SectionLabel";
 import { GlowButton } from "../ui/GlowButton";
 import { DashboardPanel } from "../ui/DashboardPanel";
 import { DataRow } from "../ui/DataRow";
-import { ThreatNetwork } from "../animations/ThreatNetwork";
 import { scrollToSection } from "../../lib/utils";
+
+const ThreatNetwork = dynamic(
+  () =>
+    import("../animations/ThreatNetwork").then((mod) => ({
+      default: mod.ThreatNetwork,
+    })),
+  { ssr: false, loading: () => null },
+);
 
 export function HeroSection() {
   const [promptCount, setPromptCount] = React.useState(340);
@@ -49,10 +57,8 @@ export function HeroSection() {
             THREAT DETECTED — AI GOVERNANCE GAP
           </SectionLabel>
           <h1 className="text-display">
-            Your employees are already using AI.{" "}
-            <span style={{ color: "var(--color-cyan)" }}>
-              Who&apos;s governing it?
-            </span>
+            Your PMO wasn&apos;t built for the AI era.{" "}
+            <span style={{ color: "var(--color-cyan)" }}>Let&apos;s fix that.</span>
           </h1>
           <p className="text-body max-w-[460px]">
             The AI revolution isn&apos;t coming — it&apos;s already inside your

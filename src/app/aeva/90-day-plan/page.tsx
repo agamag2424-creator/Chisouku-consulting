@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "AEVA 30-60-90 Day Governance Plan",
   description:
     "A governance deployment roadmap built on AEVA — board-visible AI governance in 90 days without disrupting delivery velocity.",
+  keywords: [
+    "AEVA framework",
+    "AI governance framework",
+    "enterprise AI governance",
+  ],
 };
 
 type Phase = {

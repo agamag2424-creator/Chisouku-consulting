@@ -11,6 +11,12 @@ export const metadata: Metadata = {
   title: "AI Solutions, Automation & Applied AI Builds",
   description:
     "ChisokuLab designs and builds applied AI solutions — from email intelligence and document automation to custom copilots — with governance built in.",
+  keywords: [
+    "custom AI solutions",
+    "AI automation",
+    "AI-powered tools",
+    "enterprise AI builds",
+  ],
 };
 
 export default function AiSolutionsPage() {
