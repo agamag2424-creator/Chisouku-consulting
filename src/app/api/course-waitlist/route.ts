@@ -15,6 +15,11 @@ type WaitlistPayload = {
   website?: string;
 };
 
+type AppsScriptResult = {
+  success?: boolean;
+  error?: string;
+};
+
 const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
   "fullName",
   "workEmail",
@@ -102,6 +107,21 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+        },
+        { status: 502 },
+      );
+    }
+
+    const forwardResult = (await forwardResponse
+      .json()
+      .catch(() => null)) as AppsScriptResult | null;
+
+    if (!forwardResult?.success) {
+      return NextResponse.json(
+        {
+          error: `Failed to save nomination. Apps Script did not confirm the sheet write.${
+            forwardResult?.error ? ` (${forwardResult.error})` : ""
+          }`,
         },
         { status: 502 },
       );
