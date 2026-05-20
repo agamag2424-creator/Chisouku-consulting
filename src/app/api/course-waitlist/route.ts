@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { confirmAppsScriptWrite } from "./apps-script-result";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -13,11 +14,6 @@ type WaitlistPayload = {
   optInFutureModules?: boolean;
   optInFreeTemplates?: boolean;
   website?: string;
-};
-
-type AppsScriptResult = {
-  success?: boolean;
-  error?: string;
 };
 
 const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
@@ -112,11 +108,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const forwardResult = (await forwardResponse
-      .json()
-      .catch(() => null)) as AppsScriptResult | null;
+    const forwardResult = await confirmAppsScriptWrite(forwardResponse);
 
-    if (!forwardResult?.success) {
+    if (!forwardResult.confirmed) {
       return NextResponse.json(
         {
           error: `Failed to save nomination. Apps Script did not confirm the sheet write.${
