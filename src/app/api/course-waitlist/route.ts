@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { verifyAppsScriptWrite } from "./apps-script-result";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -83,25 +84,27 @@ export async function POST(request: Request) {
       userAgent: request.headers.get("user-agent") ?? "",
     };
 
-    const forwardResponse = await fetch(appScriptUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(forwardPayload),
-      cache: "no-store",
-      redirect: "follow",
-    });
+    let forwardResponse: Response;
+    try {
+      forwardResponse = await fetch(appScriptUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(forwardPayload),
+        cache: "no-store",
+        redirect: "follow",
+      });
+    } catch {
+      return NextResponse.json(
+        { error: "Failed to save nomination. Apps Script could not be reached." },
+        { status: 502 },
+      );
+    }
 
-    if (!forwardResponse.ok) {
-      const status = forwardResponse.status;
-      const statusMessage =
-        status === 401 || status === 403
-          ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
-          : status === 404
-            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
-            : "Apps Script returned an unexpected response.";
+    const writeResult = await verifyAppsScriptWrite(forwardResponse);
+    if (!writeResult.ok) {
       return NextResponse.json(
         {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+          error: `Failed to save nomination. ${writeResult.error}`,
         },
         { status: 502 },
       );
