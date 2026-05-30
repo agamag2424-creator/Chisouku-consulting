@@ -1,25 +1,11 @@
 'use client';
 
-import * as React from "react";
 import { Section } from "../../components/ui/Section";
 import { SectionLabel } from "../../components/ui/SectionLabel";
 import { GlowButton } from "../../components/ui/GlowButton";
+import { CalendlyInlineWidget } from "../../components/CalendlyInlineWidget";
 
 export default function ContactPage() {
-  React.useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (document.querySelector('script[src*="calendly.com/assets/external/widget.js"]')) {
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = "https://assets.calendly.com/assets/external/widget.js";
-    script.async = true;
-    document.body.appendChild(script);
-    return () => {
-      // leave script in place; safe to keep for navigation back
-    };
-  }, []);
-
   return (
     <main className="min-h-screen bg-void pt-14 text-[var(--color-text-primary)]">
       <Section>
@@ -67,9 +53,9 @@ export default function ContactPage() {
 
           {/* Right column */}
           <div className="md:w-1/2 w-full">
-            <div
+            <CalendlyInlineWidget
               className="calendly-inline-widget"
-              data-url="https://calendly.com/agam-agrawwal/discovery-call"
+              url="https://calendly.com/agam-agrawwal/discovery-call"
               style={{ minWidth: 320, height: 630 }}
             />
             {/* Simple fallback form for when Calendly cannot load */}
