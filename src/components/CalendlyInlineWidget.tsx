@@ -75,20 +75,26 @@ export function CalendlyInlineWidget({
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
+    const containerElement = containerRef.current;
+
+    if (!containerElement) {
+      return;
+    }
+
     let isMounted = true;
 
     ensureCalendlyScript();
 
     void waitForCalendlyReady()
       .then(() => {
-        if (!isMounted || !containerRef.current) {
+        if (!isMounted) {
           return;
         }
 
-        containerRef.current.replaceChildren();
+        containerElement.replaceChildren();
         (window as WindowWithCalendly).Calendly?.initInlineWidget?.({
           url,
-          parentElement: containerRef.current,
+          parentElement: containerElement,
         });
       })
       .catch(() => {
@@ -97,7 +103,7 @@ export function CalendlyInlineWidget({
 
     return () => {
       isMounted = false;
-      containerRef.current?.replaceChildren();
+      containerElement.replaceChildren();
     };
   }, [url]);
 
