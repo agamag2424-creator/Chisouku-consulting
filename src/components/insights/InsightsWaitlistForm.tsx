@@ -4,10 +4,12 @@ import * as React from "react";
 
 export function InsightsWaitlistForm() {
   const [email, setEmail] = React.useState("");
+  const [website, setWebsite] = React.useState("");
   const [error, setError] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = email.trim();
     const isValid = trimmed.includes("@") && trimmed.includes(".");
@@ -15,8 +17,34 @@ export function InsightsWaitlistForm() {
       setError("Please enter a valid email");
       return;
     }
+
     setError("");
-    setSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/insights-waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmed, website }),
+      });
+      const data = (await response.json().catch(() => ({}))) as {
+        error?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Submission failed.");
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -37,19 +65,31 @@ export function InsightsWaitlistForm() {
     <form
       onSubmit={handleSubmit}
       className="flex flex-col items-stretch gap-2 sm:flex-row"
+      noValidate
     >
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
+        autoComplete="email"
         className="w-full flex-1 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-card)] px-[18px] py-[14px] text-[14px] text-[var(--color-text-primary)] outline-none focus:border-[var(--color-cyan)] focus:shadow-[0_0_0_2px_var(--color-cyan-dim)] sm:rounded-r-none"
+      />
+      <input
+        type="text"
+        value={website}
+        onChange={(e) => setWebsite(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
       />
       <button
         type="submit"
+        disabled={isSubmitting}
         className="w-full rounded-[8px] bg-[var(--color-cyan)] px-[24px] py-[14px] text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-void)] transition-shadow hover:shadow-[0_0_20px_var(--color-cyan-glow)] sm:w-auto sm:rounded-l-none"
       >
-        NOTIFY ME
+        {isSubmitting ? "SENDING..." : "NOTIFY ME"}
       </button>
       {error && (
         <p className="w-full text-left text-[12px] text-[var(--color-red)] sm:col-span-2">

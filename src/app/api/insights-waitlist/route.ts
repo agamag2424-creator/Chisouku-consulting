@@ -1,61 +1,24 @@
 import { NextResponse } from "next/server";
 import { getAppsScriptFailure } from "../_lib/apps-script";
 
-type WaitlistPayload = {
-  fullName?: string;
-  workEmail?: string;
-  phone?: string;
-  company?: string;
-  role?: string;
-  country?: string;
-  experienceYears?: string;
-  whyJoining?: string;
-  consent?: boolean;
-  optInFutureModules?: boolean;
-  optInFreeTemplates?: boolean;
+type InsightsWaitlistPayload = {
+  email?: string;
   website?: string;
 };
 
-const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
-  "fullName",
-  "workEmail",
-  "phone",
-  "company",
-  "role",
-  "country",
-  "experienceYears",
-  "whyJoining",
-];
-
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as WaitlistPayload;
+    const body = (await request.json()) as InsightsWaitlistPayload;
 
     // Basic spam trap
     if (body.website && body.website.trim() !== "") {
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    for (const field of REQUIRED_FIELDS) {
-      if (!body[field] || String(body[field]).trim() === "") {
-        return NextResponse.json(
-          { error: `${field} is required.` },
-          { status: 400 },
-        );
-      }
-    }
-
-    const email = String(body.workEmail ?? "").trim();
+    const email = String(body.email ?? "").trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
-        { error: "Please provide a valid work email." },
-        { status: 400 },
-      );
-    }
-
-    if (!body.consent) {
-      return NextResponse.json(
-        { error: "Consent is required." },
+        { error: "Please provide a valid email." },
         { status: 400 },
       );
     }
@@ -78,9 +41,19 @@ export async function POST(request: Request) {
     }
 
     const forwardPayload = {
-      ...body,
       submittedAt: new Date().toISOString(),
-      sourcePage: "/ai-governance-course",
+      sourcePage: "/insights",
+      fullName: "Insights subscriber",
+      workEmail: email,
+      phone: "",
+      company: "",
+      role: "",
+      country: "",
+      experienceYears: "",
+      whyJoining: "Insights waitlist notification request",
+      consent: true,
+      optInFutureModules: false,
+      optInFreeTemplates: true,
       userAgent: request.headers.get("user-agent") ?? "",
     };
 
@@ -94,7 +67,7 @@ export async function POST(request: Request) {
 
     const appsScriptFailure = await getAppsScriptFailure(
       forwardResponse,
-      "nomination",
+      "insights signup",
     );
 
     if (appsScriptFailure) {
@@ -112,4 +85,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
