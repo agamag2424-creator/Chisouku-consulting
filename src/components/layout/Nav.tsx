@@ -11,6 +11,7 @@ const links = [
   { href: "/aeva", label: "AEVA" },
   { href: "/ai-governance", label: "AI Governance" },
   { href: "/ai-solutions", label: "AI Solutions" },
+  { href: "/case-studies", label: "Case Studies" },
   { href: "/ai-governance-course", label: "Course" },
   { href: "/insights", label: "Insights" },
 ];

@@ -1,5 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
+import { siteConfig } from "@/lib/siteConfig";
 
 export function Footer() {
   return (
@@ -46,6 +47,14 @@ export function Footer() {
           >
             AI Solutions
           </Link>
+          <a
+            href={siteConfig.substackUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-[var(--color-text-secondary)]"
+          >
+            Substack
+          </a>
           <Link
             href="/privacy"
             className="transition-colors hover:text-[var(--color-text-secondary)]"

@@ -48,6 +48,9 @@ export const metadata: Metadata = {
     description:
       "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery — turning AI investment into measurable execution outcomes.",
   },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 export default function RootLayout({
