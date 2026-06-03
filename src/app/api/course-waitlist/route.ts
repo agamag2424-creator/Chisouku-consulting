@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { verifyAppsScriptResult } from "./apps-script-result";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!body.consent) {
+    if (body.consent !== true) {
       return NextResponse.json(
         { error: "Consent is required." },
         { status: 400 },
@@ -102,6 +103,16 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+        },
+        { status: 502 },
+      );
+    }
+
+    const appsScriptResult = verifyAppsScriptResult(await forwardResponse.text());
+    if (!appsScriptResult.ok) {
+      return NextResponse.json(
+        {
+          error: `Failed to save nomination. ${appsScriptResult.error}`,
         },
         { status: 502 },
       );
