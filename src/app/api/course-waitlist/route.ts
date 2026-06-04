@@ -15,6 +15,11 @@ type WaitlistPayload = {
   website?: string;
 };
 
+type AppsScriptResult = {
+  success?: unknown;
+  error?: unknown;
+};
+
 const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
   "fullName",
   "workEmail",
@@ -52,7 +57,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!body.consent) {
+    if (body.consent !== true) {
       return NextResponse.json(
         { error: "Consent is required." },
         { status: 400 },
@@ -78,6 +83,9 @@ export async function POST(request: Request) {
 
     const forwardPayload = {
       ...body,
+      consent: true,
+      optInFutureModules: body.optInFutureModules === true,
+      optInFreeTemplates: body.optInFreeTemplates === true,
       submittedAt: new Date().toISOString(),
       sourcePage: "/ai-governance-course",
       userAgent: request.headers.get("user-agent") ?? "",
@@ -91,17 +99,23 @@ export async function POST(request: Request) {
       redirect: "follow",
     });
 
-    if (!forwardResponse.ok) {
+    const appScriptResult = await parseAppsScriptResult(forwardResponse);
+    if (!forwardResponse.ok || appScriptResult?.success !== true) {
       const status = forwardResponse.status;
       const statusMessage =
         status === 401 || status === 403
           ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
           : status === 404
-            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
-            : "Apps Script returned an unexpected response.";
+          ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
+          : "Apps Script returned an unexpected response.";
+      const scriptError =
+        typeof appScriptResult?.error === "string" &&
+        appScriptResult.error.trim() !== ""
+          ? ` Apps Script error: ${appScriptResult.error}`
+          : "";
       return NextResponse.json(
         {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+          error: `Failed to save nomination. ${statusMessage} (status: ${status}).${scriptError}`,
         },
         { status: 502 },
       );
@@ -114,5 +128,25 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
+}
+
+async function parseAppsScriptResult(
+  response: Response,
+): Promise<AppsScriptResult | null> {
+  const text = await response.text();
+  if (text.trim() === "") {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(text) as unknown;
+    if (parsed && typeof parsed === "object") {
+      return parsed as AppsScriptResult;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
 }
 
