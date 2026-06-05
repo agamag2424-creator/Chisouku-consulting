@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getAllCaseStudies, getCaseStudyBySlug } from "@/lib/caseStudies";
+import { siteConfig } from "@/lib/siteConfig";
 
-const CALENDLY_URL = "https://calendly.com/chisokulab/discovery-call";
+export const dynamicParams = false;
 
 type CaseStudyPageProps = {
   params: Promise<{
@@ -15,7 +16,9 @@ type CaseStudyPageProps = {
 
 export async function generateStaticParams() {
   const caseStudies = await getAllCaseStudies();
-  return caseStudies.map((study) => ({ slug: study.slug }));
+  return caseStudies
+    .filter((study) => study.published)
+    .map((study) => ({ slug: study.slug }));
 }
 
 export async function generateMetadata({
@@ -24,7 +27,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const study = await getCaseStudyBySlug(slug);
 
-  if (!study) {
+  if (!study?.published) {
     return {
       title: "Case Study Not Found",
     };
@@ -40,7 +43,7 @@ export default async function CaseStudyDetailPage({ params }: CaseStudyPageProps
   const { slug } = await params;
   const study = await getCaseStudyBySlug(slug);
 
-  if (!study) {
+  if (!study?.published) {
     notFound();
   }
 
@@ -83,7 +86,7 @@ export default async function CaseStudyDetailPage({ params }: CaseStudyPageProps
         <p className="text-h3">Facing a similar challenge in your organisation?</p>
         <div className="mt-5">
           <Link
-            href={CALENDLY_URL}
+            href={siteConfig.bookingUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center rounded-full bg-[var(--color-cyan)] px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--color-void)] transition-transform hover:-translate-y-[1px]"
