@@ -1,61 +1,23 @@
 import { NextResponse } from "next/server";
 import { verifyAppsScriptSave } from "../_lib/apps-script";
 
-type WaitlistPayload = {
-  fullName?: string;
-  workEmail?: string;
-  phone?: string;
-  company?: string;
-  role?: string;
-  country?: string;
-  experienceYears?: string;
-  whyJoining?: string;
-  consent?: boolean;
-  optInFutureModules?: boolean;
-  optInFreeTemplates?: boolean;
+type InsightsWaitlistPayload = {
+  email?: string;
   website?: string;
 };
 
-const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
-  "fullName",
-  "workEmail",
-  "phone",
-  "company",
-  "role",
-  "country",
-  "experienceYears",
-  "whyJoining",
-];
-
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as WaitlistPayload;
+    const body = (await request.json()) as InsightsWaitlistPayload;
 
-    // Basic spam trap
     if (body.website && body.website.trim() !== "") {
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    for (const field of REQUIRED_FIELDS) {
-      if (!body[field] || String(body[field]).trim() === "") {
-        return NextResponse.json(
-          { error: `${field} is required.` },
-          { status: 400 },
-        );
-      }
-    }
-
-    const email = String(body.workEmail ?? "").trim();
+    const email = String(body.email ?? "").trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
-        { error: "Please provide a valid work email." },
-        { status: 400 },
-      );
-    }
-
-    if (!body.consent) {
-      return NextResponse.json(
-        { error: "Consent is required." },
+        { error: "Please provide a valid email." },
         { status: 400 },
       );
     }
@@ -77,17 +39,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const forwardPayload = {
-      ...body,
-      submittedAt: new Date().toISOString(),
-      sourcePage: "/ai-governance-course",
-      userAgent: request.headers.get("user-agent") ?? "",
-    };
-
     const forwardResponse = await fetch(appScriptUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(forwardPayload),
+      body: JSON.stringify({
+        submittedAt: new Date().toISOString(),
+        sourcePage: "/insights",
+        workEmail: email,
+        email,
+        userAgent: request.headers.get("user-agent") ?? "",
+      }),
       cache: "no-store",
       redirect: "follow",
     });
@@ -95,7 +56,7 @@ export async function POST(request: Request) {
     const saveResult = await verifyAppsScriptSave(forwardResponse);
     if (!saveResult.success) {
       return NextResponse.json(
-        { error: `Failed to save nomination. ${saveResult.error}` },
+        { error: `Failed to save subscription. ${saveResult.error}` },
         { status: 502 },
       );
     }
@@ -108,4 +69,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
