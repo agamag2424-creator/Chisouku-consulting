@@ -12,7 +12,7 @@ export function BootSequence({ children }: BootSequenceProps) {
   const [showOverlay, setShowOverlay] = React.useState(false);
   const [showLine, setShowLine] = React.useState(false);
   const [fadeOverlay, setFadeOverlay] = React.useState(false);
-  const [ready, setReady] = React.useState(false);
+  const [isBooting, setIsBooting] = React.useState(false);
 
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -23,10 +23,10 @@ export function BootSequence({ children }: BootSequenceProps) {
     const hasBooted = window.sessionStorage.getItem(BOOT_KEY) === "true";
 
     if (prefersReduced || hasBooted) {
-      setReady(true);
       return;
     }
 
+    setIsBooting(true);
     setShowOverlay(true);
 
     const timers: number[] = [];
@@ -49,7 +49,7 @@ export function BootSequence({ children }: BootSequenceProps) {
     timers.push(
       window.setTimeout(() => {
         setShowOverlay(false);
-        setReady(true);
+        setIsBooting(false);
         window.sessionStorage.setItem(BOOT_KEY, "true");
       }, 800),
     );
@@ -63,8 +63,8 @@ export function BootSequence({ children }: BootSequenceProps) {
     <div
       className={`relative min-h-screen transition-all duration-500`}
       style={{
-        opacity: ready ? 1 : 0,
-        transform: ready ? "translateY(0px)" : "translateY(24px)",
+        opacity: isBooting ? 0 : 1,
+        transform: isBooting ? "translateY(24px)" : "translateY(0px)",
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { CalendlyInlineWidget } from "../../../components/integrations/CalendlyInlineWidget";
 
 export const metadata: Metadata = {
   title: "Book an AI Governance Discovery Call",
@@ -20,38 +20,31 @@ const expectations = [
 
 export default function AevaBookPage() {
   return (
-    <>
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="afterInteractive"
-      />
-      <section className="bg-[#050a12] py-[var(--section-padding-y-mobile)] md:py-[var(--section-padding-y)]">
-        <div className="mx-auto w-full max-w-[var(--content-max-width)] px-[var(--content-padding-x-mobile)] md:px-[var(--content-padding-x)]">
-          <p className="text-label text-[#00d4ff]">20 MINUTES · FREE · NO PITCH</p>
-          <h1 className="mt-4 text-display text-[#dde6f0]">
-            See how AEVA applies to your organisation
-          </h1>
+    <section className="bg-[#050a12] py-[var(--section-padding-y-mobile)] md:py-[var(--section-padding-y)]">
+      <div className="mx-auto w-full max-w-[var(--content-max-width)] px-[var(--content-padding-x-mobile)] md:px-[var(--content-padding-x)]">
+        <p className="text-label text-[#00d4ff]">20 MINUTES · FREE · NO PITCH</p>
+        <h1 className="mt-4 text-display text-[#dde6f0]">
+          See how AEVA applies to your organisation
+        </h1>
 
-          <ul className="mt-8 space-y-3 text-body-lg text-[#6b8aaa]">
-            {expectations.map((item) => (
-              <li key={item}>- {item}</li>
-            ))}
-          </ul>
+        <ul className="mt-8 space-y-3 text-body-lg text-[#6b8aaa]">
+          {expectations.map((item) => (
+            <li key={item}>- {item}</li>
+          ))}
+        </ul>
 
-          <div className="mt-8 rounded-[20px] border border-[#1a2d45] bg-[#0c1620] p-4 md:p-6">
-            <div
-              className="calendly-inline-widget"
-              data-url="https://calendly.com/agam-agrawwal/discovery-call"
-              style={{ minWidth: "320px", height: "700px" }}
-            />
-          </div>
-
-          <p className="mt-5 text-[12px] text-[#6b8aaa]">
-            Agam Agrawwal · Founder, ChisokuLab · Creator of AEVA Framework ·
-            agam.ag2424@gmail.com
-          </p>
+        <div className="mt-8 rounded-[20px] border border-[#1a2d45] bg-[#0c1620] p-4 md:p-6">
+          <CalendlyInlineWidget
+            url="https://calendly.com/agam-agrawwal/discovery-call"
+            height={700}
+          />
         </div>
-      </section>
-    </>
+
+        <p className="mt-5 text-[12px] text-[#6b8aaa]">
+          Agam Agrawwal · Founder, ChisokuLab · Creator of AEVA Framework ·
+          agam.ag2424@gmail.com
+        </p>
+      </div>
+    </section>
   );
 }
