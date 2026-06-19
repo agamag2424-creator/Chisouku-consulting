@@ -55,9 +55,6 @@ export function GapVisualization() {
     };
   }, []);
 
-  const isMobile =
-    typeof window !== "undefined" ? window.innerWidth < 768 : false;
-
   return (
     <div
       ref={containerRef}
@@ -77,88 +74,83 @@ export function GapVisualization() {
 
       {/* Bottom trajectory line */}
       <div
-        className="absolute left-0 right-0 h-[2px] top-[220px] origin-left opacity-70"
+        className="absolute left-0 right-0 top-[220px] hidden h-[2px] origin-left opacity-70 md:block"
         style={{
           background:
             "linear-gradient(90deg, var(--color-amber), var(--color-red))",
           boxShadow: "0 0 8px var(--color-red-glow)",
-          transform:
-            linesVisible && !isMobile ? "scaleX(1)" : "scaleX(0)",
+          transform: linesVisible ? "scaleX(1)" : "scaleX(0)",
           transition: "transform 2s var(--ease-out-expo)",
           transitionDelay: "0.3s",
         }}
       />
 
       {/* Trajectory labels (desktop only) */}
-      {!isMobile && (
-        <>
-          <div className="absolute right-4 top-[40px]">
-            <span className="text-label text-[10px] text-[var(--color-cyan)]">
-              WHERE AI IS HEADING →
-            </span>
-          </div>
-          <div className="absolute right-4 top-[200px]">
-            <span className="text-label text-[10px] text-[var(--color-red)]">
-              WHERE MOST ORGANIZATIONS ARE →
-            </span>
-          </div>
-        </>
-      )}
+      <div className="hidden md:block">
+        <div className="absolute right-4 top-[40px]">
+          <span className="text-label text-[10px] text-[var(--color-cyan)]">
+            WHERE AI IS HEADING →
+          </span>
+        </div>
+        <div className="absolute right-4 top-[200px]">
+          <span className="text-label text-[10px] text-[var(--color-red)]">
+            WHERE MOST ORGANIZATIONS ARE →
+          </span>
+        </div>
+      </div>
 
       {/* Floating tags (hidden on mobile) */}
-      {!isMobile && (
-        <>
-          <FloatingTag
-            text="Autonomous workflows"
-            color="cyan"
-            style={{ top: 28, left: 80 }}
-            delay={0}
-          />
-          <FloatingTag
-            text="Predictive decisions"
-            color="green"
-            style={{ top: 10, left: 260 }}
-            delay={0.5}
-          />
-          <FloatingTag
-            text="AI-native operations"
-            color="cyan"
-            style={{ top: 40, left: 440 }}
-            delay={1}
-          />
-          <FloatingTag
-            text="Governed intelligence"
-            color="green"
-            style={{ top: 20, left: 640 }}
-            delay={1.5}
-          />
+      <div className="hidden md:block">
+        <FloatingTag
+          text="Autonomous workflows"
+          color="cyan"
+          style={{ top: 28, left: 80 }}
+          delay={0}
+        />
+        <FloatingTag
+          text="Predictive decisions"
+          color="green"
+          style={{ top: 10, left: 260 }}
+          delay={0.5}
+        />
+        <FloatingTag
+          text="AI-native operations"
+          color="cyan"
+          style={{ top: 40, left: 440 }}
+          delay={1}
+        />
+        <FloatingTag
+          text="Governed intelligence"
+          color="green"
+          style={{ top: 20, left: 640 }}
+          delay={1.5}
+        />
 
-          <FloatingTag
-            text="Shadow AI sprawl"
-            color="red"
-            style={{ top: 190, left: 60 }}
-            delay={0.4}
-          />
-          <FloatingTag
-            text="Manual reporting"
-            color="amber"
-            style={{ top: 205, left: 260 }}
-            delay={0.8}
-          />
-          <FloatingTag
-            text="Framework fatigue"
-            color="red"
-            style={{ top: 225, left: 450 }}
-            delay={1.2}
-          />
-          <FloatingTag
-            text="Governance theater"
-            color="amber"
-            style={{ top: 210, left: 645 }}
-            delay={1.6}
-          />
-        </>
-      )}
+        <FloatingTag
+          text="Shadow AI sprawl"
+          color="red"
+          style={{ top: 190, left: 60 }}
+          delay={0.4}
+        />
+        <FloatingTag
+          text="Manual reporting"
+          color="amber"
+          style={{ top: 205, left: 260 }}
+          delay={0.8}
+        />
+        <FloatingTag
+          text="Framework fatigue"
+          color="red"
+          style={{ top: 225, left: 450 }}
+          delay={1.2}
+        />
+        <FloatingTag
+          text="Governance theater"
+          color="amber"
+          style={{ top: 210, left: 645 }}
+          delay={1.6}
+        />
+      </div>
 
       {/* Gap area */}
       <div

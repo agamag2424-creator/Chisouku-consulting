@@ -12,7 +12,7 @@ export function BootSequence({ children }: BootSequenceProps) {
   const [showOverlay, setShowOverlay] = React.useState(false);
   const [showLine, setShowLine] = React.useState(false);
   const [fadeOverlay, setFadeOverlay] = React.useState(false);
-  const [ready, setReady] = React.useState(false);
+  const [ready, setReady] = React.useState(true);
 
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -20,13 +20,19 @@ export function BootSequence({ children }: BootSequenceProps) {
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    const hasBooted = window.sessionStorage.getItem(BOOT_KEY) === "true";
+    let hasBooted = false;
+    try {
+      hasBooted = window.sessionStorage.getItem(BOOT_KEY) === "true";
+    } catch {
+      hasBooted = false;
+    }
 
     if (prefersReduced || hasBooted) {
       setReady(true);
       return;
     }
 
+    setReady(false);
     setShowOverlay(true);
 
     const timers: number[] = [];
@@ -50,7 +56,11 @@ export function BootSequence({ children }: BootSequenceProps) {
       window.setTimeout(() => {
         setShowOverlay(false);
         setReady(true);
-        window.sessionStorage.setItem(BOOT_KEY, "true");
+        try {
+          window.sessionStorage.setItem(BOOT_KEY, "true");
+        } catch {
+          // Storage can be unavailable in hardened browsing modes.
+        }
       }, 800),
     );
 
