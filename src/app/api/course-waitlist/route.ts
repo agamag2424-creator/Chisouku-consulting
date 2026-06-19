@@ -15,6 +15,11 @@ type WaitlistPayload = {
   website?: string;
 };
 
+type AppsScriptResult = {
+  success?: boolean;
+  error?: unknown;
+};
+
 const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
   "fullName",
   "workEmail",
@@ -107,6 +112,23 @@ export async function POST(request: Request) {
       );
     }
 
+    const appsScriptResult = await readAppsScriptResult(forwardResponse);
+    if (appsScriptResult?.success === false) {
+      console.error(
+        "Waitlist Apps Script reported failure:",
+        typeof appsScriptResult.error === "string"
+          ? appsScriptResult.error
+          : "No error detail provided.",
+      );
+      return NextResponse.json(
+        {
+          error:
+            "Failed to save nomination. Apps Script reported that the nomination was not saved.",
+        },
+        { status: 502 },
+      );
+    }
+
     return NextResponse.json({ success: true }, { status: 200 });
   } catch {
     return NextResponse.json(
@@ -114,5 +136,23 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
+}
+
+async function readAppsScriptResult(
+  response: Response,
+): Promise<AppsScriptResult | null> {
+  const text = await response.text().catch(() => "");
+  if (!text.trim()) return null;
+
+  try {
+    const parsed = JSON.parse(text) as unknown;
+    if (parsed && typeof parsed === "object") {
+      return parsed as AppsScriptResult;
+    }
+  } catch {
+    // Some existing deployments may return an empty/plain 2xx response.
+  }
+
+  return null;
 }
 
