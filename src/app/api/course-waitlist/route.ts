@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { verifyAppsScriptResult } from "./apps-script-result";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -91,18 +92,10 @@ export async function POST(request: Request) {
       redirect: "follow",
     });
 
-    if (!forwardResponse.ok) {
-      const status = forwardResponse.status;
-      const statusMessage =
-        status === 401 || status === 403
-          ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
-          : status === 404
-            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
-            : "Apps Script returned an unexpected response.";
+    const saveResult = await verifyAppsScriptResult(forwardResponse);
+    if (!saveResult.ok) {
       return NextResponse.json(
-        {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
-        },
+        { error: saveResult.error },
         { status: 502 },
       );
     }
