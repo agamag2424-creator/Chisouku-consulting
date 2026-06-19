@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { confirmAppsScriptWrite } from "./apps-script-result";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -102,6 +103,19 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+        },
+        { status: 502 },
+      );
+    }
+
+    const forwardResult = await confirmAppsScriptWrite(forwardResponse);
+
+    if (!forwardResult.confirmed) {
+      return NextResponse.json(
+        {
+          error: `Failed to save nomination. Apps Script did not confirm the sheet write.${
+            forwardResult?.error ? ` (${forwardResult.error})` : ""
+          }`,
         },
         { status: 502 },
       );
