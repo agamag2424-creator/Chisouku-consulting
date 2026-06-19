@@ -12,7 +12,7 @@ export function BootSequence({ children }: BootSequenceProps) {
   const [showOverlay, setShowOverlay] = React.useState(false);
   const [showLine, setShowLine] = React.useState(false);
   const [fadeOverlay, setFadeOverlay] = React.useState(false);
-  const [ready, setReady] = React.useState(false);
+  const [ready, setReady] = React.useState(true);
 
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -23,10 +23,10 @@ export function BootSequence({ children }: BootSequenceProps) {
     const hasBooted = window.sessionStorage.getItem(BOOT_KEY) === "true";
 
     if (prefersReduced || hasBooted) {
-      setReady(true);
       return;
     }
 
+    setReady(false);
     setShowOverlay(true);
 
     const timers: number[] = [];
