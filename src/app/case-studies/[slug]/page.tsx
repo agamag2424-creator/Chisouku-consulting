@@ -15,7 +15,9 @@ type CaseStudyPageProps = {
 
 export async function generateStaticParams() {
   const caseStudies = await getAllCaseStudies();
-  return caseStudies.map((study) => ({ slug: study.slug }));
+  return caseStudies
+    .filter((study) => study.published)
+    .map((study) => ({ slug: study.slug }));
 }
 
 export async function generateMetadata({
@@ -24,7 +26,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const study = await getCaseStudyBySlug(slug);
 
-  if (!study) {
+  if (!study?.published) {
     return {
       title: "Case Study Not Found",
     };
@@ -40,7 +42,7 @@ export default async function CaseStudyDetailPage({ params }: CaseStudyPageProps
   const { slug } = await params;
   const study = await getCaseStudyBySlug(slug);
 
-  if (!study) {
+  if (!study?.published) {
     notFound();
   }
 
