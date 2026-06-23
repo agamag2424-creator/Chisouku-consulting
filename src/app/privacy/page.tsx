@@ -198,6 +198,7 @@ function PrivacyContent() {
         <li>Calendly (calendly.com) — for scheduling discovery calls</li>
         <li>Vercel (vercel.com) — for website hosting</li>
         <li>Plausible (plausible.io) — for website analytics</li>
+        <li>Google Workspace — for waitlist and signup storage</li>
         <li>Zoho Mail (zoho.com) — for email communications</li>
       </ul>
       <p className="text-body mb-4">
