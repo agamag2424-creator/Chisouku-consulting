@@ -3,9 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getAllCaseStudies, getCaseStudyBySlug } from "@/lib/caseStudies";
+import {
+  getPublishedCaseStudies,
+  getPublishedCaseStudyBySlug,
+} from "@/lib/caseStudies";
 
-const CALENDLY_URL = "https://calendly.com/chisokulab/discovery-call";
+const CALENDLY_URL = "https://calendly.com/agam-agrawwal/discovery-call";
 
 type CaseStudyPageProps = {
   params: Promise<{
@@ -14,7 +17,7 @@ type CaseStudyPageProps = {
 };
 
 export async function generateStaticParams() {
-  const caseStudies = await getAllCaseStudies();
+  const caseStudies = await getPublishedCaseStudies();
   return caseStudies.map((study) => ({ slug: study.slug }));
 }
 
@@ -22,7 +25,7 @@ export async function generateMetadata({
   params,
 }: CaseStudyPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const study = await getCaseStudyBySlug(slug);
+  const study = await getPublishedCaseStudyBySlug(slug);
 
   if (!study) {
     return {
@@ -38,7 +41,7 @@ export async function generateMetadata({
 
 export default async function CaseStudyDetailPage({ params }: CaseStudyPageProps) {
   const { slug } = await params;
-  const study = await getCaseStudyBySlug(slug);
+  const study = await getPublishedCaseStudyBySlug(slug);
 
   if (!study) {
     notFound();
