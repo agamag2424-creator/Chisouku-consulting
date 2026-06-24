@@ -1,37 +1,16 @@
 import { NextResponse } from "next/server";
 import { parseAppsScriptResult } from "../_lib/apps-script";
 
-type WaitlistPayload = {
-  fullName?: string;
-  workEmail?: string;
-  phone?: string;
-  company?: string;
-  role?: string;
-  country?: string;
-  experienceYears?: string;
-  whyJoining?: string;
-  consent?: boolean;
-  optInFutureModules?: boolean;
-  optInFreeTemplates?: boolean;
+type InsightsWaitlistPayload = {
+  email?: string;
   website?: string;
 };
 
-const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
-  "fullName",
-  "workEmail",
-  "phone",
-  "company",
-  "role",
-  "country",
-  "experienceYears",
-  "whyJoining",
-];
-
 export async function POST(request: Request) {
-  let body: WaitlistPayload;
+  let body: InsightsWaitlistPayload;
 
   try {
-    body = (await request.json()) as WaitlistPayload;
+    body = (await request.json()) as InsightsWaitlistPayload;
   } catch {
     return NextResponse.json(
       { error: "Invalid request payload." },
@@ -44,26 +23,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true }, { status: 200 });
   }
 
-  for (const field of REQUIRED_FIELDS) {
-    if (!body[field] || String(body[field]).trim() === "") {
-      return NextResponse.json(
-        { error: `${field} is required.` },
-        { status: 400 },
-      );
-    }
-  }
-
-  const email = String(body.workEmail ?? "").trim();
+  const email = String(body.email ?? "").trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json(
-      { error: "Please provide a valid work email." },
-      { status: 400 },
-    );
-  }
-
-  if (body.consent !== true) {
-    return NextResponse.json(
-      { error: "Consent is required." },
+      { error: "Please provide a valid email." },
       { status: 400 },
     );
   }
@@ -86,19 +49,19 @@ export async function POST(request: Request) {
   }
 
   const forwardPayload = {
-    fullName: String(body.fullName ?? "").trim(),
+    fullName: "",
     workEmail: email,
-    phone: String(body.phone ?? "").trim(),
-    company: String(body.company ?? "").trim(),
-    role: String(body.role ?? "").trim(),
-    country: String(body.country ?? "").trim(),
-    experienceYears: String(body.experienceYears ?? "").trim(),
-    whyJoining: String(body.whyJoining ?? "").trim(),
+    phone: "",
+    company: "",
+    role: "",
+    country: "",
+    experienceYears: "",
+    whyJoining: "Insights waitlist signup",
     consent: true,
-    optInFutureModules: body.optInFutureModules === true,
-    optInFreeTemplates: body.optInFreeTemplates === true,
+    optInFutureModules: false,
+    optInFreeTemplates: false,
     submittedAt: new Date().toISOString(),
-    sourcePage: "/ai-governance-course",
+    sourcePage: "/insights",
     userAgent: request.headers.get("user-agent") ?? "",
   };
 
@@ -121,7 +84,7 @@ export async function POST(request: Request) {
             : "Apps Script returned an unexpected response.";
       return NextResponse.json(
         {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+          error: `Failed to save subscription. ${statusMessage} (status: ${status})`,
         },
         { status: 502 },
       );
@@ -131,7 +94,7 @@ export async function POST(request: Request) {
     if (!appsScriptResult.ok) {
       return NextResponse.json(
         {
-          error: `Failed to save nomination. ${appsScriptResult.error}`,
+          error: `Failed to save subscription. ${appsScriptResult.error}`,
         },
         { status: 502 },
       );
@@ -140,9 +103,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true }, { status: 200 });
   } catch {
     return NextResponse.json(
-      { error: "Failed to save nomination. Could not reach Apps Script." },
+      { error: "Failed to save subscription. Could not reach Apps Script." },
       { status: 502 },
     );
   }
 }
-
