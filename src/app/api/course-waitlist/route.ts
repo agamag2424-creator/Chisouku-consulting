@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { forwardToWaitlistAppScript } from "@/app/api/_lib/apps-script";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -59,23 +60,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const appScriptUrl = process.env.GOOGLE_APPS_SCRIPT_WAITLIST_URL;
-    if (!appScriptUrl) {
-      return NextResponse.json(
-        { error: "Waitlist endpoint is not configured." },
-        { status: 500 },
-      );
-    }
-    if (!appScriptUrl.includes("/exec")) {
-      return NextResponse.json(
-        {
-          error:
-            "Waitlist endpoint looks invalid. Use the Apps Script Web App URL ending with /exec.",
-        },
-        { status: 500 },
-      );
-    }
-
     const forwardPayload = {
       ...body,
       submittedAt: new Date().toISOString(),
@@ -83,27 +67,11 @@ export async function POST(request: Request) {
       userAgent: request.headers.get("user-agent") ?? "",
     };
 
-    const forwardResponse = await fetch(appScriptUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(forwardPayload),
-      cache: "no-store",
-      redirect: "follow",
-    });
-
-    if (!forwardResponse.ok) {
-      const status = forwardResponse.status;
-      const statusMessage =
-        status === 401 || status === 403
-          ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
-          : status === 404
-            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
-            : "Apps Script returned an unexpected response.";
+    const forwardResult = await forwardToWaitlistAppScript(forwardPayload);
+    if (!forwardResult.ok) {
       return NextResponse.json(
-        {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
-        },
-        { status: 502 },
+        { error: forwardResult.error },
+        { status: forwardResult.status },
       );
     }
 
