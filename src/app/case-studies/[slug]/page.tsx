@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getAllCaseStudies, getCaseStudyBySlug } from "@/lib/caseStudies";
+import { getCaseStudyBySlug, getPublishedCaseStudies } from "@/lib/caseStudies";
 
 const CALENDLY_URL = "https://calendly.com/chisokulab/discovery-call";
 
@@ -14,7 +14,7 @@ type CaseStudyPageProps = {
 };
 
 export async function generateStaticParams() {
-  const caseStudies = await getAllCaseStudies();
+  const caseStudies = await getPublishedCaseStudies();
   return caseStudies.map((study) => ({ slug: study.slug }));
 }
 
@@ -24,7 +24,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const study = await getCaseStudyBySlug(slug);
 
-  if (!study) {
+  if (!study || !study.published) {
     return {
       title: "Case Study Not Found",
     };
@@ -40,7 +40,7 @@ export default async function CaseStudyDetailPage({ params }: CaseStudyPageProps
   const { slug } = await params;
   const study = await getCaseStudyBySlug(slug);
 
-  if (!study) {
+  if (!study || !study.published) {
     notFound();
   }
 
