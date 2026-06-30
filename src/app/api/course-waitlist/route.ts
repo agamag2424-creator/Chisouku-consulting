@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { verifyAppsScriptResponse } from "@/app/api/_lib/apps-script";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!body.consent) {
+    if (body.consent !== true) {
       return NextResponse.json(
         { error: "Consent is required." },
         { status: 400 },
@@ -77,7 +78,17 @@ export async function POST(request: Request) {
     }
 
     const forwardPayload = {
-      ...body,
+      fullName: String(body.fullName).trim(),
+      workEmail: email,
+      phone: String(body.phone).trim(),
+      company: String(body.company).trim(),
+      role: String(body.role).trim(),
+      country: String(body.country).trim(),
+      experienceYears: String(body.experienceYears).trim(),
+      whyJoining: String(body.whyJoining).trim(),
+      consent: true,
+      optInFutureModules: body.optInFutureModules === true,
+      optInFreeTemplates: body.optInFreeTemplates === true,
       submittedAt: new Date().toISOString(),
       sourcePage: "/ai-governance-course",
       userAgent: request.headers.get("user-agent") ?? "",
@@ -91,17 +102,11 @@ export async function POST(request: Request) {
       redirect: "follow",
     });
 
-    if (!forwardResponse.ok) {
-      const status = forwardResponse.status;
-      const statusMessage =
-        status === 401 || status === 403
-          ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
-          : status === 404
-            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
-            : "Apps Script returned an unexpected response.";
+    const verification = await verifyAppsScriptResponse(forwardResponse);
+    if (!verification.success) {
       return NextResponse.json(
         {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+          error: `Failed to save nomination. ${verification.error}`,
         },
         { status: 502 },
       );
