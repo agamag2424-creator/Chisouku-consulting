@@ -44,6 +44,18 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
   );
 }
 
+export async function getPublishedCaseStudies(): Promise<CaseStudy[]> {
+  const studies = await getAllCaseStudies();
+  return studies.filter((caseStudy) => caseStudy.published);
+}
+
 export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null> {
   return caseStudies.find((caseStudy) => caseStudy.slug === slug) ?? null;
+}
+
+export async function getPublishedCaseStudyBySlug(
+  slug: string,
+): Promise<CaseStudy | null> {
+  const studies = await getPublishedCaseStudies();
+  return studies.find((caseStudy) => caseStudy.slug === slug) ?? null;
 }
