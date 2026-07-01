@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import {
+  getAppsScriptFailureMessage,
+  readAppsScriptResult,
+} from "../_lib/apps-script";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -32,7 +36,7 @@ export async function POST(request: Request) {
 
     // Basic spam trap
     if (body.website && body.website.trim() !== "") {
-      return NextResponse.json({ success: true }, { status: 200 });
+      return new Response(null, { status: 204 });
     }
 
     for (const field of REQUIRED_FIELDS) {
@@ -52,7 +56,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!body.consent) {
+    if (body.consent !== true) {
       return NextResponse.json(
         { error: "Consent is required." },
         { status: 400 },
@@ -77,7 +81,17 @@ export async function POST(request: Request) {
     }
 
     const forwardPayload = {
-      ...body,
+      fullName: String(body.fullName ?? "").trim(),
+      workEmail: email,
+      phone: String(body.phone ?? "").trim(),
+      company: String(body.company ?? "").trim(),
+      role: String(body.role ?? "").trim(),
+      country: String(body.country ?? "").trim(),
+      experienceYears: String(body.experienceYears ?? "").trim(),
+      whyJoining: String(body.whyJoining ?? "").trim(),
+      consent: true,
+      optInFutureModules: body.optInFutureModules === true,
+      optInFreeTemplates: body.optInFreeTemplates === true,
       submittedAt: new Date().toISOString(),
       sourcePage: "/ai-governance-course",
       userAgent: request.headers.get("user-agent") ?? "",
@@ -102,6 +116,16 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+        },
+        { status: 502 },
+      );
+    }
+
+    const appsScriptResult = await readAppsScriptResult(forwardResponse);
+    if (!appsScriptResult.ok) {
+      return NextResponse.json(
+        {
+          error: `Failed to save nomination. ${getAppsScriptFailureMessage(appsScriptResult)}`,
         },
         { status: 502 },
       );
