@@ -38,12 +38,30 @@ This case study draft is currently in preparation. The published analysis will b
   },
 ];
 
+function sortByNewest(a: CaseStudy, b: CaseStudy) {
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+}
+
 export async function getAllCaseStudies(): Promise<CaseStudy[]> {
-  return [...caseStudies].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
+  return [...caseStudies].sort(sortByNewest);
+}
+
+export async function getPublishedCaseStudies(): Promise<CaseStudy[]> {
+  return caseStudies
+    .filter((caseStudy) => caseStudy.published)
+    .sort(sortByNewest);
 }
 
 export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | null> {
   return caseStudies.find((caseStudy) => caseStudy.slug === slug) ?? null;
+}
+
+export async function getPublishedCaseStudyBySlug(
+  slug: string,
+): Promise<CaseStudy | null> {
+  return (
+    caseStudies.find(
+      (caseStudy) => caseStudy.slug === slug && caseStudy.published,
+    ) ?? null
+  );
 }
