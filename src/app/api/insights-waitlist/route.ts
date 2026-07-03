@@ -1,61 +1,35 @@
 import { NextResponse } from "next/server";
 import { readAppsScriptConfirmation } from "@/app/api/_lib/apps-script";
 
-type WaitlistPayload = {
-  fullName?: string;
-  workEmail?: string;
-  phone?: string;
-  company?: string;
-  role?: string;
-  country?: string;
-  experienceYears?: string;
-  whyJoining?: string;
-  consent?: boolean;
-  optInFutureModules?: boolean;
-  optInFreeTemplates?: boolean;
+type InsightsWaitlistPayload = {
+  email?: string;
   website?: string;
 };
 
-const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
-  "fullName",
-  "workEmail",
-  "phone",
-  "company",
-  "role",
-  "country",
-  "experienceYears",
-  "whyJoining",
-];
+function getAppsScriptStatusMessage(status: number) {
+  if (status === 401 || status === 403) {
+    return "Apps Script rejected access. Ensure deployment access is set to 'Anyone'.";
+  }
+
+  if (status === 404) {
+    return "Apps Script URL not found. Confirm you used the latest /exec deployment URL.";
+  }
+
+  return "Apps Script returned an unexpected response.";
+}
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as WaitlistPayload;
+    const body = (await request.json()) as InsightsWaitlistPayload;
 
-    // Basic spam trap
     if (body.website && body.website.trim() !== "") {
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    for (const field of REQUIRED_FIELDS) {
-      if (!body[field] || String(body[field]).trim() === "") {
-        return NextResponse.json(
-          { error: `${field} is required.` },
-          { status: 400 },
-        );
-      }
-    }
-
-    const email = String(body.workEmail ?? "").trim();
+    const email = String(body.email ?? "").trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
-        { error: "Please provide a valid work email." },
-        { status: 400 },
-      );
-    }
-
-    if (body.consent !== true) {
-      return NextResponse.json(
-        { error: "Consent is required." },
+        { error: "Please provide a valid email." },
         { status: 400 },
       );
     }
@@ -78,12 +52,19 @@ export async function POST(request: Request) {
     }
 
     const forwardPayload = {
-      ...body,
-      consent: body.consent === true,
-      optInFutureModules: body.optInFutureModules === true,
-      optInFreeTemplates: body.optInFreeTemplates === true,
       submittedAt: new Date().toISOString(),
-      sourcePage: "/ai-governance-course",
+      sourcePage: "/insights",
+      fullName: "",
+      workEmail: email,
+      phone: "",
+      company: "",
+      role: "",
+      country: "",
+      experienceYears: "",
+      whyJoining: "Insights waitlist",
+      consent: true,
+      optInFutureModules: false,
+      optInFreeTemplates: false,
       userAgent: request.headers.get("user-agent") ?? "",
     };
 
@@ -97,15 +78,10 @@ export async function POST(request: Request) {
 
     if (!forwardResponse.ok) {
       const status = forwardResponse.status;
-      const statusMessage =
-        status === 401 || status === 403
-          ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
-          : status === 404
-            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
-            : "Apps Script returned an unexpected response.";
+      const statusMessage = getAppsScriptStatusMessage(status);
       return NextResponse.json(
         {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+          error: `Failed to save subscription. ${statusMessage} (status: ${status})`,
         },
         { status: 502 },
       );
@@ -115,7 +91,7 @@ export async function POST(request: Request) {
     if (!confirmation.success) {
       return NextResponse.json(
         {
-          error: `Failed to save nomination. ${confirmation.error}`,
+          error: `Failed to save subscription. ${confirmation.error}`,
         },
         { status: 502 },
       );
@@ -129,4 +105,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

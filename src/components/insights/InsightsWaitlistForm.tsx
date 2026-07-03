@@ -5,18 +5,45 @@ import * as React from "react";
 export function InsightsWaitlistForm() {
   const [email, setEmail] = React.useState("");
   const [error, setError] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = email.trim();
-    const isValid = trimmed.includes("@") && trimmed.includes(".");
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
     if (!isValid) {
       setError("Please enter a valid email");
       return;
     }
+
     setError("");
-    setSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/insights-waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmed }),
+      });
+      const data = (await response.json().catch(() => ({}))) as {
+        error?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Submission failed.");
+      }
+
+      setSubmitted(true);
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -47,9 +74,10 @@ export function InsightsWaitlistForm() {
       />
       <button
         type="submit"
+        disabled={isSubmitting}
         className="w-full rounded-[8px] bg-[var(--color-cyan)] px-[24px] py-[14px] text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-void)] transition-shadow hover:shadow-[0_0_20px_var(--color-cyan-glow)] sm:w-auto sm:rounded-l-none"
       >
-        NOTIFY ME
+        {isSubmitting ? "SUBMITTING..." : "NOTIFY ME"}
       </button>
       {error && (
         <p className="w-full text-left text-[12px] text-[var(--color-red)] sm:col-span-2">
