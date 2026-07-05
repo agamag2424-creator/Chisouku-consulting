@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllCaseStudies } from "@/lib/caseStudies";
+import { getPublishedCaseStudies } from "@/lib/caseStudies";
 
 const base = "https://chisokulabs.com";
 
@@ -26,13 +26,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified,
   }));
 
-  const caseStudies = await getAllCaseStudies();
-  const publishedCaseStudyRoutes = caseStudies
-    .filter((study) => study.published)
-    .map((study) => ({
-      url: `${base}/case-studies/${study.slug}`,
-      lastModified: new Date(study.date || lastModified),
-    }));
+  const caseStudies = await getPublishedCaseStudies();
+  const publishedCaseStudyRoutes = caseStudies.map((study) => ({
+    url: `${base}/case-studies/${study.slug}`,
+    lastModified: new Date(study.date || lastModified),
+  }));
 
   return [...staticRoutes, ...publishedCaseStudyRoutes];
 }

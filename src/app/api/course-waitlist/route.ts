@@ -15,6 +15,11 @@ type WaitlistPayload = {
   website?: string;
 };
 
+type AppsScriptResult = {
+  success?: unknown;
+  error?: unknown;
+};
+
 const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
   "fullName",
   "workEmail",
@@ -25,6 +30,33 @@ const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
   "experienceYears",
   "whyJoining",
 ];
+
+function parseAppsScriptResult(responseText: string): AppsScriptResult | null {
+  try {
+    const parsed = JSON.parse(responseText) as unknown;
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      return parsed as AppsScriptResult;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+export function didAppsScriptSaveSubmission(responseText: string): boolean {
+  const result = parseAppsScriptResult(responseText);
+  return result?.success === true;
+}
+
+function getAppsScriptFailureMessage(responseText: string): string {
+  const result = parseAppsScriptResult(responseText);
+  if (typeof result?.error === "string" && result.error.trim()) {
+    return result.error.trim();
+  }
+
+  return "Apps Script did not confirm that the nomination was saved.";
+}
 
 export async function POST(request: Request) {
   try {
@@ -102,6 +134,18 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+        },
+        { status: 502 },
+      );
+    }
+
+    const forwardResponseText = await forwardResponse.text();
+    if (!didAppsScriptSaveSubmission(forwardResponseText)) {
+      return NextResponse.json(
+        {
+          error: `Failed to save nomination. ${getAppsScriptFailureMessage(
+            forwardResponseText,
+          )}`,
         },
         { status: 502 },
       );
