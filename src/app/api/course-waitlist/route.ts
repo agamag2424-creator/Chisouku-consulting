@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import {
+  saveToAppsScript,
+  validateAppsScriptUrl,
+} from "@/app/api/_lib/apps-script";
 
 type WaitlistPayload = {
   fullName?: string;
@@ -30,9 +34,11 @@ export async function POST(request: Request) {
   try {
     const body = (await request.json()) as WaitlistPayload;
 
-    // Basic spam trap
     if (body.website && body.website.trim() !== "") {
-      return NextResponse.json({ success: true }, { status: 200 });
+      return NextResponse.json(
+        { error: "Invalid submission." },
+        { status: 400 },
+      );
     }
 
     for (const field of REQUIRED_FIELDS) {
@@ -60,18 +66,10 @@ export async function POST(request: Request) {
     }
 
     const appScriptUrl = process.env.GOOGLE_APPS_SCRIPT_WAITLIST_URL;
-    if (!appScriptUrl) {
+    const urlError = validateAppsScriptUrl(appScriptUrl);
+    if (urlError || !appScriptUrl) {
       return NextResponse.json(
-        { error: "Waitlist endpoint is not configured." },
-        { status: 500 },
-      );
-    }
-    if (!appScriptUrl.includes("/exec")) {
-      return NextResponse.json(
-        {
-          error:
-            "Waitlist endpoint looks invalid. Use the Apps Script Web App URL ending with /exec.",
-        },
+        { error: urlError ?? "Waitlist endpoint is not configured." },
         { status: 500 },
       );
     }
@@ -83,28 +81,9 @@ export async function POST(request: Request) {
       userAgent: request.headers.get("user-agent") ?? "",
     };
 
-    const forwardResponse = await fetch(appScriptUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(forwardPayload),
-      cache: "no-store",
-      redirect: "follow",
-    });
-
-    if (!forwardResponse.ok) {
-      const status = forwardResponse.status;
-      const statusMessage =
-        status === 401 || status === 403
-          ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
-          : status === 404
-            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
-            : "Apps Script returned an unexpected response.";
-      return NextResponse.json(
-        {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
-        },
-        { status: 502 },
-      );
+    const saveResult = await saveToAppsScript(appScriptUrl, forwardPayload);
+    if (!saveResult.success) {
+      return NextResponse.json({ error: saveResult.error }, { status: 502 });
     }
 
     return NextResponse.json({ success: true }, { status: 200 });
