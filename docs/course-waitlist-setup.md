@@ -1,7 +1,8 @@
 # Course Waitlist Setup (Google Sheets + Apps Script)
 
-This project submits waitlist nominations through `POST /api/course-waitlist`.
-That API route forwards data to your Google Apps Script Web App URL.
+This project submits course waitlist nominations through `POST /api/course-waitlist`
+and insights notification signups through `POST /api/insights-waitlist`. Both API
+routes forward data to your Google Apps Script Web App URL.
 
 ## 1) Create Google Sheet
 
@@ -98,3 +99,7 @@ GOOGLE_APPS_SCRIPT_WAITLIST_URL=https://script.google.com/macros/s/XXXX/exec
 2. Submit the waitlist form
 3. Confirm success message appears
 4. Confirm a new row appears in your Google Sheet
+5. Open `/insights`
+6. Submit the notification form
+7. Confirm success message appears
+8. Confirm another row appears in your Google Sheet with `sourcePage` set to `/insights`

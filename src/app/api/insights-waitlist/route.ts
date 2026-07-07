@@ -1,18 +1,7 @@
 import { NextResponse } from "next/server";
 
-type WaitlistPayload = {
-  fullName?: string;
-  workEmail?: string;
-  phone?: string;
-  company?: string;
-  role?: string;
-  country?: string;
-  experienceYears?: string;
-  whyJoining?: string;
-  consent?: boolean;
-  optInFutureModules?: boolean;
-  optInFreeTemplates?: boolean;
-  website?: string;
+type InsightsWaitlistPayload = {
+  email?: string;
 };
 
 type AppsScriptResult = {
@@ -20,22 +9,11 @@ type AppsScriptResult = {
   error?: unknown;
 };
 
-const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
-  "fullName",
-  "workEmail",
-  "phone",
-  "company",
-  "role",
-  "country",
-  "experienceYears",
-  "whyJoining",
-];
-
 export async function POST(request: Request) {
-  let body: WaitlistPayload;
+  let body: InsightsWaitlistPayload;
 
   try {
-    body = (await request.json()) as WaitlistPayload;
+    body = (await request.json()) as InsightsWaitlistPayload;
   } catch {
     return NextResponse.json(
       { error: "Invalid request payload." },
@@ -43,33 +21,10 @@ export async function POST(request: Request) {
     );
   }
 
-  if (body.website && body.website.trim() !== "") {
-    return NextResponse.json(
-      { error: "Invalid submission." },
-      { status: 400 },
-    );
-  }
-
-  for (const field of REQUIRED_FIELDS) {
-    if (!body[field] || String(body[field]).trim() === "") {
-      return NextResponse.json(
-        { error: `${field} is required.` },
-        { status: 400 },
-      );
-    }
-  }
-
-  const email = String(body.workEmail ?? "").trim();
+  const email = String(body.email ?? "").trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json(
-      { error: "Please provide a valid work email." },
-      { status: 400 },
-    );
-  }
-
-  if (!body.consent) {
-    return NextResponse.json(
-      { error: "Consent is required." },
+      { error: "Please provide a valid email." },
       { status: 400 },
     );
   }
@@ -92,9 +47,19 @@ export async function POST(request: Request) {
   }
 
   const forwardPayload = {
-    ...body,
     submittedAt: new Date().toISOString(),
-    sourcePage: "/ai-governance-course",
+    sourcePage: "/insights",
+    fullName: "",
+    workEmail: email,
+    phone: "",
+    company: "",
+    role: "",
+    country: "",
+    experienceYears: "",
+    whyJoining: "Insights launch notification",
+    consent: true,
+    optInFutureModules: false,
+    optInFreeTemplates: false,
     userAgent: request.headers.get("user-agent") ?? "",
   };
 
@@ -117,7 +82,7 @@ export async function POST(request: Request) {
             : "Apps Script returned an unexpected response.";
       return NextResponse.json(
         {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+          error: `Failed to save email. ${statusMessage} (status: ${status})`,
         },
         { status: 502 },
       );
@@ -133,7 +98,7 @@ export async function POST(request: Request) {
           : "";
       return NextResponse.json(
         {
-          error: `Failed to save nomination. Apps Script did not confirm the row was saved.${detail}`,
+          error: `Failed to save email. Apps Script did not confirm the row was saved.${detail}`,
         },
         { status: 502 },
       );
@@ -142,9 +107,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true }, { status: 200 });
   } catch {
     return NextResponse.json(
-      { error: "Failed to save nomination. Apps Script request failed." },
+      { error: "Failed to save email. Apps Script request failed." },
       { status: 502 },
     );
   }
 }
-
