@@ -15,6 +15,11 @@ type WaitlistPayload = {
   website?: string;
 };
 
+type AppsScriptResult = {
+  success?: unknown;
+  error?: unknown;
+};
+
 const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
   "fullName",
   "workEmail",
@@ -27,12 +32,17 @@ const REQUIRED_FIELDS: Array<keyof WaitlistPayload> = [
 ];
 
 export async function POST(request: Request) {
+  let body: WaitlistPayload;
+
   try {
-    const body = (await request.json()) as WaitlistPayload;
+    body = (await request.json()) as WaitlistPayload;
 
     // Basic spam trap
     if (body.website && body.website.trim() !== "") {
-      return NextResponse.json({ success: true }, { status: 200 });
+      return NextResponse.json(
+        { error: "Invalid submission." },
+        { status: 400 },
+      );
     }
 
     for (const field of REQUIRED_FIELDS) {
@@ -83,31 +93,54 @@ export async function POST(request: Request) {
       userAgent: request.headers.get("user-agent") ?? "",
     };
 
-    const forwardResponse = await fetch(appScriptUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(forwardPayload),
-      cache: "no-store",
-      redirect: "follow",
-    });
+    try {
+      const forwardResponse = await fetch(appScriptUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(forwardPayload),
+        cache: "no-store",
+        redirect: "follow",
+      });
 
-    if (!forwardResponse.ok) {
-      const status = forwardResponse.status;
-      const statusMessage =
-        status === 401 || status === 403
-          ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
-          : status === 404
-            ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
-            : "Apps Script returned an unexpected response.";
+      if (!forwardResponse.ok) {
+        const status = forwardResponse.status;
+        const statusMessage =
+          status === 401 || status === 403
+            ? "Apps Script rejected access. Ensure deployment access is set to 'Anyone'."
+            : status === 404
+              ? "Apps Script URL not found. Confirm you used the latest /exec deployment URL."
+              : "Apps Script returned an unexpected response.";
+        return NextResponse.json(
+          {
+            error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
+          },
+          { status: 502 },
+        );
+      }
+
+      const appsScriptResult = (await forwardResponse
+        .json()
+        .catch(() => null)) as AppsScriptResult | null;
+      if (appsScriptResult?.success !== true) {
+        const detail =
+          typeof appsScriptResult?.error === "string"
+            ? ` ${appsScriptResult.error}`
+            : "";
+        return NextResponse.json(
+          {
+            error: `Failed to save nomination. Apps Script did not confirm the row was saved.${detail}`,
+          },
+          { status: 502 },
+        );
+      }
+
+      return NextResponse.json({ success: true }, { status: 200 });
+    } catch {
       return NextResponse.json(
-        {
-          error: `Failed to save nomination. ${statusMessage} (status: ${status})`,
-        },
+        { error: "Failed to save nomination. Apps Script request failed." },
         { status: 502 },
       );
     }
-
-    return NextResponse.json({ success: true }, { status: 200 });
   } catch {
     return NextResponse.json(
       { error: "Invalid request payload." },
