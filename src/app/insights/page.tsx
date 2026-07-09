@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Section } from "../../components/ui/Section";
 import { SectionLabel } from "../../components/ui/SectionLabel";
 import { InsightsWaitlistForm } from "../../components/insights/InsightsWaitlistForm";
-import { siteConfig } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
   title: "AI-Led PMO Insights & Briefings",
@@ -39,14 +38,6 @@ export default function InsightsPage() {
             <p className="mt-3 text-[11px] italic text-[var(--color-text-muted)]">
               No spam. Unsubscribe anytime.
             </p>
-            <a
-              href={siteConfig.substackUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center rounded-full border border-[var(--color-cyan-dim)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--color-cyan)] transition-colors hover:bg-[rgba(0,212,255,0.08)]"
-            >
-              Follow on Substack
-            </a>
             <Link
               href="/"
               className="mt-10 inline-block text-[12px] text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"

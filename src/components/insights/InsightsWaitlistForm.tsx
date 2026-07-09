@@ -1,62 +1,23 @@
-'use client';
-
-import * as React from "react";
+import { siteConfig } from "@/lib/siteConfig";
 
 export function InsightsWaitlistForm() {
-  const [email, setEmail] = React.useState("");
-  const [error, setError] = React.useState("");
-  const [submitted, setSubmitted] = React.useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = email.trim();
-    const isValid = trimmed.includes("@") && trimmed.includes(".");
-    if (!isValid) {
-      setError("Please enter a valid email");
-      return;
-    }
-    setError("");
-    setSubmitted(true);
-  };
-
-  if (submitted) {
-    return (
-      <div className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(0,255,136,0.06)] px-4 py-3 text-left">
-        <div className="mb-1 text-[13px] font-semibold text-[var(--color-green)]">
-          ✓ Thanks! We&apos;ll notify you when insights go live.
-        </div>
-        <p className="text-[12px] text-[var(--color-text-secondary)]">
-          You&apos;ll receive our first briefings on AI governance and applied
-          AI solutions as soon as they launch.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col items-stretch gap-2 sm:flex-row"
+    <div
+      className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(13,24,41,0.55)] p-4 text-left"
     >
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your email"
-        className="w-full flex-1 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-card)] px-[18px] py-[14px] text-[14px] text-[var(--color-text-primary)] outline-none focus:border-[var(--color-cyan)] focus:shadow-[0_0_0_2px_var(--color-cyan-dim)] sm:rounded-r-none"
-      />
-      <button
-        type="submit"
-        className="w-full rounded-[8px] bg-[var(--color-cyan)] px-[24px] py-[14px] text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-void)] transition-shadow hover:shadow-[0_0_20px_var(--color-cyan-glow)] sm:w-auto sm:rounded-l-none"
+      <p className="text-[13px] text-[var(--color-text-secondary)]">
+        Join the ChisokuLab Substack to receive the launch briefings as soon as
+        they go live.
+      </p>
+      <a
+        href={siteConfig.substackUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-3 inline-flex w-full justify-center rounded-[8px] bg-[var(--color-cyan)] px-[24px] py-[14px] text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-void)] transition-shadow hover:shadow-[0_0_20px_var(--color-cyan-glow)] sm:w-auto"
       >
-        NOTIFY ME
-      </button>
-      {error && (
-        <p className="w-full text-left text-[12px] text-[var(--color-red)] sm:col-span-2">
-          {error}
-        </p>
-      )}
-    </form>
+        Subscribe on Substack
+      </a>
+    </div>
   );
 }
 
