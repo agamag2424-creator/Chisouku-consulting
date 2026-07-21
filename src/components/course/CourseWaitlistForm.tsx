@@ -98,8 +98,9 @@ export function CourseWaitlistForm() {
 
       const data = (await response.json().catch(() => ({}))) as {
         error?: string;
+        success?: boolean;
       };
-      if (!response.ok) {
+      if (!response.ok || data.success !== true) {
         throw new Error(data.error ?? "Submission failed.");
       }
 
