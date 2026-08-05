@@ -19,7 +19,7 @@ export function DiagnosticOrbit({ className }: Props) {
   return (
     <div
       className={cn(
-        "glass-canvas paper-grain relative flex items-center justify-center overflow-hidden p-6",
+        "glass-canvas paper-grain ink-corners relative flex items-center justify-center overflow-hidden p-6",
         className,
       )}
     >

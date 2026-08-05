@@ -60,7 +60,17 @@ export default function Home() {
   return (
     <>
       {/* 1. Hero — single composition */}
-      <section className="section report-cover pt-10 md:pt-14">
+      <section className="section report-cover photo-atmosphere pt-10 md:pt-14">
+        <div className="photo-atmosphere-media" aria-hidden>
+          <Image
+            src="/images/pmo-operating-map-cover.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
         <div className="container relative">
           <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
@@ -215,8 +225,17 @@ export default function Home() {
       </section>
 
       {/* 8. Final CTA */}
-      <section className="section dark-band atmosphere-band">
-        <div className="container max-w-4xl text-center">
+      <section className="section dark-band photo-atmosphere photo-atmosphere-dark">
+        <div className="photo-atmosphere-media" aria-hidden>
+          <Image
+            src="/images/founder-agam.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-[50%_18%]"
+          />
+        </div>
+        <div className="container relative z-[1] max-w-4xl text-center">
           <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Next step</p>
           <h2 className="headline mx-auto !max-w-xl">
             Run the diagnostic. Then map the audit.

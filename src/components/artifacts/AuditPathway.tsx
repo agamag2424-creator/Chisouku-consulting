@@ -33,7 +33,7 @@ type Props = {
 
 export function AuditPathway({ className }: Props) {
   return (
-    <div className={cn("report-board paper-grain", className)}>
+    <div className={cn("report-board paper-grain ink-corners", className)}>
       <div className="grid md:grid-cols-2 xl:grid-cols-4">
         {phases.map((phase, index) => (
           <div

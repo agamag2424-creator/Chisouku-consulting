@@ -10,7 +10,7 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
   return (
     <div
       className={cn(
-        "glass-canvas paper-grain relative overflow-hidden",
+        "glass-canvas paper-grain ink-corners relative overflow-hidden",
         compact ? "min-h-[420px]" : "min-h-[560px] md:min-h-[640px]",
         className,
       )}
@@ -121,11 +121,21 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
             </g>
 
             {/* Satellite nodes */}
-            {node(88, 52, 144, 64, "Inputs", "Tools · Exports · Status")}
-            {node(488, 52, 144, 64, "Cadence", "Weekly · Steering · RAID")}
-            {node(48, 258, 144, 64, "Friction", "Stale · Manual · Late")}
-            {node(528, 258, 144, 64, "Decision Forum", "Owners · Thresholds")}
-            {node(268, 392, 184, 56, "Blueprint", "Sequence · Automation fit", true)}
+            <g className="map-sat" style={{ animationDelay: "720ms" }}>
+              {node(88, 52, 144, 64, "Inputs", "Tools · Exports · Status")}
+            </g>
+            <g className="map-sat" style={{ animationDelay: "820ms" }}>
+              {node(488, 52, 144, 64, "Cadence", "Weekly · Steering · RAID")}
+            </g>
+            <g className="map-sat" style={{ animationDelay: "920ms" }}>
+              {node(48, 258, 144, 64, "Friction", "Stale · Manual · Late")}
+            </g>
+            <g className="map-sat" style={{ animationDelay: "1020ms" }}>
+              {node(528, 258, 144, 64, "Decision Forum", "Owners · Thresholds")}
+            </g>
+            <g className="map-sat" style={{ animationDelay: "1120ms" }}>
+              {node(268, 392, 184, 56, "Blueprint", "Sequence · Automation fit", true)}
+            </g>
           </svg>
         </div>
       </div>

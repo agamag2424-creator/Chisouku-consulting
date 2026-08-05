@@ -35,7 +35,7 @@ type Props = {
 /** Drag ledger artifact. */
 export function DragLedger({ className }: Props) {
   return (
-    <div className={cn("artifact-sheet paper-grain overflow-hidden", className)}>
+    <div className={cn("artifact-sheet paper-grain ink-corners overflow-hidden", className)}>
       <div className="flex items-start justify-between gap-4 border-b border-[rgba(17,24,32,0.12)] px-6 py-5">
         <div>
           <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
