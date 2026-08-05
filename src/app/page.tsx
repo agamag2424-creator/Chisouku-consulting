@@ -106,10 +106,16 @@ export default function Home() {
         <div className="container relative">
           <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <p className="eyebrow hero-kicker">ChisokuLabs · AI for delivery systems</p>
+              <p className="eyebrow hero-kicker">
+                ChisokuLabs · {siteConfig.tagline}
+              </p>
               <h1 className="display hero-title !max-w-[14ch]">
                 Find the drag. Automate what repeats.
               </h1>
+              <p className="subhead hero-copy mt-4 !mb-0 !max-w-xl">
+                {siteConfig.subline} — the fastest place delivery drag becomes
+                visible, measurable, and automatable.
+              </p>
               <p className="hero-copy mt-5 !mb-0 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--color-muted)]">
                 Markets · GCC · Singapore
               </p>
@@ -138,7 +144,7 @@ export default function Home() {
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <p className="eyebrow">How we engage</p>
-              <h2 className="headline !max-w-[12ch]">Diagnostic. Audit. Automation.</h2>
+              <h2 className="headline !max-w-[12ch]">Diagnostic. Audit. Implementation.</h2>
             </div>
             <p className="subhead !mb-0 lg:max-w-2xl lg:justify-self-end">
               PMO reporting is where we begin. AI automation for delivery systems
@@ -336,7 +342,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="button button-primary mt-8"
             >
-              Run Free Diagnostic
+              Run Free PMO Diagnostic
             </a>
           </div>
           <DiagnosticOrbit />

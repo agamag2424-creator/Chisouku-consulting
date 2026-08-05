@@ -36,7 +36,7 @@ export default function DiagnosticPage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Open the PMO Maturity Tool
+              Run Free PMO Diagnostic
             </a>
           </div>
           <DiagnosticOrbit />

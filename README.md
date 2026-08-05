@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ChisokuLabs
 
-## Getting Started
+Marketing site for ChisokuLabs — AI automation for delivery systems, starting with the PMO reporting layer.
 
-First, run the development server:
+Production: [chisokulabs.com](https://www.chisokulabs.com)
+
+## Stack
+
+- Next.js 16 (App Router, Turbopack)
+- TypeScript
+- Tailwind CSS v4 with design tokens in `src/styles/globals.css`
+- Resend for audit fit form delivery
+- Deployed on Vercel
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The site runs at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run lint
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment
 
-## Learn More
+Create `.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Purpose |
+| --- | --- |
+| `RESEND_API_KEY` | Sends audit fit form submissions via `POST /api/audit-fit` |
+| `AUDIT_FIT_TO_EMAIL` | Destination inbox for those submissions |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Content model
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Copy that appears in more than one place lives in `src/lib/siteConfig.ts` — tagline, subline, markets, systems, audit pricing, and the diagnostic URL. Change it there rather than in individual pages so quoted figures and naming cannot drift.
 
-## Deploy on Vercel
+`auditPriceRange` in the same file is the display form of the audit price and is used by both the audit page and the JSON-LD offer.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Engagement ladder
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site is organised around three steps, and this vocabulary should stay consistent:
+
+1. **Free PMO Diagnostic** — hosted separately at [diagnostic.chisokulabs.com](https://diagnostic.chisokulabs.com)
+2. **PMO Automation Audit** — `/pmo-automation-audit`
+3. **Implementation** — `/implementation`
+
+`Assess → Architect → Activate → Accelerate` is the internal method model shown on `/method`. "Activate" is the method-phase name; buyer-facing copy says "implementation".
+
+## Structure
+
+```
+src/app/            Routes and metadata
+src/components/     Layout, artifacts (SVG visuals), contact form
+src/lib/            siteConfig and helpers
+src/styles/         Global tokens and utilities
+```
+
+Legacy URLs from earlier versions of the site are redirected in `next.config.ts`.
+
+## Proof rules
+
+The site makes no client claims that cannot be substantiated. Sample artifacts are labelled as methodology excerpts, the drag estimator is framed as directional, and founder achievements are attributed to prior employment. Keep new copy within these constraints.

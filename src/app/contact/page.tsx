@@ -38,7 +38,7 @@ export default async function ContactPage({ searchParams }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Run the PMO Maturity Tool
+                Run the Free PMO Diagnostic
               </a>
               .
             </p>

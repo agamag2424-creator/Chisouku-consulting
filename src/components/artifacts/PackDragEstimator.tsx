@@ -175,7 +175,7 @@ export function PackDragEstimator({ className }: Props) {
               rel="noopener noreferrer"
               className="button button-primary"
             >
-              Validate with Free Diagnostic
+              Validate with Free PMO Diagnostic
             </a>
             <Link href="/contact" className="button button-secondary">
               Book Audit Fit Call

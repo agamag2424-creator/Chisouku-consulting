@@ -130,12 +130,12 @@ export default function RootLayout({
               areaServed: ["GCC", "Singapore"],
               offers: {
                 "@type": "Offer",
-                priceCurrency: "USD",
+                priceCurrency: siteConfig.pricing.currency,
                 priceSpecification: {
                   "@type": "PriceSpecification",
-                  minPrice: 4000,
-                  maxPrice: 5000,
-                  priceCurrency: "USD",
+                  minPrice: siteConfig.pricing.min,
+                  maxPrice: siteConfig.pricing.max,
+                  priceCurrency: siteConfig.pricing.currency,
                 },
               },
               url: `${siteUrl}/pmo-automation-audit`,

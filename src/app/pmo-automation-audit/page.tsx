@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AuditPathway } from "../../components/artifacts/AuditPathway";
 import { SampleAuditArtifact } from "../../components/artifacts/SampleAuditArtifact";
 import { PackCycleStrip } from "../../components/artifacts/PackCycleStrip";
-import { siteConfig } from "../../lib/siteConfig";
+import { auditPriceRange, siteConfig } from "../../lib/siteConfig";
 
 export const metadata: Metadata = {
   title: "PMO Automation Audit",
@@ -57,7 +57,7 @@ export default function AuditPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Run Free Diagnostic
+                Run Free PMO Diagnostic
               </a>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function AuditPage() {
               <div>
                 <div className="kicker-title">Typical range</div>
                 <div className="mt-2 font-[family-name:var(--font-display)] text-4xl font-bold tracking-[-0.03em]">
-                  USD 4,000–5,000
+                  {auditPriceRange}
                 </div>
               </div>
               <div className="rule" />

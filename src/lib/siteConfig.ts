@@ -20,6 +20,11 @@ export const siteConfig = {
   systems: ["Jira", "Sheets", "Power BI", "Slack / Teams"] as const,
 } as const;
 
+/** Display form of the audit price, so quoted figures cannot drift from config. */
+export const auditPriceRange = `${siteConfig.pricing.currency} ${siteConfig.pricing.min.toLocaleString(
+  "en-US",
+)}–${siteConfig.pricing.max.toLocaleString("en-US")}`;
+
 export const navLinks = [
   { href: "/pmo-automation-audit", label: "Audit" },
   { href: "/free-pmo-diagnostic", label: "Diagnostic" },

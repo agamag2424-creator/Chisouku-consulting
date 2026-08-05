@@ -131,7 +131,7 @@ export default function MethodPage() {
               rel="noopener noreferrer"
               className="button button-light"
             >
-              Run Free Diagnostic
+              Run Free PMO Diagnostic
             </a>
             <Link href="/contact" className="button button-line-light">
               Book Audit Fit Call

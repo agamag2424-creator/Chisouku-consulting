@@ -59,6 +59,11 @@ const nextConfig: NextConfig = {
         destination: "/sample-outputs",
         permanent: true,
       },
+      {
+        source: "/ai-solutions/:path*",
+        destination: "/implementation",
+        permanent: true,
+      },
     ];
   },
 };
