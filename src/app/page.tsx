@@ -86,9 +86,8 @@ export default function Home() {
               <h1 className="display hero-title !max-w-[14ch]">
                 Find the drag. Automate what repeats.
               </h1>
-              <p className="subhead hero-copy mt-4 !mb-0">
-                For GCC and Singapore growth-stage SMEs. PMO reporting is the entry
-                layer.
+              <p className="hero-copy mt-5 !mb-0 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--color-muted)]">
+                Markets · GCC · Singapore
               </p>
             </div>
             <div className="hero-actions flex shrink-0 flex-col gap-3 sm:flex-row">
@@ -104,6 +103,47 @@ export default function Home() {
                 View PMO Automation Audit
               </Link>
             </div>
+          </div>
+
+          <div
+            className="mb-8 grid border-y border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.72)] sm:grid-cols-3"
+            aria-label="ChisokuLabs engagement pathway"
+          >
+            {[
+              ["01", "Free PMO Diagnostic", "Baseline"],
+              ["02", "PMO Automation Audit", "Blueprint"],
+              ["03", "AI automation for delivery systems", "Implementation"],
+            ].map(([number, title, outcome], index) => (
+              <div
+                key={number}
+                className={[
+                  "relative px-5 py-4",
+                  index < 2
+                    ? "border-b border-[rgba(17,24,32,0.12)] sm:border-b-0 sm:border-r"
+                    : "",
+                ].join(" ")}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+                    {number}
+                  </span>
+                  <span className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+                    {outcome}
+                  </span>
+                </div>
+                <p className="mt-3 font-[family-name:var(--font-display)] text-base font-bold tracking-[-0.02em] text-[var(--color-ink)]">
+                  {title}
+                </p>
+                {index < 2 ? (
+                  <span
+                    className="absolute -right-2 top-1/2 z-10 hidden h-4 w-4 -translate-y-1/2 items-center justify-center bg-[var(--color-paper)] font-mono text-xs text-[var(--color-cyan-strong)] sm:flex"
+                    aria-hidden
+                  >
+                    →
+                  </span>
+                ) : null}
+              </div>
+            ))}
           </div>
 
           <PmoOperatingMap className="hero-map-reveal" />
