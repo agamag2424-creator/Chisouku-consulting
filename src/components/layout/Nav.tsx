@@ -26,14 +26,9 @@ export function Nav() {
           )}
         >
           <Link href="/" className="group flex items-center gap-3" aria-label="ChisokuLabs home">
-            <BrandMark className="h-10 w-10" />
-            <span className="flex flex-col leading-none">
-              <span className="font-[family-name:var(--font-display)] text-[19px] font-bold tracking-[-0.02em] text-[var(--color-ink)]">
-                ChisokuLabs
-              </span>
-              <span className="mt-1 hidden font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)] sm:block">
-                PMO Automation Audit
-              </span>
+            <BrandMark className="h-9 w-9" />
+            <span className="font-[family-name:var(--font-display)] text-[20px] font-bold tracking-[-0.03em] text-[var(--color-ink)]">
+              ChisokuLabs
             </span>
           </Link>
 

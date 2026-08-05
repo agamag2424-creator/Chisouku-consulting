@@ -12,10 +12,7 @@ type FormState = {
   company: string;
   country: string;
   role: string;
-  company_size: string;
   challenge: string;
-  tools: string;
-  urgency: string;
   interest: string;
 };
 
@@ -25,16 +22,15 @@ const initialState: FormState = {
   company: "",
   country: "",
   role: "COO",
-  company_size: "25-100",
   challenge: "",
-  tools: "",
-  urgency: "This quarter",
   interest: "Audit",
 };
 
 export function AuditFitForm() {
   const [form, setForm] = React.useState<FormState>(initialState);
-  const [status, setStatus] = React.useState<"idle" | "submitting" | "error">("idle");
+  const [status, setStatus] = React.useState<
+    "idle" | "submitting" | "error" | "success"
+  >("idle");
   const [error, setError] = React.useState<string | null>(null);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
@@ -57,14 +53,56 @@ export function AuditFitForm() {
         throw new Error("Unable to submit. Please email us directly.");
       }
 
-      const calendly = new URL(siteConfig.calendlyUrl);
-      calendly.searchParams.set("name", form.name);
-      calendly.searchParams.set("email", form.email);
-      window.location.assign(calendly.toString());
+      try {
+        const calendly = new URL(siteConfig.calendlyUrl);
+        calendly.searchParams.set("name", form.name);
+        calendly.searchParams.set("email", form.email);
+        window.location.assign(calendly.toString());
+        // If navigation is blocked, surface fallback shortly.
+        window.setTimeout(() => setStatus("success"), 1200);
+      } catch {
+        setStatus("success");
+      }
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : "Something went wrong.");
     }
+  }
+
+  if (status === "success") {
+    return (
+      <div className="border border-[rgba(17,24,32,0.14)] bg-[rgba(251,250,247,0.92)] p-6 md:p-8">
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+          Received
+        </p>
+        <h2 className="mt-3 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
+          We have your context.
+        </h2>
+        <p className="mt-3 text-sm leading-relaxed text-[var(--color-muted)]">
+          If Calendly did not open, email{" "}
+          <a
+            className="font-bold text-[var(--color-cyan-strong)]"
+            href={`mailto:${siteConfig.email}`}
+          >
+            {siteConfig.email}
+          </a>{" "}
+          or open the scheduler directly.
+        </p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={siteConfig.calendlyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button button-primary"
+          >
+            Open Calendly
+          </a>
+          <Link href="/pmo-automation-audit" className="button button-secondary">
+            Review the audit
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -74,12 +112,13 @@ export function AuditFitForm() {
     >
       <div className="mb-1 border-b border-[rgba(17,24,32,0.1)] pb-4">
         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
-          Qualification
+          Fit call
         </p>
         <p className="mt-2 text-sm text-[var(--color-muted)]">
-          Enough context to decide fit — then continue to Calendly.
+          Brief context — then continue to schedule.
         </p>
       </div>
+
       <div className="grid gap-5 md:grid-cols-2">
         <Field
           label="Name"
@@ -128,39 +167,6 @@ export function AuditFitForm() {
           ]}
         />
         <Select
-          label="Company size"
-          name="company_size"
-          value={form.company_size}
-          onChange={(v) => update("company_size", v)}
-          options={["25-100", "101-250", "251-500", "501-1,000", "1,000+"]}
-        />
-      </div>
-
-      <TextArea
-        label="Current PMO/reporting challenge"
-        name="challenge"
-        value={form.challenge}
-        onChange={(v) => update("challenge", v)}
-        placeholder="What is slowing reporting, escalation, governance, or delivery visibility?"
-      />
-
-      <TextArea
-        label="Current tools"
-        name="tools"
-        value={form.tools}
-        onChange={(v) => update("tools", v)}
-        placeholder="Jira, MS Project, Excel, Power BI, Smartsheet, Monday, ERP, custom tools..."
-      />
-
-      <div className="grid gap-5 md:grid-cols-2">
-        <Select
-          label="Urgency"
-          name="urgency"
-          value={form.urgency}
-          onChange={(v) => update("urgency", v)}
-          options={["This month", "This quarter", "Exploring options", "Not urgent"]}
-        />
-        <Select
           label="Interest"
           name="interest"
           value={form.interest}
@@ -168,6 +174,14 @@ export function AuditFitForm() {
           options={["Diagnostic", "Audit", "Implementation", "Not sure"]}
         />
       </div>
+
+      <TextArea
+        label="Current challenge"
+        name="challenge"
+        value={form.challenge}
+        onChange={(v) => update("challenge", v)}
+        placeholder="Reporting lag, escalation delays, PMO visibility…"
+      />
 
       {error ? (
         <p className="text-sm font-semibold text-red-700" role="alert">
@@ -181,15 +195,12 @@ export function AuditFitForm() {
           className="button button-primary"
           disabled={status === "submitting"}
         >
-          {status === "submitting" ? "Submitting…" : "Submit & Book Fit Call"}
+          {status === "submitting" ? "Submitting…" : "Continue to schedule"}
         </button>
         <Link href="/pmo-automation-audit" className="button button-secondary">
-          Review Audit First
+          Review audit first
         </Link>
       </div>
-      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
-        After submit you continue to Calendly to pick a time.
-      </p>
     </form>
   );
 }
@@ -275,7 +286,7 @@ function TextArea({
       <textarea
         className={inputClass}
         name={name}
-        rows={4}
+        rows={3}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}

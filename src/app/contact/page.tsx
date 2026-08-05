@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { AuditFitForm } from "../../components/contact/AuditFitForm";
+import { PmoOperatingMap } from "../../components/artifacts/PmoOperatingMap";
 import { siteConfig } from "../../lib/siteConfig";
 
 export default function ContactPage() {
   return (
     <section className="section pt-16">
-      <div className="container grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+      <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
-          <p className="eyebrow">Contact / Audit Fit Call</p>
+          <p className="eyebrow">Fit call</p>
           <h1 className="display">Check whether the audit is a fit.</h1>
           <p className="subhead mt-5">
-            Share enough context to qualify. If the free diagnostic is the better
-            next step, that will be clear quickly.
+            Share brief context. Schedule next — or start with the free diagnostic.
           </p>
           <div className="mt-8 space-y-4 text-sm text-[var(--color-muted)]">
             <p>
@@ -45,6 +45,9 @@ export default function ContactPage() {
               </Link>
               .
             </p>
+          </div>
+          <div className="mt-10 hidden lg:block">
+            <PmoOperatingMap compact />
           </div>
         </div>
 

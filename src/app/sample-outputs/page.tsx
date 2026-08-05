@@ -5,7 +5,6 @@ import { DragLedger } from "../../components/artifacts/DragLedger";
 import { OpportunityMatrix } from "../../components/artifacts/OpportunityMatrix";
 import { ImplementationBlueprint } from "../../components/artifacts/ImplementationBlueprint";
 import { SampleAuditArtifact } from "../../components/artifacts/SampleAuditArtifact";
-import { DiagnosticOrbit } from "../../components/artifacts/DiagnosticOrbit";
 
 export const metadata: Metadata = {
   title: "Audit Outputs",
@@ -22,27 +21,59 @@ export default function SampleOutputsPage() {
           <p className="eyebrow">Audit outputs</p>
           <h1 className="display">What the audit produces.</h1>
           <p className="subhead mt-5">
-            Operating clarity artifacts — maps, ledgers, matrices, and a blueprint.
+            One operating story — map, ledger, matrix, blueprint.
           </p>
         </div>
       </section>
 
       <section className="section bg-[var(--color-paper)] pt-0">
-        <div className="container grid gap-10">
-          <PmoOperatingMap compact />
-          <DragLedger />
-          <OpportunityMatrix />
-          <ImplementationBlueprint />
-          <SampleAuditArtifact />
-          <DiagnosticOrbit />
+        <div className="container">
+          <p className="eyebrow">Featured</p>
+          <h2 className="headline">Full artifact excerpt.</h2>
+          <div className="mt-8">
+            <SampleAuditArtifact />
+          </div>
         </div>
-        <div className="container mt-12 flex flex-col gap-3 sm:flex-row">
-          <Link href="/contact" className="button button-primary">
-            Book Audit Fit Call
-          </Link>
-          <Link href="/pmo-automation-audit" className="button button-secondary">
-            Review the audit
-          </Link>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <p className="eyebrow">The sequence</p>
+          <h2 className="headline">Map → Locate → Prioritize → Blueprint.</h2>
+          <div className="mt-10 grid gap-8">
+            <div>
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+                01 · Map
+              </p>
+              <PmoOperatingMap compact />
+            </div>
+            <div>
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+                02 · Locate
+              </p>
+              <DragLedger />
+            </div>
+            <div>
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+                03 · Prioritize
+              </p>
+              <OpportunityMatrix />
+            </div>
+            <div>
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+                04 · Blueprint
+              </p>
+              <ImplementationBlueprint />
+            </div>
+          </div>
+          <div className="mt-12 flex flex-col gap-3 sm:flex-row">
+            <Link href="/contact" className="button button-primary">
+              Book Audit Fit Call
+            </Link>
+            <Link href="/pmo-automation-audit" className="button button-secondary">
+              Review the audit
+            </Link>
+          </div>
         </div>
       </section>
     </>

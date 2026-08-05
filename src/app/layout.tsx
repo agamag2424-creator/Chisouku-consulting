@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Source_Sans_3 } from "next/font/google";
+import { IBM_Plex_Mono, Libre_Franklin, Source_Sans_3 } from "next/font/google";
 import "../styles/globals.css";
 import { Nav } from "../components/layout/Nav";
 import { Footer } from "../components/layout/Footer";
 
-const plexSans = IBM_Plex_Sans({
+const libreFranklin = Libre_Franklin({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  weight: ["500", "600", "700"],
+  weight: ["600", "700", "800"],
 });
 
 const sourceSans = Source_Sans_3({
@@ -86,7 +86,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plexSans.variable} ${sourceSans.variable} ${plexMono.variable}`}
+      className={`${libreFranklin.variable} ${sourceSans.variable} ${plexMono.variable}`}
     >
       <body className="antialiased">
         <Script

@@ -33,31 +33,43 @@ type Props = {
 
 export function AuditPathway({ className }: Props) {
   return (
-    <div className={cn("grid gap-4 md:grid-cols-2 xl:grid-cols-4", className)}>
-      {phases.map((phase, index) => (
-        <div
-          key={phase.name}
-          className="flex min-h-[220px] flex-col border border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.9)] p-5 shadow-[0_22px_50px_rgba(17,24,32,0.06)]"
-        >
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-              Phase 0{index + 1}
-            </span>
-            <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
-              {phase.name}
-            </span>
-          </div>
-          <div className="mt-5 flex-1">
-            <PhaseVisual type={phase.visual} />
-          </div>
-          <div className="mt-4 border-t border-[rgba(17,24,32,0.1)] pt-4">
-            <div className="text-sm font-bold text-[var(--color-ink)]">{phase.output}</div>
-            <div className="mt-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
-              {phase.detail}
+    <div
+      className={cn(
+        "overflow-hidden border border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.94)]",
+        className,
+      )}
+    >
+      <div className="grid md:grid-cols-2 xl:grid-cols-4">
+        {phases.map((phase, index) => (
+          <div
+            key={phase.name}
+            className={cn(
+              "relative flex min-h-[220px] flex-col p-5 pathway-phase",
+              index < phases.length - 1 && "border-b border-[rgba(17,24,32,0.1)] xl:border-b-0 xl:border-r",
+              "md:odd:border-r md:[&:nth-child(2)]:border-r-0 xl:[&:nth-child(2)]:border-r",
+            )}
+            style={{ animationDelay: `${120 + index * 90}ms` }}
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+                0{index + 1}
+              </span>
+              <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
+                {phase.name}
+              </span>
+            </div>
+            <div className="mt-5 flex-1">
+              <PhaseVisual type={phase.visual} />
+            </div>
+            <div className="mt-4 border-t border-[rgba(17,24,32,0.1)] pt-4">
+              <div className="text-sm font-bold text-[var(--color-ink)]">{phase.output}</div>
+              <div className="mt-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+                {phase.detail}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

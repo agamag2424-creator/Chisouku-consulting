@@ -17,24 +17,44 @@ type Props = {
 
 export function OperatingDragGrid({ className }: Props) {
   return (
-    <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-4", className)}>
-      {pains.map((pain) => (
-        <div
-          key={pain.id}
-          className="relative overflow-hidden border border-[rgba(17,24,32,0.12)] bg-[rgba(255,253,248,0.88)] p-5 shadow-[0_18px_40px_rgba(17,24,32,0.05)]"
-        >
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -right-1 -top-3 font-[family-name:var(--font-display)] text-6xl font-extrabold leading-none text-[rgba(17,24,32,0.05)]"
+    <div
+      className={cn(
+        "overflow-hidden border border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.94)]",
+        className,
+      )}
+    >
+      <div className="flex items-center justify-between border-b border-[rgba(17,24,32,0.1)] px-5 py-4">
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+          Current-state board
+        </p>
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+          08 signals
+        </p>
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4">
+        {pains.map((pain, index) => (
+          <div
+            key={pain.id}
+            className={cn(
+              "relative overflow-hidden p-5",
+              index < pains.length - 1 && "border-b border-[rgba(17,24,32,0.1)]",
+              "sm:border-b sm:odd:border-r",
+              "lg:border-b-0 lg:border-r lg:[&:nth-child(4n)]:border-r-0 lg:[&:nth-child(n+5)]:border-t",
+            )}
           >
-            {pain.id}
-          </span>
-          <MiniVisual type={pain.visual} />
-          <div className="relative mt-4 text-sm font-bold tracking-[-0.01em] text-[var(--color-ink)]">
-            {pain.label}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-1 -top-3 font-[family-name:var(--font-display)] text-5xl font-bold leading-none text-[rgba(17,24,32,0.045)]"
+            >
+              {pain.id}
+            </span>
+            <MiniVisual type={pain.visual} />
+            <div className="relative mt-3 text-sm font-bold tracking-[-0.01em] text-[var(--color-ink)]">
+              {pain.label}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

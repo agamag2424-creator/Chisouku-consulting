@@ -25,7 +25,7 @@ export default function AuditPage() {
       <section className="section pt-16">
         <div className="container grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:items-end">
           <div>
-            <p className="eyebrow">Paid offer</p>
+            <p className="eyebrow">The engagement</p>
             <h1 className="display">PMO Automation Audit</h1>
             <p className="subhead mt-5">
               Find and fix project reporting, governance, and delivery bottlenecks

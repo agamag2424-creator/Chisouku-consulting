@@ -8,8 +8,8 @@ export function Footer() {
       <div className="container grid gap-10 px-[var(--content-padding-x-mobile)] py-12 md:grid-cols-[1.2fr_1fr] md:px-[var(--content-padding-x)]">
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">
-            <BrandMark className="h-10 w-10" inverted />
-            <span className="font-[family-name:var(--font-display)] text-[19px] font-bold tracking-[-0.02em] text-[#fffdf8]">
+            <BrandMark className="h-9 w-9" inverted />
+            <span className="font-[family-name:var(--font-display)] text-[20px] font-bold tracking-[-0.03em] text-[#fffdf8]">
               ChisokuLabs
             </span>
           </Link>

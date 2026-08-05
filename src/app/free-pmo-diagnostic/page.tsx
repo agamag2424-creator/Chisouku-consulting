@@ -24,7 +24,7 @@ export default function DiagnosticPage() {
       <section className="section pt-16">
         <div className="container grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
           <div>
-            <p className="eyebrow">Lead magnet</p>
+            <p className="eyebrow">Start here</p>
             <h1 className="display">Free PMO Diagnostic</h1>
             <p className="subhead mt-5">
               Start with a 5-minute PMO baseline before an Audit Fit Call.

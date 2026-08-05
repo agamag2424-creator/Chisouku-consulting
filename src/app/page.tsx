@@ -38,33 +38,39 @@ const proofTiles = [
   },
 ] as const;
 
+const trustPoints = [
+  {
+    label: "Method",
+    title: "Map → Locate → Prioritize → Blueprint",
+    detail: "A fixed audit sequence with operator-ready outputs.",
+  },
+  {
+    label: "Markets",
+    title: "GCC · Singapore",
+    detail: "Built for growth-stage SMEs with reporting and PMO visibility gaps.",
+  },
+  {
+    label: "After the call",
+    title: "Scope, then 5–10 days",
+    detail: "Fit confirmed first. Engagement timeline and range follow.",
+  },
+] as const;
+
 export default function Home() {
   return (
     <>
-      {/* 1. Hero */}
+      {/* 1. Hero — single composition */}
       <section className="section report-cover pt-10 md:pt-14">
         <div className="container relative">
-          <div className="mb-8 max-w-3xl">
-            <p className="eyebrow hero-kicker">ChisokuLabs · PMO Operating Map</p>
-            <h1 className="display hero-title">Find the drag.</h1>
-          </div>
-
-          <figure className="hero-top-image glass-canvas mb-8 overflow-hidden md:mb-10">
-            <Image
-              src="/images/pmo-operating-map-cover.png"
-              alt="PMO operating map — workflow signals rendered as a consulting artifact"
-              width={1600}
-              height={900}
-              priority
-              className="h-[220px] w-full object-cover object-center sm:h-[280px] md:h-[340px] lg:h-[380px]"
-            />
-          </figure>
-
-          <div className="mb-10 flex flex-col gap-6 md:mb-12 md:flex-row md:items-end md:justify-between">
-            <p className="subhead hero-copy !mb-0 max-w-xl">
-              For GCC and Singapore growth-stage SMEs with reporting, escalation,
-              and PMO visibility gaps.
-            </p>
+          <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="eyebrow hero-kicker">ChisokuLabs</p>
+              <h1 className="display hero-title">Find the drag.</h1>
+              <p className="subhead hero-copy mt-4 !mb-0">
+                For GCC and Singapore growth-stage SMEs with reporting, escalation,
+                and PMO visibility gaps.
+              </p>
+            </div>
             <div className="hero-actions flex shrink-0 flex-col gap-3 sm:flex-row">
               <a
                 href={siteConfig.diagnosticUrl}
@@ -99,18 +105,16 @@ export default function Home() {
       {/* 3. Audit Pathway */}
       <section className="section">
         <div className="container">
-          <p className="eyebrow">Audit pathway</p>
+          <p className="eyebrow">The engagement</p>
           <h2 className="headline">Four phases. Four outputs.</h2>
-          <p className="subhead mt-4">
-            Map · Locate · Prioritize · Blueprint
-          </p>
+          <p className="subhead mt-4">Map · Locate · Prioritize · Blueprint</p>
           <div className="mt-10">
             <AuditPathway />
           </div>
         </div>
       </section>
 
-      {/* 4. Sample Artifact */}
+      {/* 4. Audit Artifact */}
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
           <p className="eyebrow">Audit output</p>
@@ -138,13 +142,13 @@ export default function Home() {
             </div>
           </figure>
           <div>
-            <p className="eyebrow">Founder Track Record</p>
+            <p className="eyebrow">Founder</p>
             <h2 className="headline">Delivery rooms, not decks.</h2>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-px bg-[rgba(17,24,32,0.12)] sm:grid-cols-2">
               {proofTiles.map((tile) => (
                 <div
                   key={tile.title}
-                  className="border border-[rgba(17,24,32,0.12)] bg-[rgba(255,253,248,0.88)] p-5"
+                  className="bg-[var(--color-paper)] p-5"
                 >
                   <ProofIcon type={tile.icon} />
                   <div className="mt-3 font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
@@ -165,7 +169,7 @@ export default function Home() {
       <section className="section bg-[var(--color-paper)]">
         <div className="container grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
-            <p className="eyebrow">Free diagnostic</p>
+            <p className="eyebrow">Start here</p>
             <h2 className="headline">5-minute PMO baseline.</h2>
             <p className="subhead mt-4">
               A serious first step before an Audit Fit Call.
@@ -183,8 +187,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Final CTA */}
-      <section className="section dark-band">
+      {/* 7. Trust geometry */}
+      <section className="section">
+        <div className="container">
+          <p className="eyebrow">Why this, now</p>
+          <h2 className="headline">Clarity before commitment.</h2>
+          <div className="mt-10 grid gap-8 border-t border-[rgba(17,24,32,0.14)] pt-8 md:grid-cols-3">
+            {trustPoints.map((point) => (
+              <div key={point.label}>
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+                  {point.label}
+                </p>
+                <h3 className="mt-3 font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
+                  {point.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
+                  {point.detail}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Final CTA */}
+      <section className="section dark-band atmosphere-band">
         <div className="container max-w-4xl text-center">
           <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Next step</p>
           <h2 className="headline mx-auto !max-w-xl">
