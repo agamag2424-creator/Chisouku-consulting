@@ -43,13 +43,13 @@ const proofTiles = [
 
 const trustPoints = [
   {
-    label: "Moat",
+    label: "Capability",
     title: "AI workflow automation",
     detail:
-      "Delivery ops automation — integrations plus LLM where narrative packs need intelligence.",
+      "Delivery ops automation — integrations plus intelligence where narrative packs need judgment.",
   },
   {
-    label: "Wedge",
+    label: "Starting point",
     title: "PMO reporting layer first",
     detail: "Fastest place delivery drag becomes visible — and automatable.",
   },
@@ -60,7 +60,7 @@ const trustPoints = [
   },
   {
     label: "After the call",
-    title: "Audit, then optional Activate",
+    title: "Audit, then optional implementation",
     detail: "Scope the audit first. Implementation follows only when the blueprint is real.",
   },
 ] as const;

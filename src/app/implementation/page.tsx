@@ -21,7 +21,7 @@ const automateFirst = [
 const doNotSell = [
   "Tool licenses or reseller theatre",
   "Multi-year PMO rebuild programmes",
-  "Generic “AI strategy” without a reporting wedge",
+  "Generic “AI strategy” without a reporting starting point",
   "Dashboards without an operating owner",
 ];
 
