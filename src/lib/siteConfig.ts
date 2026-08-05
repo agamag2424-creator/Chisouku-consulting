@@ -5,7 +5,7 @@ export const siteConfig = {
   linkedIn: "https://www.linkedin.com/in/agamag24",
   tagline: "AI automation for delivery systems",
   subline: "Starting with the PMO reporting layer",
-  diagnosticUrl: "https://diagnostic.chisokulabs.com/",
+  diagnosticUrl: "https://pmo-maturity-tool.vercel.app/",
   calendlyUrl: "https://calendly.com/chisokulab/discovery-call",
   pricing: {
     min: 4000,
