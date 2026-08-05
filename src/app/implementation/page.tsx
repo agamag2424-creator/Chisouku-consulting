@@ -34,7 +34,7 @@ export default function ImplementationPage() {
           <h1 className="display">AI implementation path.</h1>
           <p className="subhead mt-5">
             After the audit blueprint — build AI automation into the pack cycle.
-            Not a second lead magnet. Clarity on what Activate looks like.
+            Clarity on what Activate looks like — not a separate offer.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/contact?interest=AI%20Implementation" className="button button-primary">

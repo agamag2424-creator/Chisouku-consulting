@@ -8,6 +8,7 @@ import { SampleAuditArtifact } from "../components/artifacts/SampleAuditArtifact
 import { DiagnosticOrbit } from "../components/artifacts/DiagnosticOrbit";
 import { AiImpactModel } from "../components/artifacts/AiImpactModel";
 import { PackCycleStrip } from "../components/artifacts/PackCycleStrip";
+import { PackDragEstimator } from "../components/artifacts/PackDragEstimator";
 import { siteConfig } from "../lib/siteConfig";
 
 export const metadata: Metadata = {
@@ -158,6 +159,20 @@ export default function Home() {
       </section>
 
       <section className="section bg-[var(--color-paper)]">
+        <div className="container">
+          <p className="eyebrow">What you get back</p>
+          <h2 className="headline">Time. Cost. Fresh packs.</h2>
+          <p className="subhead mt-4">
+            See what reporting drag is costing you — then validate with the free
+            diagnostic.
+          </p>
+          <div className="mt-10">
+            <PackDragEstimator />
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
         <div className="container">
           <p className="eyebrow">Audit output</p>
           <h2 className="headline">Audit artifact.</h2>

@@ -844,6 +844,36 @@ a:focus-visible {
   font-weight: 720;
 }
 
+.drag-slider {
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(17, 24, 32, 0.12);
+  outline: none;
+  cursor: pointer;
+}
+
+.drag-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #111820;
+  background: #00a6c8;
+  box-shadow: 0 2px 8px rgba(17, 24, 32, 0.2);
+  cursor: pointer;
+}
+
+.drag-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #111820;
+  background: #00a6c8;
+  box-shadow: 0 2px 8px rgba(17, 24, 32, 0.2);
+  cursor: pointer;
+}
+
 .table-like {
   display: grid;
   border-top: 1px solid var(--color-line);
