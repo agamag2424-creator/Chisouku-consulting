@@ -7,7 +7,7 @@ type Props = {
 /** Consulting-grade sample audit artifact with sidebar metrics. */
 export function SampleAuditArtifact({ className }: Props) {
   return (
-    <div className={cn("artifact-sheet overflow-hidden", className)}>
+    <div className={cn("artifact-sheet paper-grain overflow-hidden", className)}>
       <div className="grid lg:grid-cols-[1.35fr_0.65fr]">
         <div className="border-b border-[rgba(17,24,32,0.12)] p-6 md:p-8 lg:border-b-0 lg:border-r">
           <div className="flex items-start justify-between gap-4">

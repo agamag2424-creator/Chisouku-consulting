@@ -17,12 +17,7 @@ type Props = {
 
 export function OperatingDragGrid({ className }: Props) {
   return (
-    <div
-      className={cn(
-        "overflow-hidden border border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.94)]",
-        className,
-      )}
-    >
+    <div className={cn("report-board paper-grain", className)}>
       <div className="flex items-center justify-between border-b border-[rgba(17,24,32,0.1)] px-5 py-4">
         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
           Current-state board

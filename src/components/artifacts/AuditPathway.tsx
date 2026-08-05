@@ -33,12 +33,7 @@ type Props = {
 
 export function AuditPathway({ className }: Props) {
   return (
-    <div
-      className={cn(
-        "overflow-hidden border border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.94)]",
-        className,
-      )}
-    >
+    <div className={cn("report-board paper-grain", className)}>
       <div className="grid md:grid-cols-2 xl:grid-cols-4">
         {phases.map((phase, index) => (
           <div

@@ -13,10 +13,17 @@ export const metadata: Metadata = {
   alternates: { canonical: "/sample-outputs" },
 };
 
+const strip = [
+  { href: "#map", n: "01", title: "Map", detail: "Operating map" },
+  { href: "#locate", n: "02", title: "Locate", detail: "Drag ledger" },
+  { href: "#prioritize", n: "03", title: "Prioritize", detail: "Opportunity matrix" },
+  { href: "#blueprint", n: "04", title: "Blueprint", detail: "Implementation plan" },
+] as const;
+
 export default function SampleOutputsPage() {
   return (
     <>
-      <section className="section pt-16">
+      <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
           <p className="eyebrow">Audit outputs</p>
           <h1 className="display">What the audit produces.</h1>
@@ -36,44 +43,71 @@ export default function SampleOutputsPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section-tight">
         <div className="container">
-          <p className="eyebrow">The sequence</p>
-          <h2 className="headline">Map → Locate → Prioritize → Blueprint.</h2>
-          <div className="mt-10 grid gap-8">
-            <div>
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-                01 · Map
-              </p>
+          <p className="eyebrow">Jump the sequence</p>
+          <div className="output-strip mt-6">
+            {strip.map((item) => (
+              <a key={item.href} href={item.href}>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+                  {item.n}
+                </span>
+                <div className="mt-2 font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
+                  {item.title}
+                </div>
+                <div className="mt-1 text-sm text-[var(--color-muted)]">{item.detail}</div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section pt-0">
+        <div className="container grid gap-14">
+          <div id="map">
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+              01 · Map
+            </p>
+            <h2 className="headline !max-w-none">PMO Operating Map</h2>
+            <div className="mt-6">
               <PmoOperatingMap compact />
             </div>
-            <div>
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-                02 · Locate
-              </p>
+          </div>
+          <div id="locate">
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+              02 · Locate
+            </p>
+            <h2 className="headline !max-w-none">Drag Ledger</h2>
+            <div className="mt-6">
               <DragLedger />
             </div>
-            <div>
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-                03 · Prioritize
-              </p>
+          </div>
+          <div id="prioritize">
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+              03 · Prioritize
+            </p>
+            <h2 className="headline !max-w-none">Automation Opportunity Matrix</h2>
+            <div className="mt-6">
               <OpportunityMatrix />
             </div>
-            <div>
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-                04 · Blueprint
-              </p>
+          </div>
+          <div id="blueprint">
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+              04 · Blueprint
+            </p>
+            <h2 className="headline !max-w-none">Implementation Blueprint</h2>
+            <div className="mt-6">
               <ImplementationBlueprint />
             </div>
           </div>
-          <div className="mt-12 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact" className="button button-primary">
-              Book Audit Fit Call
-            </Link>
-            <Link href="/pmo-automation-audit" className="button button-secondary">
-              Review the audit
-            </Link>
-          </div>
+        </div>
+        <div className="container mt-12 flex flex-col gap-3 sm:flex-row">
+          <Link href="/contact" className="button button-primary">
+            Book Audit Fit Call
+          </Link>
+          <Link href="/pmo-automation-audit" className="button button-secondary">
+            Review the audit
+          </Link>
         </div>
       </section>
     </>

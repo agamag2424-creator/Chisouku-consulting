@@ -52,7 +52,7 @@ const achievements = [
 export default function FounderTrackRecordPage() {
   return (
     <>
-      <section className="section pt-16">
+      <section className="section report-cover pt-16">
         <div className="container grid gap-12 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
           <figure className="relative">
             <div className="absolute -left-5 -top-5 hidden h-full w-full border border-[rgba(17,24,32,0.16)] md:block" />
@@ -82,11 +82,15 @@ export default function FounderTrackRecordPage() {
         <div className="container">
           <p className="eyebrow">At a glance</p>
           <h2 className="headline">The operating range.</h2>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {proof.map(([title, detail]) => (
+          <div className="report-board paper-grain mt-10 grid sm:grid-cols-2 lg:grid-cols-4">
+            {proof.map(([title, detail], index) => (
               <div
                 key={title}
-                className="border border-[rgba(17,24,32,0.12)] bg-[rgba(255,253,248,0.9)] p-5"
+                className={[
+                  "p-6",
+                  index < proof.length - 1 ? "border-b border-[rgba(17,24,32,0.1)] sm:border-b-0" : "",
+                  "sm:odd:border-r sm:[&:nth-child(2)]:border-r-0 lg:border-r lg:[&:nth-child(4)]:border-r-0 lg:[&:nth-child(2)]:border-r",
+                ].join(" ")}
               >
                 <div className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
                   {title}
@@ -102,19 +106,16 @@ export default function FounderTrackRecordPage() {
         <div className="container">
           <p className="eyebrow">Selected outcomes</p>
           <h2 className="headline">What the work produced.</h2>
-          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-10">
             {achievements.map((item, index) => (
-              <article
-                key={item.title}
-                className="relative border border-[rgba(17,24,32,0.12)] bg-[rgba(255,253,248,0.9)] p-6"
-              >
-                <span className="pointer-events-none absolute right-4 top-3 font-[family-name:var(--font-display)] text-4xl font-bold leading-none text-[rgba(17,24,32,0.06)]">
+              <article key={item.title} className="editorial-row">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="relative font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
+                <h3 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
                   {item.title}
                 </h3>
-                <p className="relative mt-3 text-sm leading-relaxed text-[var(--color-muted)]">
+                <p className="text-sm leading-relaxed text-[var(--color-muted)]">
                   {item.detail}
                 </p>
               </article>
@@ -123,7 +124,7 @@ export default function FounderTrackRecordPage() {
         </div>
       </section>
 
-      <section className="section dark-band">
+      <section className="section dark-band atmosphere-band">
         <div className="container flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Next</p>

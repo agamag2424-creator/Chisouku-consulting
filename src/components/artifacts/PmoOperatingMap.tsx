@@ -10,7 +10,7 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
   return (
     <div
       className={cn(
-        "glass-canvas relative overflow-hidden",
+        "glass-canvas paper-grain relative overflow-hidden",
         compact ? "min-h-[420px]" : "min-h-[560px] md:min-h-[640px]",
         className,
       )}
@@ -55,8 +55,8 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
               </filter>
             </defs>
 
-            {/* Connection lines — full, unclipped */}
-            <g stroke="rgba(17,24,32,0.28)" strokeWidth="1.5" fill="none">
+            {/* Connection lines — full, unclipped, draw-on */}
+            <g className="map-draw" stroke="rgba(17,24,32,0.28)" strokeWidth="1.5" fill="none">
               <path d="M160 96 L300 210" />
               <path d="M560 96 L420 210" />
               <path d="M120 300 L290 270" />
@@ -64,11 +64,11 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
               <path d="M360 340 L360 390" stroke="rgba(0,166,200,0.7)" />
             </g>
             <g fill="#00A6C8">
-              <circle cx="160" cy="96" r="3.5" />
-              <circle cx="560" cy="96" r="3.5" />
-              <circle cx="120" cy="300" r="3.5" />
-              <circle cx="600" cy="300" r="3.5" />
-              <circle cx="360" cy="390" r="3.5" />
+              <circle className="map-node-dot" cx="160" cy="96" r="3.5" />
+              <circle className="map-node-dot" cx="560" cy="96" r="3.5" />
+              <circle className="map-node-dot" cx="120" cy="300" r="3.5" />
+              <circle className="map-node-dot" cx="600" cy="300" r="3.5" />
+              <circle className="map-node-dot" cx="360" cy="390" r="3.5" />
             </g>
 
             {/* Center */}

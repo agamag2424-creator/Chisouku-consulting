@@ -46,16 +46,22 @@ export default function DiagnosticPage() {
         <div className="container">
           <p className="eyebrow">What it measures</p>
           <h2 className="headline">Five operating signals. One baseline.</h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {measures.map(([title, detail]) => (
+          <div className="report-board paper-grain mt-10">
+            {measures.map(([title, detail], index) => (
               <div
                 key={title}
-                className="border border-[rgba(17,24,32,0.12)] bg-[rgba(255,253,248,0.9)] p-5"
+                className={[
+                  "editorial-row px-5 md:px-6",
+                  index === 0 ? "border-t-0" : "",
+                ].join(" ")}
               >
-                <div className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
                   {title}
-                </div>
-                <div className="mt-2 text-sm text-[var(--color-muted)]">{detail}</div>
+                </span>
+                <span className="text-sm text-[var(--color-muted)]">{detail}</span>
               </div>
             ))}
           </div>
@@ -79,7 +85,7 @@ export default function DiagnosticPage() {
         </div>
       </section>
 
-      <section className="section dark-band">
+      <section className="section dark-band atmosphere-band">
         <div className="container grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-center">
           <div>
             <p className="eyebrow !text-[rgba(0,166,200,0.9)]">After the diagnostic</p>

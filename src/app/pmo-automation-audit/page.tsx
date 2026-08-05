@@ -12,17 +12,31 @@ export const metadata: Metadata = {
 };
 
 const deliverables = [
-  ["Current-state map", "Workflow of inputs, owners, forums, and packs"],
-  ["Drag ledger", "Where reporting and escalation lose time"],
-  ["Automation opportunity matrix", "Impact, effort, and fit scored"],
-  ["ROI hypothesis", "Credible operator-facing estimate"],
-  ["Implementation blueprint", "Sequence ready for the next 30-90 days"],
+  ["01", "Current-state map", "Workflow of inputs, owners, forums, and packs"],
+  ["02", "Drag ledger", "Where reporting and escalation lose time"],
+  ["03", "Automation opportunity matrix", "Impact, effort, and fit scored"],
+  ["04", "ROI hypothesis", "Credible operator-facing estimate"],
+  ["05", "Implementation blueprint", "Sequence ready for the next 30–90 days"],
+];
+
+const forItems = [
+  "COO / VP Operations / Head of PMO / Delivery Director",
+  "Growth-stage SMEs in GCC or Singapore",
+  "Teams stuck in manual reporting packs",
+  "Leadership that needs a credible fix sequence",
+];
+
+const notForItems = [
+  "Enterprises seeking multi-year PMO rebuilds",
+  "Teams wanting tool licenses instead of diagnosis",
+  "Buyers without delivery or reporting ownership",
+  "Requests for broad transformation theatre",
 ];
 
 export default function AuditPage() {
   return (
     <>
-      <section className="section pt-16">
+      <section className="section report-cover pt-16">
         <div className="container grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:items-end">
           <div>
             <p className="eyebrow">The engagement</p>
@@ -45,7 +59,7 @@ export default function AuditPage() {
               </a>
             </div>
           </div>
-          <div className="artifact-sheet p-7">
+          <div className="artifact-sheet paper-grain p-7">
             <div className="grid gap-6">
               <div>
                 <div className="kicker-title">Typical timeline</div>
@@ -56,7 +70,7 @@ export default function AuditPage() {
               <div>
                 <div className="kicker-title">Typical range</div>
                 <div className="mt-2 font-[family-name:var(--font-display)] text-4xl font-bold tracking-[-0.03em]">
-                  USD 4,000-5,000
+                  USD 4,000–5,000
                 </div>
               </div>
               <div className="rule" />
@@ -70,25 +84,33 @@ export default function AuditPage() {
       </section>
 
       <section className="section bg-[var(--color-paper)]">
-        <div className="container grid gap-10 md:grid-cols-2">
+        <div className="container grid gap-12 md:grid-cols-2">
           <div>
             <p className="eyebrow">Who it is for</p>
-            <h2 className="headline">Operators who need visibility, not theatre.</h2>
-            <ul className="mt-6 space-y-3 text-sm font-semibold text-[var(--color-ink)]">
-              <li>COO / VP Operations / Head of PMO / Delivery Director</li>
-              <li>Growth-stage SMEs in GCC or Singapore</li>
-              <li>Teams stuck in manual reporting packs</li>
-              <li>Leadership that needs a credible fix sequence</li>
+            <h2 className="headline">Operators who need visibility.</h2>
+            <ul className="mt-8">
+              {forItems.map((item) => (
+                <li key={item} className="editorial-row !grid-cols-1 md:!grid-cols-[16px_1fr]">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[var(--color-cyan)]" aria-hidden />
+                  <span className="text-sm font-semibold leading-relaxed text-[var(--color-ink)]">
+                    {item}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
             <p className="eyebrow">Who it is not for</p>
-            <h2 className="headline">Not a broad transformation programme.</h2>
-            <ul className="mt-6 space-y-3 text-sm font-semibold text-[var(--color-ink)]">
-              <li>Enterprises seeking multi-year PMO rebuilds</li>
-              <li>Teams wanting tool licenses instead of diagnosis</li>
-              <li>Buyers without delivery or reporting ownership</li>
-              <li>Buyers looking for multi-year transformation programmes</li>
+            <h2 className="headline">Not a transformation programme.</h2>
+            <ul className="mt-8">
+              {notForItems.map((item) => (
+                <li key={item} className="editorial-row !grid-cols-1 md:!grid-cols-[16px_1fr]">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[rgba(17,24,32,0.25)]" aria-hidden />
+                  <span className="text-sm font-semibold leading-relaxed text-[var(--color-ink)]">
+                    {item}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -97,7 +119,7 @@ export default function AuditPage() {
       <section className="section">
         <div className="container">
           <p className="eyebrow">Process</p>
-          <h2 className="headline">Four phases. Clear buyer outputs.</h2>
+          <h2 className="headline">Four phases. Clear outputs.</h2>
           <div className="mt-10">
             <AuditPathway />
           </div>
@@ -108,16 +130,16 @@ export default function AuditPage() {
         <div className="container">
           <p className="eyebrow">Deliverables</p>
           <h2 className="headline">What you leave with.</h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {deliverables.map(([title, detail]) => (
-              <div
-                key={title}
-                className="border border-[rgba(17,24,32,0.12)] bg-[rgba(255,253,248,0.9)] p-5"
-              >
-                <div className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
+          <div className="mt-10">
+            {deliverables.map(([n, title, detail]) => (
+              <div key={title} className="editorial-row">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+                  {n}
+                </span>
+                <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
                   {title}
-                </div>
-                <div className="mt-2 text-sm text-[var(--color-muted)]">{detail}</div>
+                </span>
+                <span className="text-sm leading-relaxed text-[var(--color-muted)]">{detail}</span>
               </div>
             ))}
           </div>

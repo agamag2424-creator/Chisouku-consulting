@@ -144,11 +144,15 @@ export default function Home() {
           <div>
             <p className="eyebrow">Founder</p>
             <h2 className="headline">Delivery rooms, not decks.</h2>
-            <div className="mt-8 grid gap-px bg-[rgba(17,24,32,0.12)] sm:grid-cols-2">
-              {proofTiles.map((tile) => (
+            <div className="report-board paper-grain mt-8 grid sm:grid-cols-2">
+              {proofTiles.map((tile, index) => (
                 <div
                   key={tile.title}
-                  className="bg-[var(--color-paper)] p-5"
+                  className={[
+                    "p-5",
+                    index < 2 ? "border-b border-[rgba(17,24,32,0.1)]" : "",
+                    index % 2 === 0 ? "sm:border-r sm:border-[rgba(17,24,32,0.1)]" : "",
+                  ].join(" ")}
                 >
                   <ProofIcon type={tile.icon} />
                   <div className="mt-3 font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
