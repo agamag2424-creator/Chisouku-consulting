@@ -4,12 +4,13 @@ import { PmoOperatingMap } from "../../components/artifacts/PmoOperatingMap";
 import { DragLedger } from "../../components/artifacts/DragLedger";
 import { OpportunityMatrix } from "../../components/artifacts/OpportunityMatrix";
 import { ImplementationBlueprint } from "../../components/artifacts/ImplementationBlueprint";
+import { AiReportingBlueprint } from "../../components/artifacts/AiReportingBlueprint";
 import { SampleAuditArtifact } from "../../components/artifacts/SampleAuditArtifact";
 
 export const metadata: Metadata = {
   title: "Audit Outputs",
   description:
-    "PMO Automation Audit artifacts — operating map, drag ledger, opportunity matrix, and implementation blueprint.",
+    "PMO Automation Audit artifacts — operating map, drag ledger, opportunity matrix, AI reporting blueprint, and implementation sequence.",
   alternates: { canonical: "/sample-outputs" },
 };
 
@@ -17,7 +18,8 @@ const strip = [
   { href: "#map", n: "01", title: "Map", detail: "Operating map" },
   { href: "#locate", n: "02", title: "Locate", detail: "Drag ledger" },
   { href: "#prioritize", n: "03", title: "Prioritize", detail: "Opportunity matrix" },
-  { href: "#blueprint", n: "04", title: "Blueprint", detail: "Implementation plan" },
+  { href: "#ai-blueprint", n: "04", title: "AI Blueprint", detail: "Reporting automation" },
+  { href: "#blueprint", n: "05", title: "Sequence", detail: "Implementation plan" },
 ] as const;
 
 export default function SampleOutputsPage() {
@@ -28,7 +30,7 @@ export default function SampleOutputsPage() {
           <p className="eyebrow">Audit outputs</p>
           <h1 className="display">What the audit produces.</h1>
           <p className="subhead mt-5">
-            One operating story — map, ledger, matrix, blueprint.
+            Map · Drag Ledger · Opportunity Matrix · AI Blueprint · Sequence.
           </p>
         </div>
       </section>
@@ -91,9 +93,18 @@ export default function SampleOutputsPage() {
               <OpportunityMatrix />
             </div>
           </div>
+          <div id="ai-blueprint">
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+              04 · AI Blueprint
+            </p>
+            <h2 className="headline !max-w-none">AI Reporting Automation Blueprint</h2>
+            <div className="mt-6">
+              <AiReportingBlueprint />
+            </div>
+          </div>
           <div id="blueprint">
             <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-              04 · Blueprint
+              05 · Sequence
             </p>
             <h2 className="headline !max-w-none">Implementation Blueprint</h2>
             <div className="mt-6">
@@ -105,8 +116,8 @@ export default function SampleOutputsPage() {
           <Link href="/contact" className="button button-primary">
             Book Audit Fit Call
           </Link>
-          <Link href="/pmo-automation-audit" className="button button-secondary">
-            Review the audit
+          <Link href="/implementation" className="button button-secondary">
+            View Activate path
           </Link>
         </div>
       </section>

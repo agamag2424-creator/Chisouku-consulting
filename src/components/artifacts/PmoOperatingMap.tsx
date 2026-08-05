@@ -103,7 +103,7 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
               fontSize="11"
               fontWeight="700"
             >
-              SIGNALS → CLARITY → ACTION
+              SIGNALS → AI AUTOMATION → ACTION
             </text>
             <g transform="translate(292 278)">
               {[0, 1, 2, 3, 4].map((i) => (
@@ -119,6 +119,17 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
                 />
               ))}
             </g>
+            <text
+              x="360"
+              y="312"
+              textAnchor="middle"
+              fill="#007F9C"
+              fontFamily="ui-monospace, monospace"
+              fontSize="9"
+              fontWeight="700"
+            >
+              AI LAYER · NARRATIVE · FRESHNESS · ALERTS
+            </text>
 
             {/* Satellite nodes */}
             <g className="map-sat" style={{ animationDelay: "720ms" }}>

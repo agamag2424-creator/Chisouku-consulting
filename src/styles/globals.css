@@ -123,7 +123,14 @@ body {
   box-shadow:
     0 36px 90px rgba(17, 24, 32, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
+}
+
+/* Atmosphere + glass blur frosts the map — keep hero map sharp */
+.photo-atmosphere .glass-canvas,
+.hero-map-reveal.glass-canvas,
+.hero-map-reveal {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .glass-canvas:hover,
@@ -889,6 +896,31 @@ a:focus-visible {
 
   .report-cover.section {
     padding-top: 28px;
+  }
+
+  /* Hero map: full-bleed readable, CTAs clear of frost */
+  .photo-atmosphere.report-cover .photo-atmosphere-media img {
+    opacity: 0.1;
+  }
+
+  .photo-atmosphere.report-cover::after {
+    opacity: 0.85;
+  }
+
+  .hero-map-reveal.glass-canvas,
+  .photo-atmosphere .glass-canvas {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(255, 253, 248, 0.97);
+  }
+
+  .hero-actions {
+    width: 100%;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+    justify-content: center;
   }
 
   .hero-top-image {

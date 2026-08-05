@@ -5,7 +5,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Founder Track Record",
   description:
-    "Agam Agrawwal — PMO, programme, and delivery track record behind ChisokuLabs.",
+    "Agam Agrawwal — PMO delivery leadership and AI automation practice behind ChisokuLabs.",
   alternates: { canonical: "/founder-track-record" },
 };
 
@@ -47,6 +47,11 @@ const achievements = [
     detail:
       "Managed delivery scope and stakeholder engagement across Asian markets with sharper on-time performance.",
   },
+  {
+    title: "AI-augmented delivery tools",
+    detail:
+      "Built AI delivery tooling and automation practice — founder capability for how ChisokuLabs approaches reporting-layer automation.",
+  },
 ];
 
 export default function FounderTrackRecordPage() {
@@ -71,8 +76,8 @@ export default function FounderTrackRecordPage() {
             <p className="eyebrow">Founder</p>
             <h1 className="display">Agam Agrawwal</h1>
             <p className="subhead mt-5">
-              Built in delivery rooms — PMO, programme leadership, and operating
-              clarity for complex software programmes.
+              PMO delivery leadership + AI automation practice — built in
+              delivery rooms, not decks.
             </p>
           </div>
         </div>
@@ -135,6 +140,11 @@ export default function FounderTrackRecordPage() {
           </Link>
         </div>
       </section>
+
+      <p className="container pb-10 text-center font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+        Outcomes above reflect prior employment and self-built tools — not
+        ChisokuLabs client results.
+      </p>
     </>
   );
 }

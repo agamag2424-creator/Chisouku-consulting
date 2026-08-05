@@ -13,9 +13,12 @@ export function Footer() {
               ChisokuLabs
             </span>
           </Link>
-          <p className="max-w-[560px] text-sm leading-6">
-            PMO Automation Audit for growth-stage SMEs in the GCC and Singapore
-            facing reporting, governance, and delivery bottlenecks.
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[rgba(0,166,200,0.85)]">
+            {siteConfig.tagline}
+          </p>
+          <p className="mt-3 max-w-[560px] text-sm leading-6">
+            {siteConfig.subline}. For growth-stage SMEs in the GCC and Singapore —
+            Free PMO Diagnostic → PMO Automation Audit → optional Activate.
           </p>
         </div>
 
@@ -27,6 +30,9 @@ export function Footer() {
                 {link.label}
               </Link>
             ))}
+            <Link href="/implementation" className="block hover:text-[#fffdf8]">
+              Implementation
+            </Link>
             <Link href="/contact" className="block hover:text-[#fffdf8]">
               Audit Fit Call
             </Link>

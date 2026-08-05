@@ -26,8 +26,28 @@ const initialState: FormState = {
   interest: "Audit",
 };
 
-export function AuditFitForm() {
-  const [form, setForm] = React.useState<FormState>(initialState);
+const interestOptions = [
+  "Diagnostic",
+  "Audit",
+  "AI Implementation",
+  "Not sure",
+] as const;
+
+type Props = {
+  defaultInterest?: string;
+};
+
+export function AuditFitForm({ defaultInterest }: Props) {
+  const resolvedInterest =
+    defaultInterest &&
+    (interestOptions as readonly string[]).includes(defaultInterest)
+      ? defaultInterest
+      : initialState.interest;
+
+  const [form, setForm] = React.useState<FormState>({
+    ...initialState,
+    interest: resolvedInterest,
+  });
   const [status, setStatus] = React.useState<
     "idle" | "submitting" | "error" | "success"
   >("idle");
@@ -115,7 +135,8 @@ export function AuditFitForm() {
           Fit call
         </p>
         <p className="mt-2 text-sm text-[var(--color-muted)]">
-          Brief context — then continue to schedule.
+          AI automation in delivery systems — starting at PMO reporting. Brief
+          context, then schedule.
         </p>
       </div>
 
@@ -171,7 +192,7 @@ export function AuditFitForm() {
           name="interest"
           value={form.interest}
           onChange={(v) => update("interest", v)}
-          options={["Diagnostic", "Audit", "Implementation", "Not sure"]}
+          options={[...interestOptions]}
         />
       </div>
 

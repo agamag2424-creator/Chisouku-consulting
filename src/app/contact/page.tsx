@@ -3,15 +3,22 @@ import { AuditFitForm } from "../../components/contact/AuditFitForm";
 import { PmoOperatingMap } from "../../components/artifacts/PmoOperatingMap";
 import { siteConfig } from "../../lib/siteConfig";
 
-export default function ContactPage() {
+type Props = {
+  searchParams?: Promise<{ interest?: string }>;
+};
+
+export default async function ContactPage({ searchParams }: Props) {
+  const params = (await searchParams) ?? {};
+  const interest = params.interest;
+
   return (
     <section className="section pt-16">
       <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
           <p className="eyebrow">Fit call</p>
-          <h1 className="display">Check whether the audit is a fit.</h1>
+          <h1 className="display">AI automation for delivery systems.</h1>
           <p className="subhead mt-5">
-            Share brief context. Schedule next — or start with the free diagnostic.
+            Starting at PMO reporting. Share brief context — then schedule.
           </p>
           <div className="mt-8 space-y-4 text-sm text-[var(--color-muted)]">
             <p>
@@ -51,7 +58,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <AuditFitForm />
+        <AuditFitForm defaultInterest={interest} />
       </div>
     </section>
   );

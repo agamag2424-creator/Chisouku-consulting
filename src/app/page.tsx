@@ -6,12 +6,14 @@ import { OperatingDragGrid } from "../components/artifacts/OperatingDragGrid";
 import { AuditPathway } from "../components/artifacts/AuditPathway";
 import { SampleAuditArtifact } from "../components/artifacts/SampleAuditArtifact";
 import { DiagnosticOrbit } from "../components/artifacts/DiagnosticOrbit";
+import { AiImpactModel } from "../components/artifacts/AiImpactModel";
+import { PackCycleStrip } from "../components/artifacts/PackCycleStrip";
 import { siteConfig } from "../lib/siteConfig";
 
 export const metadata: Metadata = {
-  title: "PMO Automation Audit for GCC Growth-Stage SMEs",
+  title: "AI Automation for Delivery Systems | PMO Reporting Audit",
   description:
-    "Find the drag in your delivery system. Run the free PMO Diagnostic or review the ChisokuLabs PMO Automation Audit.",
+    "Find the drag. Automate what repeats. ChisokuLabs builds AI automation into delivery systems—starting with the PMO reporting layer.",
   alternates: { canonical: "/" },
 };
 
@@ -40,26 +42,31 @@ const proofTiles = [
 
 const trustPoints = [
   {
-    label: "Method",
-    title: "Map → Locate → Prioritize → Blueprint",
-    detail: "A fixed audit sequence with operator-ready outputs.",
+    label: "Moat",
+    title: "AI workflow automation",
+    detail:
+      "Delivery ops automation — integrations plus LLM where narrative packs need intelligence.",
+  },
+  {
+    label: "Wedge",
+    title: "PMO reporting layer first",
+    detail: "Fastest place delivery drag becomes visible — and automatable.",
   },
   {
     label: "Markets",
     title: "GCC · Singapore",
-    detail: "Built for growth-stage SMEs with reporting and PMO visibility gaps.",
+    detail: "Growth-stage SMEs with reporting, escalation, and PMO visibility gaps.",
   },
   {
     label: "After the call",
-    title: "Scope, then 5–10 days",
-    detail: "Fit confirmed first. Engagement timeline and range follow.",
+    title: "Audit, then optional Activate",
+    detail: "Scope the audit first. Implementation follows only when the blueprint is real.",
   },
 ] as const;
 
 export default function Home() {
   return (
     <>
-      {/* 1. Hero — single composition */}
       <section className="section report-cover photo-atmosphere pt-10 md:pt-14">
         <div className="photo-atmosphere-media" aria-hidden>
           <Image
@@ -74,11 +81,13 @@ export default function Home() {
         <div className="container relative">
           <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <p className="eyebrow hero-kicker">ChisokuLabs</p>
-              <h1 className="display hero-title">Find the drag.</h1>
+              <p className="eyebrow hero-kicker">ChisokuLabs · AI for delivery systems</p>
+              <h1 className="display hero-title !max-w-[14ch]">
+                Find the drag. Automate what repeats.
+              </h1>
               <p className="subhead hero-copy mt-4 !mb-0">
-                For GCC and Singapore growth-stage SMEs with reporting, escalation,
-                and PMO visibility gaps.
+                For GCC and Singapore growth-stage SMEs. PMO reporting is the entry
+                layer.
               </p>
             </div>
             <div className="hero-actions flex shrink-0 flex-col gap-3 sm:flex-row">
@@ -100,20 +109,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Before the Audit */}
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
           <p className="eyebrow">Before the audit</p>
           <h2 className="headline">Operating drag.</h2>
-          <p className="subhead mt-4">Current state.</p>
+          <p className="subhead mt-4">Current state in the reporting layer.</p>
           <div className="mt-10">
             <OperatingDragGrid />
           </div>
         </div>
       </section>
 
-      {/* 3. Audit Pathway */}
       <section className="section">
+        <div className="container">
+          <p className="eyebrow">Method</p>
+          <h2 className="headline">AI Impact Model.</h2>
+          <p className="subhead mt-4">
+            PMO reporting is Assess → Architect. Implementation is Activate.
+          </p>
+          <div className="mt-10">
+            <AiImpactModel compact />
+          </div>
+          <Link href="/method" className="button button-secondary mt-8">
+            View method detail
+          </Link>
+        </div>
+      </section>
+
+      <section className="section bg-[var(--color-paper)]">
         <div className="container">
           <p className="eyebrow">The engagement</p>
           <h2 className="headline">Four phases. Four outputs.</h2>
@@ -124,7 +147,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Audit Artifact */}
+      <section className="section">
+        <div className="container">
+          <p className="eyebrow">From drag to automation</p>
+          <h2 className="headline">Manual pack → AI-assisted pack.</h2>
+          <div className="mt-10">
+            <PackCycleStrip />
+          </div>
+        </div>
+      </section>
+
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
           <p className="eyebrow">Audit output</p>
@@ -132,10 +164,17 @@ export default function Home() {
           <div className="mt-10">
             <SampleAuditArtifact />
           </div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-[var(--color-muted)]">
+              Blueprint ready? Continue to implementation fit.
+            </p>
+            <Link href="/implementation" className="button button-secondary">
+              View Activate path
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* 5. Founder */}
       <section className="section">
         <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <figure className="relative">
@@ -154,6 +193,9 @@ export default function Home() {
           <div>
             <p className="eyebrow">Founder</p>
             <h2 className="headline">Delivery rooms, not decks.</h2>
+            <p className="subhead mt-4">
+              PMO delivery leadership + AI automation practice.
+            </p>
             <div className="report-board paper-grain mt-8 grid sm:grid-cols-2">
               {proofTiles.map((tile, index) => (
                 <div
@@ -179,14 +221,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Free Diagnostic CTA */}
       <section className="section bg-[var(--color-paper)]">
         <div className="container grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
             <p className="eyebrow">Start here</p>
             <h2 className="headline">5-minute PMO baseline.</h2>
             <p className="subhead mt-4">
-              A serious first step before an Audit Fit Call.
+              See where AI automation can remove reporting drag.
             </p>
             <a
               href={siteConfig.diagnosticUrl}
@@ -201,12 +242,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. Trust geometry */}
       <section className="section">
         <div className="container">
           <p className="eyebrow">Why this, now</p>
           <h2 className="headline">Clarity before commitment.</h2>
-          <div className="mt-10 grid gap-8 border-t border-[rgba(17,24,32,0.14)] pt-8 md:grid-cols-3">
+          <div className="mt-10 grid gap-8 border-t border-[rgba(17,24,32,0.14)] pt-8 md:grid-cols-2 xl:grid-cols-4">
             {trustPoints.map((point) => (
               <div key={point.label}>
                 <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
@@ -221,10 +261,12 @@ export default function Home() {
               </div>
             ))}
           </div>
+          <p className="mt-8 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+            Systems we automate against · {siteConfig.systems.join(" · ")}
+          </p>
         </div>
       </section>
 
-      {/* 8. Final CTA */}
       <section className="section dark-band photo-atmosphere photo-atmosphere-dark">
         <div className="photo-atmosphere-media" aria-hidden>
           <Image

@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AuditPathway } from "../../components/artifacts/AuditPathway";
 import { SampleAuditArtifact } from "../../components/artifacts/SampleAuditArtifact";
+import { PackCycleStrip } from "../../components/artifacts/PackCycleStrip";
 import { siteConfig } from "../../lib/siteConfig";
 
 export const metadata: Metadata = {
   title: "PMO Automation Audit",
   description:
-    "A 5-10 business day PMO Automation Audit for growth-stage SMEs in the GCC and Singapore, typically USD 4,000-5,000.",
+    "A 5-10 business day PMO Automation Audit for growth-stage SMEs in the GCC and Singapore — map reporting drag, score AI automation fit, leave with a blueprint.",
   alternates: { canonical: "/pmo-automation-audit" },
 };
 
@@ -15,8 +16,9 @@ const deliverables = [
   ["01", "Current-state map", "Workflow of inputs, owners, forums, and packs"],
   ["02", "Drag ledger", "Where reporting and escalation lose time"],
   ["03", "Automation opportunity matrix", "Impact, effort, and fit scored"],
-  ["04", "ROI hypothesis", "Credible operator-facing estimate"],
-  ["05", "Implementation blueprint", "Sequence ready for the next 30–90 days"],
+  ["04", "AI automation fit score", "Where AI removes reporting drag — and where it does not"],
+  ["05", "ROI hypothesis", "Credible operator-facing estimate"],
+  ["06", "Implementation blueprint", "Sequence ready for the next 30–90 days"],
 ];
 
 const forItems = [
@@ -39,10 +41,10 @@ export default function AuditPage() {
       <section className="section report-cover pt-16">
         <div className="container grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:items-end">
           <div>
-            <p className="eyebrow">The engagement</p>
+            <p className="eyebrow">The wedge offer</p>
             <h1 className="display">PMO Automation Audit</h1>
             <p className="subhead mt-5">
-              Find and fix project reporting, governance, and delivery bottlenecks
+              Find reporting drag. Score AI automation fit. Leave with a blueprint —
               in {siteConfig.pricing.timeline}.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -118,6 +120,19 @@ export default function AuditPage() {
 
       <section className="section">
         <div className="container">
+          <p className="eyebrow">How AI enters</p>
+          <h2 className="headline">Manual pack → AI-assisted pack.</h2>
+          <p className="subhead mt-4">
+            The audit finds where automation removes drag — before you build.
+          </p>
+          <div className="mt-10">
+            <PackCycleStrip />
+          </div>
+        </div>
+      </section>
+
+      <section className="section bg-[var(--color-paper)]">
+        <div className="container">
           <p className="eyebrow">Process</p>
           <h2 className="headline">Four phases. Clear outputs.</h2>
           <div className="mt-10">
@@ -126,7 +141,7 @@ export default function AuditPage() {
         </div>
       </section>
 
-      <section className="section bg-[var(--color-paper)]">
+      <section className="section">
         <div className="container">
           <p className="eyebrow">Deliverables</p>
           <h2 className="headline">What you leave with.</h2>
@@ -146,20 +161,26 @@ export default function AuditPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section bg-[var(--color-paper)]">
         <div className="container">
           <p className="eyebrow">Audit output</p>
           <h2 className="headline">Audit artifact.</h2>
           <div className="mt-10">
             <SampleAuditArtifact />
           </div>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact" className="button button-primary">
-              Book Audit Fit Call
-            </Link>
-            <Link href="/sample-outputs" className="button button-secondary">
-              Browse outputs
-            </Link>
+          <div className="mt-10 grid gap-6 border-t border-[rgba(17,24,32,0.12)] pt-8 md:grid-cols-[1.2fr_0.8fr] md:items-end">
+            <p className="text-sm leading-relaxed text-[var(--color-muted)]">
+              The audit can stop at the blueprint — or continue into Activate when
+              ownership and fit are clear.
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
+              <Link href="/contact" className="button button-primary">
+                Book Audit Fit Call
+              </Link>
+              <Link href="/implementation" className="button button-secondary">
+                View Activate path
+              </Link>
+            </div>
           </div>
         </div>
       </section>

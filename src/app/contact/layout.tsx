@@ -3,10 +3,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Audit Fit Call",
   description:
-    "Request an Audit Fit Call with ChisokuLabs for PMO reporting, governance, and delivery bottlenecks.",
+    "Fit call for AI automation in delivery systems — starting at PMO reporting. Diagnostic, Audit, or Implementation.",
   keywords: [
+    "AI automation delivery systems",
     "PMO automation audit call",
-    "PMO consulting GCC",
+    "PMO consulting GCC Singapore",
     "ChisokuLabs contact",
   ],
   alternates: { canonical: "/contact" },

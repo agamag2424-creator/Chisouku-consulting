@@ -13,7 +13,7 @@ export function DiagnosticOrbit({ className }: Props) {
   ];
   const outer = [
     { label: "Resources", angle: 205 },
-    { label: "Automation fit", angle: 290 },
+    { label: "AI readiness", angle: 290, emphasize: true },
   ];
 
   return (
@@ -98,15 +98,21 @@ export function DiagnosticOrbit({ className }: Props) {
             const rad = (planet.angle * Math.PI) / 180;
             const x = 210 + Math.cos(rad) * 148;
             const y = 210 + Math.sin(rad) * 148;
+            const emphasize = "emphasize" in planet && planet.emphasize;
             return (
               <g key={planet.label} transform={`translate(${x} ${y})`}>
-                <circle r="18" fill="rgba(255,253,248,0.96)" stroke="rgba(17,24,32,0.2)" strokeWidth="1.5" />
+                <circle
+                  r={emphasize ? 22 : 18}
+                  fill={emphasize ? "rgba(0,166,200,0.12)" : "rgba(255,253,248,0.96)"}
+                  stroke={emphasize ? "#00A6C8" : "rgba(17,24,32,0.2)"}
+                  strokeWidth={emphasize ? 2 : 1.5}
+                />
                 <circle r="4" fill="#00A6C8" />
                 <g className="orbit-label-fix-slow">
                   <text
-                    y="34"
+                    y={emphasize ? 38 : 34}
                     textAnchor="middle"
-                    fill="#65707B"
+                    fill={emphasize ? "#007F9C" : "#65707B"}
                     fontFamily="ui-monospace, monospace"
                     fontSize="9"
                     fontWeight="700"

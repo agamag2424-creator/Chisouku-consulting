@@ -6,7 +6,7 @@ import { siteConfig } from "../../lib/siteConfig";
 export const metadata: Metadata = {
   title: "Free PMO Diagnostic",
   description:
-    "Use the free PMO Maturity Tool before deciding whether the ChisokuLabs PMO Automation Audit is a fit.",
+    "5-minute PMO baseline — see where AI automation can remove reporting drag before an Audit Fit Call.",
   alternates: { canonical: "/free-pmo-diagnostic" },
 };
 
@@ -15,7 +15,7 @@ const measures = [
   ["Reporting", "Pack assembly, freshness, reconciliation drag"],
   ["Risk", "RAID visibility and late-signal patterns"],
   ["Resources", "Capacity conflicts and planning friction"],
-  ["Automation fit", "Where tooling can reduce manual load"],
+  ["AI readiness", "Automation fit — where AI can remove reporting drag"],
 ];
 
 export default function DiagnosticPage() {
@@ -27,7 +27,8 @@ export default function DiagnosticPage() {
             <p className="eyebrow">Start here</p>
             <h1 className="display">Free PMO Diagnostic</h1>
             <p className="subhead mt-5">
-              Start with a 5-minute PMO baseline before an Audit Fit Call.
+              A 5-minute baseline that shows where AI automation can remove
+              reporting drag — before an Audit Fit Call.
             </p>
             <a
               href={siteConfig.diagnosticUrl}
@@ -53,6 +54,9 @@ export default function DiagnosticPage() {
                 className={[
                   "editorial-row px-5 md:px-6",
                   index === 0 ? "border-t-0" : "",
+                  title === "AI readiness"
+                    ? "bg-[rgba(0,166,200,0.04)]"
+                    : "",
                 ].join(" ")}
               >
                 <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">

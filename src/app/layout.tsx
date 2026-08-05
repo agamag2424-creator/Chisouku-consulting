@@ -4,6 +4,7 @@ import { IBM_Plex_Mono, Libre_Franklin, Source_Sans_3 } from "next/font/google";
 import "../styles/globals.css";
 import { Nav } from "../components/layout/Nav";
 import { Footer } from "../components/layout/Footer";
+import { siteConfig } from "../lib/siteConfig";
 
 const libreFranklin = Libre_Franklin({
   subsets: ["latin"],
@@ -26,21 +27,21 @@ const plexMono = IBM_Plex_Mono({
   weight: ["500", "600", "700"],
 });
 
-const siteUrl = "https://chisokulabs.com";
+const siteUrl = siteConfig.url;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "PMO Automation Audit for GCC SMEs | ChisokuLabs",
+    default: "AI Automation for Delivery Systems | PMO Reporting Audit",
     template: "%s | ChisokuLabs",
   },
   description:
-    "ChisokuLabs helps growth-stage SMEs in the GCC and Singapore find project reporting, governance, and delivery bottlenecks through a focused PMO Automation Audit.",
+    "ChisokuLabs builds AI automation into delivery systems—starting with the PMO reporting layer for growth-stage SMEs in the GCC and Singapore.",
   keywords: [
+    "AI automation delivery systems",
+    "PMO reporting automation",
     "PMO automation audit GCC",
-    "project reporting automation Singapore",
-    "PMO maturity diagnostic",
-    "delivery governance consulting",
+    "project reporting AI Singapore",
     "ChisokuLabs",
   ],
   alternates: {
@@ -49,24 +50,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "PMO Automation Audit for GCC SMEs | ChisokuLabs",
+    title: "AI Automation for Delivery Systems | ChisokuLabs",
     description:
-      "Find project reporting, governance, and delivery bottlenecks before they slow growth.",
+      "Find delivery drag in the PMO reporting layer—then automate what repeats.",
     siteName: "ChisokuLabs",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "ChisokuLabs PMO Automation Audit preview",
+        alt: "ChisokuLabs — AI automation for delivery systems",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "PMO Automation Audit for GCC SMEs | ChisokuLabs",
+    title: "AI Automation for Delivery Systems | ChisokuLabs",
     description:
-      "A focused audit for growth-stage SMEs with reporting, governance, and delivery bottlenecks.",
+      "Starting with the PMO reporting layer for GCC and Singapore growth-stage SMEs.",
     images: ["/og.png"],
   },
   icons: {
@@ -99,9 +100,8 @@ export default function RootLayout({
               "@type": "Organization",
               name: "ChisokuLabs",
               url: siteUrl,
-              description:
-                "ChisokuLabs helps growth-stage SMEs in the GCC and Singapore find project reporting, governance, and delivery bottlenecks.",
-              sameAs: ["https://www.linkedin.com/in/agamag24"],
+              description: `${siteConfig.tagline}. ${siteConfig.subline}.`,
+              sameAs: [siteConfig.linkedIn],
               logo: `${siteUrl}/brand/favicon-mark.png`,
             }),
           }}
@@ -120,6 +120,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Service",
               serviceType: "PMO Automation Audit",
+              description:
+                "AI automation for delivery systems, starting with the PMO reporting layer.",
               provider: {
                 "@type": "Organization",
                 name: "ChisokuLabs",

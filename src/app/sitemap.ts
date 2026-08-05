@@ -6,6 +6,8 @@ const paths = [
   "/",
   "/pmo-automation-audit",
   "/free-pmo-diagnostic",
+  "/method",
+  "/implementation",
   "/founder-track-record",
   "/sample-outputs",
   "/contact",
