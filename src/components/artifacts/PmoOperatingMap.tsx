@@ -39,12 +39,12 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
             viewBox="0 0 720 480"
             className="h-auto w-full"
             role="img"
-            aria-label="PMO Operating Map connecting Inputs, Cadence, Friction, Decision Forum, and Blueprint around a central PMO map"
+            aria-label="PMO Operating Map connecting inputs, cadence, friction, decision forum, and blueprint through an AI automation layer"
           >
             <defs>
               <linearGradient id="mapGlow" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="rgba(0,166,200,0.18)" />
-                <stop offset="100%" stopColor="rgba(17,24,32,0.04)" />
+                <stop offset="0%" stopColor="#DFF4F7" />
+                <stop offset="100%" stopColor="#F2F0EB" />
               </linearGradient>
               <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
                 <feGaussianBlur stdDeviation="6" result="blur" />
@@ -55,28 +55,28 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
               </filter>
             </defs>
 
-            {/* Connection lines — full, unclipped, draw-on */}
+            {/* Connectors terminate at node edges so they never cross box content. */}
             <g className="map-draw" stroke="rgba(17,24,32,0.28)" strokeWidth="1.5" fill="none">
-              <path d="M160 96 L300 210" />
-              <path d="M560 96 L420 210" />
-              <path d="M120 300 L290 270" />
-              <path d="M600 300 L430 270" />
-              <path d="M360 340 L360 390" stroke="rgba(0,166,200,0.7)" />
+              <path d="M160 116 L310 176" />
+              <path d="M560 116 L410 176" />
+              <path d="M192 290 L242 270" />
+              <path d="M528 290 L478 270" />
+              <path d="M360 332 L360 392" stroke="rgba(0,166,200,0.7)" />
             </g>
             <g fill="#00A6C8">
-              <circle className="map-node-dot" cx="160" cy="96" r="3.5" />
-              <circle className="map-node-dot" cx="560" cy="96" r="3.5" />
-              <circle className="map-node-dot" cx="120" cy="300" r="3.5" />
-              <circle className="map-node-dot" cx="600" cy="300" r="3.5" />
-              <circle className="map-node-dot" cx="360" cy="390" r="3.5" />
+              <circle className="map-node-dot" cx="160" cy="116" r="3.5" />
+              <circle className="map-node-dot" cx="560" cy="116" r="3.5" />
+              <circle className="map-node-dot" cx="192" cy="290" r="3.5" />
+              <circle className="map-node-dot" cx="528" cy="290" r="3.5" />
+              <circle className="map-node-dot" cx="360" cy="392" r="3.5" />
             </g>
 
             {/* Center */}
             <rect
-              x="250"
-              y="180"
-              width="220"
-              height="140"
+              x="242"
+              y="176"
+              width="236"
+              height="156"
               rx="8"
               fill="url(#mapGlow)"
               stroke="#111820"
@@ -85,7 +85,7 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
             />
             <text
               x="360"
-              y="228"
+              y="218"
               textAnchor="middle"
               fill="#111820"
               fontFamily="var(--font-display), sans-serif"
@@ -96,23 +96,23 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
             </text>
             <text
               x="360"
-              y="256"
+              y="246"
               textAnchor="middle"
               fill="#65707B"
               fontFamily="ui-monospace, monospace"
-              fontSize="11"
+              fontSize="10"
               fontWeight="700"
             >
               SIGNALS → AI AUTOMATION → ACTION
             </text>
-            <g transform="translate(292 278)">
+            <g transform="translate(292 264)">
               {[0, 1, 2, 3, 4].map((i) => (
                 <rect
                   key={i}
                   x={i * 28}
                   y="0"
                   width="22"
-                  height="18"
+                  height="16"
                   rx="2"
                   fill={i === 2 ? "rgba(0,166,200,0.35)" : "rgba(17,24,32,0.08)"}
                   stroke="rgba(17,24,32,0.18)"
@@ -121,14 +121,25 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
             </g>
             <text
               x="360"
-              y="312"
+              y="302"
               textAnchor="middle"
               fill="#007F9C"
               fontFamily="ui-monospace, monospace"
-              fontSize="9"
+              fontSize="8.5"
               fontWeight="700"
             >
-              AI LAYER · NARRATIVE · FRESHNESS · ALERTS
+              AI LAYER · NARRATIVE · FRESHNESS
+            </text>
+            <text
+              x="360"
+              y="316"
+              textAnchor="middle"
+              fill="#007F9C"
+              fontFamily="ui-monospace, monospace"
+              fontSize="8.5"
+              fontWeight="700"
+            >
+              ALERTS · ESCALATION SIGNALS
             </text>
 
             {/* Satellite nodes */}
@@ -163,6 +174,8 @@ function node(
   subtitle: string,
   accent = false,
 ) {
+  const subtitleFontSize = Math.min(10, (w - 28) / (subtitle.length * 0.6));
+
   return (
     <g transform={`translate(${x} ${y})`}>
       <rect
@@ -188,7 +201,7 @@ function node(
         y={46}
         fill={accent ? "#AAB3BA" : "#65707B"}
         fontFamily="ui-monospace, monospace"
-        fontSize="10"
+        fontSize={subtitleFontSize}
         fontWeight="600"
       >
         {subtitle}
