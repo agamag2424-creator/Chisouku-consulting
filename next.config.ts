@@ -6,7 +6,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://pmo-maturity-tool.vercel.app",
+  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://diagnostic.chisokulabs.com",
   "frame-src https://calendly.com https://*.calendly.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
@@ -34,6 +34,30 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: securityHeaders,
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: "/aeva/:path*",
+        destination: "/method",
+        permanent: true,
+      },
+      {
+        source: "/ai-governance/:path*",
+        destination: "/method",
+        permanent: true,
+      },
+      {
+        source: "/ai-governance-course/:path*",
+        destination: "/method",
+        permanent: true,
+      },
+      {
+        source: "/case-studies/:path*",
+        destination: "/sample-outputs",
+        permanent: true,
       },
     ];
   },

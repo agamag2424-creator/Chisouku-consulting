@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/siteConfig";
 export const metadata: Metadata = {
   title: "AI Implementation Path",
   description:
-    "What Activate looks like after the PMO Automation Audit — Data → Integration → Logic → Interface for the reporting pack cycle.",
+    "What implementation looks like after the PMO Automation Audit — Data → Integration → Logic → Interface for the reporting pack cycle.",
   alternates: { canonical: "/implementation" },
 };
 
@@ -30,11 +30,11 @@ export default function ImplementationPage() {
     <>
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Activate</p>
+          <p className="eyebrow">Implementation · Activate phase</p>
           <h1 className="display">AI implementation path.</h1>
           <p className="subhead mt-5">
             After the audit blueprint — build AI automation into the pack cycle.
-            Clarity on what Activate looks like — not a separate offer.
+            Clarity on what implementation looks like — not a separate offer.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/contact?interest=AI%20Implementation" className="button button-primary">
@@ -52,7 +52,7 @@ export default function ImplementationPage() {
           <p className="eyebrow">Architecture</p>
           <h2 className="headline">Data → Integration → Logic → Interface.</h2>
           <p className="subhead mt-4">
-            The Activate stack for the PMO reporting layer.
+            The implementation stack for the PMO reporting layer.
           </p>
           <div className="mt-10">
             <AiReportingBlueprint />
@@ -120,7 +120,7 @@ export default function ImplementationPage() {
         <div className="container flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Fit call</p>
-            <h2 className="headline">Ready for Activate?</h2>
+            <h2 className="headline">Ready to implement?</h2>
           </div>
           <Link href="/contact?interest=AI%20Implementation" className="button button-light">
             Book Implementation Fit Call

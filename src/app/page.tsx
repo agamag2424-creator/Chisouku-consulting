@@ -270,7 +270,7 @@ export default function Home() {
               Blueprint ready? Continue to implementation fit.
             </p>
             <Link href="/implementation" className="button button-secondary">
-              View Activate path
+              View implementation path
             </Link>
           </div>
         </div>

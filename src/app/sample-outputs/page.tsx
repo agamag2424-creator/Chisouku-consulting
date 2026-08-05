@@ -117,7 +117,7 @@ export default function SampleOutputsPage() {
             Book Audit Fit Call
           </Link>
           <Link href="/implementation" className="button button-secondary">
-            View Activate path
+            View implementation path
           </Link>
         </div>
       </section>

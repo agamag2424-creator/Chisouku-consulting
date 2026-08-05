@@ -170,7 +170,7 @@ export default function AuditPage() {
           </div>
           <div className="mt-10 grid gap-6 border-t border-[rgba(17,24,32,0.12)] pt-8 md:grid-cols-[1.2fr_0.8fr] md:items-end">
             <p className="text-sm leading-relaxed text-[var(--color-muted)]">
-              The audit can stop at the blueprint — or continue into Activate when
+              The audit can stop at the blueprint — or continue into implementation when
               ownership and fit are clear.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
@@ -178,7 +178,7 @@ export default function AuditPage() {
                 Book Audit Fit Call
               </Link>
               <Link href="/implementation" className="button button-secondary">
-                View Activate path
+                View implementation path
               </Link>
             </div>
           </div>
