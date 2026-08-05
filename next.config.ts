@@ -6,11 +6,11 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com",
+  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://pmo-maturity-tool.vercel.app",
   "frame-src https://calendly.com https://*.calendly.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
-  "form-action 'self' https://calendly.com",
+  "form-action 'self' mailto: https://calendly.com",
 ].join("; ");
 
 const securityHeaders = [

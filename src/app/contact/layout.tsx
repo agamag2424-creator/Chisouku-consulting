@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Book a Discovery Call",
+  title: "Audit Fit Call",
   description:
-    "Schedule a 30-minute discovery call with ChisokuLab to map your AI governance gaps and highest-value AI solution opportunities.",
+    "Request an Audit Fit Call with ChisokuLabs for PMO reporting, governance, and delivery bottlenecks.",
   keywords: [
-    "AI governance consultant",
-    "book discovery call",
-    "ChisokuLab contact",
+    "PMO automation audit call",
+    "PMO consulting GCC",
+    "ChisokuLabs contact",
   ],
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactLayout({
@@ -18,4 +19,3 @@ export default function ContactLayout({
 }) {
   return children;
 }
-

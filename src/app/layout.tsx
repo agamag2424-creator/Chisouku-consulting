@@ -1,21 +1,29 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Outfit, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Source_Sans_3 } from "next/font/google";
 import "../styles/globals.css";
-import { AmbientScanline } from "../components/layout/AmbientScanline";
 import { Nav } from "../components/layout/Nav";
 import { Footer } from "../components/layout/Footer";
 
-const outfit = Outfit({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-display",
   display: "swap",
+  weight: ["500", "600", "700"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const sourceSans = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
+  weight: ["500", "600", "700"],
 });
 
 const siteUrl = "https://chisokulabs.com";
@@ -23,30 +31,47 @@ const siteUrl = "https://chisokulabs.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AI-Led PMO & Enterprise Transformation | ChisokuLab",
-    template: "%s | ChisokuLab",
+    default: "PMO Automation Audit for GCC SMEs | ChisokuLabs",
+    template: "%s | ChisokuLabs",
   },
   description:
-    "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery — turning AI investment into measurable execution outcomes.",
+    "ChisokuLabs helps growth-stage SMEs in the GCC and Singapore find project reporting, governance, and delivery bottlenecks through a focused PMO Automation Audit.",
   keywords: [
-    "AI-led PMO",
-    "AI project management",
-    "AI enterprise transformation",
-    "ChisokuLab",
+    "PMO automation audit GCC",
+    "project reporting automation Singapore",
+    "PMO maturity diagnostic",
+    "delivery governance consulting",
+    "ChisokuLabs",
   ],
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "AI-Led PMO & Enterprise Transformation | ChisokuLab",
+    title: "PMO Automation Audit for GCC SMEs | ChisokuLabs",
     description:
-      "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery — turning AI investment into measurable execution outcomes.",
-    siteName: "ChisokuLab",
+      "Find project reporting, governance, and delivery bottlenecks before they slow growth.",
+    siteName: "ChisokuLabs",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "ChisokuLabs PMO Automation Audit preview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI-Led PMO & Enterprise Transformation | ChisokuLab",
+    title: "PMO Automation Audit for GCC SMEs | ChisokuLabs",
     description:
-      "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery — turning AI investment into measurable execution outcomes.",
+      "A focused audit for growth-stage SMEs with reporting, governance, and delivery bottlenecks.",
+    images: ["/og.png"],
+  },
+  icons: {
+    icon: "/brand/favicon-mark.png",
+    apple: "/brand/apple-touch-icon.png",
   },
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
@@ -59,50 +84,59 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${jetbrainsMono.variable}`}>
-      <body className="antialiased bg-[var(--color-void)] text-[var(--color-text-primary)]">
+    <html
+      lang="en"
+      className={`${plexSans.variable} ${sourceSans.variable} ${plexMono.variable}`}
+    >
+      <body className="antialiased">
         <Script
-          id="chisokulab-org-ld-json"
+          id="chisokulabs-org-ld-json"
           type="application/ld+json"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "ChisokuLab",
+              name: "ChisokuLabs",
               url: siteUrl,
               description:
-                "ChisokuLab helps enterprises embed AI into PMO operations and programme delivery.",
-              sameAs: [],
-              logo: `${siteUrl}/icon.png`,
+                "ChisokuLabs helps growth-stage SMEs in the GCC and Singapore find project reporting, governance, and delivery bottlenecks.",
+              sameAs: ["https://www.linkedin.com/in/agamag24"],
+              logo: `${siteUrl}/brand/favicon-mark.png`,
             }),
           }}
         />
-        <AmbientScanline />
-        <Nav />
-        <div className="pt-14 min-h-screen flex flex-col">
-          <main className="flex-1">{children}</main>
+        <div className="site-shell">
+          <Nav />
+          <main className="site-main pt-20">{children}</main>
           <Footer />
         </div>
         <Script
-          id="chisokulab-services-ld-json"
+          id="chisokulabs-services-ld-json"
           type="application/ld+json"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Service",
-              serviceType: "AI-Led PMO & Enterprise Transformation",
+              serviceType: "PMO Automation Audit",
               provider: {
                 "@type": "Organization",
-                name: "ChisokuLab",
+                name: "ChisokuLabs",
                 url: siteUrl,
               },
-              areaServed: {
-                "@type": "GeoCircle",
-                name: "Global (remote-first)",
+              areaServed: ["GCC", "Singapore"],
+              offers: {
+                "@type": "Offer",
+                priceCurrency: "USD",
+                priceSpecification: {
+                  "@type": "PriceSpecification",
+                  minPrice: 4000,
+                  maxPrice: 5000,
+                  priceCurrency: "USD",
+                },
               },
-              url: siteUrl,
+              url: `${siteUrl}/pmo-automation-audit`,
             }),
           }}
         />
