@@ -65,6 +65,30 @@ const trustPoints = [
   },
 ] as const;
 
+const engagementPath = [
+  {
+    number: "01",
+    outcome: "Baseline",
+    title: "Free PMO Diagnostic",
+    detail:
+      "A five-minute baseline of reporting maturity, operating drag, and automation fit.",
+  },
+  {
+    number: "02",
+    outcome: "Blueprint",
+    title: "PMO Automation Audit",
+    detail:
+      "Map the pack cycle, prioritize opportunities, and leave with an implementation blueprint.",
+  },
+  {
+    number: "03",
+    outcome: "Implementation",
+    title: "AI automation for delivery systems",
+    detail:
+      "Build the approved automation into delivery workflows—starting with PMO reporting.",
+  },
+] as const;
+
 export default function Home() {
   return (
     <>
@@ -105,52 +129,74 @@ export default function Home() {
             </div>
           </div>
 
-          <div
-            className="mb-8 grid border-y border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.72)] sm:grid-cols-3"
-            aria-label="ChisokuLabs engagement pathway"
-          >
-            {[
-              ["01", "Free PMO Diagnostic", "Baseline"],
-              ["02", "PMO Automation Audit", "Blueprint"],
-              ["03", "AI automation for delivery systems", "Implementation"],
-            ].map(([number, title, outcome], index) => (
-              <div
-                key={number}
-                className={[
-                  "relative px-5 py-4",
-                  index < 2
-                    ? "border-b border-[rgba(17,24,32,0.12)] sm:border-b-0 sm:border-r"
-                    : "",
-                ].join(" ")}
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
-                    {number}
-                  </span>
-                  <span className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
-                    {outcome}
-                  </span>
-                </div>
-                <p className="mt-3 font-[family-name:var(--font-display)] text-base font-bold tracking-[-0.02em] text-[var(--color-ink)]">
-                  {title}
-                </p>
-                {index < 2 ? (
-                  <span
-                    className="absolute -right-2 top-1/2 z-10 hidden h-4 w-4 -translate-y-1/2 items-center justify-center bg-[var(--color-paper)] font-mono text-xs text-[var(--color-cyan-strong)] sm:flex"
-                    aria-hidden
-                  >
-                    →
-                  </span>
-                ) : null}
-              </div>
-            ))}
-          </div>
-
           <PmoOperatingMap className="hero-map-reveal" />
         </div>
       </section>
 
       <section className="section bg-[var(--color-paper)]">
+        <div className="container">
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="eyebrow">How we engage</p>
+              <h2 className="headline !max-w-[12ch]">Diagnostic. Audit. Automation.</h2>
+            </div>
+            <p className="subhead !mb-0 lg:max-w-2xl lg:justify-self-end">
+              PMO reporting is where we begin. AI automation for delivery systems
+              is where the path leads.
+            </p>
+          </div>
+
+          <div
+            className="mt-14 grid border-y border-[rgba(17,24,32,0.14)] md:grid-cols-3"
+            aria-label="ChisokuLabs engagement pathway"
+          >
+            {engagementPath.map((step, index) => (
+              <article
+                key={step.number}
+                className={[
+                  "relative min-h-[260px] overflow-hidden p-7 md:p-8",
+                  index < engagementPath.length - 1
+                    ? "border-b border-[rgba(17,24,32,0.12)] md:border-b-0 md:border-r"
+                    : "bg-[rgba(0,166,200,0.045)]",
+                ].join(" ")}
+              >
+                <span
+                  className="pointer-events-none absolute -right-1 -top-6 font-[family-name:var(--font-display)] text-[7rem] font-bold leading-none text-[rgba(17,24,32,0.035)]"
+                  aria-hidden
+                >
+                  {step.number}
+                </span>
+                <div className="relative flex h-full min-h-[196px] flex-col">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+                      {step.number}
+                    </span>
+                    <span className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+                      {step.outcome}
+                    </span>
+                  </div>
+                  <h3 className="mt-10 max-w-[18ch] font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.03em] text-[var(--color-ink)]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-auto pt-6 text-sm leading-relaxed text-[var(--color-muted)]">
+                    {step.detail}
+                  </p>
+                </div>
+                {index < engagementPath.length - 1 ? (
+                  <span
+                    className="absolute -right-3 top-1/2 z-10 hidden h-6 w-6 -translate-y-1/2 items-center justify-center bg-[var(--color-paper)] font-mono text-sm text-[var(--color-cyan-strong)] md:flex"
+                    aria-hidden
+                  >
+                    →
+                  </span>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
         <div className="container">
           <p className="eyebrow">Before the audit</p>
           <h2 className="headline">Operating drag.</h2>
@@ -161,7 +207,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section bg-[var(--color-paper)]">
         <div className="container">
           <p className="eyebrow">Method</p>
           <h2 className="headline">AI Impact Model.</h2>
@@ -177,7 +223,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section bg-[var(--color-paper)]">
+      <section className="section">
         <div className="container">
           <p className="eyebrow">The engagement</p>
           <h2 className="headline">Four phases. Four outputs.</h2>
