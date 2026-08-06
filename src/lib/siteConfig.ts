@@ -6,7 +6,8 @@ export const siteConfig = {
   tagline: "AI automation for delivery systems",
   subline: "Starting with the PMO reporting layer",
   diagnosticUrl: "https://diagnostic.chisokulabs.com/",
-  calendlyUrl: "https://calendly.com/chisokulab/discovery-call",
+  // Live event page (chisokulab/discovery-call 404s and breaks booking).
+  calendlyUrl: "https://calendly.com/agam-agrawwal/discovery-call",
   pricing: {
     min: 4000,
     max: 5000,
