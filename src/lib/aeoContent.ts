@@ -2,7 +2,7 @@ import { auditPriceRange, siteConfig } from "./siteConfig";
 
 /** Canonical one-sentence answers — single source for FAQ, strips, llms.txt */
 export const canonicalAnswers = {
-  whatWeDo: `${siteConfig.name} builds ${siteConfig.tagline.toLowerCase()}, ${siteConfig.subline.toLowerCase()}, for growth-stage SMEs in the ${siteConfig.markets.primary} and ${siteConfig.markets.secondary}.`,
+  whatWeDo: `${siteConfig.name} builds ${siteConfig.tagline}, ${siteConfig.subline}, for growth-stage SMEs in the ${siteConfig.markets.primary} and ${siteConfig.markets.secondary}.`,
   audit: `The PMO Automation Audit maps reporting drag, scores AI automation fit, and leaves a blueprint in ${siteConfig.pricing.timeline}, typically ${auditPriceRange}.`,
   auditTimeline: `Typical timeline is ${siteConfig.pricing.timeline}; final scope is confirmed after the Audit Fit Call.`,
   diagnostic: `The Free PMO Diagnostic is a five-minute baseline of reporting maturity, operating drag, and AI automation fit — no login, no data stored — at ${siteConfig.diagnosticUrl}`,
