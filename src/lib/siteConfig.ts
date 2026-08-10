@@ -28,6 +28,7 @@ export const auditPriceRange = `${siteConfig.pricing.currency} ${siteConfig.pric
 export const navLinks = [
   { href: "/pmo-automation-audit", label: "Audit" },
   { href: "/free-pmo-diagnostic", label: "Diagnostic" },
+  { href: "/implementation", label: "Implementation" },
   { href: "/method", label: "Method" },
   { href: "/founder-track-record", label: "Founder" },
   { href: "/sample-outputs", label: "Outputs" },

@@ -89,12 +89,13 @@ export default function FounderTrackRecordPage() {
             <div className="absolute -left-5 -top-5 hidden h-full w-full border border-[rgba(17,24,32,0.16)] md:block" />
             <div className="relative overflow-hidden shadow-[0_34px_90px_rgba(17,24,32,0.18)]">
               <Image
-                src="/images/founder-agam.png"
+                src="/images/founder-agam.webp"
                 alt="Agam Agrawwal"
-                width={1254}
-                height={1254}
+                width={900}
+                height={900}
                 className="aspect-[4/5] w-full max-h-[680px] object-cover object-[50%_18%]"
                 priority
+                sizes="(max-width: 1024px) 100vw, 40vw"
               />
             </div>
           </figure>
@@ -166,9 +167,14 @@ export default function FounderTrackRecordPage() {
             <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Next</p>
             <h2 className="headline">If the drag is real, map the audit.</h2>
           </div>
-          <Link href="/contact" className="button button-light">
-            Book Audit Fit Call
-          </Link>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href="/free-pmo-diagnostic" className="button button-light">
+              Free PMO Diagnostic
+            </Link>
+            <Link href="/contact" className="button button-line-light">
+              Book Audit Fit Call
+            </Link>
+          </div>
         </div>
       </section>
 

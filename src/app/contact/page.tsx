@@ -26,7 +26,7 @@ export default async function ContactPage({ searchParams }: Props) {
       <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
           <p className="eyebrow">Fit call</p>
-          <h1 className="display">AI automation for delivery systems.</h1>
+          <h1 className="display">Audit Fit Call.</h1>
           <p className="subhead mt-5">
             Starting at PMO reporting. Share brief context — then schedule.
           </p>
@@ -41,15 +41,13 @@ export default async function ContactPage({ searchParams }: Props) {
               </a>
             </p>
             <p>
-              Not ready for a call?{" "}
-              <a
+              Not ready for a call? Start with the{" "}
+              <Link
                 className="font-bold text-[var(--color-cyan-strong)]"
-                href={siteConfig.diagnosticUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/free-pmo-diagnostic"
               >
-                Run the Free PMO Diagnostic
-              </a>
+                Free PMO Diagnostic
+              </Link>
               .
             </p>
             <p>

@@ -42,7 +42,7 @@ export default function FaqPage() {
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
           <p className="eyebrow">Answers</p>
-          <h1 className="display">FAQ.</h1>
+          <h1 className="display !max-w-[16ch]">FAQ — Diagnostic, Audit & Implementation</h1>
           <p className="subhead mt-5">
             Direct answers on the Free PMO Diagnostic, PMO Automation Audit, and
             implementation path — for growth-stage SMEs in the{" "}
@@ -81,6 +81,22 @@ export default function FaqPage() {
                   {item.detail}
                 </p>
               ) : null}
+              {item.related && item.related.length > 0 ? (
+                <p className="mt-4 text-sm text-[var(--color-muted)]">
+                  Related:{" "}
+                  {item.related.map((link, index) => (
+                    <span key={link.href}>
+                      {index > 0 ? " · " : null}
+                      <Link
+                        href={link.href}
+                        className="font-semibold text-[var(--color-cyan-strong)]"
+                      >
+                        {link.label}
+                      </Link>
+                    </span>
+                  ))}
+                </p>
+              ) : null}
             </article>
           ))}
         </div>
@@ -91,14 +107,9 @@ export default function FaqPage() {
           <p className="eyebrow">Next step</p>
           <h2 className="headline">Start with the baseline.</h2>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={siteConfig.diagnosticUrl}
-              className="button button-primary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Run Free PMO Diagnostic
-            </a>
+            <Link href="/free-pmo-diagnostic" className="button button-primary">
+              Free PMO Diagnostic
+            </Link>
             <Link href="/contact" className="button button-secondary">
               Book Audit Fit Call
             </Link>

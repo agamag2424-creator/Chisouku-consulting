@@ -9,9 +9,9 @@ import { canonicalAnswers } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { auditPriceRange, siteConfig } from "../../lib/siteConfig";
 
-const title = "PMO Automation Audit";
+const title = "PMO Automation Audit — GCC & Singapore";
 const description =
-  "A 5-10 business day PMO Automation Audit for growth-stage SMEs in the GCC and Singapore — map reporting drag, score AI automation fit, leave with a blueprint.";
+  "A 5-10 business day PMO Automation Audit (USD 4,000–5,000) for growth-stage SMEs in the GCC and Singapore — map reporting drag, score AI automation fit, leave with a blueprint.";
 
 export const metadata: Metadata = {
   title,
@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     title: `${title} | ChisokuLabs`,
     description,
     url: `${siteConfig.url}/pmo-automation-audit`,
-    images: ["/og.png"],
+    images: ["/og-audit.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: `${title} | ChisokuLabs`,
     description,
-    images: ["/og.png"],
+    images: ["/og-audit.png"],
   },
 };
 
@@ -82,9 +82,8 @@ export default function AuditPage() {
               ]}
               primaryHref="/contact"
               primaryLabel="Book Audit Fit Call"
-              secondaryHref={siteConfig.diagnosticUrl}
-              secondaryLabel="Run Free PMO Diagnostic"
-              secondaryExternal
+              secondaryHref="/free-pmo-diagnostic"
+              secondaryLabel="Free PMO Diagnostic"
             />
           </div>
           <div className="artifact-sheet paper-grain p-7">
@@ -203,10 +202,31 @@ export default function AuditPage() {
               <Link href="/contact" className="button button-primary">
                 Book Audit Fit Call
               </Link>
+              <Link href="/sample-outputs" className="button button-secondary">
+                Sample audit outputs
+              </Link>
               <Link href="/implementation" className="button button-secondary">
                 View implementation path
               </Link>
             </div>
+            <p className="mt-6 text-sm text-[var(--color-muted)] md:col-span-2">
+              Related:{" "}
+              <Link href="/free-pmo-diagnostic" className="font-semibold text-[var(--color-cyan-strong)]">
+                Free PMO Diagnostic
+              </Link>
+              {" · "}
+              <Link href="/method" className="font-semibold text-[var(--color-cyan-strong)]">
+                Method
+              </Link>
+              {" · "}
+              <Link href="/faq" className="font-semibold text-[var(--color-cyan-strong)]">
+                FAQ
+              </Link>
+              {" · "}
+              <Link href="/diagnostic-vs-audit" className="font-semibold text-[var(--color-cyan-strong)]">
+                Diagnostic vs Audit
+              </Link>
+            </p>
           </div>
         </div>
       </section>

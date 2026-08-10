@@ -7,9 +7,9 @@ import { canonicalAnswers } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 
-const title = "Method — AI Impact Model";
+const title = "Method — AI Impact Model for PMO Reporting";
 const description =
-  "ChisokuLabs AI Impact Model: Assess, Architect, Activate, Accelerate — starting with the PMO reporting layer.";
+  "ChisokuLabs AI Impact Model for PMO reporting automation: Assess, Architect, Activate, Accelerate — starting with the reporting pack cycle.";
 
 export const metadata: Metadata = {
   title,
@@ -73,7 +73,7 @@ export default function MethodPage() {
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
           <p className="eyebrow">Method</p>
-          <h1 className="display">AI Impact Model.</h1>
+          <h1 className="display">AI Impact Model for PMO reporting.</h1>
           <p className="subhead mt-5">
             {siteConfig.tagline}. {siteConfig.subline}.
           </p>
@@ -86,8 +86,8 @@ export default function MethodPage() {
             ]}
             primaryHref="/pmo-automation-audit"
             primaryLabel="View PMO Automation Audit"
-            secondaryHref="/glossary#ai-impact-model"
-            secondaryLabel="Glossary · AI Impact Model"
+            secondaryHref="/implementation"
+            secondaryLabel="Implementation path"
           />
         </div>
       </section>
@@ -163,16 +163,14 @@ export default function MethodPage() {
             <h2 className="headline">Begin at the reporting layer.</h2>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <a
-              href={siteConfig.diagnosticUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button button-light"
-            >
-              Run Free PMO Diagnostic
-            </a>
-            <Link href="/contact" className="button button-line-light">
-              Book Audit Fit Call
+            <Link href="/free-pmo-diagnostic" className="button button-light">
+              Free PMO Diagnostic
+            </Link>
+            <Link href="/pmo-automation-audit" className="button button-line-light">
+              PMO Automation Audit
+            </Link>
+            <Link href="/implementation" className="button button-line-light">
+              Implementation
             </Link>
           </div>
         </div>

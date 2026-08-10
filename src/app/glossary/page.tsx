@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { glossaryTerms } from "../../lib/aeoContent";
-import { breadcrumbJsonLd } from "../../lib/jsonLd";
+import { breadcrumbJsonLd, definedTermSetJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 
 const title = "Glossary — Pack Cycle, Reporting Drag & AI Impact Model";
@@ -31,6 +31,10 @@ export default function GlossaryPage() {
   return (
     <>
       <JsonLdScript
+        id="glossary-defined-terms-ld-json"
+        data={definedTermSetJsonLd(glossaryTerms)}
+      />
+      <JsonLdScript
         id="glossary-breadcrumb-ld-json"
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
@@ -41,7 +45,7 @@ export default function GlossaryPage() {
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
           <p className="eyebrow">Definitions</p>
-          <h1 className="display">Glossary.</h1>
+          <h1 className="display !max-w-[18ch]">Glossary — Pack cycle & reporting drag</h1>
           <p className="subhead mt-5">
             Shared language for the reporting layer — so buyers and answer engines
             cite the same meanings.

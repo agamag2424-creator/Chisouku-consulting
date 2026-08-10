@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     title: `${title} | ChisokuLabs`,
     description,
     url: `${siteConfig.url}/contact`,
-    images: ["/og.png"],
+    images: ["/og-contact.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: `${title} | ChisokuLabs`,
     description,
-    images: ["/og.png"],
+    images: ["/og-contact.png"],
   },
 };
 

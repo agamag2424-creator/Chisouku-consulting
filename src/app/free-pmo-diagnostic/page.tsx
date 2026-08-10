@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     title: `${title} | ChisokuLabs`,
     description,
     url: `${siteConfig.url}/free-pmo-diagnostic`,
-    images: ["/og.png"],
+    images: ["/og-diagnostic.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: `${title} | ChisokuLabs`,
     description,
-    images: ["/og.png"],
+    images: ["/og-diagnostic.png"],
   },
 };
 

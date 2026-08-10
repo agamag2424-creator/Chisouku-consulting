@@ -8,7 +8,7 @@ import { canonicalAnswers } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 
-const title = "AI Implementation Path";
+const title = "Implementation after the PMO Automation Audit";
 const description =
   "What implementation looks like after the PMO Automation Audit — Data → Integration → Logic → Interface for the reporting pack cycle.";
 
@@ -57,7 +57,7 @@ export default function ImplementationPage() {
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
           <p className="eyebrow">Implementation · Activate phase</p>
-          <h1 className="display">AI implementation path.</h1>
+          <h1 className="display">Implementation after the PMO Automation Audit.</h1>
           <p className="subhead mt-5">
             After the audit blueprint — build AI automation into the pack cycle.
             Clarity on what implementation looks like — not a separate offer.

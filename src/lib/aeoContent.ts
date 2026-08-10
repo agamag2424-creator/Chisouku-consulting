@@ -22,6 +22,7 @@ export type FaqItem = {
   question: string;
   answer: string;
   detail?: string;
+  related?: { href: string; label: string }[];
 };
 
 export const faqItems: FaqItem[] = [
@@ -31,6 +32,10 @@ export const faqItems: FaqItem[] = [
     answer: canonicalAnswers.whatWeDo,
     detail:
       "We start where delivery drag becomes visible and automatable: the reporting pack cycle. We do not sell multi-year PMO rebuild programmes or tool licenses as the product.",
+    related: [
+      { href: "/pmo-reporting-automation", label: "PMO reporting automation" },
+      { href: "/method", label: "Method" },
+    ],
   },
   {
     id: "what-is-pmo-automation-audit",
@@ -38,6 +43,10 @@ export const faqItems: FaqItem[] = [
     answer: canonicalAnswers.audit,
     detail:
       "Deliverables typically include a current-state map, drag ledger, automation opportunity matrix, AI automation fit score, ROI hypothesis, and implementation blueprint. Final scope is confirmed after the fit call.",
+    related: [
+      { href: "/pmo-automation-audit", label: "Audit offer" },
+      { href: "/sample-outputs", label: "Sample outputs" },
+    ],
   },
   {
     id: "how-long-does-the-audit-take",
@@ -45,6 +54,7 @@ export const faqItems: FaqItem[] = [
     answer: canonicalAnswers.auditTimeline,
     detail:
       "Timeline covers discovery through blueprint handoff — workstreams, tools, and stakeholder interviews are scoped on the fit call.",
+    related: [{ href: "/pmo-automation-audit", label: "PMO Automation Audit" }],
   },
   {
     id: "what-is-free-pmo-diagnostic",
@@ -52,6 +62,10 @@ export const faqItems: FaqItem[] = [
     answer: canonicalAnswers.diagnostic,
     detail:
       "You leave with a directional maturity profile, dimension scores, priority actions for the next 90 days, and AI readiness insight for the reporting layer.",
+    related: [
+      { href: "/free-pmo-diagnostic", label: "Diagnostic landing" },
+      { href: "/diagnostic-vs-audit", label: "Diagnostic vs Audit" },
+    ],
   },
   {
     id: "who-is-it-for",
@@ -59,6 +73,10 @@ export const faqItems: FaqItem[] = [
     answer: canonicalAnswers.whoFor,
     detail:
       "Best fit when someone owns reporting or delivery visibility and wants a credible fix sequence — not theatre.",
+    related: [
+      { href: "/pmo-automation-singapore", label: "Singapore" },
+      { href: "/pmo-automation-gcc", label: "GCC" },
+    ],
   },
   {
     id: "pack-cycle-reporting-drag",
@@ -66,6 +84,10 @@ export const faqItems: FaqItem[] = [
     answer: `${canonicalAnswers.packCycle} ${canonicalAnswers.reportingDrag}`,
     detail:
       "See the glossary for definitions of pack cycle, reporting drag, drag ledger, and related terms.",
+    related: [
+      { href: "/glossary#pack-cycle", label: "Glossary · Pack cycle" },
+      { href: "/glossary#reporting-drag", label: "Glossary · Reporting drag" },
+    ],
   },
   {
     id: "diagnostic-vs-audit-vs-implementation",
@@ -73,6 +95,10 @@ export const faqItems: FaqItem[] = [
     answer: canonicalAnswers.path,
     detail:
       "The diagnostic is free and directional. The audit is a paid blueprint engagement. Implementation is optional and follows only when the blueprint and ownership are real.",
+    related: [
+      { href: "/diagnostic-vs-audit", label: "Diagnostic vs Audit" },
+      { href: "/implementation", label: "Implementation" },
+    ],
   },
   {
     id: "which-systems",
@@ -80,6 +106,7 @@ export const faqItems: FaqItem[] = [
     answer: canonicalAnswers.systems,
     detail:
       "Architecture is modular — systems with an API or webhook can usually be adapted. Common stack: collection from PM tools, consolidation, AI-assisted narrative, distribution to Slack/Teams or email.",
+    related: [{ href: "/implementation", label: "Implementation path" }],
   },
   {
     id: "roi-guarantee",
@@ -87,12 +114,20 @@ export const faqItems: FaqItem[] = [
     answer: canonicalAnswers.noRoiGuarantee,
     detail:
       "Sample artifacts on the site are methodology excerpts, not client case studies. Founder track-record metrics are career delivery leadership, not ChisokuLabs client ROI.",
+    related: [
+      { href: "/sample-outputs", label: "Sample outputs" },
+      { href: "/founder-track-record", label: "Founder" },
+    ],
   },
   {
     id: "how-do-i-start",
     question: "How do I start?",
     answer: canonicalAnswers.howToStart,
     detail: `Markets: ${siteConfig.markets.primary} · ${siteConfig.markets.secondary}. Full audit offer: ${siteConfig.url}/pmo-automation-audit`,
+    related: [
+      { href: "/free-pmo-diagnostic", label: "Free PMO Diagnostic" },
+      { href: "/contact", label: "Audit Fit Call" },
+    ],
   },
 ];
 

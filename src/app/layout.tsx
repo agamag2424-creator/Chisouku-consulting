@@ -7,10 +7,13 @@ import { Footer } from "../components/layout/Footer";
 import {
   auditServiceJsonLd,
   diagnosticServiceJsonLd,
+  implementationServiceJsonLd,
   organizationJsonLd,
   websiteJsonLd,
 } from "../lib/jsonLd";
 import { siteConfig } from "../lib/siteConfig";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const libreFranklin = Libre_Franklin({
   subsets: ["latin"],
@@ -38,7 +41,7 @@ const siteUrl = siteConfig.url;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AI Automation for Delivery Systems | PMO Reporting Audit",
+    default: "PMO Reporting Automation | ChisokuLabs",
     template: "%s | ChisokuLabs",
   },
   description:
@@ -108,6 +111,12 @@ export default function RootLayout({
           id="chisokulabs-diagnostic-service-ld-json"
           data={diagnosticServiceJsonLd()}
         />
+        <JsonLdScript
+          id="chisokulabs-implementation-service-ld-json"
+          data={implementationServiceJsonLd()}
+        />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

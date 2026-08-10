@@ -138,6 +138,47 @@ export function breadcrumbJsonLd(items: BreadcrumbItem[]): JsonLd {
   };
 }
 
+export function implementationServiceJsonLd(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "PMO Reporting Implementation",
+    serviceType: "AI automation implementation for PMO reporting",
+    description:
+      "Optional build after the PMO Automation Audit — AI automation into the pack cycle. Scope and commercial terms confirmed after the blueprint.",
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteUrl,
+    },
+    areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
+    offers: {
+      "@type": "Offer",
+      url: `${siteUrl}/implementation`,
+      description: "Quoted after audit blueprint and fit conversation — not a fixed list price.",
+    },
+    url: `${siteUrl}/implementation`,
+  };
+}
+
+export function definedTermSetJsonLd(
+  terms: { id: string; term: string; definition: string }[],
+): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    name: "ChisokuLabs PMO reporting glossary",
+    url: `${siteUrl}/glossary`,
+    hasDefinedTerm: terms.map((term) => ({
+      "@type": "DefinedTerm",
+      name: term.term,
+      description: term.definition,
+      url: `${siteUrl}/glossary#${term.id}`,
+      inDefinedTermSet: `${siteUrl}/glossary`,
+    })),
+  };
+}
+
 export function stringifyJsonLd(data: JsonLd): string {
   return JSON.stringify(data);
 }

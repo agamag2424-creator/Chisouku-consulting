@@ -1,0 +1,29 @@
+ChisokuLabs SEO ops checklist
+=============================
+
+Monthly
+-------
+1. Google Search Console — branded vs non-branded impressions; queries with PMO / reporting / audit.
+2. Index coverage for new URLs:
+   - /pmo-reporting-automation
+   - /diagnostic-vs-audit
+   - /pmo-automation-singapore
+   - /pmo-automation-gcc
+   - /faq · /glossary
+3. Confirm sitemap: https://chisokulabs.com/sitemap.xml is submitted.
+4. Spot-check CWV (mobile) on / and /pmo-automation-audit after image changes.
+5. Vercel Analytics + Speed Insights — traffic and CWV trends.
+
+One-time / verify
+-----------------
+- GOOGLE_SITE_VERIFICATION is NOT yet in Vercel env (as of 2026-08-10). Add the
+  Search Console meta token via: vercel env add GOOGLE_SITE_VERIFICATION production
+  then redeploy. Wired in src/app/layout.tsx metadata.verification.google.
+- Domain property: https://chisokulabs.com in Search Console; submit sitemap.xml.
+- Proof rules: no invented client ROI in new pages.
+
+Canonical commercial facts
+--------------------------
+- Audit: USD 4,000–5,000 · 5–10 business days
+- Markets: GCC · Singapore
+- Diagnostic: https://diagnostic.chisokulabs.com/ (land via /free-pmo-diagnostic)

@@ -12,10 +12,26 @@ import { PackDragEstimator } from "../components/artifacts/PackDragEstimator";
 import { siteConfig } from "../lib/siteConfig";
 
 export const metadata: Metadata = {
-  title: "AI Automation for Delivery Systems | PMO Reporting Audit",
+  title: {
+    absolute: "PMO Reporting Automation | ChisokuLabs",
+  },
   description:
-    "Find the drag. Automate what repeats. ChisokuLabs builds AI automation into delivery systems—starting with the PMO reporting layer.",
+    "Find the drag. Automate what repeats. ChisokuLabs builds AI automation into delivery systems—starting with the PMO reporting layer for growth-stage SMEs in the GCC and Singapore.",
   alternates: { canonical: "/" },
+  openGraph: {
+    title: "PMO Reporting Automation | ChisokuLabs",
+    description:
+      "Find delivery drag in the PMO reporting layer—then automate what repeats.",
+    url: siteConfig.url,
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PMO Reporting Automation | ChisokuLabs",
+    description:
+      "Starting with the PMO reporting layer for GCC and Singapore growth-stage SMEs.",
+    images: ["/og.png"],
+  },
 };
 
 const proofTiles = [
@@ -72,6 +88,7 @@ const engagementPath = [
     title: "Free PMO Diagnostic",
     detail:
       "A five-minute baseline of reporting maturity, operating drag, and automation fit.",
+    href: "/free-pmo-diagnostic",
   },
   {
     number: "02",
@@ -79,6 +96,7 @@ const engagementPath = [
     title: "PMO Automation Audit",
     detail:
       "Map the pack cycle, prioritize opportunities, and leave with an implementation blueprint.",
+    href: "/pmo-automation-audit",
   },
   {
     number: "03",
@@ -86,6 +104,7 @@ const engagementPath = [
     title: "AI automation for delivery systems",
     detail:
       "Build the approved automation into delivery workflows—starting with PMO reporting.",
+    href: "/implementation",
   },
 ] as const;
 
@@ -121,14 +140,9 @@ export default function Home() {
               </p>
             </div>
             <div className="hero-actions flex shrink-0 flex-col gap-3 sm:flex-row">
-              <a
-                href={siteConfig.diagnosticUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button button-primary"
-              >
-                Run Free PMO Diagnostic
-              </a>
+              <Link href="/free-pmo-diagnostic" className="button button-primary">
+                Free PMO Diagnostic
+              </Link>
               <Link href="/pmo-automation-audit" className="button button-secondary">
                 View PMO Automation Audit
               </Link>
@@ -157,10 +171,11 @@ export default function Home() {
             aria-label="ChisokuLabs engagement pathway"
           >
             {engagementPath.map((step, index) => (
-              <article
+              <Link
                 key={step.number}
+                href={step.href}
                 className={[
-                  "relative min-h-[260px] overflow-hidden p-7 md:p-8",
+                  "relative block min-h-[260px] overflow-hidden p-7 md:p-8 transition-colors hover:bg-[rgba(0,166,200,0.06)]",
                   index < engagementPath.length - 1
                     ? "border-b border-[rgba(17,24,32,0.12)] md:border-b-0 md:border-r"
                     : "bg-[rgba(0,166,200,0.045)]",
@@ -196,7 +211,7 @@ export default function Home() {
                     →
                   </span>
                 ) : null}
-              </article>
+              </Link>
             ))}
           </div>
         </div>
@@ -288,12 +303,12 @@ export default function Home() {
             <div className="absolute -left-4 -top-4 hidden h-full w-full border border-[rgba(17,24,32,0.14)] md:block" />
             <div className="relative overflow-hidden shadow-[0_34px_90px_rgba(17,24,32,0.18)]">
               <Image
-                src="/images/founder-agam.png"
+                src="/images/founder-agam.webp"
                 alt="Agam Agrawwal, Founder of ChisokuLabs"
-                width={1254}
-                height={1254}
+                width={900}
+                height={900}
                 className="aspect-[4/5] w-full object-cover object-[50%_18%]"
-                priority
+                sizes="(max-width: 1024px) 100vw, 45vw"
               />
             </div>
           </figure>
@@ -336,14 +351,9 @@ export default function Home() {
             <p className="subhead mt-4">
               See where AI automation can remove reporting drag.
             </p>
-            <a
-              href={siteConfig.diagnosticUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button button-primary mt-8"
-            >
-              Run Free PMO Diagnostic
-            </a>
+            <Link href="/free-pmo-diagnostic" className="button button-primary mt-8">
+              Free PMO Diagnostic
+            </Link>
           </div>
           <DiagnosticOrbit />
         </div>
@@ -374,10 +384,54 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section bg-[var(--color-paper)]">
+        <div className="container">
+          <p className="eyebrow">Learn</p>
+          <h2 className="headline">Guides for Google and buyers.</h2>
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {[
+              {
+                href: "/pmo-reporting-automation",
+                title: "PMO reporting automation",
+                detail: "Automate the pack cycle without a multi-year rebuild.",
+              },
+              {
+                href: "/diagnostic-vs-audit",
+                title: "Diagnostic vs Audit",
+                detail: "Free baseline versus paid blueprint — when to use each.",
+              },
+              {
+                href: "/pmo-automation-singapore",
+                title: "Singapore",
+                detail: "Growth-stage SMEs — same ladder, Singapore focus.",
+              },
+              {
+                href: "/pmo-automation-gcc",
+                title: "GCC",
+                detail: "GCC growth-stage SMEs — diagnostic, audit, optional build.",
+              },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="artifact-sheet paper-grain block p-6 transition-colors hover:border-[rgba(0,166,200,0.35)]"
+              >
+                <h3 className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em] text-[var(--color-ink)]">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
+                  {item.detail}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="section dark-band photo-atmosphere photo-atmosphere-dark">
         <div className="photo-atmosphere-media" aria-hidden>
           <Image
-            src="/images/founder-agam.png"
+            src="/images/founder-agam.webp"
             alt=""
             fill
             sizes="100vw"
@@ -390,14 +444,9 @@ export default function Home() {
             Run the diagnostic. Then map the audit.
           </h2>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a
-              href={siteConfig.diagnosticUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button button-light"
-            >
-              Run Free PMO Diagnostic
-            </a>
+            <Link href="/free-pmo-diagnostic" className="button button-light">
+              Free PMO Diagnostic
+            </Link>
             <Link href="/contact" className="button button-line-light">
               Book Audit Fit Call
             </Link>

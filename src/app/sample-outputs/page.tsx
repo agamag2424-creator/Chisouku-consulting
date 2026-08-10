@@ -138,7 +138,10 @@ export default function SampleOutputsPage() {
           </div>
         </div>
         <div className="container mt-12 flex flex-col gap-3 sm:flex-row">
-          <Link href="/contact" className="button button-primary">
+          <Link href="/pmo-automation-audit" className="button button-primary">
+            View PMO Automation Audit
+          </Link>
+          <Link href="/contact" className="button button-secondary">
             Book Audit Fit Call
           </Link>
           <Link href="/implementation" className="button button-secondary">

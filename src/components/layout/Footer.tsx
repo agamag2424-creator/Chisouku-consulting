@@ -2,10 +2,17 @@ import Link from "next/link";
 import { BrandMark } from "../brand/BrandMark";
 import { navLinks, siteConfig } from "../../lib/siteConfig";
 
+const guideLinks = [
+  { href: "/pmo-reporting-automation", label: "PMO reporting automation" },
+  { href: "/diagnostic-vs-audit", label: "Diagnostic vs Audit" },
+  { href: "/pmo-automation-singapore", label: "Singapore" },
+  { href: "/pmo-automation-gcc", label: "GCC" },
+] as const;
+
 export function Footer() {
   return (
     <footer className="border-t border-[rgba(17,24,32,0.12)] bg-[var(--color-charcoal)] text-[#c7ced3]">
-      <div className="container grid gap-10 px-[var(--content-padding-x-mobile)] py-12 md:grid-cols-[1.2fr_1fr] md:px-[var(--content-padding-x)]">
+      <div className="container grid gap-10 px-[var(--content-padding-x-mobile)] py-12 md:grid-cols-[1.1fr_1fr_1fr] md:px-[var(--content-padding-x)]">
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">
             <BrandMark className="h-9 w-9" inverted />
@@ -22,26 +29,32 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-6 text-sm">
+        <div className="space-y-3 text-sm">
+          <div className="font-bold text-[#fffdf8]">Site</div>
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} className="block hover:text-[#fffdf8]">
+              {link.label}
+            </Link>
+          ))}
+          <Link href="/faq" className="block hover:text-[#fffdf8]">
+            FAQ
+          </Link>
+          <Link href="/glossary" className="block hover:text-[#fffdf8]">
+            Glossary
+          </Link>
+          <Link href="/contact" className="block hover:text-[#fffdf8]">
+            Audit Fit Call
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 text-sm sm:grid-cols-2 md:grid-cols-1">
           <div className="space-y-3">
-            <div className="font-bold text-[#fffdf8]">Site</div>
-            {navLinks.map((link) => (
+            <div className="font-bold text-[#fffdf8]">Guides</div>
+            {guideLinks.map((link) => (
               <Link key={link.href} href={link.href} className="block hover:text-[#fffdf8]">
                 {link.label}
               </Link>
             ))}
-            <Link href="/implementation" className="block hover:text-[#fffdf8]">
-              Implementation
-            </Link>
-            <Link href="/faq" className="block hover:text-[#fffdf8]">
-              FAQ
-            </Link>
-            <Link href="/glossary" className="block hover:text-[#fffdf8]">
-              Glossary
-            </Link>
-            <Link href="/contact" className="block hover:text-[#fffdf8]">
-              Audit Fit Call
-            </Link>
           </div>
           <div className="space-y-3">
             <div className="font-bold text-[#fffdf8]">Contact</div>

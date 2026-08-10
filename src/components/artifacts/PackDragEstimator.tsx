@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { siteConfig } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
 const WEEKS_PER_YEAR = 48;
@@ -169,14 +168,9 @@ export function PackDragEstimator({ className }: Props) {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 border-t border-[rgba(17,24,32,0.12)] pt-6 sm:flex-row">
-            <a
-              href={siteConfig.diagnosticUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button button-primary"
-            >
+            <Link href="/free-pmo-diagnostic" className="button button-primary">
               Validate with Free PMO Diagnostic
-            </a>
+            </Link>
             <Link href="/contact" className="button button-secondary">
               Book Audit Fit Call
             </Link>
