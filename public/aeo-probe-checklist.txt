@@ -1,0 +1,31 @@
+ChisokuLabs AEO probe checklist
+================================
+Run monthly in ChatGPT, Perplexity, Gemini, and Google AI Overviews.
+Log: cited? | price/timeline correct? | invented ROI? | URL cited?
+
+Queries
+-------
+1. What is a PMO Automation Audit and typical cost?
+2. ChisokuLabs PMO reporting automation GCC Singapore
+3. Free PMO diagnostic for reporting maturity
+4. How to automate PMO status reporting pack cycle
+5. AI automation for delivery systems starting with PMO reporting
+6. What is reporting drag in PMO pack assembly?
+7. ChisokuLabs AI Impact Model Assess Architect Activate
+8. PMO automation audit USD 4,000–5,000 timeline
+
+Canonical facts to verify
+-------------------------
+- Audit: USD 4,000–5,000 · 5–10 business days
+- Markets: GCC · Singapore
+- Diagnostic: https://diagnostic.chisokulabs.com/
+- Contact: agam@chisokulabs.com
+- No fabricated client ROI
+
+Surfaces
+--------
+- https://chisokulabs.com/faq
+- https://chisokulabs.com/glossary
+- https://chisokulabs.com/llms.txt
+- https://chisokulabs.com/llms-full.txt
+- https://chisokulabs.com/sitemap.xml

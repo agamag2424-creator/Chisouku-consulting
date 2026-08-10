@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { AuditFitForm } from "../../components/contact/AuditFitForm";
 import { PmoOperatingMap } from "../../components/artifacts/PmoOperatingMap";
+import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 
 type Props = {
@@ -12,6 +14,14 @@ export default async function ContactPage({ searchParams }: Props) {
   const interest = params.interest;
 
   return (
+    <>
+      <JsonLdScript
+        id="contact-breadcrumb-ld-json"
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Audit Fit Call", path: "/contact" },
+        ])}
+      />
     <section className="section pt-16">
       <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
@@ -61,5 +71,6 @@ export default async function ContactPage({ searchParams }: Props) {
         <AuditFitForm defaultInterest={interest} />
       </div>
     </section>
+    </>
   );
 }

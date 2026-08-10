@@ -1,13 +1,32 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AiImpactModel } from "../../components/artifacts/AiImpactModel";
+import { DirectAnswer } from "../../components/aeo/DirectAnswer";
+import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { canonicalAnswers } from "../../lib/aeoContent";
+import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 
+const title = "Method — AI Impact Model";
+const description =
+  "ChisokuLabs AI Impact Model: Assess, Architect, Activate, Accelerate — starting with the PMO reporting layer.";
+
 export const metadata: Metadata = {
-  title: "Method — AI Impact Model",
-  description:
-    "ChisokuLabs AI Impact Model: Assess, Architect, Activate, Accelerate — starting with the PMO reporting layer.",
+  title,
+  description,
   alternates: { canonical: "/method" },
+  openGraph: {
+    title: `${title} | ChisokuLabs`,
+    description,
+    url: `${siteConfig.url}/method`,
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ChisokuLabs`,
+    description,
+    images: ["/og.png"],
+  },
 };
 
 const gates = [
@@ -44,6 +63,13 @@ const gates = [
 export default function MethodPage() {
   return (
     <>
+      <JsonLdScript
+        id="method-breadcrumb-ld-json"
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Method", path: "/method" },
+        ])}
+      />
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
           <p className="eyebrow">Method</p>
@@ -51,6 +77,18 @@ export default function MethodPage() {
           <p className="subhead mt-5">
             {siteConfig.tagline}. {siteConfig.subline}.
           </p>
+          <DirectAnswer
+            answer={canonicalAnswers.method}
+            bullets={[
+              "Go/No-Go gates after each phase — prevent runaway scope",
+              "PMO reporting starts at Assess → Architect (the audit)",
+              "Definitions: pack cycle, reporting drag — see glossary",
+            ]}
+            primaryHref="/pmo-automation-audit"
+            primaryLabel="View PMO Automation Audit"
+            secondaryHref="/glossary#ai-impact-model"
+            secondaryLabel="Glossary · AI Impact Model"
+          />
         </div>
       </section>
 

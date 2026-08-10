@@ -2,13 +2,32 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AiReportingBlueprint } from "../../components/artifacts/AiReportingBlueprint";
 import { PackCycleStrip } from "../../components/artifacts/PackCycleStrip";
+import { DirectAnswer } from "../../components/aeo/DirectAnswer";
+import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { canonicalAnswers } from "../../lib/aeoContent";
+import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 
+const title = "AI Implementation Path";
+const description =
+  "What implementation looks like after the PMO Automation Audit — Data → Integration → Logic → Interface for the reporting pack cycle.";
+
 export const metadata: Metadata = {
-  title: "AI Implementation Path",
-  description:
-    "What implementation looks like after the PMO Automation Audit — Data → Integration → Logic → Interface for the reporting pack cycle.",
+  title,
+  description,
   alternates: { canonical: "/implementation" },
+  openGraph: {
+    title: `${title} | ChisokuLabs`,
+    description,
+    url: `${siteConfig.url}/implementation`,
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ChisokuLabs`,
+    description,
+    images: ["/og.png"],
+  },
 };
 
 const automateFirst = [
@@ -28,6 +47,13 @@ const doNotSell = [
 export default function ImplementationPage() {
   return (
     <>
+      <JsonLdScript
+        id="implementation-breadcrumb-ld-json"
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Implementation", path: "/implementation" },
+        ])}
+      />
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
           <p className="eyebrow">Implementation · Activate phase</p>
@@ -36,14 +62,18 @@ export default function ImplementationPage() {
             After the audit blueprint — build AI automation into the pack cycle.
             Clarity on what implementation looks like — not a separate offer.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact?interest=AI%20Implementation" className="button button-primary">
-              Book Implementation Fit Call
-            </Link>
-            <Link href="/pmo-automation-audit" className="button button-secondary">
-              Start with the audit
-            </Link>
-          </div>
+          <DirectAnswer
+            answer={canonicalAnswers.implementation}
+            bullets={[
+              "Automate first: collection → consolidation → narrative → distribution",
+              canonicalAnswers.systems,
+              "Not sold: tool licenses, multi-year rebuilds, strategy without a reporting start",
+            ]}
+            primaryHref="/contact?interest=AI%20Implementation"
+            primaryLabel="Book Implementation Fit Call"
+            secondaryHref="/pmo-automation-audit"
+            secondaryLabel="Start with the audit"
+          />
         </div>
       </section>
 

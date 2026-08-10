@@ -6,12 +6,30 @@ import { OpportunityMatrix } from "../../components/artifacts/OpportunityMatrix"
 import { ImplementationBlueprint } from "../../components/artifacts/ImplementationBlueprint";
 import { AiReportingBlueprint } from "../../components/artifacts/AiReportingBlueprint";
 import { SampleAuditArtifact } from "../../components/artifacts/SampleAuditArtifact";
+import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { breadcrumbJsonLd } from "../../lib/jsonLd";
+import { siteConfig } from "../../lib/siteConfig";
+
+const title = "Audit Outputs";
+const description =
+  "PMO Automation Audit artifacts — operating map, drag ledger, opportunity matrix, AI reporting blueprint, and implementation sequence.";
 
 export const metadata: Metadata = {
-  title: "Audit Outputs",
-  description:
-    "PMO Automation Audit artifacts — operating map, drag ledger, opportunity matrix, AI reporting blueprint, and implementation sequence.",
+  title,
+  description,
   alternates: { canonical: "/sample-outputs" },
+  openGraph: {
+    title: `${title} | ChisokuLabs`,
+    description,
+    url: `${siteConfig.url}/sample-outputs`,
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ChisokuLabs`,
+    description,
+    images: ["/og.png"],
+  },
 };
 
 const strip = [
@@ -25,6 +43,13 @@ const strip = [
 export default function SampleOutputsPage() {
   return (
     <>
+      <JsonLdScript
+        id="sample-outputs-breadcrumb-ld-json"
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Audit Outputs", path: "/sample-outputs" },
+        ])}
+      />
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
           <p className="eyebrow">Audit outputs</p>

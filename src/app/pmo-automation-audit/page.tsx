@@ -3,13 +3,32 @@ import Link from "next/link";
 import { AuditPathway } from "../../components/artifacts/AuditPathway";
 import { SampleAuditArtifact } from "../../components/artifacts/SampleAuditArtifact";
 import { PackCycleStrip } from "../../components/artifacts/PackCycleStrip";
+import { DirectAnswer } from "../../components/aeo/DirectAnswer";
+import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { canonicalAnswers } from "../../lib/aeoContent";
+import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { auditPriceRange, siteConfig } from "../../lib/siteConfig";
 
+const title = "PMO Automation Audit";
+const description =
+  "A 5-10 business day PMO Automation Audit for growth-stage SMEs in the GCC and Singapore — map reporting drag, score AI automation fit, leave with a blueprint.";
+
 export const metadata: Metadata = {
-  title: "PMO Automation Audit",
-  description:
-    "A 5-10 business day PMO Automation Audit for growth-stage SMEs in the GCC and Singapore — map reporting drag, score AI automation fit, leave with a blueprint.",
+  title,
+  description,
   alternates: { canonical: "/pmo-automation-audit" },
+  openGraph: {
+    title: `${title} | ChisokuLabs`,
+    description,
+    url: `${siteConfig.url}/pmo-automation-audit`,
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ChisokuLabs`,
+    description,
+    images: ["/og.png"],
+  },
 };
 
 const deliverables = [
@@ -38,6 +57,13 @@ const notForItems = [
 export default function AuditPage() {
   return (
     <>
+      <JsonLdScript
+        id="audit-breadcrumb-ld-json"
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "PMO Automation Audit", path: "/pmo-automation-audit" },
+        ])}
+      />
       <section className="section report-cover pt-16">
         <div className="container grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:items-end">
           <div>
@@ -47,19 +73,19 @@ export default function AuditPage() {
               Find reporting drag. Score AI automation fit. Leave with a blueprint —
               in {siteConfig.pricing.timeline}.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/contact" className="button button-primary">
-                Book Audit Fit Call
-              </Link>
-              <a
-                href={siteConfig.diagnosticUrl}
-                className="button button-secondary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Run Free PMO Diagnostic
-              </a>
-            </div>
+            <DirectAnswer
+              answer={canonicalAnswers.audit}
+              bullets={[
+                `Typical range ${auditPriceRange} · timeline ${siteConfig.pricing.timeline}`,
+                "Blueprint deliverables — map, drag ledger, fit score, ROI hypothesis",
+                `Markets · ${siteConfig.markets.primary} · ${siteConfig.markets.secondary}`,
+              ]}
+              primaryHref="/contact"
+              primaryLabel="Book Audit Fit Call"
+              secondaryHref={siteConfig.diagnosticUrl}
+              secondaryLabel="Run Free PMO Diagnostic"
+              secondaryExternal
+            />
           </div>
           <div className="artifact-sheet paper-grain p-7">
             <div className="grid gap-6">

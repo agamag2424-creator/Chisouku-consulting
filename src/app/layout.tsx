@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { IBM_Plex_Mono, Libre_Franklin, Source_Sans_3 } from "next/font/google";
 import "../styles/globals.css";
+import { JsonLdScript } from "../components/aeo/JsonLdScript";
 import { Nav } from "../components/layout/Nav";
 import { Footer } from "../components/layout/Footer";
+import {
+  auditServiceJsonLd,
+  diagnosticServiceJsonLd,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "../lib/jsonLd";
 import { siteConfig } from "../lib/siteConfig";
 
 const libreFranklin = Libre_Franklin({
@@ -90,57 +96,17 @@ export default function RootLayout({
       className={`${libreFranklin.variable} ${sourceSans.variable} ${plexMono.variable}`}
     >
       <body className="antialiased">
-        <Script
-          id="chisokulabs-org-ld-json"
-          type="application/ld+json"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "ChisokuLabs",
-              url: siteUrl,
-              description: `${siteConfig.tagline}. ${siteConfig.subline}.`,
-              sameAs: [siteConfig.linkedIn],
-              logo: `${siteUrl}/brand/favicon-mark.png`,
-            }),
-          }}
-        />
+        <JsonLdScript id="chisokulabs-org-ld-json" data={organizationJsonLd()} />
+        <JsonLdScript id="chisokulabs-website-ld-json" data={websiteJsonLd()} />
         <div className="site-shell">
           <Nav />
           <main className="site-main pt-20">{children}</main>
           <Footer />
         </div>
-        <Script
-          id="chisokulabs-services-ld-json"
-          type="application/ld+json"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Service",
-              serviceType: "PMO Automation Audit",
-              description:
-                "AI automation for delivery systems, starting with the PMO reporting layer.",
-              provider: {
-                "@type": "Organization",
-                name: "ChisokuLabs",
-                url: siteUrl,
-              },
-              areaServed: ["GCC", "Singapore"],
-              offers: {
-                "@type": "Offer",
-                priceCurrency: siteConfig.pricing.currency,
-                priceSpecification: {
-                  "@type": "PriceSpecification",
-                  minPrice: siteConfig.pricing.min,
-                  maxPrice: siteConfig.pricing.max,
-                  priceCurrency: siteConfig.pricing.currency,
-                },
-              },
-              url: `${siteUrl}/pmo-automation-audit`,
-            }),
-          }}
+        <JsonLdScript id="chisokulabs-audit-service-ld-json" data={auditServiceJsonLd()} />
+        <JsonLdScript
+          id="chisokulabs-diagnostic-service-ld-json"
+          data={diagnosticServiceJsonLd()}
         />
       </body>
     </html>

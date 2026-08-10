@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
+import { siteConfig } from "../../lib/siteConfig";
+
+const title = "Audit Fit Call";
+const description =
+  "Fit call for AI automation in delivery systems — starting at PMO reporting. Diagnostic, Audit, or Implementation.";
 
 export const metadata: Metadata = {
-  title: "Audit Fit Call",
-  description:
-    "Fit call for AI automation in delivery systems — starting at PMO reporting. Diagnostic, Audit, or Implementation.",
+  title,
+  description,
   keywords: [
     "AI automation delivery systems",
     "PMO automation audit call",
@@ -11,6 +15,18 @@ export const metadata: Metadata = {
     "ChisokuLabs contact",
   ],
   alternates: { canonical: "/contact" },
+  openGraph: {
+    title: `${title} | ChisokuLabs`,
+    description,
+    url: `${siteConfig.url}/contact`,
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ChisokuLabs`,
+    description,
+    images: ["/og.png"],
+  },
 };
 
 export default function ContactLayout({

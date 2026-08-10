@@ -33,6 +33,12 @@ export function Footer() {
             <Link href="/implementation" className="block hover:text-[#fffdf8]">
               Implementation
             </Link>
+            <Link href="/faq" className="block hover:text-[#fffdf8]">
+              FAQ
+            </Link>
+            <Link href="/glossary" className="block hover:text-[#fffdf8]">
+              Glossary
+            </Link>
             <Link href="/contact" className="block hover:text-[#fffdf8]">
               Audit Fit Call
             </Link>
@@ -49,6 +55,9 @@ export function Footer() {
               className="block hover:text-[#fffdf8]"
             >
               LinkedIn
+            </a>
+            <a href="/llms.txt" className="block hover:text-[#fffdf8]">
+              llms.txt
             </a>
             <Link href="/privacy" className="block hover:text-[#fffdf8]">
               Privacy

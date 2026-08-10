@@ -1,12 +1,30 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { breadcrumbJsonLd, personJsonLd } from "../../lib/jsonLd";
+import { siteConfig } from "../../lib/siteConfig";
+
+const title = "Founder Track Record";
+const description =
+  "Agam Agrawwal — PMO delivery leadership and AI automation practice behind ChisokuLabs.";
 
 export const metadata: Metadata = {
-  title: "Founder Track Record",
-  description:
-    "Agam Agrawwal — PMO delivery leadership and AI automation practice behind ChisokuLabs.",
+  title,
+  description,
   alternates: { canonical: "/founder-track-record" },
+  openGraph: {
+    title: `${title} | ChisokuLabs`,
+    description,
+    url: `${siteConfig.url}/founder-track-record`,
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ChisokuLabs`,
+    description,
+    images: ["/og.png"],
+  },
 };
 
 const proof = [
@@ -57,6 +75,14 @@ const achievements = [
 export default function FounderTrackRecordPage() {
   return (
     <>
+      <JsonLdScript id="founder-person-ld-json" data={personJsonLd()} />
+      <JsonLdScript
+        id="founder-breadcrumb-ld-json"
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Founder", path: "/founder-track-record" },
+        ])}
+      />
       <section className="section report-cover pt-16">
         <div className="container grid gap-12 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
           <figure className="relative">
@@ -78,6 +104,11 @@ export default function FounderTrackRecordPage() {
             <p className="subhead mt-5">
               PMO delivery leadership + AI automation practice — built in
               delivery rooms, not decks.
+            </p>
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-[var(--color-muted)]">
+              What this is: career delivery leadership and founder capability behind
+              how ChisokuLabs approaches the reporting layer. What this is not: a
+              ChisokuLabs client case study or guaranteed ROI for buyers.
             </p>
           </div>
         </div>

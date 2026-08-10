@@ -10,6 +10,8 @@ const paths = [
   "/implementation",
   "/founder-track-record",
   "/sample-outputs",
+  "/faq",
+  "/glossary",
   "/contact",
   "/privacy",
 ];

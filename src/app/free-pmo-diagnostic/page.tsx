@@ -1,13 +1,32 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DiagnosticOrbit } from "../../components/artifacts/DiagnosticOrbit";
+import { DirectAnswer } from "../../components/aeo/DirectAnswer";
+import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { canonicalAnswers } from "../../lib/aeoContent";
+import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 
+const title = "Free PMO Diagnostic";
+const description =
+  "5-minute PMO baseline — see where AI automation can remove reporting drag before an Audit Fit Call.";
+
 export const metadata: Metadata = {
-  title: "Free PMO Diagnostic",
-  description:
-    "5-minute PMO baseline — see where AI automation can remove reporting drag before an Audit Fit Call.",
+  title,
+  description,
   alternates: { canonical: "/free-pmo-diagnostic" },
+  openGraph: {
+    title: `${title} | ChisokuLabs`,
+    description,
+    url: `${siteConfig.url}/free-pmo-diagnostic`,
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ChisokuLabs`,
+    description,
+    images: ["/og.png"],
+  },
 };
 
 const measures = [
@@ -21,6 +40,13 @@ const measures = [
 export default function DiagnosticPage() {
   return (
     <>
+      <JsonLdScript
+        id="diagnostic-breadcrumb-ld-json"
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Free PMO Diagnostic", path: "/free-pmo-diagnostic" },
+        ])}
+      />
       <section className="section pt-16">
         <div className="container grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
           <div>
@@ -30,14 +56,18 @@ export default function DiagnosticPage() {
               A 5-minute baseline that shows where AI automation can remove
               reporting drag — before an Audit Fit Call.
             </p>
-            <a
-              href={siteConfig.diagnosticUrl}
-              className="button button-primary mt-8"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Run Free PMO Diagnostic
-            </a>
+            <DirectAnswer
+              answer={canonicalAnswers.diagnostic}
+              bullets={[
+                "20 questions · No login · No data stored",
+                "Maturity profile, dimension scores, 90-day priority actions",
+                "Next step if the gap is material: Audit Fit Call",
+              ]}
+              primaryHref={siteConfig.diagnosticUrl}
+              primaryLabel="Run Free PMO Diagnostic"
+              secondaryHref="/contact"
+              secondaryLabel="Book Audit Fit Call"
+            />
           </div>
           <DiagnosticOrbit />
         </div>

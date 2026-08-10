@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+/** Allow all crawlers; llms.txt / llms-full.txt are public discovery surfaces. */
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
@@ -9,5 +10,6 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: "https://chisokulabs.com/sitemap.xml",
+    host: "https://chisokulabs.com",
   };
 }
