@@ -5,7 +5,7 @@ export const canonicalAnswers = {
   whatWeDo: `${siteConfig.name} builds ${siteConfig.tagline}, ${siteConfig.subline}, for growth-stage SMEs in the ${siteConfig.markets.primary} and ${siteConfig.markets.secondary}.`,
   audit: `The PMO Automation Audit maps reporting drag, scores AI automation fit, and leaves a blueprint in ${siteConfig.pricing.timeline}, typically ${auditPriceRange}.`,
   auditTimeline: `Typical timeline is ${siteConfig.pricing.timeline}; final scope is confirmed after the Audit Fit Call.`,
-  diagnostic: `The Free PMO Diagnostic is a five-minute baseline of reporting maturity, operating drag, and AI automation fit — no login, no data stored — at ${siteConfig.diagnosticUrl}`,
+  diagnostic: `The Free PMO Diagnostic is a five-minute baseline of reporting maturity, operating drag, and AI automation fit — no account required; email used for results follow-up — at ${siteConfig.diagnosticUrl}`,
   whoFor: `COO, VP Operations, Head of PMO, Director of Project Delivery, and founder/CEOs of growth-stage SMEs in the ${siteConfig.markets.primary} or ${siteConfig.markets.secondary} with reporting, escalation, or PMO visibility drag.`,
   packCycle: `The pack cycle is the recurring work to collect status, consolidate signals, write narrative, and distribute packs to decision forums.`,
   reportingDrag: `Reporting drag is time and cost lost to manual exports, spreadsheet glue, stale narrative, and forum chase in the pack cycle.`,

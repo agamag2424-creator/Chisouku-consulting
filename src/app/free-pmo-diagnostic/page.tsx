@@ -59,7 +59,7 @@ export default function DiagnosticPage() {
             <DirectAnswer
               answer={canonicalAnswers.diagnostic}
               bullets={[
-                "20 questions · No login · No data stored",
+                "20 questions · No account · Email used for results follow-up",
                 "Maturity profile, dimension scores, 90-day priority actions",
                 "Next step if the gap is material: Audit Fit Call",
               ]}
