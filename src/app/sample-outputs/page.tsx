@@ -148,6 +148,20 @@ export default function SampleOutputsPage() {
             View implementation path
           </Link>
         </div>
+        <p className="container mt-6 text-sm text-[var(--color-muted)]">
+          Related:{" "}
+          <Link href="/free-pmo-diagnostic" className="font-semibold text-[var(--color-cyan-strong)]">
+            Free PMO Diagnostic
+          </Link>
+          {" · "}
+          <Link href="/method" className="font-semibold text-[var(--color-cyan-strong)]">
+            Method
+          </Link>
+          {" · "}
+          <Link href="/founder-track-record" className="font-semibold text-[var(--color-cyan-strong)]">
+            Founder
+          </Link>
+        </p>
       </section>
     </>
   );

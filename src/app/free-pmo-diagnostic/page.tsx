@@ -133,6 +133,20 @@ export default function DiagnosticPage() {
               Book Audit Fit Call
             </Link>
           </div>
+          <p className="text-sm text-[rgba(255,253,248,0.72)] lg:col-span-2">
+            Related:{" "}
+            <Link href="/implementation" className="font-semibold text-[#fffdf8]">
+              Implementation
+            </Link>
+            {" · "}
+            <Link href="/method" className="font-semibold text-[#fffdf8]">
+              Method
+            </Link>
+            {" · "}
+            <Link href="/sample-outputs" className="font-semibold text-[#fffdf8]">
+              Sample outputs
+            </Link>
+          </p>
         </div>
       </section>
     </>

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const base = "https://chisokulabs.com";
+const base = "https://www.chisokulabs.com";
 
 type Entry = {
   path: string;

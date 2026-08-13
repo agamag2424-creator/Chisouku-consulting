@@ -156,6 +156,24 @@ export default function ImplementationPage() {
             Book Implementation Fit Call
           </Link>
         </div>
+        <p className="container mt-6 text-sm text-[rgba(255,253,248,0.72)]">
+          Related:{" "}
+          <Link href="/free-pmo-diagnostic" className="font-semibold text-[#fffdf8]">
+            Free PMO Diagnostic
+          </Link>
+          {" · "}
+          <Link href="/pmo-automation-audit" className="font-semibold text-[#fffdf8]">
+            PMO Automation Audit
+          </Link>
+          {" · "}
+          <Link href="/method" className="font-semibold text-[#fffdf8]">
+            Method
+          </Link>
+          {" · "}
+          <Link href="/sample-outputs" className="font-semibold text-[#fffdf8]">
+            Sample outputs
+          </Link>
+        </p>
       </section>
     </>
   );

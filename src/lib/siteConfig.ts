@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "ChisokuLabs",
-  url: "https://chisokulabs.com",
+  url: "https://www.chisokulabs.com",
   email: "agam@chisokulabs.com",
   linkedIn: "https://www.linkedin.com/in/agamag24",
   tagline: "AI automation for delivery systems",

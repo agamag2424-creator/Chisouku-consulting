@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://chisokulabs.com/sitemap.xml",
-    host: "https://chisokulabs.com",
+    sitemap: "https://www.chisokulabs.com/sitemap.xml",
+    host: "https://www.chisokulabs.com",
   };
 }

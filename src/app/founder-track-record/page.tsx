@@ -168,14 +168,28 @@ export default function FounderTrackRecordPage() {
             <h2 className="headline">If the drag is real, map the audit.</h2>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Link href="/free-pmo-diagnostic" className="button button-light">
-              Free PMO Diagnostic
+            <Link href="/pmo-automation-audit" className="button button-light">
+              View PMO Automation Audit
             </Link>
             <Link href="/contact" className="button button-line-light">
               Book Audit Fit Call
             </Link>
           </div>
         </div>
+        <p className="container mt-6 text-sm text-[rgba(255,253,248,0.72)]">
+          Related:{" "}
+          <Link href="/free-pmo-diagnostic" className="font-semibold text-[#fffdf8]">
+            Free PMO Diagnostic
+          </Link>
+          {" · "}
+          <Link href="/implementation" className="font-semibold text-[#fffdf8]">
+            Implementation
+          </Link>
+          {" · "}
+          <Link href="/sample-outputs" className="font-semibold text-[#fffdf8]">
+            Sample outputs
+          </Link>
+        </p>
       </section>
 
       <p className="container pb-10 text-center font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">

@@ -288,7 +288,7 @@ export default function Home() {
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-[var(--color-muted)]">
-              Blueprint ready? Continue to implementation fit.
+              Blueprint ready? Continue to the implementation path.
             </p>
             <Link href="/implementation" className="button button-secondary">
               View implementation path
@@ -447,10 +447,16 @@ export default function Home() {
             <Link href="/free-pmo-diagnostic" className="button button-light">
               Free PMO Diagnostic
             </Link>
-            <Link href="/contact" className="button button-line-light">
-              Book Audit Fit Call
+            <Link href="/pmo-automation-audit" className="button button-line-light">
+              View PMO Automation Audit
             </Link>
           </div>
+          <p className="mt-6 text-sm text-[rgba(255,253,248,0.72)]">
+            Ready to talk?{" "}
+            <Link href="/contact" className="font-semibold text-[#fffdf8] underline-offset-4 hover:underline">
+              Book Audit Fit Call
+            </Link>
+          </p>
         </div>
       </section>
     </>
