@@ -30,11 +30,11 @@ export const metadata: Metadata = {
 };
 
 const measures = [
-  ["Governance", "Cadence, ownership, escalation thresholds"],
-  ["Reporting", "Pack assembly, freshness, reconciliation drag"],
-  ["Risk", "RAID visibility and late-signal patterns"],
-  ["Resources", "Capacity conflicts and planning friction"],
-  ["AI readiness", "Automation fit — where AI can remove reporting drag"],
+  ["Governance & Process", "Intake, change control, risk, standards"],
+  ["Portfolio & Prioritisation", "Priority, visibility, resource choices"],
+  ["People & Capability", "Ownership, knowledge, delivery practice"],
+  ["Reporting & Visibility", "Pack cycle, forecasting, decisions"],
+  ["AI & Digital Readiness", "Automation fit, validation, guardrails"],
 ];
 
 export default function DiagnosticPage() {
@@ -84,7 +84,7 @@ export default function DiagnosticPage() {
                 className={[
                   "editorial-row px-5 md:px-6",
                   index === 0 ? "border-t-0" : "",
-                  title === "AI readiness"
+                  title === "AI & Digital Readiness"
                     ? "bg-[rgba(0,166,200,0.04)]"
                     : "",
                 ].join(" ")}

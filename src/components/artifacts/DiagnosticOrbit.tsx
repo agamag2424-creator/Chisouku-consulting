@@ -6,13 +6,14 @@ type Props = {
 
 /** Solar-system style diagnostic graphic with slow orbit motion. */
 export function DiagnosticOrbit({ className }: Props) {
+  // Short orbit labels — full names on the measures list; match DimensionLabels order
   const inner = [
     { label: "Governance", angle: -20 },
-    { label: "Reporting", angle: 48 },
-    { label: "Risk", angle: 130 },
+    { label: "Portfolio", angle: 48 },
+    { label: "People", angle: 130 },
   ];
   const outer = [
-    { label: "Resources", angle: 205 },
+    { label: "Reporting", angle: 205 },
     { label: "AI readiness", angle: 290, emphasize: true },
   ];
 
