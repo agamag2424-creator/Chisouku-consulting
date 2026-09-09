@@ -2,7 +2,6 @@ export const siteConfig = {
   name: "ChisokuLabs",
   url: "https://www.chisokulabs.com",
   email: "agam@chisokulabs.com",
-  linkedIn: "https://www.linkedin.com/in/agamag24",
   tagline: "AI automation for delivery systems",
   subline: "Starting with the PMO reporting layer",
   diagnosticUrl: "https://diagnostic.chisokulabs.com/",
@@ -30,7 +29,6 @@ export const navLinks = [
   { href: "/free-pmo-diagnostic", label: "Diagnostic" },
   { href: "/implementation", label: "Implementation" },
   { href: "/method", label: "Method" },
-  { href: "/founder-track-record", label: "Founder" },
   { href: "/sample-outputs", label: "Outputs" },
 ] as const;
 

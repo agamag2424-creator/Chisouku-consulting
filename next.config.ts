@@ -64,6 +64,16 @@ const nextConfig: NextConfig = {
         destination: "/implementation",
         permanent: true,
       },
+      {
+        source: "/founder-track-record",
+        destination: "/method",
+        permanent: true,
+      },
+      {
+        source: "/founder-track-record/:path*",
+        destination: "/method",
+        permanent: true,
+      },
     ];
   },
 };

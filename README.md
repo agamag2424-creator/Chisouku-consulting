@@ -64,4 +64,4 @@ Legacy URLs from earlier versions of the site are redirected in `next.config.ts`
 
 ## Proof rules
 
-The site makes no client claims that cannot be substantiated. Sample artifacts are labelled as methodology excerpts, the drag estimator is framed as directional, and founder achievements are attributed to prior employment. Keep new copy within these constraints.
+The site makes no client claims that cannot be substantiated. Sample artifacts are labelled as methodology excerpts and the drag estimator is framed as directional. Keep new copy within these constraints.

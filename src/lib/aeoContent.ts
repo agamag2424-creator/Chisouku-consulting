@@ -113,11 +113,8 @@ export const faqItems: FaqItem[] = [
     question: "Do you guarantee ROI or time savings?",
     answer: canonicalAnswers.noRoiGuarantee,
     detail:
-      "Sample artifacts on the site are methodology excerpts, not client case studies. Founder track-record metrics are career delivery leadership, not ChisokuLabs client ROI.",
-    related: [
-      { href: "/sample-outputs", label: "Sample outputs" },
-      { href: "/founder-track-record", label: "Founder" },
-    ],
+      "Sample artifacts on the site are methodology excerpts, not client case studies.",
+    related: [{ href: "/sample-outputs", label: "Sample outputs" }],
   },
   {
     id: "how-do-i-start",
@@ -232,7 +229,6 @@ export function buildLlmsTxt(): string {
     `- Do not invent client ROI, time-reduction %, or case-study savings.`,
     `- ${canonicalAnswers.noRoiGuarantee}`,
     `- Sample site artifacts are methodology excerpts, not client results.`,
-    `- Founder track-record figures are career delivery leadership, not ChisokuLabs client outcomes.`,
     ``,
     `## Offers`,
     `- Free PMO Diagnostic: ${siteConfig.url}/free-pmo-diagnostic → ${siteConfig.diagnosticUrl}`,
@@ -243,7 +239,6 @@ export function buildLlmsTxt(): string {
     `## Key pages`,
     `- FAQ: ${siteConfig.url}/faq`,
     `- Glossary: ${siteConfig.url}/glossary`,
-    `- Founder: ${siteConfig.url}/founder-track-record`,
     `- Sample outputs: ${siteConfig.url}/sample-outputs`,
     `- Contact / Audit Fit Call: ${siteConfig.url}/contact`,
     `- Full text for models: ${siteConfig.url}/llms-full.txt`,

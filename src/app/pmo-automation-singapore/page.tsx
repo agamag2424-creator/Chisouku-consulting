@@ -55,7 +55,7 @@ export default function SingaporePage() {
           heading: "What a Singapore engagement looks like",
           paragraphs: [
             "Remote-friendly discovery interviews, system access for the reporting layer, and a blueprint you can take to leadership. Implementation follows only when the audit shows clear ownership and fit.",
-            `${canonicalAnswers.noRoiGuarantee} Founder track-record metrics on this site are career delivery leadership, not Singapore client ROI case studies.`,
+            canonicalAnswers.noRoiGuarantee,
           ],
         },
         {

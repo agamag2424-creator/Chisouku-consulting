@@ -63,12 +63,6 @@ const entries: Entry[] = [
     priority: 0.7,
     lastModified: "2026-08-10",
   },
-  {
-    path: "/founder-track-record",
-    changeFrequency: "monthly",
-    priority: 0.6,
-    lastModified: "2026-08-10",
-  },
   { path: "/contact", changeFrequency: "monthly", priority: 0.7, lastModified: "2026-08-10" },
   { path: "/privacy", changeFrequency: "yearly", priority: 0.2, lastModified: "2026-08-05" },
 ];

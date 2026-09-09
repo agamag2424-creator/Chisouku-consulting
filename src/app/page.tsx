@@ -34,29 +34,6 @@ export const metadata: Metadata = {
   },
 };
 
-const proofTiles = [
-  {
-    title: "11+ years",
-    detail: "PMO / delivery experience",
-    icon: "years",
-  },
-  {
-    title: "40+ FTE",
-    detail: "Programme delivery exposure",
-    icon: "fte",
-  },
-  {
-    title: "UK fintech PMO",
-    detail: "Regulated operating context",
-    icon: "uk",
-  },
-  {
-    title: "7-country",
-    detail: "Programme context",
-    icon: "world",
-  },
-] as const;
-
 const trustPoints = [
   {
     label: "Capability",
@@ -298,48 +275,16 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <figure className="relative">
-            <div className="absolute -left-4 -top-4 hidden h-full w-full border border-[rgba(17,24,32,0.14)] md:block" />
-            <div className="relative overflow-hidden shadow-[0_34px_90px_rgba(17,24,32,0.18)]">
-              <Image
-                src="/images/founder-agam.webp"
-                alt="Agam Agrawwal, Founder of ChisokuLabs"
-                width={900}
-                height={900}
-                className="aspect-[4/5] w-full object-cover object-[50%_18%]"
-                sizes="(max-width: 1024px) 100vw, 45vw"
-              />
-            </div>
-          </figure>
-          <div>
-            <p className="eyebrow">Founder</p>
-            <h2 className="headline">Delivery rooms, not decks.</h2>
-            <p className="subhead mt-4">
-              PMO delivery leadership + AI automation practice.
-            </p>
-            <div className="report-board paper-grain mt-8 grid sm:grid-cols-2">
-              {proofTiles.map((tile, index) => (
-                <div
-                  key={tile.title}
-                  className={[
-                    "p-5",
-                    index < 2 ? "border-b border-[rgba(17,24,32,0.1)]" : "",
-                    index % 2 === 0 ? "sm:border-r sm:border-[rgba(17,24,32,0.1)]" : "",
-                  ].join(" ")}
-                >
-                  <ProofIcon type={tile.icon} />
-                  <div className="mt-3 font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
-                    {tile.title}
-                  </div>
-                  <div className="mt-1 text-sm text-[var(--color-muted)]">{tile.detail}</div>
-                </div>
-              ))}
-            </div>
-            <Link href="/founder-track-record" className="button button-secondary mt-8">
-              View founder detail
-            </Link>
-          </div>
+        <div className="container max-w-3xl">
+          <p className="eyebrow">Practice</p>
+          <h2 className="headline">Delivery rooms, not decks.</h2>
+          <p className="subhead mt-4">
+            Work starts in the reporting layer — map drag, score automation fit,
+            leave a blueprint. Implementation only when ownership is real.
+          </p>
+          <Link href="/method" className="button button-secondary mt-8">
+            View AI Impact Model
+          </Link>
         </div>
       </section>
 
@@ -428,17 +373,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section dark-band photo-atmosphere photo-atmosphere-dark">
-        <div className="photo-atmosphere-media" aria-hidden>
-          <Image
-            src="/images/founder-agam.webp"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover object-[50%_18%]"
-          />
-        </div>
-        <div className="container relative z-[1] max-w-4xl text-center">
+      <section className="section dark-band atmosphere-band">
+        <div className="container max-w-4xl text-center">
           <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Next step</p>
           <h2 className="headline mx-auto !max-w-xl">
             Run the diagnostic. Then map the audit.
@@ -461,43 +397,4 @@ export default function Home() {
       </section>
     </>
   );
-}
-
-function ProofIcon({ type }: { type: (typeof proofTiles)[number]["icon"] }) {
-  switch (type) {
-    case "years":
-      return (
-        <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden>
-          <rect x="4" y="6" width="24" height="20" rx="2" fill="none" stroke="rgba(17,24,32,0.35)" strokeWidth="2" />
-          <path d="M4 12 H28" stroke="#00A6C8" strokeWidth="2" />
-        </svg>
-      );
-    case "fte":
-      return (
-        <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden>
-          <circle cx="10" cy="12" r="3" fill="#111820" />
-          <circle cx="22" cy="12" r="3" fill="#111820" />
-          <path d="M5 24c0-3 2.5-5 5-5s5 2 5 5 M17 24c0-3 2.5-5 5-5s5 2 5 5" fill="none" stroke="#00A6C8" strokeWidth="2" />
-        </svg>
-      );
-    case "uk":
-      return (
-        <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden>
-          <rect x="5" y="8" width="22" height="16" rx="2" fill="none" stroke="rgba(17,24,32,0.35)" strokeWidth="2" />
-          <path d="M5 16 H27 M16 8 V24" stroke="#00A6C8" strokeWidth="2" />
-        </svg>
-      );
-    case "world":
-      return (
-        <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden>
-          <circle cx="16" cy="16" r="10" fill="none" stroke="rgba(17,24,32,0.35)" strokeWidth="2" />
-          <ellipse cx="16" cy="16" rx="5" ry="10" fill="none" stroke="#00A6C8" strokeWidth="2" />
-          <path d="M6 16 H26" stroke="rgba(17,24,32,0.25)" strokeWidth="2" />
-        </svg>
-      );
-    default: {
-      const _exhaustive: never = type;
-      return _exhaustive;
-    }
-  }
 }

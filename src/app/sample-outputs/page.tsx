@@ -157,10 +157,6 @@ export default function SampleOutputsPage() {
           <Link href="/method" className="font-semibold text-[var(--color-cyan-strong)]">
             Method
           </Link>
-          {" · "}
-          <Link href="/founder-track-record" className="font-semibold text-[var(--color-cyan-strong)]">
-            Founder
-          </Link>
         </p>
       </section>
     </>

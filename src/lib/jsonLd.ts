@@ -15,7 +15,6 @@ export function organizationJsonLd(): JsonLd {
     email: siteConfig.email,
     description: `${siteConfig.tagline}. ${siteConfig.subline}.`,
     areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
-    sameAs: [siteConfig.linkedIn],
     logo: `${siteUrl}/brand/favicon-mark.png`,
   };
 }
@@ -86,22 +85,6 @@ export function diagnosticServiceJsonLd(): JsonLd {
       url: siteConfig.diagnosticUrl,
     },
     url: `${siteUrl}/free-pmo-diagnostic`,
-  };
-}
-
-export function personJsonLd(): JsonLd {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Agam Agrawwal",
-    jobTitle: "Founder",
-    url: `${siteUrl}/founder-track-record`,
-    worksFor: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteUrl,
-    },
-    sameAs: [siteConfig.linkedIn],
   };
 }
 

@@ -61,14 +61,6 @@ export function Footer() {
             <a href={`mailto:${siteConfig.email}`} className="block hover:text-[#fffdf8]">
               {siteConfig.email}
             </a>
-            <a
-              href={siteConfig.linkedIn}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block hover:text-[#fffdf8]"
-            >
-              LinkedIn
-            </a>
             <a href="/llms.txt" className="block hover:text-[#fffdf8]">
               llms.txt
             </a>
