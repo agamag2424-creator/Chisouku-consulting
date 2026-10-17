@@ -58,6 +58,7 @@ const cards: readonly { offer: OfferKey; duration: string; includes: readonly st
   },
 ];
 
+// Buying questions only. Answers use PRD wording: 6.2, 6.3, 8.6, 9.3, 9.6 and the 9.9 answer notes.
 const faq = [
   {
     id: "why-publish-prices",
@@ -70,6 +71,42 @@ const faq = [
     summary: "What if our programme is larger?",
     content:
       "Multi-entity reviews are quoted after a scoping call. The list price applies to one programme, up to five workstreams.",
+  },
+  { id: "fee-credit", summary: "What is the fee credit?", content: feeCredit },
+  ...(siteConfig.foundingSlotsRemaining > 0
+    ? [
+        {
+          id: "founding-rate",
+          summary: "What is the founding-client rate?",
+          content: `The first three clients pay 50% of list price in exchange for a named or anonymised case study. Founding-client places remaining: ${siteConfig.foundingSlotsRemaining}.`,
+        },
+      ]
+    : []),
+  {
+    id: "payment",
+    summary: "How is payment structured?",
+    content: `${paymentTerms}, for the ${siteConfig.offers.evidenceCheck.name} and the ${siteConfig.offers.decisionReview.name}.`,
+  },
+  {
+    id: "under-four-weeks",
+    summary: "We go live in under four weeks. Can you still help?",
+    content: `Yes. A ${siteConfig.offers.evidenceCheck.name}, scoped to the highest-risk domains.`,
+  },
+  {
+    id: "team-time",
+    summary: "What do you need from our team?",
+    content:
+      "Documents on day one. Interviews only where the evidence conflicts, which keeps your team's time to a minimum.",
+  },
+  {
+    id: "fixes",
+    summary: "Do you implement or fix what you find?",
+    content: "No. We stay independent, and we tell you who should own each fix.",
+  },
+  {
+    id: "guarantee",
+    summary: "Do you guarantee a successful go-live?",
+    content: "No. The review does not guarantee go-live success.",
   },
 ];
 

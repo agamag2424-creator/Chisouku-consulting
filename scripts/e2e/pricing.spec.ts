@@ -18,10 +18,11 @@ for (const viewport of [
       await expect(page.getByText(price, { exact: true }).first()).toBeVisible();
     }
     await expect(page.getByText("50% on signature, 50% on delivery").first()).toBeVisible();
-    await expect(page.getByText("Founding-client places remaining: 3.", { exact: false })).toBeVisible();
+    await expect(page.getByText("Founding-client places remaining: 3.", { exact: false }).first()).toBeVisible();
     const table = page.getByRole("table", { name: /How ChisokuLabs compares/ });
     await expect(table.locator('th[scope="row"]')).toHaveCount(6);
     await expect(page.getByText("Comparisons describe typical market practice, not specific firms.")).toBeVisible();
+    await expect(page.locator("details")).toHaveCount(9);
     await page.getByText("What if our programme is larger?").click();
     await expect(page.getByText("Multi-entity reviews are quoted after a scoping call.", { exact: false })).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
