@@ -12,6 +12,7 @@ export const siteConfig = {
   markets: { primary: "United Arab Emirates", secondary: "Saudi Arabia" },
   platforms: ["SAP S/4HANA", "Oracle Fusion", "Microsoft Dynamics 365", "Salesforce", "Workday"],
   currency: "USD",
+  // PRD 6.1 prices approved (IN-1, 17 Oct 2026)
   offers: {
     evidenceCheck: {
       name: "Readiness Evidence Check",
@@ -37,7 +38,7 @@ export const siteConfig = {
   foundingSlotsRemaining: 3,
   selfCheck: { live: false, url: null as string | null },
   samplePackPath: "/documents/chisokulabs-go-live-decision-pack-illustrative.pdf",
-  // PRD 9.11; example values pending founder approval (IN-7)
+  // PRD 9.11; example values approved (IN-7, 17 Oct 2026)
   slipEstimator: {
     defaults: { people: 40, dayRate: 600, weeks: 4, parallelRunMonthly: 0 },
     workingDaysPerWeek: 5,
