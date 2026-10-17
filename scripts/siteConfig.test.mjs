@@ -36,3 +36,10 @@ test("isRouteLive ignores query and hash, and rejects unknown paths", () => {
 test("every nav link has a routeLive entry", () => {
   for (const link of navLinks) assert.ok(link.href in routeLive, link.href);
 });
+
+test("JSON-LD for a script tag escapes '<' so it cannot close the tag", async () => {
+  const { stringifyJsonLd } = await import("../src/lib/safeJson.ts");
+  const out = stringifyJsonLd({ name: "</script><script>alert(1)</script>" });
+  assert.ok(!out.includes("<"));
+  assert.deepEqual(JSON.parse(out), { name: "</script><script>alert(1)</script>" });
+});
