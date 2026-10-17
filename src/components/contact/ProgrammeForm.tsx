@@ -3,6 +3,7 @@
 import * as React from "react";
 import { requestTypes, type RequestKey } from "../../content/contactForm";
 import { siteConfig } from "../../lib/siteConfig";
+import { track } from "../../lib/track";
 import { cn } from "../../lib/utils";
 
 // "Discuss your programme" form (PRD 11, E9.1). Labels and options are PRD 11 wording; messages per BACKLOG E9.1.
@@ -75,6 +76,7 @@ export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: 
     setErrors(found);
     const first = fieldOrder.find((key) => found[key]);
     if (first) {
+      track("form_error", { reason: "validation", request_type: fields.request_type });
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
@@ -85,8 +87,11 @@ export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(fields),
       });
-      setStatus(response.ok ? "sent" : "failed");
+      if (!response.ok) throw new Error(String(response.status));
+      track("form_submit", { request_type: fields.request_type });
+      setStatus("sent");
     } catch {
+      track("form_error", { reason: "delivery", request_type: fields.request_type });
       setStatus("failed");
     }
   }

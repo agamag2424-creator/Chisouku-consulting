@@ -78,7 +78,7 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <Link href="/contact?request=review" className={linkClass}>
+              <Link href="/contact?request=review" className={linkClass} data-cta="contact-request-review">
                 Discuss your programme
               </Link>
             </li>

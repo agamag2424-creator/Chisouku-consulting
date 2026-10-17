@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { isRouteLive } from "../../lib/siteConfig";
+import { ctaIdFromHref } from "../../lib/track";
 import { cn } from "../../lib/utils";
 
 /** The "inverse" variants are for ink surfaces. */
@@ -11,6 +12,8 @@ type CommonProps = {
   variant?: Variant;
   size?: Size;
   className?: string;
+  /** Analytics id for `cta_click` (PRD 11). Links get one from their href when not given. */
+  ctaId?: string;
   children: ReactNode;
 };
 
@@ -47,7 +50,7 @@ const EXTERNAL = /^(https?:|mailto:|tel:)/;
  * An internal `href` whose route is not live yet (siteConfig.routeLive) renders as inactive text, never a dead link.
  */
 export function Button(props: ButtonProps) {
-  const { variant = "primary", size = "md", className, children, ...rest } = props;
+  const { variant = "primary", size = "md", className, ctaId, children, ...rest } = props;
   const classes = cn(
     "inline-flex items-center justify-center gap-2 font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50",
     variantClasses[variant],
@@ -64,15 +67,16 @@ export function Button(props: ButtonProps) {
         </span>
       );
     }
+    const tracking = { "data-cta": ctaId ?? ctaIdFromHref(href), "data-cta-variant": variant };
     if (EXTERNAL.test(href)) {
       return (
-        <a href={href} className={classes} {...anchorProps}>
+        <a href={href} className={classes} {...tracking} {...anchorProps}>
           {children}
         </a>
       );
     }
     return (
-      <Link href={href} className={classes} {...anchorProps}>
+      <Link href={href} className={classes} {...tracking} {...anchorProps}>
         {children}
       </Link>
     );

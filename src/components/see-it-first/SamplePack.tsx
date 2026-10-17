@@ -54,6 +54,8 @@ export function SamplePack() {
         <a
           href={siteConfig.samplePackPath}
           download
+          data-cta="sample-pack-download"
+          data-cta-variant="primary"
           onClick={() => track("sample_pack_download")}
           className="inline-flex min-h-12 items-center justify-center gap-2 rounded-control border border-ink bg-ink px-6 text-[17px] font-semibold text-paper transition-colors hover:border-teal hover:bg-teal"
         >
