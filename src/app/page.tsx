@@ -220,8 +220,8 @@ export default function Home() {
             <h2 className="t-h2 text-ink">No stake in your go-live date.</h2>
             <p className="t-body mt-6 text-ink">
               We take no implementation fees, resell no software and hold no system integrator partnerships. Your
-              documents are processed under a written data-handling policy: never used to train models, deleted at the end
-              of the engagement unless you ask us to keep them.
+              documents are processed under a written data-handling policy: never used to train models, deleted within 30
+              days of the final readout unless you ask us to keep them.
             </p>
             <div className="mt-6">
               <Button href="/independence-and-data" variant="text">
