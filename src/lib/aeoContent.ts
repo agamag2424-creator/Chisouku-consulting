@@ -1,16 +1,17 @@
-import { auditPriceRange, siteConfig } from "./siteConfig";
+import { siteConfig } from "./siteConfig";
+import { legacy, legacyAuditPriceRange } from "./legacyOffer"; // canonical answers are replaced in E8.1
 
 /** Canonical one-sentence answers — single source for FAQ, strips, llms.txt */
 export const canonicalAnswers = {
-  whatWeDo: `${siteConfig.name} builds ${siteConfig.tagline}, ${siteConfig.subline}, for growth-stage SMEs in the ${siteConfig.markets.primary} and ${siteConfig.markets.secondary}.`,
-  audit: `The PMO Automation Audit maps reporting drag, scores AI automation fit, and leaves a blueprint in ${siteConfig.pricing.timeline}, typically ${auditPriceRange}.`,
-  auditTimeline: `Typical timeline is ${siteConfig.pricing.timeline}; final scope is confirmed after the Audit Fit Call.`,
-  diagnostic: `The Free PMO Diagnostic is a five-minute baseline of reporting maturity, operating drag, and AI automation fit — no account required; email used for results follow-up — at ${siteConfig.diagnosticUrl}`,
-  whoFor: `COO, VP Operations, Head of PMO, Director of Project Delivery, and founder/CEOs of growth-stage SMEs in the ${siteConfig.markets.primary} or ${siteConfig.markets.secondary} with reporting, escalation, or PMO visibility drag.`,
+  whatWeDo: `${siteConfig.name} builds ${legacy.tagline}, ${legacy.subline}, for growth-stage SMEs in the ${legacy.markets.primary} and ${legacy.markets.secondary}.`,
+  audit: `The PMO Automation Audit maps reporting drag, scores AI automation fit, and leaves a blueprint in ${legacy.pricing.timeline}, typically ${legacyAuditPriceRange}.`,
+  auditTimeline: `Typical timeline is ${legacy.pricing.timeline}; final scope is confirmed after the Audit Fit Call.`,
+  diagnostic: `The Free PMO Diagnostic is a five-minute baseline of reporting maturity, operating drag, and AI automation fit — no account required; email used for results follow-up — at ${legacy.diagnosticUrl}`,
+  whoFor: `COO, VP Operations, Head of PMO, Director of Project Delivery, and founder/CEOs of growth-stage SMEs in the ${legacy.markets.primary} or ${legacy.markets.secondary} with reporting, escalation, or PMO visibility drag.`,
   packCycle: `The pack cycle is the recurring work to collect status, consolidate signals, write narrative, and distribute packs to decision forums.`,
   reportingDrag: `Reporting drag is time and cost lost to manual exports, spreadsheet glue, stale narrative, and forum chase in the pack cycle.`,
   path: `Path: Free PMO Diagnostic (baseline), then PMO Automation Audit (blueprint), then optional Implementation (build into the pack cycle).`,
-  systems: `Systems we commonly automate against: ${siteConfig.systems.join(", ")}.`,
+  systems: `Systems we commonly automate against: ${legacy.systems.join(", ")}.`,
   noRoiGuarantee: `We do not guarantee ROI or time savings. The audit produces an ROI hypothesis from your operating map — not fabricated client case metrics.`,
   howToStart: `Start with the Free PMO Diagnostic, then book an Audit Fit Call at ${siteConfig.url}/contact or email ${siteConfig.email}.`,
   method: `The AI Impact Model is Assess, then Architect, then Activate, then Accelerate. PMO reporting is Assess and Architect; Implementation is Activate.`,
@@ -120,7 +121,7 @@ export const faqItems: FaqItem[] = [
     id: "how-do-i-start",
     question: "How do I start?",
     answer: canonicalAnswers.howToStart,
-    detail: `Markets: ${siteConfig.markets.primary}, ${siteConfig.markets.secondary}. Full audit offer: ${siteConfig.url}/pmo-automation-audit`,
+    detail: `Markets: ${legacy.markets.primary}, ${legacy.markets.secondary}. Full audit offer: ${siteConfig.url}/pmo-automation-audit`,
     related: [
       { href: "/free-pmo-diagnostic", label: "Free PMO Diagnostic" },
       { href: "/contact", label: "Audit Fit Call" },
@@ -206,7 +207,7 @@ export const aeoProbeQueries = [
   "AI automation for delivery systems starting with PMO reporting",
   "What is reporting drag in PMO pack assembly?",
   "ChisokuLabs AI Impact Model Assess Architect Activate",
-  `PMO automation audit ${auditPriceRange} timeline`,
+  `PMO automation audit ${legacyAuditPriceRange} timeline`,
 ] as const;
 
 export function buildLlmsTxt(): string {
@@ -216,12 +217,12 @@ export function buildLlmsTxt(): string {
     `> ${canonicalAnswers.whatWeDo}`,
     ``,
     `## Canonical facts`,
-    `- Tagline: ${siteConfig.tagline}`,
-    `- Subline: ${siteConfig.subline}`,
-    `- Markets: ${siteConfig.markets.primary}, ${siteConfig.markets.secondary}`,
-    `- Audit typical range: ${auditPriceRange}`,
-    `- Audit typical timeline: ${siteConfig.pricing.timeline}`,
-    `- Diagnostic: ${siteConfig.diagnosticUrl}`,
+    `- Tagline: ${legacy.tagline}`,
+    `- Subline: ${legacy.subline}`,
+    `- Markets: ${legacy.markets.primary}, ${legacy.markets.secondary}`,
+    `- Audit typical range: ${legacyAuditPriceRange}`,
+    `- Audit typical timeline: ${legacy.pricing.timeline}`,
+    `- Diagnostic: ${legacy.diagnosticUrl}`,
     `- Contact: ${siteConfig.email}`,
     `- Site: ${siteConfig.url}`,
     ``,
@@ -231,7 +232,7 @@ export function buildLlmsTxt(): string {
     `- Sample site artifacts are methodology excerpts, not client results.`,
     ``,
     `## Offers`,
-    `- Free PMO Diagnostic: ${siteConfig.url}/free-pmo-diagnostic, then ${siteConfig.diagnosticUrl}`,
+    `- Free PMO Diagnostic: ${siteConfig.url}/free-pmo-diagnostic, then ${legacy.diagnosticUrl}`,
     `- PMO Automation Audit: ${siteConfig.url}/pmo-automation-audit`,
     `- Implementation path: ${siteConfig.url}/implementation`,
     `- Method (AI Impact Model): ${siteConfig.url}/method`,

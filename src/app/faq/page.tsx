@@ -4,6 +4,7 @@ import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { faqItems } from "../../lib/aeoContent";
 import { breadcrumbJsonLd, faqPageJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
+import { legacy } from "../../lib/legacyOffer"; // FAQ content is replaced in E8.1
 
 const title = "FAQ — PMO Diagnostic, Audit & Implementation";
 const description =
@@ -45,7 +46,7 @@ export default function FaqPage() {
           <p className="subhead mt-5">
             Direct answers on the Free PMO Diagnostic, PMO Automation Audit, and
             implementation path — for growth-stage SMEs in the{" "}
-            {siteConfig.markets.primary} and {siteConfig.markets.secondary}.
+            {legacy.markets.primary} and {legacy.markets.secondary}.
           </p>
           <p className="mt-4 text-sm text-[var(--color-muted)]">
             Definitions:{" "}

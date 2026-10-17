@@ -10,6 +10,7 @@ import { AiImpactModel } from "../components/artifacts/AiImpactModel";
 import { PackCycleStrip } from "../components/artifacts/PackCycleStrip";
 import { PackDragEstimator } from "../components/artifacts/PackDragEstimator";
 import { siteConfig } from "../lib/siteConfig";
+import { legacy } from "../lib/legacyOffer"; // removed in E10
 
 export const metadata: Metadata = {
   title: {
@@ -106,7 +107,7 @@ export default function Home() {
                 Find the drag. Automate what repeats.
               </h1>
               <p className="subhead mt-4 !mb-0 !max-w-xl">
-                {siteConfig.subline} — the fastest place delivery drag becomes
+                {legacy.subline} — the fastest place delivery drag becomes
                 visible, measurable, and automatable.
               </p>
               <p className="mt-5 !mb-0 text-[13px] font-bold text-[var(--color-muted)]">
@@ -297,7 +298,7 @@ export default function Home() {
             ))}
           </div>
           <p className="mt-8 text-[13px] font-bold text-[var(--color-muted)]">
-            Systems we automate against: {siteConfig.systems.join(", ")}
+            Systems we automate against: {legacy.systems.join(", ")}
           </p>
         </div>
       </section>

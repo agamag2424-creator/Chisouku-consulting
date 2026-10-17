@@ -1,5 +1,5 @@
 import { cn } from "../../lib/utils";
-import { impactPhases } from "../../lib/siteConfig";
+import { impactPhases } from "../../lib/legacyOffer"; // removed in E10
 
 type Props = {
   className?: string;

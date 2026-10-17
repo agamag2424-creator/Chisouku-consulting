@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { GuidePage } from "../../components/aeo/GuidePage";
 import { canonicalAnswers } from "../../lib/aeoContent";
-import { auditPriceRange, siteConfig } from "../../lib/siteConfig";
+import { siteConfig } from "../../lib/siteConfig";
+import { legacy, legacyAuditPriceRange } from "../../lib/legacyOffer"; // removed in E10
 
 const title = "PMO Automation for Singapore Growth-Stage SMEs";
 const description =
@@ -32,7 +33,7 @@ export default function SingaporePage() {
       path="/pmo-automation-singapore"
       title="PMO automation for Singapore SMEs."
       subhead={`${canonicalAnswers.whatWeDo} Singapore is a primary market alongside the GCC.`}
-      answer={`For Singapore growth-stage SMEs with reporting or PMO visibility drag, we start at the pack cycle — Free PMO Diagnostic, then a scoped PMO Automation Audit (typically ${auditPriceRange}, ${siteConfig.pricing.timeline}).`}
+      answer={`For Singapore growth-stage SMEs with reporting or PMO visibility drag, we start at the pack cycle — Free PMO Diagnostic, then a scoped PMO Automation Audit (typically ${legacyAuditPriceRange}, ${legacy.pricing.timeline}).`}
       bullets={[
         canonicalAnswers.whoFor,
         canonicalAnswers.systems,

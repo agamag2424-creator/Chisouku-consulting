@@ -1,4 +1,5 @@
-import { auditPriceRange, siteConfig } from "./siteConfig";
+import { siteConfig } from "./siteConfig";
+import { legacy, legacyAuditPriceRange } from "./legacyOffer"; // old Service blocks, removed in E8.4/E10
 import type { FaqItem } from "./aeoContent";
 
 const siteUrl = siteConfig.url;
@@ -13,7 +14,7 @@ export function organizationJsonLd(): JsonLd {
     legalName: "ChisokuLabs Pvt Ltd",
     url: siteUrl,
     email: siteConfig.email,
-    description: `${siteConfig.tagline}. ${siteConfig.subline}.`,
+    description: `${siteConfig.tagline}. ${siteConfig.positioning}`,
     areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
     logo: `${siteUrl}/brand/favicon-mark.png`,
   };
@@ -25,7 +26,7 @@ export function websiteJsonLd(): JsonLd {
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteUrl,
-    description: `${siteConfig.tagline}. ${siteConfig.subline}.`,
+    description: `${siteConfig.tagline}. ${siteConfig.positioning}`,
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
@@ -47,17 +48,17 @@ export function auditServiceJsonLd(): JsonLd {
       name: siteConfig.name,
       url: siteUrl,
     },
-    areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
+    areaServed: [legacy.markets.primary, legacy.markets.secondary],
     offers: {
       "@type": "Offer",
       url: `${siteUrl}/pmo-automation-audit`,
-      priceCurrency: siteConfig.pricing.currency,
-      description: `Typical range ${auditPriceRange}; timeline ${siteConfig.pricing.timeline}.`,
+      priceCurrency: legacy.pricing.currency,
+      description: `Typical range ${legacyAuditPriceRange}; timeline ${legacy.pricing.timeline}.`,
       priceSpecification: {
         "@type": "PriceSpecification",
-        minPrice: siteConfig.pricing.min,
-        maxPrice: siteConfig.pricing.max,
-        priceCurrency: siteConfig.pricing.currency,
+        minPrice: legacy.pricing.min,
+        maxPrice: legacy.pricing.max,
+        priceCurrency: legacy.pricing.currency,
       },
     },
     url: `${siteUrl}/pmo-automation-audit`,
@@ -77,12 +78,12 @@ export function diagnosticServiceJsonLd(): JsonLd {
       name: siteConfig.name,
       url: siteUrl,
     },
-    areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
+    areaServed: [legacy.markets.primary, legacy.markets.secondary],
     offers: {
       "@type": "Offer",
       price: 0,
-      priceCurrency: siteConfig.pricing.currency,
-      url: siteConfig.diagnosticUrl,
+      priceCurrency: legacy.pricing.currency,
+      url: legacy.diagnosticUrl,
     },
     url: `${siteUrl}/free-pmo-diagnostic`,
   };
@@ -134,7 +135,7 @@ export function implementationServiceJsonLd(): JsonLd {
       name: siteConfig.name,
       url: siteUrl,
     },
-    areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
+    areaServed: [legacy.markets.primary, legacy.markets.secondary],
     offers: {
       "@type": "Offer",
       url: `${siteUrl}/implementation`,

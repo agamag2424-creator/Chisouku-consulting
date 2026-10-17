@@ -6,6 +6,7 @@ import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { canonicalAnswers } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
+import { legacy } from "../../lib/legacyOffer"; // removed in E10
 
 const title = "Method — AI Impact Model for PMO Reporting";
 const description =
@@ -74,7 +75,7 @@ export default function MethodPage() {
         <div className="container max-w-3xl">
           <h1 className="display">AI Impact Model for PMO reporting.</h1>
           <p className="subhead mt-5">
-            {siteConfig.tagline}. {siteConfig.subline}.
+            {legacy.tagline}. {legacy.subline}.
           </p>
           <DirectAnswer
             answer={canonicalAnswers.method}

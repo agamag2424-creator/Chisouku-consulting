@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { GuidePage } from "../../components/aeo/GuidePage";
 import { canonicalAnswers } from "../../lib/aeoContent";
-import { auditPriceRange, siteConfig } from "../../lib/siteConfig";
+import { siteConfig } from "../../lib/siteConfig";
+import { legacy, legacyAuditPriceRange } from "../../lib/legacyOffer"; // removed in E10
 
 const title = "Free PMO Diagnostic vs PMO Automation Audit";
 const description =
@@ -34,8 +35,8 @@ export default function DiagnosticVsAuditPage() {
       subhead="One is a free five-minute baseline. The other is a paid blueprint engagement. They are sequential — not substitutes."
       answer={canonicalAnswers.path}
       bullets={[
-        `Diagnostic: free, directional, no login — ${siteConfig.diagnosticUrl}`,
-        `Audit: typically ${auditPriceRange}, ${siteConfig.pricing.timeline}, blueprint + fit score`,
+        `Diagnostic: free, directional, no login — ${legacy.diagnosticUrl}`,
+        `Audit: typically ${legacyAuditPriceRange}, ${legacy.pricing.timeline}, blueprint + fit score`,
         "Skip the diagnostic only when reporting drag is already obvious and ownership is clear.",
       ]}
       primaryHref="/free-pmo-diagnostic"

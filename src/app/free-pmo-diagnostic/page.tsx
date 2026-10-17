@@ -6,6 +6,7 @@ import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { canonicalAnswers } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
+import { legacy } from "../../lib/legacyOffer"; // removed in E10
 
 const title = "Free PMO Diagnostic";
 const description =
@@ -62,7 +63,7 @@ export default function DiagnosticPage() {
                 "Maturity profile, dimension scores, 90-day priority actions",
                 "Next step if the gap is material: Audit Fit Call",
               ]}
-              primaryHref={siteConfig.diagnosticUrl}
+              primaryHref={legacy.diagnosticUrl}
               primaryLabel="Run Free PMO Diagnostic"
               secondaryHref="/contact"
               secondaryLabel="Book Audit Fit Call"

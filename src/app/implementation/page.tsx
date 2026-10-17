@@ -7,6 +7,7 @@ import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { canonicalAnswers } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
+import { legacy } from "../../lib/legacyOffer"; // removed in E10
 
 const title = "Implementation after the PMO Automation Audit";
 const description =
@@ -128,7 +129,7 @@ export default function ImplementationPage() {
           <div>
             <h2 className="headline">Automate against what you run.</h2>
             <p className="mt-6 text-[13px] font-bold text-[var(--color-muted)]">
-              {siteConfig.systems.join(", ")}
+              {legacy.systems.join(", ")}
             </p>
             <p className="mt-6 text-sm leading-relaxed text-[var(--color-muted)]">
               Audit first when the reporting layer is unclear. Implementation when

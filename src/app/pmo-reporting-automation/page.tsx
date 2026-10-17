@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { GuidePage } from "../../components/aeo/GuidePage";
 import { canonicalAnswers } from "../../lib/aeoContent";
-import { auditPriceRange, siteConfig } from "../../lib/siteConfig";
+import { siteConfig } from "../../lib/siteConfig";
+import { legacy, legacyAuditPriceRange } from "../../lib/legacyOffer"; // removed in E10
 
 const title = "PMO Reporting Automation";
 const description =
@@ -31,11 +32,11 @@ export default function PmoReportingAutomationPage() {
       breadcrumbName="PMO Reporting Automation"
       path="/pmo-reporting-automation"
       title="PMO reporting automation."
-      subhead={`${siteConfig.tagline}. ${siteConfig.subline} — for growth-stage SMEs in the ${siteConfig.markets.primary} and ${siteConfig.markets.secondary}.`}
+      subhead={`${legacy.tagline}. ${legacy.subline} — for growth-stage SMEs in the ${legacy.markets.primary} and ${legacy.markets.secondary}.`}
       answer={`${canonicalAnswers.packCycle} Automating that cycle is where ChisokuLabs starts — not with a multi-year PMO rebuild.`}
       bullets={[
         canonicalAnswers.reportingDrag,
-        `Typical next step after a free baseline: PMO Automation Audit (${auditPriceRange}, ${siteConfig.pricing.timeline}).`,
+        `Typical next step after a free baseline: PMO Automation Audit (${legacyAuditPriceRange}, ${legacy.pricing.timeline}).`,
         canonicalAnswers.systems,
       ]}
       primaryHref="/free-pmo-diagnostic"
@@ -62,7 +63,7 @@ export default function PmoReportingAutomationPage() {
           paragraphs: [
             canonicalAnswers.path,
             "We do not guarantee ROI or time savings on a marketing page. The audit produces an ROI hypothesis from your operating map. Sample artifacts on this site are methodology excerpts, not client case studies.",
-            `Markets: ${siteConfig.markets.primary}, ${siteConfig.markets.secondary}. Contact: ${siteConfig.email}.`,
+            `Markets: ${legacy.markets.primary}, ${legacy.markets.secondary}. Contact: ${siteConfig.email}.`,
           ],
         },
       ]}
