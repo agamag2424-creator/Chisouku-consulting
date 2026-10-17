@@ -35,6 +35,29 @@ export function websiteJsonLd(): JsonLd {
   };
 }
 
+/** Service + Offer for one of the two fixed-fee offers, from config (E2). List price only; the founding rate is a promotion. */
+export function offerServiceJsonLd(offer: "evidenceCheck" | "decisionReview", description: string): JsonLd {
+  const data = siteConfig.offers[offer];
+  const url = `${siteUrl}${data.path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: data.name,
+    serviceType: "Go-live readiness assurance",
+    description,
+    provider: { "@type": "Organization", name: siteConfig.name, url: siteUrl },
+    areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
+    url,
+    offers: {
+      "@type": "Offer",
+      url,
+      price: data.listPrice,
+      priceCurrency: siteConfig.currency,
+      description: `${data.days} business days`,
+    },
+  };
+}
+
 export function auditServiceJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
