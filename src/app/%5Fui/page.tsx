@@ -54,9 +54,15 @@ function Demo({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
+/**
+ * Fail closed: the page exists only in `next dev` and on Vercel preview deployments.
+ * Production, or any build where VERCEL_ENV is missing, returns 404.
+ */
+const showUiReference =
+  process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview";
+
 export default function UiPage() {
-  // Visible locally and on preview deployments only.
-  if (process.env.VERCEL_ENV === "production") notFound();
+  if (!showUiReference) notFound();
 
   return (
     <>
