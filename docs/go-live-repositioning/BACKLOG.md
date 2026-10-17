@@ -10,6 +10,8 @@
 - GitHub: `agamag2424-creator/Chisouku-consulting`, branch `main`, HEAD `c2aa1d9` ("Remove founder identity from the marketing site."). The founder's local copy matches `origin/main` with no uncommitted tracked changes.
 - These docs are added through the branch `site/docs-go-live-repositioning` and a PR the founder merges. Story branches for E0 may branch from that docs branch so they can be reviewed before the docs PR merges.
 - Evidence reports go in `docs/go-live-repositioning/evidence/`.
+- **Release path (founder decision, 17 Oct 2026):** E0 is live on `main`. From E1 on, every story PR targets the staging branch `release/go-live`; its Vercel preview is the staging site. `main` (production) does not change until E10.4, when `release/go-live` merges to `main` in one launch after the founder approves it. Executor rule 11 applies to story PRs: the founder merges them into `release/go-live`, or tells the executor to.
+- **IN-3 approved (17 Oct 2026):** the PRD 8.3 principal paragraph is approved as written; the homepage principal block (E1.3) and `principalBlock` flag (E6.2) are on.
 
 ## How to start (paste this into Claude Code)
 

@@ -465,7 +465,7 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 |---|---|---|---|
 | IN-1 | Approve prices in 6.1 | E2 merge | Do not merge E2 |
 | IN-2 | Public contact email (role address vs personal) | E9 | Keep current `siteConfig.email` |
-| IN-3 | Approve principal paragraph (8.3) | E1 merge | Omit the principal block |
+| IN-3 | Approve principal paragraph (8.3) | E1 merge | **Approved as written, 17 Oct 2026** |
 | IN-4 | Confirm every data-handling statement in 9.7 is true | E6 merge | Do not publish `/independence-and-data` |
 | IN-5 | Calendly link still valid | E9 | Keep current link |
 | IN-6 | When the Self-Check goes live: URL | Later | `selfCheck.live = false` |
