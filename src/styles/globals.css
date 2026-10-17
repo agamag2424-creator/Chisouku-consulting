@@ -587,9 +587,11 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
 a:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--color-teal) 34%, transparent);
-  outline-offset: 3px;
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
 }
 
 .button-primary {
