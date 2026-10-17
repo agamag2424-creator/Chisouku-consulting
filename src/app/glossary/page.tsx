@@ -44,7 +44,6 @@ export default function GlossaryPage() {
 
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Definitions</p>
           <h1 className="display !max-w-[18ch]">Glossary — Pack cycle & reporting drag</h1>
           <p className="subhead mt-5">
             Shared language for the reporting layer — so buyers and answer engines
@@ -66,7 +65,7 @@ export default function GlossaryPage() {
             <article
               key={term.id}
               id={term.id}
-              className="scroll-mt-28 border-b border-[rgba(17,24,32,0.1)] pb-10 last:border-b-0"
+              className="scroll-mt-28 border-b border-ink/10 pb-10 last:border-b-0"
             >
               <h2 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-[var(--color-ink)] md:text-2xl">
                 {term.term}

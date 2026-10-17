@@ -11,7 +11,6 @@ export default function PrivacyPage() {
   return (
     <section className="section pt-16">
       <div className="container max-w-[860px]">
-        <p className="eyebrow">Legal</p>
         <h1 className="headline">Privacy Policy and Terms of Service</h1>
         <p className="body-copy mt-4">Last updated: August 2026</p>
 

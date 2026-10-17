@@ -30,7 +30,6 @@ export default function SingaporePage() {
     <GuidePage
       breadcrumbName="Singapore"
       path="/pmo-automation-singapore"
-      eyebrow="Market · Singapore"
       title="PMO automation for Singapore SMEs."
       subhead={`${canonicalAnswers.whatWeDo} Singapore is a primary market alongside the GCC.`}
       answer={`For Singapore growth-stage SMEs with reporting or PMO visibility drag, we start at the pack cycle — Free PMO Diagnostic, then a scoped PMO Automation Audit (typically ${auditPriceRange}, ${siteConfig.pricing.timeline}).`}
@@ -48,7 +47,7 @@ export default function SingaporePage() {
           heading: "Why Singapore teams feel pack-cycle drag",
           paragraphs: [
             "Growth-stage Singapore operators often run multi-tool stacks across delivery and leadership forums. The pain is rarely “we need another dashboard.” It is hours lost assembling status, reconciling sources, and distributing packs that are already late.",
-            "ChisokuLabs treats Singapore as a focus market for the same ladder used globally on this site: baseline → blueprint → optional build — without selling multi-year PMO rebuild theatre.",
+            "ChisokuLabs treats Singapore as a focus market for the same ladder used globally on this site: baseline, then blueprint, then optional build — without selling multi-year PMO rebuild theatre.",
           ],
         },
         {

@@ -10,7 +10,7 @@ const toneClasses: Record<EvidenceState, string> = {
 
 type EvidenceCellProps = {
   state: EvidenceState;
-  /** Read by screen readers before the state, e.g. "Evidence" → "Evidence: missing". */
+  /** Read by screen readers before the state, e.g. "Evidence" gives "Evidence: missing". */
   label: string;
   className?: string;
 };

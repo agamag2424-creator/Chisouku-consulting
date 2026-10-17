@@ -50,28 +50,28 @@ export function PackDragEstimator({ className }: Props) {
   const reclaimCostHigh = reclaimHoursHigh * hourlyRate;
 
   return (
-    <div className={cn("report-board paper-grain ink-corners overflow-hidden", className)}>
-      <div className="flex flex-col gap-2 border-b border-[rgba(17,24,32,0.1)] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+    <div className={cn("report-board ink-corners overflow-hidden", className)}>
+      <div className="flex flex-col gap-2 border-b border-ink/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
           Pack drag estimate
         </p>
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
-          Your numbers · Directional
+        <p className="text-[13px] font-bold text-[var(--color-muted)]">
+          Your numbers: Directional
         </p>
       </div>
 
-      <div className="grid gap-0 border-b border-[rgba(17,24,32,0.1)] sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-0 border-b border-ink/10 sm:grid-cols-2 xl:grid-cols-4">
         {benefits.map((benefit, index) => (
           <div
             key={benefit.label}
             className={cn(
               "p-5",
-              index < benefits.length - 1 && "border-b border-[rgba(17,24,32,0.1)] sm:border-b-0",
+              index < benefits.length - 1 && "border-b border-ink/10 sm:border-b-0",
               "sm:odd:border-r xl:border-r xl:[&:nth-child(4)]:border-r-0",
               "sm:[&:nth-child(2)]:border-r-0 xl:[&:nth-child(2)]:border-r",
             )}
           >
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+            <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
               {benefit.label}
             </p>
             <h3 className="mt-3 font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
@@ -85,7 +85,7 @@ export function PackDragEstimator({ className }: Props) {
       </div>
 
       <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="border-b border-[rgba(17,24,32,0.1)] p-6 lg:border-b-0 lg:border-r">
+        <div className="border-b border-ink/10 p-6 lg:border-b-0 lg:border-r">
           <h3 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
             Estimate your reporting drag
           </h3>
@@ -125,9 +125,9 @@ export function PackDragEstimator({ className }: Props) {
           </div>
         </div>
 
-        <div className="bg-[rgba(0,166,200,0.04)] p-6">
-          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-            Annual drag · Today
+        <div className="bg-teal/4 p-6">
+          <p className="text-[13px] font-bold text-[var(--color-muted)]">
+            Annual drag: Today
           </p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Metric
@@ -143,9 +143,9 @@ export function PackDragEstimator({ className }: Props) {
             />
           </div>
 
-          <div className="mt-8 border-t border-[rgba(17,24,32,0.12)] pt-6">
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
-              Planning reclaim · After automation
+          <div className="mt-8 border-t border-ink/12 pt-6">
+            <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+              Planning reclaim: After automation
             </p>
             <p className="mt-2 text-sm text-[var(--color-muted)]">
               Directional range if {Math.round(RECLAIM_LOW * 100)}–
@@ -167,7 +167,7 @@ export function PackDragEstimator({ className }: Props) {
             </div>
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 border-t border-[rgba(17,24,32,0.12)] pt-6 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 border-t border-ink/12 pt-6 sm:flex-row">
             <Link href="/free-pmo-diagnostic" className="button button-primary">
               Validate with Free PMO Diagnostic
             </Link>
@@ -208,7 +208,7 @@ function SliderField({
           {prefix}
           {value}
           {suffix ? (
-            <span className="ml-1 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--color-muted)]">
+            <span className="ml-1 text-[13px] font-bold text-[var(--color-muted)]">
               {suffix}
             </span>
           ) : null}
@@ -246,14 +246,14 @@ function Metric({
       className={cn(
         "border p-4",
         emphasize
-          ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-[#fffdf8]"
-          : "border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.95)]",
+          ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-paper"
+          : "border-ink/14 bg-paper/95",
       )}
     >
       <p
         className={cn(
-          "font-mono text-[10px] font-bold uppercase tracking-[0.14em]",
-          emphasize ? "text-[rgba(0,166,200,0.9)]" : "text-[var(--color-muted)]",
+          "text-[13px] font-bold",
+          emphasize ? "text-teal-tint" : "text-[var(--color-muted)]",
         )}
       >
         {label}
@@ -261,15 +261,15 @@ function Metric({
       <p
         className={cn(
           "mt-2 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.03em] md:text-3xl",
-          emphasize ? "text-[#fffdf8]" : "text-[var(--color-ink)]",
+          emphasize ? "text-paper" : "text-[var(--color-ink)]",
         )}
       >
         {value}
       </p>
       <p
         className={cn(
-          "mt-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em]",
-          emphasize ? "text-[#aab3ba]" : "text-[var(--color-muted)]",
+          "mt-1 text-[13px] font-bold",
+          emphasize ? "text-paper/65" : "text-[var(--color-muted)]",
         )}
       >
         {unit}

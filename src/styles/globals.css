@@ -204,17 +204,6 @@ body {
   }
 }
 
-.eyebrow {
-  margin-bottom: 14px;
-  color: var(--color-cyan-strong);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
 .display {
   max-width: 16ch;
   font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
@@ -233,67 +222,22 @@ body {
   letter-spacing: -0.02em;
 }
 
-.glass-canvas,
 .artifact-sheet,
 .report-board {
   position: relative;
-  border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
-  border-radius: 2px;
-  transition:
-    transform 220ms ease,
-    box-shadow 220ms ease,
-    border-color 220ms ease;
-}
-
-.glass-canvas {
-  background:
-    linear-gradient(160deg, color-mix(in srgb, var(--color-paper) 94%, transparent), color-mix(in srgb, var(--color-page) 90%, transparent)),
-    color-mix(in srgb, var(--color-paper) 82%, transparent);
-  box-shadow:
-    0 36px 90px color-mix(in srgb, var(--color-ink) 12%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-paper) 75%, transparent);
-}
-
-/* Atmosphere + glass blur frosts the map — keep hero map sharp */
-.photo-atmosphere .glass-canvas,
-.hero-map-reveal.glass-canvas,
-.hero-map-reveal {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
-.glass-canvas:hover,
-.artifact-sheet:hover,
-.report-board:hover {
-  border-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
-  box-shadow:
-    0 42px 100px color-mix(in srgb, var(--color-ink) 16%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-paper) 80%, transparent);
-  transform: translateY(-2px);
-}
-
-.paper-grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sheet);
 }
 
 .report-board {
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-paper) 96%, transparent);
-  box-shadow: 0 28px 70px color-mix(in srgb, var(--color-ink) 8%, transparent);
 }
 
 .report-board.ink-corners::before,
 .report-board.ink-corners::after,
 .artifact-sheet.ink-corners::before,
-.artifact-sheet.ink-corners::after,
-.glass-canvas.ink-corners::before,
-.glass-canvas.ink-corners::after {
+.artifact-sheet.ink-corners::after {
   content: "";
   position: absolute;
   z-index: 2;
@@ -305,16 +249,14 @@ body {
 }
 
 .report-board.ink-corners::before,
-.artifact-sheet.ink-corners::before,
-.glass-canvas.ink-corners::before {
+.artifact-sheet.ink-corners::before {
   top: 8px;
   left: 8px;
   border-width: 1.5px 0 0 1.5px;
 }
 
 .report-board.ink-corners::after,
-.artifact-sheet.ink-corners::after,
-.glass-canvas.ink-corners::after {
+.artifact-sheet.ink-corners::after {
   right: 8px;
   bottom: 8px;
   border-width: 0 1.5px 1.5px 0;
@@ -372,7 +314,6 @@ body {
 
 .pathway-phase {
   position: relative;
-  animation: cover-text-rise 700ms ease-out both;
 }
 
 .pathway-phase::after {
@@ -394,31 +335,18 @@ body {
     border-right: 1.5px solid color-mix(in srgb, var(--color-teal) 70%, transparent);
     transform: translate(50%, -50%) rotate(45deg);
     background: color-mix(in srgb, var(--color-paper) 96%, transparent);
-    animation: pathway-pulse 2.4s ease-in-out infinite;
-  }
-}
-
-@keyframes pathway-pulse {
-  0%,
-  100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 1;
   }
 }
 
 .metric-chip {
   transition:
     background 180ms ease,
-    border-color 180ms ease,
-    transform 180ms ease;
+    border-color 180ms ease;
 }
 
 .metric-chip:hover {
   border-color: color-mix(in srgb, var(--color-teal) 45%, transparent);
   background: color-mix(in srgb, var(--color-teal) 6%, transparent);
-  transform: translateY(-1px);
 }
 
 .editorial-row {
@@ -480,34 +408,7 @@ body {
   transform: scaleX(1);
 }
 
-.map-draw path {
-  stroke-dasharray: 280;
-  stroke-dashoffset: 280;
-  animation: map-line-draw 1100ms ease forwards;
-}
 
-.map-draw path:nth-child(1) { animation-delay: 180ms; }
-.map-draw path:nth-child(2) { animation-delay: 280ms; }
-.map-draw path:nth-child(3) { animation-delay: 380ms; }
-.map-draw path:nth-child(4) { animation-delay: 480ms; }
-.map-draw path:nth-child(5) { animation-delay: 580ms; }
-
-.map-draw .map-node-dot {
-  opacity: 0;
-  animation: map-dot-settle 500ms ease forwards;
-  animation-delay: 900ms;
-}
-
-.map-sat {
-  opacity: 0;
-  animation: cover-text-rise 700ms ease-out forwards;
-}
-
-.map-sat:nth-of-type(1) { animation-delay: 720ms; }
-.map-sat:nth-of-type(2) { animation-delay: 820ms; }
-.map-sat:nth-of-type(3) { animation-delay: 920ms; }
-.map-sat:nth-of-type(4) { animation-delay: 1020ms; }
-.map-sat:nth-of-type(5) { animation-delay: 1120ms; }
 
 .map-grid-texture {
   background-image:
@@ -515,11 +416,6 @@ body {
     linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 2.8%, transparent) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
-}
-
-.hero-map-reveal {
-  animation: cover-image-reveal 900ms ease-out both;
-  animation-delay: 180ms;
 }
 
 .atmosphere-band {
@@ -545,11 +441,9 @@ body {
 
 .kicker-title {
   color: var(--color-muted);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.86rem;
+  font-weight: 600;
   line-height: 1.5;
-  text-transform: uppercase;
 }
 
 .subhead {
@@ -576,7 +470,6 @@ body {
   font-weight: 600;
   text-decoration: none;
   transition:
-    transform 180ms ease,
     border-color 180ms ease,
     background 180ms ease,
     color 180ms ease;
@@ -624,10 +517,6 @@ a:focus-visible {
   border: 1px solid color-mix(in srgb, var(--color-paper) 32%, transparent);
   background: transparent;
   color: var(--color-paper);
-}
-
-.button:hover {
-  transform: translateY(-1px);
 }
 
 .panel {
@@ -681,7 +570,6 @@ a:focus-visible {
 
 .hero-top-image {
   position: relative;
-  animation: cover-image-reveal 820ms ease-out both;
 }
 
 .hero-top-image::after {
@@ -690,39 +578,6 @@ a:focus-visible {
   inset: 0;
   pointer-events: none;
   background: linear-gradient(90deg, color-mix(in srgb, var(--color-paper) 24%, transparent), transparent 36%, color-mix(in srgb, var(--color-teal) 8%, transparent));
-}
-
-.hero-kicker,
-.hero-title,
-.hero-meta,
-.hero-copy,
-.hero-actions,
-.hero-price {
-  animation: cover-text-rise 720ms ease-out both;
-}
-
-.hero-kicker {
-  animation-delay: 80ms;
-}
-
-.hero-title {
-  animation-delay: 140ms;
-}
-
-.hero-meta {
-  animation-delay: 220ms;
-}
-
-.hero-copy {
-  animation-delay: 260ms;
-}
-
-.hero-actions {
-  animation-delay: 340ms;
-}
-
-.hero-price {
-  animation-delay: 420ms;
 }
 
 .map-artifact {
@@ -745,10 +600,6 @@ a:focus-visible {
   box-shadow: 0 18px 42px color-mix(in srgb, var(--color-ink) 8%, transparent);
 }
 
-.report-cover .map-node {
-  animation: node-reveal 560ms ease-out both;
-}
-
 .map-node-dark {
   border-color: var(--color-ink);
   background: var(--color-ink);
@@ -765,9 +616,6 @@ a:focus-visible {
   height: 1px;
   transform-origin: left center;
   background: color-mix(in srgb, var(--color-ink) 22%, transparent);
-  clip-path: inset(0 100% 0 0);
-  animation: map-line-draw 860ms ease-out forwards;
-  animation-delay: 520ms;
 }
 
 .map-line-accent {
@@ -782,17 +630,13 @@ a:focus-visible {
   border-radius: 999px;
   background: var(--color-cyan);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 18%, transparent);
-  animation: map-dot-settle 760ms ease-out both;
-  animation-delay: 680ms;
 }
 
 .annotation {
   color: var(--color-muted);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 600;
   line-height: 1.45;
-  text-transform: uppercase;
 }
 
 .ledger {
@@ -852,100 +696,6 @@ a:focus-visible {
   border: 1px solid color-mix(in srgb, var(--color-ink) 17%, transparent);
   background: var(--color-paper);
   box-shadow: 0 42px 120px color-mix(in srgb, var(--color-ink) 14%, transparent);
-}
-
-@keyframes cover-image-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
-
-@keyframes cover-text-rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes node-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes map-line-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes map-dot-settle {
-  0% {
-    opacity: 0;
-    transform: scale(0.65);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1.12);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes orbit-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes orbit-counter {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-.orbit-ring {
-  transform-origin: 210px 210px;
-  animation: orbit-spin 48s linear infinite;
-}
-
-.orbit-ring-slow {
-  transform-origin: 210px 210px;
-  animation: orbit-spin 72s linear infinite;
-}
-
-.orbit-label-fix {
-  transform-origin: center;
-  animation: orbit-counter 48s linear infinite;
-}
-
-.orbit-label-fix-slow {
-  transform-origin: center;
-  animation: orbit-counter 72s linear infinite;
 }
 
 .heat-cell {
@@ -1045,12 +795,6 @@ a:focus-visible {
     max-width: 100%;
   }
 
-  .glass-canvas:hover,
-  .artifact-sheet:hover,
-  .report-board:hover {
-    transform: none;
-  }
-
   .report-cover::before {
     display: none;
   }
@@ -1066,13 +810,6 @@ a:focus-visible {
 
   .photo-atmosphere.report-cover::after {
     opacity: 0.85;
-  }
-
-  .hero-map-reveal.glass-canvas,
-  .photo-atmosphere .glass-canvas {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: color-mix(in srgb, var(--color-paper) 97%, transparent);
   }
 
   .hero-actions {
@@ -1114,10 +851,6 @@ a:focus-visible {
   .map-line,
   .map-dot {
     display: none;
-  }
-
-  .report-cover .map-node {
-    animation: none;
   }
 
   .ledger-row {
@@ -1162,39 +895,6 @@ a:focus-visible {
   .table-cell + .table-cell {
     padding-left: 0;
     padding-top: 8px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-top-image,
-  .hero-kicker,
-  .hero-title,
-  .hero-meta,
-  .hero-copy,
-  .hero-actions,
-  .hero-price,
-  .hero-map-reveal,
-  .report-cover .map-node,
-  .map-line,
-  .map-dot,
-  .map-draw path,
-  .map-draw .map-node-dot,
-  .map-sat,
-  .pathway-phase,
-  .pathway-phase:not(:last-child)::after,
-  .orbit-ring,
-  .orbit-ring-slow,
-  .orbit-label-fix,
-  .orbit-label-fix-slow,
-  .photo-atmosphere-media img {
-    animation: none !important;
-    clip-path: none;
-    opacity: 1;
-    transform: none;
-  }
-
-  .map-draw path {
-    stroke-dashoffset: 0;
   }
 }
 

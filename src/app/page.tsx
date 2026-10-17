@@ -48,7 +48,7 @@ const trustPoints = [
   },
   {
     label: "Markets",
-    title: "GCC · Singapore",
+    title: "GCC, Singapore",
     detail: "Growth-stage SMEs with reporting, escalation, and PMO visibility gaps.",
   },
   {
@@ -60,7 +60,7 @@ const trustPoints = [
 
 const engagementPath = [
   {
-    number: "01",
+    number: "1",
     outcome: "Baseline",
     title: "Free PMO Diagnostic",
     detail:
@@ -68,7 +68,7 @@ const engagementPath = [
     href: "/free-pmo-diagnostic",
   },
   {
-    number: "02",
+    number: "2",
     outcome: "Blueprint",
     title: "PMO Automation Audit",
     detail:
@@ -76,7 +76,7 @@ const engagementPath = [
     href: "/pmo-automation-audit",
   },
   {
-    number: "03",
+    number: "3",
     outcome: "Implementation",
     title: "AI automation for delivery systems",
     detail:
@@ -102,18 +102,15 @@ export default function Home() {
         <div className="container relative">
           <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <p className="eyebrow hero-kicker">
-                ChisokuLabs · {siteConfig.tagline}
-              </p>
-              <h1 className="display hero-title !max-w-[14ch]">
+              <h1 className="display !max-w-[14ch]">
                 Find the drag. Automate what repeats.
               </h1>
-              <p className="subhead hero-copy mt-4 !mb-0 !max-w-xl">
+              <p className="subhead mt-4 !mb-0 !max-w-xl">
                 {siteConfig.subline} — the fastest place delivery drag becomes
                 visible, measurable, and automatable.
               </p>
-              <p className="hero-copy mt-5 !mb-0 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--color-muted)]">
-                Markets · GCC · Singapore
+              <p className="mt-5 !mb-0 text-[13px] font-bold text-[var(--color-muted)]">
+                Markets: GCC, Singapore
               </p>
             </div>
             <div className="hero-actions flex shrink-0 flex-col gap-3 sm:flex-row">
@@ -126,7 +123,7 @@ export default function Home() {
             </div>
           </div>
 
-          <PmoOperatingMap className="hero-map-reveal" />
+          <PmoOperatingMap />
         </div>
       </section>
 
@@ -134,7 +131,6 @@ export default function Home() {
         <div className="container">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="eyebrow">How we engage</p>
               <h2 className="headline !max-w-[12ch]">Diagnostic. Audit. Implementation.</h2>
             </div>
             <p className="subhead !mb-0 lg:max-w-2xl lg:justify-self-end">
@@ -144,7 +140,7 @@ export default function Home() {
           </div>
 
           <div
-            className="mt-14 grid border-y border-[rgba(17,24,32,0.14)] md:grid-cols-3"
+            className="mt-14 grid border-y border-ink/14 md:grid-cols-3"
             aria-label="ChisokuLabs engagement pathway"
           >
             {engagementPath.map((step, index) => (
@@ -152,24 +148,18 @@ export default function Home() {
                 key={step.number}
                 href={step.href}
                 className={[
-                  "relative block min-h-[260px] overflow-hidden p-7 md:p-8 transition-colors hover:bg-[rgba(0,166,200,0.06)]",
+                  "relative block min-h-[260px] overflow-hidden p-7 md:p-8 transition-colors hover:bg-teal/6",
                   index < engagementPath.length - 1
-                    ? "border-b border-[rgba(17,24,32,0.12)] md:border-b-0 md:border-r"
-                    : "bg-[rgba(0,166,200,0.045)]",
+                    ? "border-b border-ink/12 md:border-b-0 md:border-r"
+                    : "bg-teal/4",
                 ].join(" ")}
               >
-                <span
-                  className="pointer-events-none absolute -right-1 -top-6 font-[family-name:var(--font-display)] text-[7rem] font-bold leading-none text-[rgba(17,24,32,0.035)]"
-                  aria-hidden
-                >
-                  {step.number}
-                </span>
                 <div className="relative flex h-full min-h-[196px] flex-col">
                   <div className="flex items-center justify-between gap-4">
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+                    <span className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
                       {step.number}
                     </span>
-                    <span className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+                    <span className="text-[13px] font-bold text-[var(--color-muted)]">
                       {step.outcome}
                     </span>
                   </div>
@@ -180,14 +170,6 @@ export default function Home() {
                     {step.detail}
                   </p>
                 </div>
-                {index < engagementPath.length - 1 ? (
-                  <span
-                    className="absolute -right-3 top-1/2 z-10 hidden h-6 w-6 -translate-y-1/2 items-center justify-center bg-[var(--color-paper)] font-mono text-sm text-[var(--color-cyan-strong)] md:flex"
-                    aria-hidden
-                  >
-                    →
-                  </span>
-                ) : null}
               </Link>
             ))}
           </div>
@@ -196,7 +178,6 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">Before the audit</p>
           <h2 className="headline">Operating drag.</h2>
           <p className="subhead mt-4">Current state in the reporting layer.</p>
           <div className="mt-10">
@@ -207,10 +188,9 @@ export default function Home() {
 
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
-          <p className="eyebrow">Method</p>
           <h2 className="headline">AI Impact Model.</h2>
           <p className="subhead mt-4">
-            PMO reporting is Assess → Architect. Implementation is Activate.
+            PMO reporting is Assess, then Architect. Implementation is Activate.
           </p>
           <div className="mt-10">
             <AiImpactModel compact />
@@ -223,9 +203,8 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">The engagement</p>
           <h2 className="headline">Four phases. Four outputs.</h2>
-          <p className="subhead mt-4">Map · Locate · Prioritize · Blueprint</p>
+          <p className="subhead mt-4">Map, Locate, Prioritize, Blueprint</p>
           <div className="mt-10">
             <AuditPathway />
           </div>
@@ -234,8 +213,7 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">From drag to automation</p>
-          <h2 className="headline">Manual pack → AI-assisted pack.</h2>
+          <h2 className="headline">Manual pack, then AI-assisted pack.</h2>
           <div className="mt-10">
             <PackCycleStrip />
           </div>
@@ -244,7 +222,6 @@ export default function Home() {
 
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
-          <p className="eyebrow">What you get back</p>
           <h2 className="headline">Time. Cost. Fresh packs.</h2>
           <p className="subhead mt-4">
             See what reporting drag is costing you — then validate with the free
@@ -258,7 +235,6 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">Audit output</p>
           <h2 className="headline">Audit artifact.</h2>
           <div className="mt-10">
             <SampleAuditArtifact />
@@ -276,7 +252,6 @@ export default function Home() {
 
       <section className="section">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Practice</p>
           <h2 className="headline">Delivery rooms, not decks.</h2>
           <p className="subhead mt-4">
             Work starts in the reporting layer — map drag, score automation fit,
@@ -291,7 +266,6 @@ export default function Home() {
       <section className="section bg-[var(--color-paper)]">
         <div className="container grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
-            <p className="eyebrow">Start here</p>
             <h2 className="headline">5-minute PMO baseline.</h2>
             <p className="subhead mt-4">
               See where AI automation can remove reporting drag.
@@ -306,12 +280,11 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">Why this, now</p>
           <h2 className="headline">Clarity before commitment.</h2>
-          <div className="mt-10 grid gap-8 border-t border-[rgba(17,24,32,0.14)] pt-8 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 grid gap-8 border-t border-ink/14 pt-8 md:grid-cols-2 xl:grid-cols-4">
             {trustPoints.map((point) => (
               <div key={point.label}>
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+                <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
                   {point.label}
                 </p>
                 <h3 className="mt-3 font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
@@ -323,15 +296,14 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <p className="mt-8 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
-            Systems we automate against · {siteConfig.systems.join(" · ")}
+          <p className="mt-8 text-[13px] font-bold text-[var(--color-muted)]">
+            Systems we automate against: {siteConfig.systems.join(", ")}
           </p>
         </div>
       </section>
 
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
-          <p className="eyebrow">Learn</p>
           <h2 className="headline">Guides for Google and buyers.</h2>
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {[
@@ -359,7 +331,7 @@ export default function Home() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="artifact-sheet paper-grain block p-6 transition-colors hover:border-[rgba(0,166,200,0.35)]"
+                className="artifact-sheet block p-6 transition-colors hover:border-teal/35"
               >
                 <h3 className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em] text-[var(--color-ink)]">
                   {item.title}
@@ -375,7 +347,6 @@ export default function Home() {
 
       <section className="section dark-band atmosphere-band">
         <div className="container max-w-4xl text-center">
-          <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Next step</p>
           <h2 className="headline mx-auto !max-w-xl">
             Run the diagnostic. Then map the audit.
           </h2>
@@ -387,9 +358,9 @@ export default function Home() {
               View PMO Automation Audit
             </Link>
           </div>
-          <p className="mt-6 text-sm text-[rgba(255,253,248,0.72)]">
+          <p className="mt-6 text-sm text-paper/72">
             Ready to talk?{" "}
-            <Link href="/contact" className="font-semibold text-[#fffdf8] underline-offset-4 hover:underline">
+            <Link href="/contact" className="font-semibold text-paper underline-offset-4 hover:underline">
               Book Audit Fit Call
             </Link>
           </p>

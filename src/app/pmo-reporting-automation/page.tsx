@@ -30,7 +30,6 @@ export default function PmoReportingAutomationPage() {
     <GuidePage
       breadcrumbName="PMO Reporting Automation"
       path="/pmo-reporting-automation"
-      eyebrow="Guide"
       title="PMO reporting automation."
       subhead={`${siteConfig.tagline}. ${siteConfig.subline} — for growth-stage SMEs in the ${siteConfig.markets.primary} and ${siteConfig.markets.secondary}.`}
       answer={`${canonicalAnswers.packCycle} Automating that cycle is where ChisokuLabs starts — not with a multi-year PMO rebuild.`}
@@ -55,7 +54,7 @@ export default function PmoReportingAutomationPage() {
           heading: "What “automation” means here",
           paragraphs: [
             "PMO reporting automation means wiring the pack cycle so signals extract on cadence, rules keep freshness, AI assists narrative where judgment still matters, and packs distribute to the right owners — without pretending AI should own escalation alone.",
-            "The stack ChisokuLabs uses in buyer language is Data → Integration → Logic → Interface. Human review stays on narrative and escalation. Dashboards without an operating owner are not the product.",
+            "The stack ChisokuLabs uses in buyer language is Data, then Integration, then Logic, then Interface. Human review stays on narrative and escalation. Dashboards without an operating owner are not the product.",
           ],
         },
         {
@@ -63,7 +62,7 @@ export default function PmoReportingAutomationPage() {
           paragraphs: [
             canonicalAnswers.path,
             "We do not guarantee ROI or time savings on a marketing page. The audit produces an ROI hypothesis from your operating map. Sample artifacts on this site are methodology excerpts, not client case studies.",
-            `Markets: ${siteConfig.markets.primary} · ${siteConfig.markets.secondary}. Contact: ${siteConfig.email}.`,
+            `Markets: ${siteConfig.markets.primary}, ${siteConfig.markets.secondary}. Contact: ${siteConfig.email}.`,
           ],
         },
       ]}

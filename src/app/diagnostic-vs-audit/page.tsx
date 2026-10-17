@@ -30,13 +30,12 @@ export default function DiagnosticVsAuditPage() {
     <GuidePage
       breadcrumbName="Diagnostic vs Audit"
       path="/diagnostic-vs-audit"
-      eyebrow="Compare"
       title="Diagnostic vs Audit."
       subhead="One is a free five-minute baseline. The other is a paid blueprint engagement. They are sequential — not substitutes."
       answer={canonicalAnswers.path}
       bullets={[
         `Diagnostic: free, directional, no login — ${siteConfig.diagnosticUrl}`,
-        `Audit: typically ${auditPriceRange} · ${siteConfig.pricing.timeline} · blueprint + fit score`,
+        `Audit: typically ${auditPriceRange}, ${siteConfig.pricing.timeline}, blueprint + fit score`,
         "Skip the diagnostic only when reporting drag is already obvious and ownership is clear.",
       ]}
       primaryHref="/free-pmo-diagnostic"
