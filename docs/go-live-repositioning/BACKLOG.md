@@ -295,6 +295,12 @@ Confirm IN-1. Report.
 **Tasks:** PRD 9.6 content; price table from config; founding slots; fee credit; payment terms; comparison table; two FAQ items; CTA. Replace the homepage placeholder from E1.3 with the compact comparison (first 4 rows) linking here.
 **AC:** changing `foundingSlotsRemaining` to 0 hides founding prices everywhere (verified by a build with the value set to 0, screenshot attached, then reverted).
 
+### E5.3 Homepage performance (added at founder request, 17 Oct 2026)
+**Type:** Code · **Files:** `src/components/hero/EvidenceCheckHero.tsx`, `src/components/aeo/JsonLdScript.tsx`, `src/lib/safeJson.ts`
+**Why:** after E1.6 and the E5.2 compact comparison, the homepage sat at about the 90 line on the Lighthouse mobile gate.
+**Tasks:** render the hero's claims once for every width (no separate mobile list); emit JSON-LD as plain script tags in the server HTML (Next.js guidance) with `<` escaped.
+**AC:** hero behaviour and tests unchanged; JSON-LD parses on every page; homepage Lighthouse mobile median ≥ 90 with margin, measured against E5.2 on the same machine.
+
 ---
 
 # E6 — Independence and data
