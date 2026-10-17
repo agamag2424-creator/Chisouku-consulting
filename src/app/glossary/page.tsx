@@ -1,93 +1,80 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
-import { glossaryTerms } from "../../lib/legacyAeo";
+import { OfferClosing } from "../../components/offers/OfferSections";
+import { Button } from "../../components/ui/Button";
+import { Section } from "../../components/ui/Section";
+import { glossaryTerms } from "../../lib/aeoContent";
 import { breadcrumbJsonLd, definedTermSetJsonLd } from "../../lib/jsonLd";
+import { ogImage } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 
-const title = "Glossary — Pack Cycle, Reporting Drag & AI Impact Model";
+// PRD 10 glossary (E8.2). Each term has an anchor; DefinedTermSet JSON-LD reads the same array.
+const title = "Glossary";
 const description =
-  "Definitions for pack cycle, reporting drag, drag ledger, PMO Automation Audit, Free PMO Diagnostic, and the AI Impact Model used by ChisokuLabs.";
+  "Go-live readiness terms: go/no-go decision, Conditional Go, cutover, rollback point, hypercare, SIT, UAT, data migration reconciliation, READINESS-5 and more.";
+const url = `${siteConfig.url}/glossary`;
 
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "/glossary" },
-  openGraph: {
-    title: `${title} | ChisokuLabs`,
-    description,
-    url: `${siteConfig.url}/glossary`,
-    images: ["/og.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${title} | ChisokuLabs`,
-    description,
-    images: ["/og.png"],
-  },
+  alternates: { canonical: url },
+  openGraph: { type: "website", title: `${title} | ChisokuLabs`, description, url, images: [ogImage] },
+  twitter: { card: "summary_large_image", title: `${title} | ChisokuLabs`, description, images: [ogImage.url] },
 };
 
 export default function GlossaryPage() {
   return (
     <>
-      <JsonLdScript
-        id="glossary-defined-terms-ld-json"
-        data={definedTermSetJsonLd(glossaryTerms)}
-      />
+      <JsonLdScript id="glossary-defined-terms-ld-json" data={definedTermSetJsonLd(glossaryTerms)} />
       <JsonLdScript
         id="glossary-breadcrumb-ld-json"
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "Glossary", path: "/glossary" },
+          { name: title, path: "/glossary" },
         ])}
       />
 
-      <section className="section report-cover pt-16">
-        <div className="container max-w-3xl">
-          <h1 className="display !max-w-[18ch]">Glossary — Pack cycle & reporting drag</h1>
-          <p className="subhead mt-5">
-            Shared language for the reporting layer — so buyers and answer engines
-            cite the same meanings.
-          </p>
-          <p className="mt-4 text-sm text-[var(--color-muted)]">
-            Buyer questions:{" "}
-            <Link href="/faq" className="font-semibold text-teal">
-              FAQ
-            </Link>
-            .
-          </p>
-        </div>
-      </section>
+      <Section tone="ink">
+        <h1 className="t-h1 text-paper">{title}</h1>
+        <nav aria-label="Terms" className="mt-8">
+          <ul className="flex flex-wrap gap-2">
+            {glossaryTerms.map((item) => (
+              <li key={item.id}>
+                <a
+                  href={`#${item.id}`}
+                  className="inline-flex min-h-10 items-center rounded-full border border-paper/25 px-3.5 text-[14px] text-paper/85 hover:border-paper hover:text-paper"
+                >
+                  {item.term}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </Section>
 
-      <section className="section bg-[var(--color-paper)]">
-        <div className="container max-w-3xl space-y-10">
-          {glossaryTerms.map((term) => (
-            <article
-              key={term.id}
-              id={term.id}
-              className="scroll-mt-28 border-b border-ink/10 pb-10 last:border-b-0"
-            >
-              <h2 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-[var(--color-ink)] md:text-2xl">
-                {term.term}
-              </h2>
-              <p className="mt-4 text-base font-semibold leading-relaxed text-[var(--color-ink)]">
-                {term.definition}
-              </p>
-              {term.relatedHref && term.relatedLabel ? (
-                <p className="mt-3 text-sm text-[var(--color-muted)]">
-                  Related:{" "}
-                  <Link
-                    href={term.relatedHref}
-                    className="font-semibold text-teal"
-                  >
-                    {term.relatedLabel}
-                  </Link>
-                </p>
-              ) : null}
-            </article>
+      <Section tone="paper">
+        <dl className="grid max-w-[960px] gap-x-12 min-[900px]:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
+          {glossaryTerms.map((item) => (
+            <div key={item.id} className="contents">
+              <dt id={item.id} className="scroll-mt-24 border-t border-line pt-6 font-[family-name:var(--font-display)] text-[20px] font-bold text-ink min-[900px]:pb-6">
+                {item.term}
+              </dt>
+              <dd className="t-body pb-6 pt-2 text-ink min-[900px]:border-t min-[900px]:border-line min-[900px]:pt-6">
+                {item.definition}
+                {item.related && (
+                  <span className="mt-2 block">
+                    <Button href={item.related.href} variant="text">
+                      {item.related.label}
+                    </Button>
+                  </span>
+                )}
+              </dd>
+            </div>
           ))}
-        </div>
-      </section>
+        </dl>
+      </Section>
+
+      <OfferClosing />
     </>
   );
 }

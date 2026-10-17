@@ -201,7 +201,7 @@ export function definedTermSetJsonLd(
   return {
     "@context": "https://schema.org",
     "@type": "DefinedTermSet",
-    name: "ChisokuLabs PMO reporting glossary",
+    name: "ChisokuLabs go-live readiness glossary",
     url: `${siteUrl}/glossary`,
     hasDefinedTerm: terms.map((term) => ({
       "@type": "DefinedTerm",
