@@ -28,6 +28,10 @@ for (const viewport of [
       for (const by of ["D-10", "D-14", "D-7"]) {
         await expect(page.getByText(by, { exact: true }).filter({ visible: true })).toHaveCount(1);
       }
+      // E3.2 claim-flow diagram: one accessible SVG visible per width, with title and description.
+      const flow = page.getByRole("img", { name: "How one claim is tested" }).filter({ visible: true });
+      await expect(flow).toHaveCount(1);
+      await expect(flow).toHaveAccessibleDescription(/3 of 5 evidenced/);
       const body = await page.locator("main").innerText();
       for (const old of ["Assess", "Architect", "Activate", "Accelerate", "AI Impact Model", "PMO"]) {
         expect(body).not.toContain(old);

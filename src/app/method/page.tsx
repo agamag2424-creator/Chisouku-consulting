@@ -9,6 +9,7 @@ import {
   ReportedVersusScore,
   ScoreKey,
 } from "../../components/method/MethodVisuals";
+import { ClaimFlow } from "../../components/method/ClaimFlow";
 import { OfferClosing, SectionHead, offerCta } from "../../components/offers/OfferSections";
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
@@ -67,6 +68,7 @@ export default function MethodPage() {
 
       <Section tone="paper">
         <SectionHead title="The five elements" />
+        <ClaimFlow className="mt-10" />
         <ElementCards />
         <p className="mt-6 text-[13px] text-muted">{sampleLabel}</p>
       </Section>
