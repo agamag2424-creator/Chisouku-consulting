@@ -197,18 +197,6 @@ export const glossaryTerms: GlossaryTerm[] = [
   },
 ];
 
-/** Fixed monthly probe set for ChatGPT / Perplexity / Gemini / AI Overviews */
-export const aeoProbeQueries = [
-  "What is a PMO Automation Audit and typical cost?",
-  "ChisokuLabs PMO reporting automation GCC Singapore",
-  "Free PMO diagnostic for reporting maturity",
-  "How to automate PMO status reporting pack cycle",
-  "AI automation for delivery systems starting with PMO reporting",
-  "What is reporting drag in PMO pack assembly?",
-  "ChisokuLabs AI Impact Model Assess Architect Activate",
-  `PMO automation audit ${auditPriceRange} timeline`,
-] as const;
-
 export function buildLlmsTxt(): string {
   const lines = [
     `# ${siteConfig.name}`,
@@ -268,9 +256,6 @@ export function buildLlmsFullTxt(): string {
     `## Glossary`,
     ``,
     glossaryBlock,
-    ``,
-    `## Probe query set (for operators)`,
-    ...aeoProbeQueries.map((q) => `- ${q}`),
     ``,
   ].join("\n");
 }
