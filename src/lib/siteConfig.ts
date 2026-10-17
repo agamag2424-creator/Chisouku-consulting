@@ -61,7 +61,7 @@ export const routeLive = {
   "/glossary": true,
   "/privacy": true,
   "/readiness-evidence-check": true,
-  "/go-live-decision-review": false,
+  "/go-live-decision-review": true,
   "/see-it-first": false,
   "/pricing": false,
   "/independence-and-data": false,

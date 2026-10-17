@@ -13,6 +13,21 @@ const pages = [
     list: "USD 5,000",
     founding: "USD 2,500",
     steps: ["Scoping call and document request", "Evidence review", "Written findings and readout"],
+    navLabel: "Evidence Check",
+  },
+  {
+    path: "/go-live-decision-review",
+    h1: "Go-Live Decision Review",
+    list: "USD 12,000",
+    founding: "USD 6,000",
+    steps: [
+      "Kickoff and evidence request",
+      "Evidence review and contradiction testing",
+      "Targeted interviews",
+      "Draft findings",
+      "Sponsor readout",
+    ],
+    navLabel: "Decision Review",
   },
 ];
 
@@ -29,7 +44,8 @@ for (const offer of pages) {
         await expect(page.getByRole("heading", { level: 1 })).toHaveText(offer.h1);
         await expect(page.getByText(offer.list).first()).toBeVisible();
         await expect(page.getByText(offer.founding).first()).toBeVisible();
-        for (const step of offer.steps) await expect(page.getByText(step, { exact: true })).toBeVisible();
+        const sequence = page.locator("section", { has: page.getByRole("heading", { name: /^(How it runs|Timeline)$/ }) });
+        for (const step of offer.steps) await expect(sequence.getByText(step, { exact: true })).toBeVisible();
         await expect(page.getByText(/The full Evidence Check fee is credited/)).toBeVisible();
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
         expect(overflow).toBeLessThanOrEqual(0);
@@ -39,7 +55,7 @@ for (const offer of pages) {
     test("is linked from the nav and has Service JSON-LD", async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 });
       await page.goto(base + "/");
-      await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: offer.h1.replace("Readiness ", "").replace("Go-Live ", "") }).click();
+      await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: offer.navLabel, exact: true }).click();
       await expect(page).toHaveURL(base + offer.path);
       const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
       expect(ld.some((json) => json.includes('"@type":"Service"') && json.includes(offer.h1))).toBe(true);
