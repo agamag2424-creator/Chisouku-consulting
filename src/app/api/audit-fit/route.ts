@@ -49,26 +49,34 @@ export async function POST(request: Request) {
   ].join("\n");
 
   const resendKey = process.env.RESEND_API_KEY;
-  if (resendKey) {
-    try {
-      await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "ChisokuLabs Site <onboarding@resend.dev>",
-          to: [siteConfig.email],
-          subject: `Audit Fit Call — ${company}`,
-          text: summary,
-        }),
-      });
-    } catch {
-      // Calendly still captures the lead; do not block booking.
+  if (!resendKey) {
+    // Never report success for a message nobody receives; never log the message itself.
+    console.error("[audit-fit] RESEND_API_KEY is not set; submission not delivered");
+    return NextResponse.json({ ok: false, error: "Delivery unavailable" }, { status: 503 });
+  }
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "ChisokuLabs website <website@chisokulabs.com>",
+        to: [siteConfig.email],
+        reply_to: email,
+        subject: `Audit Fit Call — ${company}`,
+        text: summary,
+      }),
+    });
+    if (!response.ok) {
+      console.error(`[audit-fit] Resend returned ${response.status}; submission not delivered`);
+      return NextResponse.json({ ok: false, error: "Delivery failed" }, { status: 502 });
     }
-  } else {
-    console.info("[audit-fit]", summary);
+  } catch {
+    console.error("[audit-fit] Resend request failed; submission not delivered");
+    return NextResponse.json({ ok: false, error: "Delivery failed" }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true });

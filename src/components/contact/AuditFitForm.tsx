@@ -70,7 +70,7 @@ export function AuditFitForm({ defaultInterest }: Props) {
       });
 
       if (!response.ok) {
-        throw new Error("Unable to submit. Please email us directly.");
+        throw new Error(`We could not send your message. Please email us at ${siteConfig.email}.`);
       }
 
       try {
