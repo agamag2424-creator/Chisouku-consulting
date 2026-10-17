@@ -480,7 +480,7 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 
 | ID | Input | Needed by | Default if not answered |
 |---|---|---|---|
-| IN-1 | Approve prices in 6.1 | E2 merge | Do not merge E2 |
+| IN-1 | Approve prices in 6.1 (**approved 17 Oct 2026**) | E2 merge | Do not merge E2 |
 | IN-2 | Public contact email (role address vs personal) | E9 | Keep current `siteConfig.email` |
 | IN-3 | Approve principal paragraph (8.3) | E1 merge | **Approved as written, 17 Oct 2026** |
 | IN-4 | Confirm every data-handling statement in 9.7 is true | E6 merge | Do not publish `/independence-and-data` |
