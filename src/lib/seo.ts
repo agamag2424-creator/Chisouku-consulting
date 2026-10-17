@@ -81,6 +81,11 @@ export const routeSeo = {
     description:
       "Discuss a go-live review, request a free readiness brief, or ask about pricing. We reply within one business day.",
   },
+  "/privacy": {
+    title: "Privacy Policy and Terms",
+    description:
+      "What ChisokuLabs collects through this website, why, who processes it, how long it is kept, and how to ask for it to be deleted.",
+  },
   "/glossary": {
     title: "Glossary",
     description:

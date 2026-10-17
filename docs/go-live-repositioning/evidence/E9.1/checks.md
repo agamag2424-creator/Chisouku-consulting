@@ -15,3 +15,5 @@
 | e2e | 62 / 62 · axe 0 at 1440 and 390 · no horizontal scroll |
 
 **Still to do (needs the founder):** add **Preview** to `RESEND_API_KEY` in Vercel (it is Production only), then one test email per request type from the staging site, and confirm receipt.
+
+**17 Oct 2026:** `RESEND_API_KEY` is now set for Production and Preview. The live-delivery test is on hold: chisokulabs.com lapsed at the registrar and currently has no MX records, so mail to agam@chisokulabs.com cannot arrive. Run one test per request type from staging once DNS is restored (`chisokulabs-dns-records.md` checklist given to the founder).

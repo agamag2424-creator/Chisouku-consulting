@@ -1,84 +1,125 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { Button } from "../../components/ui/Button";
+import { Section } from "../../components/ui/Section";
+import { pageMetadata } from "../../lib/seo";
+import { siteConfig } from "../../lib/siteConfig";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy and Terms",
-  description: "ChisokuLabs privacy policy, terms of service, and contact details.",
-  keywords: ["ChisokuLabs", "privacy policy", "terms of service"],
-  alternates: { canonical: "/privacy" },
-};
+// Privacy policy and terms (PRD 11, E9.3). Wording and enquiry retention approved by the founder (IN-13, 17 Oct 2026).
+export const metadata: Metadata = pageMetadata("/privacy");
+
+const lastUpdated = "17 October 2026";
+
+const collected = [
+  "What you enter in the “Discuss your programme” form: name, work email, company, country, role, request type, platform, go-live decision date and your message.",
+  "Anything you send us by email, or share with us during an engagement.",
+  "Anonymous website analytics: pages visited, the buttons clicked, device type, country and referring site. No cookies are used for analytics.",
+];
+
+const purposes = [
+  "To reply to your enquiry.",
+  "To prepare a readiness brief you have asked for.",
+  "To provide the services you engage us for, under a written agreement.",
+  "To understand which pages and buttons are used, so we can improve the site.",
+  "To meet legal, security and administrative obligations.",
+];
+
+const providers = [
+  { name: "Vercel", role: "hosts this website and provides its analytics" },
+  { name: "Resend", role: "delivers form messages to our inbox" },
+  { name: "Calendly", role: "handles bookings, if you choose to book a call" },
+];
 
 export default function PrivacyPage() {
   return (
-    <section className="section pt-16">
-      <div className="container max-w-[860px]">
-        <h1 className="headline">Privacy Policy and Terms of Service</h1>
-        <p className="body-copy mt-4">Last updated: August 2026</p>
+    <>
+      <Section tone="page">
+        <h1 className="t-h1 text-ink">Privacy Policy and Terms</h1>
+        <p className="mt-4 text-[14px] text-muted">{`Last updated: ${lastUpdated}`}</p>
+      </Section>
 
-        <div className="mt-10 space-y-10">
-          <section>
-            <h2 className="text-2xl font-bold">Privacy Policy</h2>
-            <p className="body-copy mt-4">
-              ChisokuLabs Pvt Ltd (&quot;ChisokuLabs&quot;, &quot;we&quot;, &quot;us&quot;, &quot;our&quot;) collects
-              only the information needed to respond to inquiries, qualify audit
-              requests, operate this website, and provide requested services.
-            </p>
-            <ul className="mt-4 list-disc space-y-2 pl-5 body-copy">
-              <li>Name, email address, company, role, country, and form details you provide.</li>
-              <li>Basic website analytics such as pages visited, device type, and referring URL.</li>
-              <li>Messages and documents you choose to share for an audit or fit call.</li>
+      <Section tone="paper">
+        <div className="flex max-w-[760px] flex-col gap-12">
+          <Part title="What we collect">
+            <List items={collected} />
+          </Part>
+
+          <Part title="Why we use it">
+            <List items={purposes} />
+            <p className="t-body text-ink">We do not sell, rent or trade personal data.</p>
+          </Part>
+
+          <Part title="Who processes it">
+            <ul className="flex flex-col gap-2.5">
+              {providers.map((item) => (
+                <li key={item.name} className="t-body text-ink">
+                  <span className="font-semibold">{item.name}</span> {item.role}.
+                </li>
+              ))}
             </ul>
-          </section>
+            <p className="t-body text-ink">Each processes data under its own privacy terms.</p>
+          </Part>
 
-          <section>
-            <h2 className="text-2xl font-bold">How We Use Information</h2>
-            <ul className="mt-4 list-disc space-y-2 pl-5 body-copy">
-              <li>To respond to your inquiry or Audit Fit Call request.</li>
-              <li>To provide requested diagnostics, audits, or consulting services.</li>
-              <li>To improve website content, navigation, and service packaging.</li>
-              <li>To meet legal, security, and administrative obligations.</li>
-            </ul>
-            <p className="body-copy mt-4">
-              We do not sell, rent, or trade personal data.
+          <Part title="How long we keep it">
+            <p className="t-body text-ink">
+              Enquiries are kept for up to 24 months after our last contact, then deleted, unless they become part of an
+              engagement.
             </p>
-          </section>
+            <p className="t-body text-ink">
+              Evidence shared during an engagement is handled under our data-handling policy, and deleted within 30 days
+              of the final readout unless you ask us to keep it.
+            </p>
+            <div>
+              <Button href="/independence-and-data#data-handling" variant="text">
+                Independence and data handling
+              </Button>
+            </div>
+          </Part>
 
-          <section>
-            <h2 className="text-2xl font-bold">Third-Party Services</h2>
-            <p className="body-copy mt-4">
-              We may use service providers for hosting, email, scheduling,
-              analytics, and form handling. These providers process data under
-              their own privacy terms.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold">Terms of Service</h2>
-            <p className="body-copy mt-4">
-              Website content is provided for general informational purposes.
-              Specific consulting deliverables, responsibilities, timelines,
-              confidentiality, and fees are governed by the relevant written
-              agreement for each engagement.
-            </p>
-            <p className="body-copy mt-4">
-              All site text, design, graphics, logos, and code are the
-              intellectual property of ChisokuLabs Pvt Ltd unless otherwise
-              stated. You may not copy or redistribute website content without
-              permission.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold">Contact</h2>
-            <p className="body-copy mt-4">
-              For privacy or legal questions, contact{" "}
-              <a className="font-bold text-teal underline" href="mailto:agam@chisokulabs.com">
-                agam@chisokulabs.com
+          <Part title="Your choices">
+            <p className="t-body text-ink">
+              To see, correct or delete what we hold about you, email{" "}
+              <a href={`mailto:${siteConfig.email}`} className="font-semibold text-teal underline underline-offset-4">
+                {siteConfig.email}
               </a>
-              .
+              . We reply within one business day.
             </p>
-          </section>
+          </Part>
+
+          <Part title="Terms of Service">
+            <p className="t-body text-ink">
+              Website content is provided for general information. Specific consulting deliverables, responsibilities,
+              timelines, confidentiality and fees are governed by the written agreement for each engagement.
+            </p>
+            <p className="t-body text-ink">
+              All site text, design, graphics, logos and code are the intellectual property of ChisokuLabs Pvt Ltd unless
+              otherwise stated. You may not copy or redistribute website content without permission.
+            </p>
+          </Part>
         </div>
-      </div>
+      </Section>
+    </>
+  );
+}
+
+function Part({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="flex flex-col gap-4">
+      <h2 className="t-h3 text-ink">{title}</h2>
+      {children}
     </section>
+  );
+}
+
+function List({ items }: { items: readonly string[] }) {
+  return (
+    <ul className="flex flex-col gap-2.5">
+      {items.map((item) => (
+        <li key={item} className="t-body flex gap-3 text-ink">
+          <span aria-hidden className="mt-[0.6em] size-2 shrink-0 rounded-full bg-teal" />
+          {item}
+        </li>
+      ))}
+    </ul>
   );
 }
