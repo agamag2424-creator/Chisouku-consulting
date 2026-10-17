@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { formatPrice, offerPriceLabel, siteConfig } from "../../lib/siteConfig";
-import { slipEstimate, type SlipInputs } from "../../lib/slipEstimate";
+import { slipEstimate, slipLabel, type SlipInputs } from "../../lib/slipEstimate";
 import { track } from "../../lib/track";
 import { Button } from "../ui/Button";
 import { Sheet } from "../ui/Sheet";
@@ -53,7 +53,8 @@ export function SlipCostEstimator() {
   const priceText = price.founding ? `${price.list} list, ${price.founding} founding-client rate` : price.list;
 
   // Announce the result once typing pauses, so screen readers are not flooded on every keystroke.
-  const summary = `Cost per week of slip: ${weekly}. Cost of a ${weeks}-week slip: ${total}.`;
+  const totalLabel = slipLabel(weeks);
+  const summary = `Cost per week of slip: ${weekly}. ${totalLabel}: ${total}.`;
   React.useEffect(() => {
     if (!tracked.current) return;
     const timer = window.setTimeout(() => setAnnouncement(summary), ANNOUNCE_DELAY_MS);
@@ -119,7 +120,7 @@ export function SlipCostEstimator() {
             <dd className="t-data mt-2 text-[32px] leading-none tracking-[-0.03em] text-ink min-[641px]:text-[40px]">{weekly}</dd>
           </div>
           <div>
-            <dt className="t-small text-muted">{`Cost of a ${weeks}-week slip`}</dt>
+            <dt className="t-small text-muted">{totalLabel}</dt>
             <dd className="t-data mt-2 text-[32px] leading-none tracking-[-0.03em] text-ink min-[641px]:text-[40px]">{total}</dd>
           </div>
         </dl>
@@ -144,7 +145,7 @@ export function SlipCostEstimator() {
 
         <div aria-hidden className="grid gap-2 text-[13px]">
           <p className="flex justify-between gap-3">
-            <span className="font-semibold text-ink">{`Cost of a ${weeks}-week slip`}</span>
+            <span className="font-semibold text-ink">{totalLabel}</span>
             <span className="t-data text-ink">{total}</span>
           </p>
           <span className="h-3.5 overflow-hidden rounded-full bg-faint">

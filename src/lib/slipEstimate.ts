@@ -40,3 +40,9 @@ export function slipEstimate(
 
   return { weeklyRunRate, totalCost: weeklyRunRate * weeks, comparisonDays };
 }
+
+/** "Cost of a 4-week slip", "Cost of an 8-week slip": "an" when the number is spoken with a vowel (8, 11, 18, 80s). */
+export function slipLabel(weeks: number): string {
+  const article = /^(8|11(?!\d)|18(?!\d))/.test(String(weeks)) ? "an" : "a";
+  return `Cost of ${article} ${weeks}-week slip`;
+}

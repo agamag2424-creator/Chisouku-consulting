@@ -410,7 +410,7 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - H2: What a slipped go-live costs.
 - Lead: Put in your own numbers. When a go-live date moves, the programme team, the system integrator and the current system all keep running.
 - Labels: as the inputs above. Small note above the fields: "Example values. Replace them with yours."
-- Outputs: "Cost per week of slip: {weekly}" · "Cost of a {weeks}-week slip: {total}"
+- Outputs: "Cost per week of slip: {weekly}" · "Cost of a {weeks}-week slip: {total}" ("an" before 8, 11, 18 and the 80s)
 - Comparison line: "A Readiness Evidence Check costs {price}: about {days} working days of your programme's run-rate." (with founding price: "{list} list, {founding} founding-client rate")
 - Footnote: "Calculated in your browser from your numbers. Directional only: it leaves out lost benefits, contract penalties and business disruption. Not a forecast for your programme."
 - CTA: primary "Request a free readiness brief" (→ `/contact?request=brief`); text link "Discuss your programme" (→ `/contact?request=review`).
@@ -486,6 +486,6 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-4 | Confirm every data-handling statement in 9.7 is true | E6 merge | Do not publish `/independence-and-data` |
 | IN-5 | Calendly link still valid | E9 | Keep current link |
 | IN-6 | When the Self-Check goes live: URL | Later | `selfCheck.live = false` |
-| IN-7 | Approve the estimator copy and example values in 9.11 | E1.5 merge | Do not merge E1.5 |
+| IN-7 | Approve the estimator copy and example values in 9.11 (**approved 17 Oct 2026**, with "a"/"an" chosen by number in "Cost of a {weeks}-week slip") | E1.5 merge | Do not merge E1.5 |
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
-| IN-9 | Approve the interface wording in 9.12 | E1.6 merge | Do not merge E1.6 |
+| IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |
