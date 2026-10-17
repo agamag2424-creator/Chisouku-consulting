@@ -76,6 +76,11 @@ export const routeSeo = {
     description:
       "What a system integrator's readiness review does well, where it falls short, and what independent go-live assurance adds to the decision.",
   },
+  "/contact": {
+    title: "Discuss your programme",
+    description:
+      "Discuss a go-live review, request a free readiness brief, or ask about pricing. We reply within one business day.",
+  },
   "/glossary": {
     title: "Glossary",
     description:

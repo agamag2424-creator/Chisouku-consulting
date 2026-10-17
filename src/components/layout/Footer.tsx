@@ -41,7 +41,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-paper/10 bg-ink text-paper/80">
-      <div className="mx-auto grid max-w-[var(--content-max-width)] gap-10 px-[var(--content-padding-x-mobile)] py-14 md:grid-cols-2 min-[1100px]:grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))] md:px-[var(--content-padding-x)]">
+      <div className="mx-auto grid max-w-[var(--content-max-width)] gap-10 px-[var(--content-padding-x-mobile)] py-14 min-[641px]:grid-cols-2 min-[1100px]:grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))] md:px-[var(--content-padding-x)]">
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">
             <BrandMark className="h-9 w-9" inverted />

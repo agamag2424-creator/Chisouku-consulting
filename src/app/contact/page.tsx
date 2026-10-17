@@ -1,17 +1,18 @@
-import Link from "next/link";
-import { AuditFitForm } from "../../components/contact/AuditFitForm";
-import { PmoOperatingMap } from "../../components/artifacts/PmoOperatingMap";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { ProgrammeForm } from "../../components/contact/ProgrammeForm";
+import { isRequestKey } from "../../content/contactForm";
+import { Section } from "../../components/ui/Section";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 
-type Props = {
-  searchParams?: Promise<{ interest?: string }>;
-};
+// "Discuss your programme" (PRD 11, E9.1). `?request=brief|review|pricing` presets the request type.
+const title = "Discuss your programme";
+
+type Props = { searchParams?: Promise<{ request?: string | string[] }> };
 
 export default async function ContactPage({ searchParams }: Props) {
-  const params = (await searchParams) ?? {};
-  const interest = params.interest;
+  const { request } = (await searchParams) ?? {};
+  const initialRequest = isRequestKey(request) ? request : "review";
 
   return (
     <>
@@ -19,55 +20,35 @@ export default async function ContactPage({ searchParams }: Props) {
         id="contact-breadcrumb-ld-json"
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "Audit Fit Call", path: "/contact" },
+          { name: title, path: "/contact" },
         ])}
       />
-    <section className="section pt-16">
-      <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-        <div>
-          <h1 className="display">Audit Fit Call.</h1>
-          <p className="subhead mt-5">
-            Starting at PMO reporting. Share brief context — then schedule.
-          </p>
-          <div className="mt-8 space-y-4 text-sm text-[var(--color-muted)]">
+      <Section
+        tone="page"
+        containerClassName="grid gap-10 min-[1000px]:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] min-[1000px]:items-start min-[1000px]:gap-16"
+      >
+        <div className="flex flex-col gap-6">
+          <h1 className="t-h1 text-ink">{title}</h1>
+          <p className="t-body text-muted">We reply within one business day.</p>
+          <div className="flex flex-col gap-3 border-t border-line pt-6 text-[15px] text-ink">
             <p>
-              Prefer email?{" "}
+              Prefer to talk?{" "}
               <a
-                className="font-bold text-teal"
-                href={`mailto:${siteConfig.email}`}
+                href={siteConfig.calendlyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-teal underline underline-offset-4 hover:text-ink"
               >
-                {siteConfig.email}
+                Book a call
               </a>
             </p>
             <p>
-              Not ready for a call? Start with the{" "}
-              <Link
-                className="font-bold text-teal"
-                href="/free-pmo-diagnostic"
-              >
-                Free PMO Diagnostic
-              </Link>
-              .
+              Email: <span className="font-semibold">{siteConfig.email}</span>
             </p>
-            <p>
-              Want the offer detail first?{" "}
-              <Link
-                className="font-bold text-teal"
-                href="/pmo-automation-audit"
-              >
-                Review the audit
-              </Link>
-              .
-            </p>
-          </div>
-          <div className="mt-10 hidden lg:block">
-            <PmoOperatingMap compact />
           </div>
         </div>
-
-        <AuditFitForm defaultInterest={interest} />
-      </div>
-    </section>
+        <ProgrammeForm key={initialRequest} initialRequest={initialRequest} />
+      </Section>
     </>
   );
 }

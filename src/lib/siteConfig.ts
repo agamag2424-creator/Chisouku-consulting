@@ -6,7 +6,9 @@ export const siteConfig = {
   name: "ChisokuLabs",
   url: "https://www.chisokulabs.com",
   email: "agam@chisokulabs.com", // INPUT NEEDED (IN-2): confirm a role address, e.g. hello@, given L4
-  calendlyUrl: "https://calendly.com/chisokulab/discovery-call",
+  calendlyUrl: "https://calendly.com/agam-agrawwal", // IN-5, founder 17 Oct 2026
+  /** Sender for form emails; chisokulabs.com is verified in Resend. Replies go to the visitor. */
+  formSender: "ChisokuLabs website <website@chisokulabs.com>",
   tagline: "Independent go-live decision assurance",
   positioning: "Your programme reports Green. We test whether the evidence agrees.",
   markets: { primary: "United Arab Emirates", secondary: "Saudi Arabia" },
