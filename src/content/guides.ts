@@ -1,6 +1,6 @@
 // Answer guides (PRD 4.1, E8.3). Every dated fact links to the issuer's own page (checked in E7.0). Industry statistics
 // are left out: the Horváth and Gartner pages named in PRD 8.4 could not be opened from the build environment to check
-// them. Wording pending founder approval (IN-11).
+// them. Wording approved by the founder (IN-11, 17 Oct 2026).
 
 export type GuideBlock =
   | { kind: "p"; text: string }

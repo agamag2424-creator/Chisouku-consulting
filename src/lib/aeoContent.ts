@@ -1,7 +1,7 @@
 import { siteConfig } from "./siteConfig";
 
 // Answer content (PRD 9.9, 10). Single source for /faq, FAQPage JSON-LD and llms.txt. Prices, platforms and the fee
-// credit come from config. Answers marked in PRD 9.9 as new wording await founder approval (IN-11).
+// credit come from config. New wording approved by the founder (IN-11, 17 Oct 2026).
 
 const { evidenceCheck, decisionReview } = siteConfig.offers;
 const platformList = new Intl.ListFormat("en-GB", { type: "conjunction" }).format(siteConfig.platforms);

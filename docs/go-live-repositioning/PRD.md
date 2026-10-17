@@ -377,7 +377,7 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 12. Do you work in Saudi Arabia? (yes; remote by default, on site by arrangement)
 13. Do you implement or fix what you find? (no; we stay independent, and we tell you who should own each fix)
 
-**Answers (E8.1).** Items 4, 6, 9, 10, 11 and 13 reuse wording already approved on `/pricing`. Item 2 reuses the homepage section 2 wording; items 7 and 8 reuse the approved 9.7 statements. New wording for approval ([FOUNDER APPROVES], IN-11):
+**Answers (E8.1).** Items 4, 6, 9, 10, 11 and 13 reuse wording already approved on `/pricing`. Item 2 reuses the homepage section 2 wording; items 7 and 8 reuse the approved 9.7 statements. New wording (approved 17 Oct 2026, IN-11):
 - 1: "We are independent of delivery, and your system integrator is not: its review is part of delivery, and its final milestone depends on the date holding. We test every critical claim on READINESS-5, check the claims against each other, and give a Go, Conditional Go or No-Go with the conditions, owners and dates behind it."
 - 2 (opening): "Because leadership is asked to approve the go-live on reports written by the people being judged on delivery."
 - 3: "Six to sixteen weeks before the go-live decision. Earlier is fine."
@@ -467,7 +467,7 @@ Interface wording added by 9.12 ([FOUNDER APPROVES], IN-9): "Go-live readiness c
 - JSON-LD: Organization (areaServed AE, SA; no founder), WebSite, `Service` + `Offer` for both offers (prices from config), `FAQPage` on `/faq`, `DefinedTermSet` on `/glossary`, `HowTo` on the S/4HANA checklist guide, `BreadcrumbList` on guides.
 - `llms.txt` / `llms-full.txt`: rebuilt from new canonical answers (what ChisokuLabs does, offers, prices, method, markets, policy).
 - Glossary (≥ 15 terms): go-live readiness, go/no-go decision, conditional go, cutover, rollback point, point of no return, hypercare, SIT, UAT, data migration reconciliation, mock load, RAID log, readiness claim, READINESS-5, contradiction testing, decision condition.
-  Definitions (E8.2, [FOUNDER APPROVES], IN-11) are in `src/lib/aeoContent.ts` (`glossaryTerms`), one to three sentences each; READINESS-5 and contradiction testing reuse 9.4 wording.
+  Definitions (E8.2, approved 17 Oct 2026, IN-11) are in `src/lib/aeoContent.ts` (`glossaryTerms`), one to three sentences each; READINESS-5 and contradiction testing reuse 9.4 wording.
 - Sitemap and `robots.ts` updated; remove deleted routes; set new `lastModified`.
 - OG images: replace `og*.png` with new-system images (static PNGs generated from an internal route or design file; no runtime OG service).
 - Canonicals on every page; no duplicate H1s.
@@ -514,4 +514,4 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
 | IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |
 | IN-10 | Approve the market page wording in 9.10 (**approved 17 Oct 2026**) | E7 merge | Do not merge E7.1 / E7.2 |
-| IN-11 | Approve the new E8 wording: FAQ answers (9.9), glossary definitions, the three guides (`src/content/guides.ts`) | E8 merge | Do not merge E8 |
+| IN-11 | Approve the new E8 wording: FAQ answers (9.9), glossary definitions, the three guides (`src/content/guides.ts`) (**approved 17 Oct 2026**) | E8 merge | Do not merge E8 |
