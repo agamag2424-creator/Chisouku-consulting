@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import { EvidenceCheckHero } from "../components/hero/EvidenceCheckHero";
 import {
   BriefIllustration,
@@ -39,6 +40,9 @@ const CTA = {
   samplePack: { href: "/see-it-first#sample-pack", label: "See a full sample decision pack" },
 } as const;
 
+/** "Your programme reports Green." / "We test whether the evidence agrees." */
+const positioningLines = siteConfig.positioning.split(/(?<=\.)\s+/);
+
 /** Heading beside text from 1100px; stacked below. */
 const split = "grid gap-6 min-[1100px]:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] min-[1100px]:gap-16";
 
@@ -57,7 +61,21 @@ export default function Home() {
         containerClassName="grid gap-12 min-[1200px]:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] min-[1200px]:items-center min-[1200px]:gap-16"
       >
         <div>
-          <h1 className="t-h1 max-w-[18ch] text-paper">{siteConfig.positioning}</h1>
+          {/* One sentence per line (founder's canvas edit). A real space sits before the line break, so the text reads
+              "Green. We" for screen readers, and the H1 stays one text block (it is the page's largest paint). */}
+          <h1 className="t-h1 max-w-[22ch] text-paper">
+            {positioningLines.map((line, index) => (
+              <Fragment key={line}>
+                {index > 0 && (
+                  <>
+                    {" "}
+                    <br />
+                  </>
+                )}
+                {line}
+              </Fragment>
+            ))}
+          </h1>
           <p className="t-body mt-5 max-w-[46ch] text-paper/75">
             Independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia.
           </p>
