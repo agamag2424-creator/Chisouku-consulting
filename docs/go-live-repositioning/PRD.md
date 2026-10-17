@@ -467,6 +467,7 @@ Interface wording added by 9.12 ([FOUNDER APPROVES], IN-9): "Go-live readiness c
 - JSON-LD: Organization (areaServed AE, SA; no founder), WebSite, `Service` + `Offer` for both offers (prices from config), `FAQPage` on `/faq`, `DefinedTermSet` on `/glossary`, `HowTo` on the S/4HANA checklist guide, `BreadcrumbList` on guides.
 - `llms.txt` / `llms-full.txt`: rebuilt from new canonical answers (what ChisokuLabs does, offers, prices, method, markets, policy).
 - Glossary (≥ 15 terms): go-live readiness, go/no-go decision, conditional go, cutover, rollback point, point of no return, hypercare, SIT, UAT, data migration reconciliation, mock load, RAID log, readiness claim, READINESS-5, contradiction testing, decision condition.
+  Definitions (E8.2, [FOUNDER APPROVES], IN-11) are in `src/lib/aeoContent.ts` (`glossaryTerms`), one to three sentences each; READINESS-5 and contradiction testing reuse 9.4 wording.
 - Sitemap and `robots.ts` updated; remove deleted routes; set new `lastModified`.
 - OG images: replace `og*.png` with new-system images (static PNGs generated from an internal route or design file; no runtime OG service).
 - Canonicals on every page; no duplicate H1s.

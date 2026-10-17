@@ -105,3 +105,115 @@ export const faqItems: FaqItem[] = [
     answer: "No. We stay independent, and we tell you who should own each fix.",
   },
 ];
+
+export type GlossaryTerm = {
+  /** Anchor on /glossary. */
+  id: string;
+  term: string;
+  /** One to three sentences. */
+  definition: string;
+  related?: { href: string; label: string };
+};
+
+/** PRD 10 glossary, in the PRD's order. */
+export const glossaryTerms: GlossaryTerm[] = [
+  {
+    id: "go-live-readiness",
+    term: "Go-live readiness",
+    definition:
+      "The state in which a programme can switch to the new system with known, accepted risk. It is shown by evidence for each critical claim, not by status colours.",
+  },
+  {
+    id: "go-no-go-decision",
+    term: "Go/no-go decision",
+    definition:
+      "The formal decision, usually taken by a steering committee, on whether to go live on the planned date. A ChisokuLabs review ends in Go, Conditional Go or No-Go.",
+    related: { href: "/go-live-decision-review", label: "Go-Live Decision Review" },
+  },
+  {
+    id: "conditional-go",
+    term: "Conditional Go",
+    definition:
+      "A decision to go live once named conditions are met, each with an owner and a date. If a condition is not met by its date, the decision is revisited.",
+  },
+  {
+    id: "cutover",
+    term: "Cutover",
+    definition:
+      "The planned sequence of steps that moves the business from the old system to the new one, including the final data load, the switch and the checks before users start work.",
+  },
+  {
+    id: "rollback-point",
+    term: "Rollback point",
+    definition:
+      "The last agreed point in cutover at which the programme can return to the old system. It needs a tested rollback plan and a named person who can call it.",
+  },
+  {
+    id: "point-of-no-return",
+    term: "Point of no return",
+    definition:
+      "The moment in cutover after which returning to the old system is no longer practical. After it, problems are fixed forward.",
+  },
+  {
+    id: "hypercare",
+    term: "Hypercare",
+    definition:
+      "The period of heightened support straight after go-live, when the project team stays on to resolve issues quickly before handing over to normal support.",
+  },
+  {
+    id: "sit",
+    term: "SIT (system integration testing)",
+    definition:
+      "Testing that the new system and the systems it connects to exchange data correctly from end to end. It comes before UAT.",
+  },
+  {
+    id: "uat",
+    term: "UAT (user acceptance testing)",
+    definition:
+      "Testing by business users that the system supports their processes. A signed acceptance from each business area is a key piece of readiness evidence.",
+  },
+  {
+    id: "data-migration-reconciliation",
+    term: "Data migration reconciliation",
+    definition:
+      "Checking that the data loaded into the new system matches the source, by record counts, balances and key fields. The evidence is the reconciliation output, signed off by the data owner.",
+  },
+  {
+    id: "mock-load",
+    term: "Mock load",
+    definition:
+      "A rehearsal of the data migration with production-like data, run before cutover to test load times, errors and reconciliation.",
+  },
+  {
+    id: "raid-log",
+    term: "RAID log",
+    definition:
+      "A register of risks, assumptions, issues and dependencies, each with an owner. It is a source for readiness claims, not proof of them.",
+  },
+  {
+    id: "readiness-claim",
+    term: "Readiness claim",
+    definition:
+      "A statement that something is ready for go-live, such as “UAT is complete” or “cutover is rehearsed”. Every critical claim is tested on READINESS-5.",
+  },
+  {
+    id: "readiness-5",
+    term: "READINESS-5",
+    definition:
+      "The ChisokuLabs test for every critical readiness claim: Status, Owner, Evidence, Date and Action. A claim reported Green with 2 of 5 is an assumption, not a fact.",
+    related: { href: "/method", label: "How READINESS-5 works" },
+  },
+  {
+    id: "contradiction-testing",
+    term: "Contradiction testing",
+    definition:
+      "Checking readiness claims against each other across workstreams, for example a reconciliation reported as passed while a business entity has not signed UAT. The most expensive risks sit between workstreams.",
+    related: { href: "/method", label: "How READINESS-5 works" },
+  },
+  {
+    id: "decision-condition",
+    term: "Decision condition",
+    definition:
+      "Something that must be true before go-live under a Conditional Go, with a named owner and an evidence-by date.",
+  },
+];
