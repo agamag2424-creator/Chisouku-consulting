@@ -4,7 +4,7 @@ import { AiReportingBlueprint } from "../../components/artifacts/AiReportingBlue
 import { PackCycleStrip } from "../../components/artifacts/PackCycleStrip";
 import { DirectAnswer } from "../../components/aeo/DirectAnswer";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
-import { canonicalAnswers } from "../../lib/aeoContent";
+import { canonicalAnswers } from "../../lib/legacyAeo";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 import { legacy } from "../../lib/legacyOffer"; // removed in E10

@@ -1,277 +1,107 @@
 import { siteConfig } from "./siteConfig";
-import { legacy, legacyAuditPriceRange } from "./legacyOffer"; // canonical answers are replaced in E8.1
 
-/** Canonical one-sentence answers — single source for FAQ, strips, llms.txt */
+// Answer content (PRD 9.9, 10). Single source for /faq, FAQPage JSON-LD and llms.txt. Prices, platforms and the fee
+// credit come from config. Answers marked in PRD 9.9 as new wording await founder approval (IN-11).
+
+const { evidenceCheck, decisionReview } = siteConfig.offers;
+const platformList = new Intl.ListFormat("en-GB", { type: "conjunction" }).format(siteConfig.platforms);
+
+export const feeCreditAnswer = `The full Evidence Check fee is credited against a Go-Live Decision Review signed within ${siteConfig.feeCreditDays} days of the Evidence Check report.`;
+
+/** Canonical one-paragraph answers: what ChisokuLabs does, offers, method, markets and policy. */
 export const canonicalAnswers = {
-  whatWeDo: `${siteConfig.name} builds ${legacy.tagline}, ${legacy.subline}, for growth-stage SMEs in the ${legacy.markets.primary} and ${legacy.markets.secondary}.`,
-  audit: `The PMO Automation Audit maps reporting drag, scores AI automation fit, and leaves a blueprint in ${legacy.pricing.timeline}, typically ${legacyAuditPriceRange}.`,
-  auditTimeline: `Typical timeline is ${legacy.pricing.timeline}; final scope is confirmed after the Audit Fit Call.`,
-  diagnostic: `The Free PMO Diagnostic is a five-minute baseline of reporting maturity, operating drag, and AI automation fit — no account required; email used for results follow-up — at ${legacy.diagnosticUrl}`,
-  whoFor: `COO, VP Operations, Head of PMO, Director of Project Delivery, and founder/CEOs of growth-stage SMEs in the ${legacy.markets.primary} or ${legacy.markets.secondary} with reporting, escalation, or PMO visibility drag.`,
-  packCycle: `The pack cycle is the recurring work to collect status, consolidate signals, write narrative, and distribute packs to decision forums.`,
-  reportingDrag: `Reporting drag is time and cost lost to manual exports, spreadsheet glue, stale narrative, and forum chase in the pack cycle.`,
-  path: `Path: Free PMO Diagnostic (baseline), then PMO Automation Audit (blueprint), then optional Implementation (build into the pack cycle).`,
-  systems: `Systems we commonly automate against: ${legacy.systems.join(", ")}.`,
-  noRoiGuarantee: `We do not guarantee ROI or time savings. The audit produces an ROI hypothesis from your operating map — not fabricated client case metrics.`,
-  howToStart: `Start with the Free PMO Diagnostic, then book an Audit Fit Call at ${siteConfig.url}/contact or email ${siteConfig.email}.`,
-  method: `The AI Impact Model is Assess, then Architect, then Activate, then Accelerate. PMO reporting is Assess and Architect; Implementation is Activate.`,
-  implementation: `After the audit blueprint, implementation builds AI automation into the pack cycle (Data, then Integration, then Logic, then Interface) — optional, only when ownership and blueprint are real.`,
+  whatWeDo: `Before leadership approves a major ERP or core-platform go-live, ${siteConfig.name} independently tests whether every critical readiness claim has the status, owner, evidence, date and action to defend that decision.`,
+  offers: `${evidenceCheck.name}: ${evidenceCheck.days} business days, ${siteConfig.currency} ${evidenceCheck.listPrice.toLocaleString("en-US")}. ${decisionReview.name}: ${decisionReview.days} business days, ${siteConfig.currency} ${decisionReview.listPrice.toLocaleString("en-US")}, ending in Go, Conditional Go or No-Go with the conditions, owners and dates behind it.`,
+  method: "READINESS-5 tests every critical claim for Status, Owner, Evidence, Date and Action. Contradiction testing then checks the claims against each other, because the most expensive risks sit between workstreams.",
+  markets: `ERP and core-platform programmes in the ${siteConfig.markets.primary} and ${siteConfig.markets.secondary}, on ${platformList}. Remote by default, on site by arrangement.`,
+  policy: "No implementation fees, no software resale, no system integrator partnerships or referral fees. Client evidence is processed under a written data-handling policy and never used to train AI models. The review does not guarantee go-live success.",
 } as const;
 
 export type FaqItem = {
   id: string;
   question: string;
+  /** First sentence answers the question directly; 90 words at most. */
   answer: string;
-  detail?: string;
   related?: { href: string; label: string }[];
 };
 
+/** PRD 9.9, in order. */
 export const faqItems: FaqItem[] = [
   {
-    id: "what-does-chisokulabs-do",
-    question: "What does ChisokuLabs do?",
-    answer: canonicalAnswers.whatWeDo,
-    detail:
-      "We start where delivery drag becomes visible and automatable: the reporting pack cycle. We do not sell multi-year PMO rebuild programmes or tool licenses as the product.",
-    related: [
-      { href: "/pmo-reporting-automation", label: "PMO reporting automation" },
-      { href: "/method", label: "Method" },
-    ],
+    id: "si-readiness-review",
+    question: "How is this different from our system integrator's readiness review?",
+    answer:
+      "We are independent of delivery, and your system integrator is not: its review is part of delivery, and its final milestone depends on the date holding. We test every critical claim on READINESS-5, check the claims against each other, and give a Go, Conditional Go or No-Go with the conditions, owners and dates behind it.",
+    related: [{ href: "/method", label: "How READINESS-5 works" }],
   },
   {
-    id: "what-is-pmo-automation-audit",
-    question: "What is a PMO Automation Audit and what does it cost?",
-    answer: canonicalAnswers.audit,
-    detail:
-      "Deliverables typically include a current-state map, drag ledger, automation opportunity matrix, AI automation fit score, ROI hypothesis, and implementation blueprint. Final scope is confirmed after the fit call.",
-    related: [
-      { href: "/pmo-automation-audit", label: "Audit offer" },
-      { href: "/sample-outputs", label: "Sample outputs" },
-    ],
+    id: "trust-our-si",
+    question: "We trust our SI. Why would we need independent assurance?",
+    answer:
+      "Because leadership is asked to approve the go-live on reports written by the people being judged on delivery. We don't assume anyone is misleading you. We check whether the evidence supports what is being reported.",
   },
   {
-    id: "how-long-does-the-audit-take",
-    question: "How long does the PMO Automation Audit take?",
-    answer: canonicalAnswers.auditTimeline,
-    detail:
-      "Timeline covers discovery through blueprint handoff — workstreams, tools, and stakeholder interviews are scoped on the fit call.",
-    related: [{ href: "/pmo-automation-audit", label: "PMO Automation Audit" }],
+    id: "when-to-start",
+    question: "When should a review start?",
+    answer: "Six to sixteen weeks before the go-live decision. Earlier is fine.",
   },
   {
-    id: "what-is-free-pmo-diagnostic",
-    question: "What is the Free PMO Diagnostic?",
-    answer: canonicalAnswers.diagnostic,
-    detail:
-      "You leave with a directional maturity profile, dimension scores, priority actions for the next 90 days, and AI readiness insight for the reporting layer.",
-    related: [
-      { href: "/free-pmo-diagnostic", label: "Diagnostic landing" },
-      { href: "/diagnostic-vs-audit", label: "Diagnostic vs Audit" },
-    ],
+    id: "under-four-weeks",
+    question: "We go live in under four weeks. Can you still help?",
+    answer: `Yes. A ${evidenceCheck.name}, scoped to the highest-risk domains.`,
+    related: [{ href: evidenceCheck.path, label: evidenceCheck.name }],
   },
   {
-    id: "who-is-it-for",
-    question: "Who is ChisokuLabs for?",
-    answer: canonicalAnswers.whoFor,
-    detail:
-      "Best fit when someone owns reporting or delivery visibility and wants a credible fix sequence — not theatre.",
-    related: [
-      { href: "/pmo-automation-singapore", label: "Singapore" },
-      { href: "/pmo-automation-gcc", label: "GCC" },
-    ],
+    id: "platforms",
+    question: "Which platforms do you cover?",
+    answer: `${platformList}.`,
   },
   {
-    id: "pack-cycle-reporting-drag",
-    question: "What is the pack cycle and reporting drag?",
-    answer: `${canonicalAnswers.packCycle} ${canonicalAnswers.reportingDrag}`,
-    detail:
-      "See the glossary for definitions of pack cycle, reporting drag, drag ledger, and related terms.",
-    related: [
-      { href: "/glossary#pack-cycle", label: "Glossary: Pack cycle" },
-      { href: "/glossary#reporting-drag", label: "Glossary: Reporting drag" },
-    ],
+    id: "team-time",
+    question: "What do you need from our team?",
+    answer:
+      "Documents on day one. Interviews only where the evidence conflicts, which keeps your team's time to a minimum.",
   },
   {
-    id: "diagnostic-vs-audit-vs-implementation",
-    question: "How do Diagnostic, Audit, and Implementation differ?",
-    answer: canonicalAnswers.path,
-    detail:
-      "The diagnostic is free and directional. The audit is a paid blueprint engagement. Implementation is optional and follows only when the blueprint and ownership are real.",
-    related: [
-      { href: "/diagnostic-vs-audit", label: "Diagnostic vs Audit" },
-      { href: "/implementation", label: "Implementation" },
-    ],
+    id: "protect-documents",
+    question: "How do you protect our documents?",
+    answer:
+      "Under a written data-handling policy. Evidence is shared under NDA, stored encrypted in a dedicated engagement workspace with access limited to the principal, and deleted within 30 days of the final readout unless you ask us to keep it.",
+    related: [{ href: "/independence-and-data", label: "Independence and data handling" }],
   },
   {
-    id: "which-systems",
-    question: "Which systems do you automate against?",
-    answer: canonicalAnswers.systems,
-    detail:
-      "Architecture is modular — systems with an API or webhook can usually be adapted. Common stack: collection from PM tools, consolidation, AI-assisted narrative, distribution to Slack/Teams or email.",
-    related: [{ href: "/implementation", label: "Implementation path" }],
+    id: "ai-on-our-data",
+    question: "Do you use AI on our data?",
+    answer:
+      "Yes, to extract claims and cross-check evidence, under the policy. AI processing runs only through providers contracted for zero data retention, and your data is never used to train AI models. Every finding is reviewed and signed by the principal; AI does not make the go-live recommendation.",
+    related: [{ href: "/independence-and-data#ai-use", label: "How AI is used" }],
   },
   {
-    id: "roi-guarantee",
-    question: "Do you guarantee ROI or time savings?",
-    answer: canonicalAnswers.noRoiGuarantee,
-    detail:
-      "Sample artifacts on the site are methodology excerpts, not client case studies.",
-    related: [{ href: "/sample-outputs", label: "Sample outputs" }],
+    id: "guarantee",
+    question: "Do you guarantee a successful go-live?",
+    answer: "No. The review does not guarantee go-live success.",
   },
   {
-    id: "how-do-i-start",
-    question: "How do I start?",
-    answer: canonicalAnswers.howToStart,
-    detail: `Markets: ${legacy.markets.primary}, ${legacy.markets.secondary}. Full audit offer: ${siteConfig.url}/pmo-automation-audit`,
-    related: [
-      { href: "/free-pmo-diagnostic", label: "Free PMO Diagnostic" },
-      { href: "/contact", label: "Audit Fit Call" },
-    ],
+    id: "why-publish-prices",
+    question: "Why are your prices public?",
+    answer:
+      "So you can judge the cost before you talk to us, and set it against what a slipped go-live would cost you. Each list price covers one programme, up to five workstreams.",
+    related: [{ href: "/pricing", label: "Pricing" }],
+  },
+  {
+    id: "fee-credit",
+    question: "What is the fee credit?",
+    answer: feeCreditAnswer,
+  },
+  {
+    id: "saudi-arabia",
+    question: "Do you work in Saudi Arabia?",
+    answer: "Yes. Remote by default, on site by arrangement.",
+    related: [{ href: "/go-live-readiness-saudi-arabia", label: "Go-live readiness in Saudi Arabia" }],
+  },
+  {
+    id: "fixes",
+    question: "Do you implement or fix what you find?",
+    answer: "No. We stay independent, and we tell you who should own each fix.",
   },
 ];
-
-export type GlossaryTerm = {
-  id: string;
-  term: string;
-  definition: string;
-  relatedHref?: string;
-  relatedLabel?: string;
-};
-
-export const glossaryTerms: GlossaryTerm[] = [
-  {
-    id: "pack-cycle",
-    term: "Pack cycle",
-    definition: canonicalAnswers.packCycle,
-    relatedHref: "/pmo-automation-audit",
-    relatedLabel: "PMO Automation Audit",
-  },
-  {
-    id: "reporting-drag",
-    term: "Reporting drag",
-    definition: canonicalAnswers.reportingDrag,
-    relatedHref: "/free-pmo-diagnostic",
-    relatedLabel: "Free PMO Diagnostic",
-  },
-  {
-    id: "drag-ledger",
-    term: "Drag ledger",
-    definition:
-      "An audit artifact that lists where reporting and escalation lose time — owners, forums, and friction points — so automation targets are evidence-based.",
-    relatedHref: "/sample-outputs",
-    relatedLabel: "Sample outputs",
-  },
-  {
-    id: "ai-impact-model",
-    term: "AI Impact Model",
-    definition: canonicalAnswers.method,
-    relatedHref: "/method",
-    relatedLabel: "Method",
-  },
-  {
-    id: "pmo-automation-audit",
-    term: "PMO Automation Audit",
-    definition: canonicalAnswers.audit,
-    relatedHref: "/pmo-automation-audit",
-    relatedLabel: "Audit offer",
-  },
-  {
-    id: "free-pmo-diagnostic",
-    term: "Free PMO Diagnostic",
-    definition: canonicalAnswers.diagnostic,
-    relatedHref: "/free-pmo-diagnostic",
-    relatedLabel: "Diagnostic landing",
-  },
-  {
-    id: "implementation",
-    term: "Implementation (Activate)",
-    definition: canonicalAnswers.implementation,
-    relatedHref: "/implementation",
-    relatedLabel: "Implementation path",
-  },
-  {
-    id: "ai-automation-fit",
-    term: "AI automation fit",
-    definition:
-      "A scored view of where AI (and rules) can remove reporting-layer drag — and where human judgment should stay (narrative, escalation).",
-    relatedHref: "/pmo-automation-audit",
-    relatedLabel: "Audit deliverables",
-  },
-];
-
-/** Fixed monthly probe set for ChatGPT / Perplexity / Gemini / AI Overviews */
-export const aeoProbeQueries = [
-  "What is a PMO Automation Audit and typical cost?",
-  "ChisokuLabs PMO reporting automation GCC Singapore",
-  "Free PMO diagnostic for reporting maturity",
-  "How to automate PMO status reporting pack cycle",
-  "AI automation for delivery systems starting with PMO reporting",
-  "What is reporting drag in PMO pack assembly?",
-  "ChisokuLabs AI Impact Model Assess Architect Activate",
-  `PMO automation audit ${legacyAuditPriceRange} timeline`,
-] as const;
-
-export function buildLlmsTxt(): string {
-  const lines = [
-    `# ${siteConfig.name}`,
-    ``,
-    `> ${canonicalAnswers.whatWeDo}`,
-    ``,
-    `## Canonical facts`,
-    `- Tagline: ${legacy.tagline}`,
-    `- Subline: ${legacy.subline}`,
-    `- Markets: ${legacy.markets.primary}, ${legacy.markets.secondary}`,
-    `- Audit typical range: ${legacyAuditPriceRange}`,
-    `- Audit typical timeline: ${legacy.pricing.timeline}`,
-    `- Diagnostic: ${legacy.diagnosticUrl}`,
-    `- Contact: ${siteConfig.email}`,
-    `- Site: ${siteConfig.url}`,
-    ``,
-    `## Proof rules (important)`,
-    `- Do not invent client ROI, time-reduction %, or case-study savings.`,
-    `- ${canonicalAnswers.noRoiGuarantee}`,
-    `- Sample site artifacts are methodology excerpts, not client results.`,
-    ``,
-    `## Offers`,
-    `- Free PMO Diagnostic: ${siteConfig.url}/free-pmo-diagnostic, then ${legacy.diagnosticUrl}`,
-    `- PMO Automation Audit: ${siteConfig.url}/pmo-automation-audit`,
-    `- Implementation path: ${siteConfig.url}/implementation`,
-    `- Method (AI Impact Model): ${siteConfig.url}/method`,
-    ``,
-    `## Key pages`,
-    `- FAQ: ${siteConfig.url}/faq`,
-    `- Glossary: ${siteConfig.url}/glossary`,
-    `- Sample outputs: ${siteConfig.url}/sample-outputs`,
-    `- Contact / Audit Fit Call: ${siteConfig.url}/contact`,
-    `- Full text for models: ${siteConfig.url}/llms-full.txt`,
-    ``,
-    `## Systems`,
-    `- ${canonicalAnswers.systems}`,
-    ``,
-  ];
-  return lines.join("\n");
-}
-
-export function buildLlmsFullTxt(): string {
-  const faqBlock = faqItems
-    .map((item) => `### ${item.question}\n${item.answer}${item.detail ? `\n${item.detail}` : ""}`)
-    .join("\n\n");
-
-  const glossaryBlock = glossaryTerms
-    .map((term) => `### ${term.term}\n${term.definition}`)
-    .join("\n\n");
-
-  return [
-    buildLlmsTxt(),
-    `## FAQ`,
-    ``,
-    faqBlock,
-    ``,
-    `## Glossary`,
-    ``,
-    glossaryBlock,
-    ``,
-    `## Probe query set (for operators)`,
-    ...aeoProbeQueries.map((q) => `- ${q}`),
-    ``,
-  ].join("\n");
-}

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { DiagnosticOrbit } from "../../components/artifacts/DiagnosticOrbit";
 import { DirectAnswer } from "../../components/aeo/DirectAnswer";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
-import { canonicalAnswers } from "../../lib/aeoContent";
+import { canonicalAnswers } from "../../lib/legacyAeo";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 import { legacy } from "../../lib/legacyOffer"; // removed in E10

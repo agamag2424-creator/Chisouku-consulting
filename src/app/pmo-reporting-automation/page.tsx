@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GuidePage } from "../../components/aeo/GuidePage";
-import { canonicalAnswers } from "../../lib/aeoContent";
+import { canonicalAnswers } from "../../lib/legacyAeo";
 import { siteConfig } from "../../lib/siteConfig";
 import { legacy, legacyAuditPriceRange } from "../../lib/legacyOffer"; // removed in E10
 
