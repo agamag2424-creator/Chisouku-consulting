@@ -148,7 +148,7 @@ export function faqPageJsonLd(items: FaqItem[]): JsonLd {
       name: item.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: item.detail ? `${item.answer} ${item.detail}` : item.answer,
+        text: item.answer,
       },
     })),
   };

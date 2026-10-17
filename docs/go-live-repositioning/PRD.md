@@ -377,6 +377,15 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 12. Do you work in Saudi Arabia? (yes; remote by default, on site by arrangement)
 13. Do you implement or fix what you find? (no; we stay independent, and we tell you who should own each fix)
 
+**Answers (E8.1).** Items 4, 6, 9, 10, 11 and 13 reuse wording already approved on `/pricing`. Item 2 reuses the homepage section 2 wording; items 7 and 8 reuse the approved 9.7 statements. New wording for approval ([FOUNDER APPROVES], IN-11):
+- 1: "We are independent of delivery, and your system integrator is not: its review is part of delivery, and its final milestone depends on the date holding. We test every critical claim on READINESS-5, check the claims against each other, and give a Go, Conditional Go or No-Go with the conditions, owners and dates behind it."
+- 2 (opening): "Because leadership is asked to approve the go-live on reports written by the people being judged on delivery."
+- 3: "Six to sixteen weeks before the go-live decision. Earlier is fine."
+- 5: the platform list from config.
+- 7 (opening): "Under a written data-handling policy." 8 (opening): "Yes, to extract claims and cross-check evidence, under the policy."
+- 12: "Yes. Remote by default, on site by arrangement."
+- Canonical answers in `src/lib/aeoContent.ts` (for llms.txt): what we do (homepage meta description), offers (config), method, markets, policy (9.7).
+
 ### 9.10 Market pages (E7)
 - **UAE:** why now (SAP Business Suite 7 mainstream maintenance ends 2027 with optional extended maintenance to 2030; UAE e-invoicing for businesses above AED 50M turnover from 1 Jan 2027 adds an ERP integration go-live to many programmes); platforms; typical programme shapes (multi-entity groups, free-zone and mainland entities); how engagements run remotely with on-site option. Sources linked.
 - **Saudi Arabia:** why now (ZATCA Phase 2 integration waves continuing, wave 25 from 1 Feb 2027; S/4HANA migrations); same structure. Sources linked.
@@ -504,3 +513,4 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
 | IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |
 | IN-10 | Approve the market page wording in 9.10 (**approved 17 Oct 2026**) | E7 merge | Do not merge E7.1 / E7.2 |
+| IN-11 | Approve the new E8 wording: FAQ answers (9.9), glossary definitions, guides | E8 merge | Do not merge E8 |

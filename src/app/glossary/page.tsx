@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
-import { glossaryTerms } from "../../lib/aeoContent";
+import { glossaryTerms } from "../../lib/legacyAeo";
 import { breadcrumbJsonLd, definedTermSetJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 

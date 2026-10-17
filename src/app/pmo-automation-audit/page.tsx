@@ -5,7 +5,7 @@ import { SampleAuditArtifact } from "../../components/artifacts/SampleAuditArtif
 import { PackCycleStrip } from "../../components/artifacts/PackCycleStrip";
 import { DirectAnswer } from "../../components/aeo/DirectAnswer";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
-import { canonicalAnswers } from "../../lib/aeoContent";
+import { canonicalAnswers } from "../../lib/legacyAeo";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 import { legacy, legacyAuditPriceRange } from "../../lib/legacyOffer"; // removed in E10

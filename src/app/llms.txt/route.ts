@@ -1,4 +1,4 @@
-import { buildLlmsTxt } from "../../lib/aeoContent";
+import { buildLlmsTxt } from "../../lib/legacyAeo";
 
 export function GET() {
   return new Response(buildLlmsTxt(), {
