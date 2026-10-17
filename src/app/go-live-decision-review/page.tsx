@@ -4,7 +4,7 @@ import { OfferLayout, offerMetadata, type OfferBlock } from "../../components/of
 const lead =
   "A ten-day independent review that gives your steering committee a defensible go-live decision: Go, Conditional Go or No-Go, with the conditions, owners and dates behind it.";
 
-export const metadata = offerMetadata("decisionReview", lead);
+export const metadata = offerMetadata("decisionReview");
 
 const blocks: readonly OfferBlock[] = [
   {

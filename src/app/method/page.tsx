@@ -21,20 +21,12 @@ import {
   sampleLabel,
 } from "../../content/samplePack";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
-import { ogImage } from "../../lib/seo";
-import { siteConfig } from "../../lib/siteConfig";
+import { pageMetadata } from "../../lib/seo";
 
 // PRD 9.4. Headings and one-line tests are 9.4's; examples and their wording come from the sample pack.
 const title = "READINESS-5: how we test a go-live claim";
-const url = `${siteConfig.url}/method`;
 
-export const metadata: Metadata = {
-  title: { absolute: `${title} | ChisokuLabs` },
-  description: packMethodNote,
-  alternates: { canonical: url },
-  openGraph: { type: "website", title: `${title} | ChisokuLabs`, description: packMethodNote, url, images: [ogImage] },
-  twitter: { card: "summary_large_image", title: `${title} | ChisokuLabs`, description: packMethodNote, images: [ogImage.url] },
-};
+export const metadata: Metadata = pageMetadata("/method");
 
 export default function MethodPage() {
   return (

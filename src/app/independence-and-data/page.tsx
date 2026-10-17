@@ -6,29 +6,20 @@ import { OfferClosing, SectionHead } from "../../components/offers/OfferSections
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
-import { ogImage } from "../../lib/seo";
+import { pageMetadata } from "../../lib/seo";
 import { routeRenders, siteConfig } from "../../lib/siteConfig";
 
 // PRD 9.7, verbatim fragments. Every data statement needs the founder's confirmation (IN-4) before the route goes
 // live; until then the page renders only on previews and in development, and is a 404 in production.
 const path = "/independence-and-data";
 const title = "Independence and data handling";
-const description =
-  "No implementation fees, no software resale, no system integrator partnerships or referral fees. How client evidence is handled, and how AI is used.";
 const lastUpdated = "17 October 2026";
-const url = `${siteConfig.url}${path}`;
 
 const renders = routeRenders(path);
 
 // The 404 still streams this route's metadata, so the page title is only set where the page renders (as /_ui).
 export const metadata: Metadata = renders
-  ? {
-      title,
-      description,
-      alternates: { canonical: url },
-      openGraph: { type: "website", title: `${title} | ChisokuLabs`, description, url, images: [ogImage] },
-      twitter: { card: "summary_large_image", title: `${title} | ChisokuLabs`, description, images: [ogImage.url] },
-    }
+  ? pageMetadata(path)
   : { robots: { index: false, follow: false } };
 
 const independence = [

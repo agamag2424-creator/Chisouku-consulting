@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { Market } from "../../content/markets";
 import { breadcrumbJsonLd, marketServiceJsonLd } from "../../lib/jsonLd";
-import { ogImage } from "../../lib/seo";
+import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 import { JsonLdScript } from "../aeo/JsonLdScript";
 import { OfferPanels } from "../home/OfferPanels";
@@ -17,16 +17,7 @@ const lead = (market: Market) =>
   `Independent go-live decision assurance for ERP and core-platform programmes in ${market.inName}.`;
 
 export function marketMetadata(market: Market): Metadata {
-  const url = `${siteConfig.url}${market.path}`;
-  const title = `${market.name} | ChisokuLabs`;
-  const description = `${lead(market)} ${market.whyNow}`;
-  return {
-    title: market.name,
-    description,
-    alternates: { canonical: url },
-    openGraph: { type: "website", title, description, url, images: [ogImage] },
-    twitter: { card: "summary_large_image", title, description, images: [ogImage.url] },
-  };
+  return pageMetadata(market.path);
 }
 
 /** Ink hero with the dated reasons as a timeline card, then programme shapes, engagement and offers, brief CTA. */

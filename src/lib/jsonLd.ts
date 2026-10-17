@@ -1,5 +1,4 @@
 import { siteConfig } from "./siteConfig";
-import { legacy, legacyAuditPriceRange } from "./legacyOffer"; // old Service blocks, removed in E8.4/E10
 import type { FaqItem } from "./aeoContent";
 import type { Market } from "../content/markets";
 
@@ -85,60 +84,6 @@ export function marketServiceJsonLd(market: Market, description: string): JsonLd
   };
 }
 
-export function auditServiceJsonLd(): JsonLd {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "PMO Automation Audit",
-    serviceType: "PMO Automation Audit",
-    description:
-      "AI automation for delivery systems, starting with the PMO reporting layer. Map reporting drag, score AI automation fit, leave with a blueprint.",
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteUrl,
-    },
-    areaServed: [legacy.markets.primary, legacy.markets.secondary],
-    offers: {
-      "@type": "Offer",
-      url: `${siteUrl}/pmo-automation-audit`,
-      priceCurrency: legacy.pricing.currency,
-      description: `Typical range ${legacyAuditPriceRange}; timeline ${legacy.pricing.timeline}.`,
-      priceSpecification: {
-        "@type": "PriceSpecification",
-        minPrice: legacy.pricing.min,
-        maxPrice: legacy.pricing.max,
-        priceCurrency: legacy.pricing.currency,
-      },
-    },
-    url: `${siteUrl}/pmo-automation-audit`,
-  };
-}
-
-export function diagnosticServiceJsonLd(): JsonLd {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Free PMO Diagnostic",
-    serviceType: "Free PMO Diagnostic",
-    description:
-      "Five-minute baseline of reporting maturity, operating drag, and AI automation fit.",
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteUrl,
-    },
-    areaServed: [legacy.markets.primary, legacy.markets.secondary],
-    offers: {
-      "@type": "Offer",
-      price: 0,
-      priceCurrency: legacy.pricing.currency,
-      url: legacy.diagnosticUrl,
-    },
-    url: `${siteUrl}/free-pmo-diagnostic`,
-  };
-}
-
 export function faqPageJsonLd(items: FaqItem[]): JsonLd {
   return {
     "@context": "https://schema.org",
@@ -169,29 +114,6 @@ export function breadcrumbJsonLd(items: BreadcrumbItem[]): JsonLd {
       name: item.name,
       item: item.path.startsWith("http") ? item.path : `${siteUrl}${item.path === "/" ? "" : item.path}`,
     })),
-  };
-}
-
-export function implementationServiceJsonLd(): JsonLd {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "PMO Reporting Implementation",
-    serviceType: "AI automation implementation for PMO reporting",
-    description:
-      "Optional build after the PMO Automation Audit — AI automation into the pack cycle. Scope and commercial terms confirmed after the blueprint.",
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteUrl,
-    },
-    areaServed: [legacy.markets.primary, legacy.markets.secondary],
-    offers: {
-      "@type": "Offer",
-      url: `${siteUrl}/implementation`,
-      description: "Quoted after audit blueprint and fit conversation — not a fixed list price.",
-    },
-    url: `${siteUrl}/implementation`,
   };
 }
 

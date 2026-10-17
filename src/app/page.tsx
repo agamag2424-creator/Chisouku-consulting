@@ -18,21 +18,11 @@ import { SlipCostEstimator } from "../components/home/SlipCostEstimator";
 import { Button } from "../components/ui/Button";
 import { Section } from "../components/ui/Section";
 import { Sheet } from "../components/ui/Sheet";
-import { defaultTitle, ogImage } from "../lib/seo";
+import { pageMetadata } from "../lib/seo";
 import { siteConfig } from "../lib/siteConfig";
 import { cn } from "../lib/utils";
 
-const description =
-  "Before leadership approves a major ERP or core-platform go-live, ChisokuLabs independently tests whether every critical readiness claim has the status, owner, evidence, date and action to defend that decision.";
-
-export const metadata: Metadata = {
-  title: { absolute: defaultTitle },
-  description,
-  alternates: { canonical: siteConfig.url },
-  // Nested metadata replaces the layout's, so the share image is repeated here.
-  openGraph: { type: "website", title: defaultTitle, description, url: siteConfig.url, images: [ogImage] },
-  twitter: { card: "summary_large_image", title: defaultTitle, description, images: [ogImage.url] },
-};
+export const metadata: Metadata = pageMetadata("/");
 
 const CTA = {
   review: { href: "/contact?request=review", label: "Discuss your programme" },

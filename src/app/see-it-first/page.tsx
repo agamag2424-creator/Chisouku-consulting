@@ -7,22 +7,15 @@ import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { Sheet } from "../../components/ui/Sheet";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
-import { ogImage } from "../../lib/seo";
+import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 
 // PRD 9.5, verbatim. The brief's list items are cut from the 9.5 sentence.
 const title = "See the work before you talk to us";
 const briefText =
   "Tell us the programme. Within two business days we send a one-page readiness brief prepared from public information: where readiness risk most likely sits and the questions we would ask.";
-const url = `${siteConfig.url}/see-it-first`;
 
-export const metadata: Metadata = {
-  title: { absolute: `${title} | ChisokuLabs` },
-  description: briefText,
-  alternates: { canonical: url },
-  openGraph: { type: "website", title: `${title} | ChisokuLabs`, description: briefText, url, images: [ogImage] },
-  twitter: { card: "summary_large_image", title: `${title} | ChisokuLabs`, description: briefText, images: [ogImage.url] },
-};
+export const metadata: Metadata = pageMetadata("/see-it-first");
 
 const briefContents = [
   "A one-page readiness brief",
