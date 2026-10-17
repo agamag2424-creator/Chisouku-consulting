@@ -4,7 +4,7 @@ import { OfferLayout, offerMetadata, type OfferBlock } from "../../components/of
 const lead =
   "A five-day written review of your programme's readiness evidence. You learn which claims are proven, which are assumed, and where workstreams contradict each other.";
 
-export const metadata = offerMetadata("evidenceCheck", lead);
+export const metadata = offerMetadata("evidenceCheck");
 
 const blocks: readonly OfferBlock[] = [
   {

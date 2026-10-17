@@ -5,22 +5,12 @@ import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { glossaryTerms } from "../../lib/aeoContent";
 import { breadcrumbJsonLd, definedTermSetJsonLd } from "../../lib/jsonLd";
-import { ogImage } from "../../lib/seo";
-import { siteConfig } from "../../lib/siteConfig";
+import { pageMetadata } from "../../lib/seo";
 
 // PRD 10 glossary (E8.2). Each term has an anchor; DefinedTermSet JSON-LD reads the same array.
 const title = "Glossary";
-const description =
-  "Go-live readiness terms: go/no-go decision, Conditional Go, cutover, rollback point, hypercare, SIT, UAT, data migration reconciliation, READINESS-5 and more.";
-const url = `${siteConfig.url}/glossary`;
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: url },
-  openGraph: { type: "website", title: `${title} | ChisokuLabs`, description, url, images: [ogImage] },
-  twitter: { card: "summary_large_image", title: `${title} | ChisokuLabs`, description, images: [ogImage.url] },
-};
+export const metadata: Metadata = pageMetadata("/glossary");
 
 export default function GlossaryPage() {
   return (

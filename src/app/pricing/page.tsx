@@ -8,22 +8,15 @@ import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { Sheet } from "../../components/ui/Sheet";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
-import { ogImage } from "../../lib/seo";
+import { pageMetadata } from "../../lib/seo";
 import { offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
 // PRD 9.6. Prices, days, founding places and fee credit come from config; "what's included" is the PRD 6.1 table.
 const feeCredit = `The full Evidence Check fee is credited against a Go-Live Decision Review signed within ${siteConfig.feeCreditDays} days of the Evidence Check report.`;
 const paymentTerms = "50% on signature, 50% on delivery";
-const url = `${siteConfig.url}/pricing`;
 
-export const metadata: Metadata = {
-  title: "Pricing",
-  description: feeCredit,
-  alternates: { canonical: url },
-  openGraph: { type: "website", title: "Pricing | ChisokuLabs", description: feeCredit, url, images: [ogImage] },
-  twitter: { card: "summary_large_image", title: "Pricing | ChisokuLabs", description: feeCredit, images: [ogImage.url] },
-};
+export const metadata: Metadata = pageMetadata("/pricing");
 
 const cards: readonly { offer: OfferKey; duration: string; includes: readonly string[]; payment: boolean }[] = [
   {

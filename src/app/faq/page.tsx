@@ -6,22 +6,12 @@ import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { faqItems } from "../../lib/aeoContent";
 import { breadcrumbJsonLd, faqPageJsonLd } from "../../lib/jsonLd";
-import { ogImage } from "../../lib/seo";
-import { siteConfig } from "../../lib/siteConfig";
+import { pageMetadata } from "../../lib/seo";
 
 // PRD 9.9 (E8.1). The page and its FAQPage JSON-LD read the same array.
 const title = "FAQ";
-const description =
-  "Independent go-live decision assurance: how it differs from an SI readiness review, timing, platforms, data handling, AI use, prices and the fee credit.";
-const url = `${siteConfig.url}/faq`;
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: url },
-  openGraph: { type: "website", title: `${title} | ChisokuLabs`, description, url, images: [ogImage] },
-  twitter: { card: "summary_large_image", title: `${title} | ChisokuLabs`, description, images: [ogImage.url] },
-};
+export const metadata: Metadata = pageMetadata("/faq");
 
 export default function FaqPage() {
   return (

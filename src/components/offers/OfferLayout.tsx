@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { breadcrumbJsonLd, offerServiceJsonLd } from "../../lib/jsonLd";
-import { ogImage } from "../../lib/seo";
+import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 import { JsonLdScript } from "../aeo/JsonLdScript";
 import { PrincipalBlock } from "../trust/PrincipalBlock";
@@ -51,18 +51,9 @@ export type OfferBlock =
 
 type OfferLayoutProps = { offer: FixedOffer; lead: string; blocks: readonly OfferBlock[] };
 
-/** Page metadata for an offer page: title from config, description from the lead, share image. */
-export function offerMetadata(offer: FixedOffer, lead: string): Metadata {
-  const { name, path } = siteConfig.offers[offer];
-  const url = `${siteConfig.url}${path}`;
-  const title = `${name} | ChisokuLabs`;
-  return {
-    title: name,
-    description: lead,
-    alternates: { canonical: url },
-    openGraph: { type: "website", title, description: lead, url, images: [ogImage] },
-    twitter: { card: "summary_large_image", title, description: lead, images: [ogImage.url] },
-  };
+/** Page metadata for an offer page, from the SEO map. */
+export function offerMetadata(offer: FixedOffer): Metadata {
+  return pageMetadata(siteConfig.offers[offer].path);
 }
 
 /** Offer page (E2.3): JSON-LD, ink hero, the blocks with alternating tones, closing band. */
