@@ -7,5 +7,6 @@
 | CSS | `globals.css` 959 → 256 lines: 104 rules for classes nothing uses (old page system, map/ledger/report artefacts, `.drag-slider`) removed with a postcss script; empty media blocks dropped |
 | Visual check | 12 pages × desktop and mobile, full page, before vs after: **24 / 24 pixel-identical** |
 | `/_ui` | kept with the fail-closed guard (E0.3): 404 in a production build |
-| Build | `npm run build` passes; lint 0 warnings; typecheck OK; unit 13/13; e2e 78/78 |
+| Build | `npm run build` passes; lint 0 warnings; typecheck OK; e2e 78/78; unit 13/13 after a fix (below) |
+| Unit-test fix | the fail-closed guard test used `/guides/s4hana-go-no-go-checklist` as its "not live" example; that route went live in E8.3, so the test had failed since then (unit tests were not re-run on E8.3–E10.1). It now uses a route that does not exist |
 | Size | homepage JS (gzip, chunks the page loads): 197,546 → 197,546 bytes (unchanged); `.next/static` total 1,066,499 → 1,031,108 bytes (−35 KB) |
