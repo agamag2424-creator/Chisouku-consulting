@@ -15,6 +15,9 @@ const routes = [
   "/go-live-readiness-saudi-arabia",
   "/faq",
   "/glossary",
+  "/guides/s4hana-go-no-go-checklist",
+  "/guides/is-my-erp-ready-to-go-live",
+  "/guides/independent-assurance-vs-si-readiness-review",
 ];
 
 for (const route of routes) {
@@ -48,7 +51,6 @@ test("llms.txt and llms-full.txt: new answers from config, live pages only, noth
     expect(text).toContain("Readiness Evidence Check");
     expect(text).toContain("USD 12,000");
     expect(text).not.toMatch(/PMO|Diagnostic|Automation Audit|operator|probe/i);
-    expect(text).not.toContain("/guides/");
   }
   expect(full).toContain("## FAQ");
   expect(full).toContain("### READINESS-5");

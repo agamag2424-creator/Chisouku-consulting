@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandMark } from "../brand/BrandMark";
+import { guides } from "../../content/guides";
 import { isRouteLive, siteConfig } from "../../lib/siteConfig";
 
 type FooterLink = { href: string; label: string };
@@ -27,7 +28,7 @@ const groups: { title: string; links: FooterLink[] }[] = [
       { href: "/go-live-readiness-saudi-arabia", label: "Saudi Arabia" },
     ],
   },
-  // Guides (PRD 4.1) join this list in E8.3, with their titles.
+  { title: "Guides", links: guides.map((guide) => ({ href: guide.path, label: guide.title })) },
 ];
 
 const linkClass = "text-paper/80 underline-offset-4 transition-colors hover:text-paper hover:underline";
@@ -40,7 +41,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-paper/10 bg-ink text-paper/80">
-      <div className="mx-auto grid max-w-[var(--content-max-width)] gap-10 px-[var(--content-padding-x-mobile)] py-14 md:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))] md:px-[var(--content-padding-x)]">
+      <div className="mx-auto grid max-w-[var(--content-max-width)] gap-10 px-[var(--content-padding-x-mobile)] py-14 md:grid-cols-2 min-[1100px]:grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))] md:px-[var(--content-padding-x)]">
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">
             <BrandMark className="h-9 w-9" inverted />

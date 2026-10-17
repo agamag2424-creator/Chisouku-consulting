@@ -79,7 +79,7 @@ export const guides: readonly Guide[] = [
           },
           {
             kind: "p",
-            text: "Many SAP ERP 6.0 customers are moving now because SAP’s mainstream maintenance for SAP Business Suite 7 ends at the end of 2027, with optional extended maintenance to the end of 2030. A fixed horizon adds pressure on the date, which makes an evidence-based decision more important, not less.",
+            text: "For SAP ERP 6.0 customers the horizon is fixed: SAP’s mainstream maintenance for SAP Business Suite 7 ends at the end of 2027, with optional extended maintenance to the end of 2030. A fixed horizon adds pressure on the date, which makes an evidence-based decision more important, not less.",
           },
         ],
       },

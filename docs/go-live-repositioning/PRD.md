@@ -514,4 +514,4 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
 | IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |
 | IN-10 | Approve the market page wording in 9.10 (**approved 17 Oct 2026**) | E7 merge | Do not merge E7.1 / E7.2 |
-| IN-11 | Approve the new E8 wording: FAQ answers (9.9), glossary definitions, guides | E8 merge | Do not merge E8 |
+| IN-11 | Approve the new E8 wording: FAQ answers (9.9), glossary definitions, the three guides (`src/content/guides.ts`) | E8 merge | Do not merge E8 |

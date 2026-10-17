@@ -34,7 +34,7 @@ export function GuideArticle({ guide }: { guide: Guide }) {
       )}
 
       <Section tone="ink">
-        <h1 className="t-h1 max-w-[20ch] text-paper">{guide.title}</h1>
+        <h1 className="t-h1 max-w-[28ch] text-paper">{guide.title}</h1>
         <p className="t-body mt-6 max-w-[62ch] border-l-4 border-teal pl-5 text-paper">{guide.answer}</p>
       </Section>
 
@@ -139,7 +139,8 @@ function Block({ block }: { block: GuideBlock }) {
       </ul>
     );
   return (
-    <div className="overflow-x-auto rounded-sheet border border-line">
+    // Focusable so keyboard users can scroll a table that is wider than a phone screen.
+    <div role="region" aria-label={block.caption} tabIndex={0} className="overflow-x-auto rounded-sheet border border-line">
       <table className="w-full min-w-[560px] border-collapse text-left text-[15px]">
         <caption className="sr-only">{block.caption}</caption>
         <thead className="bg-page">

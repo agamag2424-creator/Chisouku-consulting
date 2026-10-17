@@ -72,7 +72,7 @@ export const routeSeo = {
       "How to tell whether an ERP is ready to go live: five questions for every critical claim, ten warning signs, and the risks between workstreams.",
   },
   "/guides/independent-assurance-vs-si-readiness-review": {
-    title: "Independent assurance vs an SI readiness review",
+    title: "Independent assurance vs SI readiness review",
     description:
       "What a system integrator's readiness review does well, where it falls short, and what independent go-live assurance adds to the decision.",
   },
