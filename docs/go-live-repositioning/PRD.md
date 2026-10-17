@@ -481,6 +481,8 @@ Interface wording added by 9.12 ([FOUNDER APPROVES], IN-9): "Go-live readiness c
 - API route keeps Resend delivery; update payload and email subject `"[ChisokuLabs] {request type} — {company}"`; keep validation; add honeypot field; rate-limit by simple in-memory guard is **not** required.
 - Analytics via existing `@vercel/analytics` `track()`: `cta_click` {id, page}, `sample_pack_view`, `sample_pack_download`, `hero_view_toggle` {view}, `slip_estimate_used`, `form_submit` {request_type}, `form_error`. No cookies beyond Vercel Analytics defaults; privacy page updated.
 - Calendly button stays available on `/contact` as an alternative.
+- Delivery (E9.1): Resend, sender `website@chisokulabs.com` (domain verified), reply-to the visitor; the API returns an error when the key is missing or Resend rejects the send, and the form then shows the email address. `RESEND_API_KEY` is set in Vercel by the founder.
+- New interface wording (E9.1, [FOUNDER APPROVES], IN-12): "We reply within one business day." (under the H1, from the approved success message); "Prefer to talk? Book a call"; "Email:"; "Choose…" in selects; field messages "Enter your name.", "Enter your company name.", "Choose a country."; failure "We could not send your message. Please email us at {email}."; `/contact` description "Discuss a go-live review, request a free readiness brief, or ask about pricing. We reply within one business day."
 
 ---
 
@@ -505,13 +507,14 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | ID | Input | Needed by | Default if not answered |
 |---|---|---|---|
 | IN-1 | Approve prices in 6.1 (**approved 17 Oct 2026**) | E2 merge | Do not merge E2 |
-| IN-2 | Public contact email (role address vs personal) | E9 | Keep current `siteConfig.email` |
+| IN-2 | Public contact email (role address vs personal) | E9 | Keep current `siteConfig.email` (not answered; default applies) |
 | IN-3 | Approve principal paragraph (8.3) | E1 merge | **Approved as written, 17 Oct 2026** |
 | IN-4 | Confirm every data-handling statement in 9.7 is true (**confirmed 17 Oct 2026**, all twelve; the homepage deletion line aligned to 9.7) | E6 merge | Do not publish `/independence-and-data` |
-| IN-5 | Calendly link still valid | E9 | Keep current link |
+| IN-5 | Calendly link still valid | E9 | **Old link dead (404); founder gave https://calendly.com/agam-agrawwal, 17 Oct 2026** |
 | IN-6 | When the Self-Check goes live: URL | Later | `selfCheck.live = false` |
 | IN-7 | Approve the estimator copy and example values in 9.11 (**approved 17 Oct 2026**, with "a"/"an" chosen by number in "Cost of a {weeks}-week slip") | E1.5 merge | Do not merge E1.5 |
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
 | IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |
 | IN-10 | Approve the market page wording in 9.10 (**approved 17 Oct 2026**) | E7 merge | Do not merge E7.1 / E7.2 |
+| IN-12 | Approve the E9.1 interface wording (11) | E9 merge | Do not merge E9.1 |
 | IN-11 | Approve the new E8 wording: FAQ answers (9.9), glossary definitions, the three guides (`src/content/guides.ts`) (**approved 17 Oct 2026**) | E8 merge | Do not merge E8 |
