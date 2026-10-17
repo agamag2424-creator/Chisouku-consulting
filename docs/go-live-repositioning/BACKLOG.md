@@ -180,7 +180,7 @@ Read `src/app/page.tsx`, `src/lib/siteConfig.ts`, `src/lib/jsonLd.ts`, `src/lib/
 
 ### E1.5 Slipped go-live cost estimator (added in PRD v1.1)
 **Type:** Code + Copy · **Files:** new `src/components/home/SlipCostEstimator.tsx`, `src/lib/slipEstimate.ts` (pure calculation), `src/lib/siteConfig.ts` (`slipEstimator`), `src/app/page.tsx` (section 4a)
-**Depends on:** E0.3 (form controls, `Section`, `Sheet`, `Button`), E1.1 (`offers`, `formatPrice`, `foundingActive()`), E1.3 (homepage)
+**Depends on:** E0.3 (`Section`, `Sheet`, `Button`; E0.3 has no form-control component, so the number inputs follow PRD 5.4: visible 2px teal focus, token colours), E1.1 (`offers`, `formatPrice`, `foundingActive()`), E1.3 (homepage)
 **Tasks**
 1. `slipEstimate(inputs, config)` as a pure, typed function returning weekly run-rate, total cost and the comparison in working days; guards against zero people or rate (comparison hidden, no division by zero).
 2. Client component per PRD 9.11: four labelled number inputs, outputs, comparison line, footnote, CTAs. Server-render the example values.
