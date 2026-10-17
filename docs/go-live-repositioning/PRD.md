@@ -298,7 +298,7 @@ Next to it: headline "Your programme reports Green. We test whether the evidence
    Items: The full sample decision pack (view or download, no form) · A free readiness brief on your programme, prepared from public information · The Readiness Self-Check (if `selfCheck.live`; otherwise omitted).
 7. **Why not the usual options** — compact version of the comparison table (E5), link to `/pricing`.
 8. **Independent, and careful with your data** — H2: No stake in your go-live date.
-   Body: We take no implementation fees, resell no software and hold no system integrator partnerships. Your documents are processed under a written data-handling policy: never used to train models, deleted at the end of the engagement unless you ask us to keep them. Link: Independence and data handling.
+   Body: We take no implementation fees, resell no software and hold no system integrator partnerships. Your documents are processed under a written data-handling policy: never used to train models, deleted within 30 days of the final readout unless you ask us to keep them. Link: Independence and data handling.
 9. **Principal-led** — one paragraph from 8.3. No photo.
 10. **Closing CTA** — H2: Six weeks from go-live? Start with the evidence. Buttons: Discuss your programme · Request a free readiness brief.
 
@@ -436,7 +436,7 @@ Each homepage section leads with a visual; the 9.1 copy is kept verbatim and may
 - 9 Principal-led: a signature line and experience chips taken from the 8.3 paragraph.
 - 10 Closing CTA: ink band with a six-week strip ending at go-live; W-6 highlighted.
 
-Interface wording added by 9.12 ([FOUNDER APPROVES], IN-9): "Go-live readiness check"; "Three critical claims, all reported Green"; "As reported"; "As evidenced"; "claims reported Green"; "evidence not yet checked"; "claims have most of their evidence"; "contradiction between workstreams"; "{ID} {claim}: what the evidence shows"; "Evidenced", "Partial", "Missing"; "The go-live decision"; workstream lines "Reports a pass rate.", "Reports a reconciliation.", "Has a plan.", "Has an opinion, and a milestone tied to the date."; "Fee credited in full"; "None" with "Implementation fees", "Software resold", "System integrator partnerships"; the three data-handling lines (cut from section 8 body); "Led and signed by a principal"; chips "11+ years", "Aviation", "Banking", "Manufacturing", "Multi-country go-lives"; "W-6" to "W-1" and "Go-live"; estimator chart labels "Week 1" and "Week {n}".
+Interface wording added by 9.12 ([FOUNDER APPROVES], IN-9): "Go-live readiness check"; "Three critical claims, all reported Green"; "As reported"; "As evidenced"; "claims reported Green"; "evidence not yet checked"; "claims have most of their evidence"; "contradiction between workstreams"; "{ID} {claim}: what the evidence shows"; "Evidenced", "Partial", "Missing"; "The go-live decision"; workstream lines "Reports a pass rate.", "Reports a reconciliation.", "Has a plan.", "Has an opinion, and a milestone tied to the date."; "Fee credited in full"; "None" with "Implementation fees", "Software resold", "System integrator partnerships"; the three data-handling lines (cut from section 8 body); on `/independence-and-data` (approved 17 Oct 2026): "Shared", "Stored", "Processed", "Deleted", "Last updated: {date}", "Questions about how we handle your data:"; "Led and signed by a principal"; chips "11+ years", "Aviation", "Banking", "Manufacturing", "Multi-country go-lives"; "W-6" to "W-1" and "Go-live"; estimator chart labels "Week 1" and "Week {n}".
 
 ## 10. SEO and answer-engine requirements (E8)
 
@@ -483,7 +483,7 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-1 | Approve prices in 6.1 (**approved 17 Oct 2026**) | E2 merge | Do not merge E2 |
 | IN-2 | Public contact email (role address vs personal) | E9 | Keep current `siteConfig.email` |
 | IN-3 | Approve principal paragraph (8.3) | E1 merge | **Approved as written, 17 Oct 2026** |
-| IN-4 | Confirm every data-handling statement in 9.7 is true | E6 merge | Do not publish `/independence-and-data` |
+| IN-4 | Confirm every data-handling statement in 9.7 is true (**confirmed 17 Oct 2026**, all twelve; the homepage deletion line aligned to 9.7) | E6 merge | Do not publish `/independence-and-data` |
 | IN-5 | Calendly link still valid | E9 | Keep current link |
 | IN-6 | When the Self-Check goes live: URL | Later | `selfCheck.live = false` |
 | IN-7 | Approve the estimator copy and example values in 9.11 (**approved 17 Oct 2026**, with "a"/"an" chosen by number in "Cost of a {weeks}-week slip") | E1.5 merge | Do not merge E1.5 |

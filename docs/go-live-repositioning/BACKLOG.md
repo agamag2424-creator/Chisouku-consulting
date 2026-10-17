@@ -12,6 +12,7 @@
 - Evidence reports go in `docs/go-live-repositioning/evidence/`.
 - **Release path (founder decision, 17 Oct 2026):** E0 is live on `main`. From E1 on, every story PR targets the staging branch `release/go-live`; its Vercel preview is the staging site. `main` (production) does not change until E10.4, when `release/go-live` merges to `main` in one launch after the founder approves it. Executor rule 11 applies to story PRs: the founder merges them into `release/go-live`, or tells the executor to.
 - **IN-3 approved (17 Oct 2026):** the PRD 8.3 principal paragraph is approved as written; the homepage principal block (E1.3) and `principalBlock` flag (E6.2) are on.
+- **IN-4 confirmed (17 Oct 2026):** every PRD 9.7 data-handling statement is true. `/independence-and-data` is live (`routeLive` true), and the homepage deletion line now matches 9.7 ("within 30 days of the final readout").
 
 ## How to start (paste this into Claude Code)
 

@@ -245,7 +245,7 @@ const dataLines = [
     ),
   },
   {
-    text: "Deleted at the end of the engagement unless you ask us to keep them",
+    text: "Deleted within 30 days of the final readout unless you ask us to keep them",
     icon: <path d="M4 6h14M8 6V4h6v2M6 6l1 12h8l1-12" />,
   },
 ] as const;
