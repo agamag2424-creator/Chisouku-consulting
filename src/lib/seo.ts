@@ -61,6 +61,21 @@ export const routeSeo = {
     description:
       "Independent go-live decision assurance: how it differs from an SI readiness review, timing, platforms, data handling, AI use, prices and the fee credit.",
   },
+  "/guides/s4hana-go-no-go-checklist": {
+    title: "S/4HANA go/no-go checklist",
+    description:
+      "Test every critical S/4HANA readiness claim before the go/no-go: testing, data migration, integration, cutover and governance, on READINESS-5.",
+  },
+  "/guides/is-my-erp-ready-to-go-live": {
+    title: "Is my ERP ready to go live?",
+    description:
+      "How to tell whether an ERP is ready to go live: five questions for every critical claim, ten warning signs, and the risks between workstreams.",
+  },
+  "/guides/independent-assurance-vs-si-readiness-review": {
+    title: "Independent assurance vs SI readiness review",
+    description:
+      "What a system integrator's readiness review does well, where it falls short, and what independent go-live assurance adds to the decision.",
+  },
   "/glossary": {
     title: "Glossary",
     description:

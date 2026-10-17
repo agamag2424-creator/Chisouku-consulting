@@ -67,9 +67,9 @@ export const routeLive = {
   "/independence-and-data": true,
   "/go-live-readiness-uae": true,
   "/go-live-readiness-saudi-arabia": true,
-  "/guides/s4hana-go-no-go-checklist": false,
-  "/guides/is-my-erp-ready-to-go-live": false,
-  "/guides/independent-assurance-vs-si-readiness-review": false,
+  "/guides/s4hana-go-no-go-checklist": true,
+  "/guides/is-my-erp-ready-to-go-live": true,
+  "/guides/independent-assurance-vs-si-readiness-review": true,
 } as const;
 
 export type SiteRoute = keyof typeof routeLive;
