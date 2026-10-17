@@ -188,7 +188,7 @@ export function PackIllustration() {
             <span key={rowIndex} className="flex items-center gap-1.5">
               <Bar className="flex-1" />
               {row.map((state, cell) => (
-                <EvidenceCell key={cell} state={state} label="" className="[&_svg]:size-3 [&>.sr-only]:hidden" />
+                <EvidenceCell key={cell} state={state} label="" className="[--glyph:12px] [&>.sr-only]:hidden" />
               ))}
             </span>
           ))}

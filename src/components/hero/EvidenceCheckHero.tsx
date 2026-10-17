@@ -207,7 +207,7 @@ export function EvidenceCheckHero({ className }: { className?: string }) {
           {pickedClaim.marks.map((mark, cellIndex) => (
             <li key={readiness5[cellIndex].key} className="flex flex-col gap-1.5 rounded-sheet bg-page p-2.5">
               <span className="flex items-center gap-2 text-[12px] font-semibold">
-                <EvidenceCell state={mark} label={readiness5[cellIndex].name} className="[&_svg]:size-3.5" />
+                <EvidenceCell state={mark} label={readiness5[cellIndex].name} className="[--glyph:14px]" />
                 <span aria-hidden>{readiness5[cellIndex].name}</span>
               </span>
               <span aria-hidden className="text-[12px] text-muted">
@@ -223,7 +223,7 @@ export function EvidenceCheckHero({ className }: { className?: string }) {
         <ul className="flex gap-3.5 text-[13px] text-muted" aria-label="Key">
           {(["present", "partial", "missing"] as const).map((state) => (
             <li key={state} className="flex items-center gap-1.5">
-              <EvidenceCell state={state} label="Key" className="[&_svg]:size-3 [&>.sr-only]:hidden" />
+              <EvidenceCell state={state} label="Key" className="[--glyph:12px] [&>.sr-only]:hidden" />
               {evidenceStateLabel[state]}
             </li>
           ))}
