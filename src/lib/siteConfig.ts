@@ -66,6 +66,9 @@ export const routeLive = {
   "/independence-and-data": false,
   "/go-live-readiness-uae": false,
   "/go-live-readiness-saudi-arabia": false,
+  "/guides/s4hana-go-no-go-checklist": false,
+  "/guides/is-my-erp-ready-to-go-live": false,
+  "/guides/independent-assurance-vs-si-readiness-review": false,
 } as const;
 
 export type SiteRoute = keyof typeof routeLive;
@@ -107,10 +110,11 @@ export function offerPriceLabel(
   return { list, founding: foundingActive(slotsRemaining) ? founding : null };
 }
 
+/** Primary navigation (PRD 4.3). Nav and footer show only links whose route is live. */
 export const navLinks = [
-  { href: "/pmo-automation-audit", label: "Audit" },
-  { href: "/free-pmo-diagnostic", label: "Diagnostic" },
-  { href: "/implementation", label: "Implementation" },
+  { href: "/go-live-decision-review", label: "Decision Review" },
+  { href: "/readiness-evidence-check", label: "Evidence Check" },
   { href: "/method", label: "Method" },
-  { href: "/sample-outputs", label: "Outputs" },
+  { href: "/see-it-first", label: "See it first" },
+  { href: "/pricing", label: "Pricing" },
 ] as const;
