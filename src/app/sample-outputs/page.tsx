@@ -33,11 +33,11 @@ export const metadata: Metadata = {
 };
 
 const strip = [
-  { href: "#map", n: "01", title: "Map", detail: "Operating map" },
-  { href: "#locate", n: "02", title: "Locate", detail: "Drag ledger" },
-  { href: "#prioritize", n: "03", title: "Prioritize", detail: "Opportunity matrix" },
-  { href: "#ai-blueprint", n: "04", title: "AI Blueprint", detail: "Reporting automation" },
-  { href: "#blueprint", n: "05", title: "Sequence", detail: "Implementation plan" },
+  { href: "#map", n: "1", title: "Map", detail: "Operating map" },
+  { href: "#locate", n: "2", title: "Locate", detail: "Drag ledger" },
+  { href: "#prioritize", n: "3", title: "Prioritize", detail: "Opportunity matrix" },
+  { href: "#ai-blueprint", n: "4", title: "AI Blueprint", detail: "Reporting automation" },
+  { href: "#blueprint", n: "5", title: "Sequence", detail: "Implementation plan" },
 ] as const;
 
 export default function SampleOutputsPage() {
@@ -52,17 +52,15 @@ export default function SampleOutputsPage() {
       />
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Audit outputs</p>
           <h1 className="display">What the audit produces.</h1>
           <p className="subhead mt-5">
-            Map · Drag Ledger · Opportunity Matrix · AI Blueprint · Sequence.
+            Map, Drag Ledger, Opportunity Matrix, AI Blueprint, Sequence.
           </p>
         </div>
       </section>
 
       <section className="section bg-[var(--color-paper)] pt-0">
         <div className="container">
-          <p className="eyebrow">Featured</p>
           <h2 className="headline">Full artifact excerpt.</h2>
           <div className="mt-8">
             <SampleAuditArtifact />
@@ -72,11 +70,10 @@ export default function SampleOutputsPage() {
 
       <section className="section-tight">
         <div className="container">
-          <p className="eyebrow">Jump the sequence</p>
           <div className="output-strip mt-6">
             {strip.map((item) => (
               <a key={item.href} href={item.href}>
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+                <span className="text-[13px] font-bold text-[var(--color-muted)]">
                   {item.n}
                 </span>
                 <div className="mt-2 font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
@@ -92,8 +89,8 @@ export default function SampleOutputsPage() {
       <section className="section pt-0">
         <div className="container grid gap-14">
           <div id="map">
-            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-              01 · Map
+            <p className="mb-3 text-[13px] font-bold text-[var(--color-muted)]">
+              1. Map
             </p>
             <h2 className="headline !max-w-none">PMO Operating Map</h2>
             <div className="mt-6">
@@ -101,8 +98,8 @@ export default function SampleOutputsPage() {
             </div>
           </div>
           <div id="locate">
-            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-              02 · Locate
+            <p className="mb-3 text-[13px] font-bold text-[var(--color-muted)]">
+              2. Locate
             </p>
             <h2 className="headline !max-w-none">Drag Ledger</h2>
             <div className="mt-6">
@@ -110,8 +107,8 @@ export default function SampleOutputsPage() {
             </div>
           </div>
           <div id="prioritize">
-            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-              03 · Prioritize
+            <p className="mb-3 text-[13px] font-bold text-[var(--color-muted)]">
+              3. Prioritize
             </p>
             <h2 className="headline !max-w-none">Automation Opportunity Matrix</h2>
             <div className="mt-6">
@@ -119,8 +116,8 @@ export default function SampleOutputsPage() {
             </div>
           </div>
           <div id="ai-blueprint">
-            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
-              04 · AI Blueprint
+            <p className="mb-3 text-[13px] font-bold text-teal">
+              4. AI Blueprint
             </p>
             <h2 className="headline !max-w-none">AI Reporting Automation Blueprint</h2>
             <div className="mt-6">
@@ -128,8 +125,8 @@ export default function SampleOutputsPage() {
             </div>
           </div>
           <div id="blueprint">
-            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-              05 · Sequence
+            <p className="mb-3 text-[13px] font-bold text-[var(--color-muted)]">
+              5. Sequence
             </p>
             <h2 className="headline !max-w-none">Implementation Blueprint</h2>
             <div className="mt-6">
@@ -150,11 +147,11 @@ export default function SampleOutputsPage() {
         </div>
         <p className="container mt-6 text-sm text-[var(--color-muted)]">
           Related:{" "}
-          <Link href="/free-pmo-diagnostic" className="font-semibold text-[var(--color-cyan-strong)]">
+          <Link href="/free-pmo-diagnostic" className="font-semibold text-teal">
             Free PMO Diagnostic
           </Link>
-          {" · "}
-          <Link href="/method" className="font-semibold text-[var(--color-cyan-strong)]">
+          {", "}
+          <Link href="/method" className="font-semibold text-teal">
             Method
           </Link>
         </p>

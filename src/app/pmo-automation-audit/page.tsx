@@ -32,12 +32,12 @@ export const metadata: Metadata = {
 };
 
 const deliverables = [
-  ["01", "Current-state map", "Workflow of inputs, owners, forums, and packs"],
-  ["02", "Drag ledger", "Where reporting and escalation lose time"],
-  ["03", "Automation opportunity matrix", "Impact, effort, and fit scored"],
-  ["04", "AI automation fit score", "Where AI removes reporting drag — and where it does not"],
-  ["05", "ROI hypothesis", "Credible operator-facing estimate"],
-  ["06", "Implementation blueprint", "Sequence ready for the next 30–90 days"],
+  ["Current-state map", "Workflow of inputs, owners, forums, and packs"],
+  ["Drag ledger", "Where reporting and escalation lose time"],
+  ["Automation opportunity matrix", "Impact, effort, and fit scored"],
+  ["AI automation fit score", "Where AI removes reporting drag — and where it does not"],
+  ["ROI hypothesis", "Credible operator-facing estimate"],
+  ["Implementation blueprint", "Sequence ready for the next 30–90 days"],
 ];
 
 const forItems = [
@@ -67,7 +67,6 @@ export default function AuditPage() {
       <section className="section report-cover pt-16">
         <div className="container grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:items-end">
           <div>
-            <p className="eyebrow">The engagement</p>
             <h1 className="display">PMO Automation Audit</h1>
             <p className="subhead mt-5">
               Find reporting drag. Score AI automation fit. Leave with a blueprint —
@@ -76,9 +75,9 @@ export default function AuditPage() {
             <DirectAnswer
               answer={canonicalAnswers.audit}
               bullets={[
-                `Typical range ${auditPriceRange} · timeline ${siteConfig.pricing.timeline}`,
+                `Typical range ${auditPriceRange}, timeline ${siteConfig.pricing.timeline}`,
                 "Blueprint deliverables — map, drag ledger, fit score, ROI hypothesis",
-                `Markets · ${siteConfig.markets.primary} · ${siteConfig.markets.secondary}`,
+                `Markets: ${siteConfig.markets.primary}, ${siteConfig.markets.secondary}`,
               ]}
               primaryHref="/contact"
               primaryLabel="Book Audit Fit Call"
@@ -86,7 +85,7 @@ export default function AuditPage() {
               secondaryLabel="Free PMO Diagnostic"
             />
           </div>
-          <div className="artifact-sheet paper-grain p-7">
+          <div className="artifact-sheet p-7">
             <div className="grid gap-6">
               <div>
                 <div className="kicker-title">Typical timeline</div>
@@ -113,12 +112,11 @@ export default function AuditPage() {
       <section className="section bg-[var(--color-paper)]">
         <div className="container grid gap-12 md:grid-cols-2">
           <div>
-            <p className="eyebrow">Who it is for</p>
             <h2 className="headline">Operators who need visibility.</h2>
             <ul className="mt-8">
               {forItems.map((item) => (
                 <li key={item} className="editorial-row !grid-cols-1 md:!grid-cols-[16px_1fr]">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-[var(--color-cyan)]" aria-hidden />
+                  <span className="mt-1 h-2 w-2 rounded-full bg-teal" aria-hidden />
                   <span className="text-sm font-semibold leading-relaxed text-[var(--color-ink)]">
                     {item}
                   </span>
@@ -127,12 +125,11 @@ export default function AuditPage() {
             </ul>
           </div>
           <div>
-            <p className="eyebrow">Who it is not for</p>
             <h2 className="headline">Not a transformation programme.</h2>
             <ul className="mt-8">
               {notForItems.map((item) => (
                 <li key={item} className="editorial-row !grid-cols-1 md:!grid-cols-[16px_1fr]">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-[rgba(17,24,32,0.25)]" aria-hidden />
+                  <span className="mt-1 h-2 w-2 rounded-full bg-ink/25" aria-hidden />
                   <span className="text-sm font-semibold leading-relaxed text-[var(--color-ink)]">
                     {item}
                   </span>
@@ -145,8 +142,7 @@ export default function AuditPage() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">How AI enters</p>
-          <h2 className="headline">Manual pack → AI-assisted pack.</h2>
+          <h2 className="headline">Manual pack, then AI-assisted pack.</h2>
           <p className="subhead mt-4">
             The audit finds where automation removes drag — before you build.
           </p>
@@ -158,7 +154,6 @@ export default function AuditPage() {
 
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
-          <p className="eyebrow">Process</p>
           <h2 className="headline">Four phases. Clear outputs.</h2>
           <div className="mt-10">
             <AuditPathway />
@@ -168,14 +163,10 @@ export default function AuditPage() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">Deliverables</p>
           <h2 className="headline">What you leave with.</h2>
           <div className="mt-10">
-            {deliverables.map(([n, title, detail]) => (
-              <div key={title} className="editorial-row">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
-                  {n}
-                </span>
+            {deliverables.map(([title, detail]) => (
+              <div key={title} className="editorial-row md:!grid-cols-[1.1fr_1.4fr]">
                 <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
                   {title}
                 </span>
@@ -188,12 +179,11 @@ export default function AuditPage() {
 
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
-          <p className="eyebrow">Audit output</p>
           <h2 className="headline">Audit artifact.</h2>
           <div className="mt-10">
             <SampleAuditArtifact />
           </div>
-          <div className="mt-10 grid gap-6 border-t border-[rgba(17,24,32,0.12)] pt-8 md:grid-cols-[1.2fr_0.8fr] md:items-end">
+          <div className="mt-10 grid gap-6 border-t border-ink/12 pt-8 md:grid-cols-[1.2fr_0.8fr] md:items-end">
             <p className="text-sm leading-relaxed text-[var(--color-muted)]">
               The audit can stop at the blueprint — or continue into implementation when
               ownership and fit are clear.
@@ -211,19 +201,19 @@ export default function AuditPage() {
             </div>
             <p className="mt-6 text-sm text-[var(--color-muted)] md:col-span-2">
               Related:{" "}
-              <Link href="/free-pmo-diagnostic" className="font-semibold text-[var(--color-cyan-strong)]">
+              <Link href="/free-pmo-diagnostic" className="font-semibold text-teal">
                 Free PMO Diagnostic
               </Link>
-              {" · "}
-              <Link href="/method" className="font-semibold text-[var(--color-cyan-strong)]">
+              {", "}
+              <Link href="/method" className="font-semibold text-teal">
                 Method
               </Link>
-              {" · "}
-              <Link href="/faq" className="font-semibold text-[var(--color-cyan-strong)]">
+              {", "}
+              <Link href="/faq" className="font-semibold text-teal">
                 FAQ
               </Link>
-              {" · "}
-              <Link href="/diagnostic-vs-audit" className="font-semibold text-[var(--color-cyan-strong)]">
+              {", "}
+              <Link href="/diagnostic-vs-audit" className="font-semibold text-teal">
                 Diagnostic vs Audit
               </Link>
             </p>

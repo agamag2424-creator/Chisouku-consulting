@@ -30,12 +30,11 @@ export default function GccPage() {
     <GuidePage
       breadcrumbName="GCC"
       path="/pmo-automation-gcc"
-      eyebrow="Market · GCC"
       title="PMO automation for GCC SMEs."
       subhead={`${canonicalAnswers.whatWeDo} The GCC is a primary market alongside Singapore.`}
       answer={`For GCC growth-stage SMEs with reporting, escalation, or PMO visibility drag, start with the Free PMO Diagnostic, then a PMO Automation Audit — typically ${auditPriceRange} over ${siteConfig.pricing.timeline}.`}
       bullets={[
-        "Fit roles: COO · VP Operations · Head of PMO · Delivery Director · founder/CEO",
+        "Fit roles: COO, VP Operations, Head of PMO, Delivery Director, founder/CEO",
         canonicalAnswers.systems,
         "USD commercial terms; blueprint-first — implementation only when ownership is real.",
       ]}

@@ -9,12 +9,12 @@ export const canonicalAnswers = {
   whoFor: `COO, VP Operations, Head of PMO, Director of Project Delivery, and founder/CEOs of growth-stage SMEs in the ${siteConfig.markets.primary} or ${siteConfig.markets.secondary} with reporting, escalation, or PMO visibility drag.`,
   packCycle: `The pack cycle is the recurring work to collect status, consolidate signals, write narrative, and distribute packs to decision forums.`,
   reportingDrag: `Reporting drag is time and cost lost to manual exports, spreadsheet glue, stale narrative, and forum chase in the pack cycle.`,
-  path: `Path: Free PMO Diagnostic (baseline) → PMO Automation Audit (blueprint) → optional Implementation (build into the pack cycle).`,
-  systems: `Systems we commonly automate against: ${siteConfig.systems.join(" · ")}.`,
+  path: `Path: Free PMO Diagnostic (baseline), then PMO Automation Audit (blueprint), then optional Implementation (build into the pack cycle).`,
+  systems: `Systems we commonly automate against: ${siteConfig.systems.join(", ")}.`,
   noRoiGuarantee: `We do not guarantee ROI or time savings. The audit produces an ROI hypothesis from your operating map — not fabricated client case metrics.`,
   howToStart: `Start with the Free PMO Diagnostic, then book an Audit Fit Call at ${siteConfig.url}/contact or email ${siteConfig.email}.`,
-  method: `The AI Impact Model is Assess → Architect → Activate → Accelerate. PMO reporting is Assess and Architect; Implementation is Activate.`,
-  implementation: `After the audit blueprint, implementation builds AI automation into the pack cycle (Data → Integration → Logic → Interface) — optional, only when ownership and blueprint are real.`,
+  method: `The AI Impact Model is Assess, then Architect, then Activate, then Accelerate. PMO reporting is Assess and Architect; Implementation is Activate.`,
+  implementation: `After the audit blueprint, implementation builds AI automation into the pack cycle (Data, then Integration, then Logic, then Interface) — optional, only when ownership and blueprint are real.`,
 } as const;
 
 export type FaqItem = {
@@ -85,8 +85,8 @@ export const faqItems: FaqItem[] = [
     detail:
       "See the glossary for definitions of pack cycle, reporting drag, drag ledger, and related terms.",
     related: [
-      { href: "/glossary#pack-cycle", label: "Glossary · Pack cycle" },
-      { href: "/glossary#reporting-drag", label: "Glossary · Reporting drag" },
+      { href: "/glossary#pack-cycle", label: "Glossary: Pack cycle" },
+      { href: "/glossary#reporting-drag", label: "Glossary: Reporting drag" },
     ],
   },
   {
@@ -120,7 +120,7 @@ export const faqItems: FaqItem[] = [
     id: "how-do-i-start",
     question: "How do I start?",
     answer: canonicalAnswers.howToStart,
-    detail: `Markets: ${siteConfig.markets.primary} · ${siteConfig.markets.secondary}. Full audit offer: ${siteConfig.url}/pmo-automation-audit`,
+    detail: `Markets: ${siteConfig.markets.primary}, ${siteConfig.markets.secondary}. Full audit offer: ${siteConfig.url}/pmo-automation-audit`,
     related: [
       { href: "/free-pmo-diagnostic", label: "Free PMO Diagnostic" },
       { href: "/contact", label: "Audit Fit Call" },
@@ -231,7 +231,7 @@ export function buildLlmsTxt(): string {
     `- Sample site artifacts are methodology excerpts, not client results.`,
     ``,
     `## Offers`,
-    `- Free PMO Diagnostic: ${siteConfig.url}/free-pmo-diagnostic → ${siteConfig.diagnosticUrl}`,
+    `- Free PMO Diagnostic: ${siteConfig.url}/free-pmo-diagnostic, then ${siteConfig.diagnosticUrl}`,
     `- PMO Automation Audit: ${siteConfig.url}/pmo-automation-audit`,
     `- Implementation path: ${siteConfig.url}/implementation`,
     `- Method (AI Impact Model): ${siteConfig.url}/method`,

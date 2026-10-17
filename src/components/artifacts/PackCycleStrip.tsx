@@ -1,19 +1,19 @@
 import { cn } from "../../lib/utils";
 
 const manualSteps = [
-  { label: "Export", detail: "Jira · Sheets · BI" },
+  { label: "Export", detail: "Jira, Sheets, BI" },
   { label: "Paste", detail: "Spreadsheet glue" },
-  { label: "Reconcile", detail: "Late · manual" },
+  { label: "Reconcile", detail: "Late, manual" },
   { label: "Write", detail: "Narrative by hand" },
   { label: "Send", detail: "Forum chase" },
 ] as const;
 
 const automatedSteps = [
   { label: "Extract", detail: "Live signals" },
-  { label: "Transform", detail: "Rules · freshness" },
-  { label: "AI layer", detail: "Narrative · alerts" },
+  { label: "Transform", detail: "Rules, freshness" },
+  { label: "AI layer", detail: "Narrative, alerts" },
   { label: "Pack", detail: "Ready on cadence" },
-  { label: "Distribute", detail: "Owners · forums" },
+  { label: "Distribute", detail: "Owners, forums" },
 ] as const;
 
 type Props = {
@@ -23,24 +23,24 @@ type Props = {
 /** Before/after pack cycle — methodology excerpt, not client results. */
 export function PackCycleStrip({ className }: Props) {
   return (
-    <div className={cn("report-board paper-grain ink-corners", className)}>
-      <div className="flex flex-col gap-2 border-b border-[rgba(17,24,32,0.1)] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
-          Pack cycle · Before / After
+    <div className={cn("report-board ink-corners", className)}>
+      <div className="flex flex-col gap-2 border-b border-ink/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-[13px] font-bold text-teal">
+          Pack cycle: Before / After
         </p>
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+        <p className="text-[13px] font-bold text-[var(--color-muted)]">
           Methodology excerpt
         </p>
       </div>
 
       <div className="grid lg:grid-cols-2">
-        {/* BEFORE — Manual */}
-        <div className="border-b border-[rgba(17,24,32,0.1)] p-6 lg:border-b-0 lg:border-r">
+        {/* Before — Manual */}
+        <div className="border-b border-ink/10 p-6 lg:border-b-0 lg:border-r">
           <div className="flex items-center justify-between gap-3">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+            <span className="text-[13px] font-bold text-[var(--color-muted)]">
               Before
             </span>
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+            <span className="text-[13px] font-bold text-[var(--color-muted)]">
               Manual pack
             </span>
           </div>
@@ -57,7 +57,7 @@ export function PackCycleStrip({ className }: Props) {
             {["Hours of glue", "Stale signals", "Missed escalation"].map((tag) => (
               <span
                 key={tag}
-                className="border border-[rgba(17,24,32,0.14)] bg-[rgba(17,24,32,0.03)] px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--color-muted)]"
+                className="border border-ink/14 bg-ink/3 px-2.5 py-1 text-[13px] font-bold text-[var(--color-muted)]"
               >
                 {tag}
               </span>
@@ -65,13 +65,13 @@ export function PackCycleStrip({ className }: Props) {
           </div>
         </div>
 
-        {/* AFTER — AI-assisted */}
-        <div className="bg-[rgba(0,166,200,0.04)] p-6">
+        {/* After — AI-assisted */}
+        <div className="bg-teal/4 p-6">
           <div className="flex items-center justify-between gap-3">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+            <span className="text-[13px] font-bold text-teal">
               After
             </span>
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-cyan-strong)]">
+            <span className="text-[13px] font-bold text-teal">
               AI-assisted pack
             </span>
           </div>
@@ -79,7 +79,7 @@ export function PackCycleStrip({ className }: Props) {
             Automated pack cycle
           </h3>
           <p className="mt-2 text-sm text-[var(--color-muted)]">
-            Live extract → rules + AI narrative → pack on cadence → distribute.
+            Live extract, then rules + AI narrative, then pack on cadence, then distribute.
           </p>
 
           <WorkflowRow variant="automated" steps={automatedSteps} className="mt-8" />
@@ -88,7 +88,7 @@ export function PackCycleStrip({ className }: Props) {
             {["Fresh on cadence", "AI narrative", "Owners notified"].map((tag) => (
               <span
                 key={tag}
-                className="border border-[rgba(0,166,200,0.35)] bg-[rgba(0,166,200,0.08)] px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--color-cyan-strong)]"
+                className="border border-teal/35 bg-teal/8 px-2.5 py-1 text-[13px] font-bold text-teal"
               >
                 {tag}
               </span>
@@ -126,53 +126,35 @@ function WorkflowRow({
             return (
               <g key={step.label}>
                 {index < steps.length - 1 ? (
-                  <path
+                  <path className={`${isAuto ? "stroke-teal" : "stroke-ink/28"}`}
                     d={`M${x + 88} 36 H${x + 104}`}
                     fill="none"
-                    stroke={isAuto ? "#00A6C8" : "rgba(17,24,32,0.28)"}
                     strokeWidth="1.5"
                     strokeDasharray={isAuto ? undefined : "3 4"}
                   />
                 ) : null}
-                <rect
+                <rect className={`${isAuto ? index === 2 ? "fill-teal/14" : "fill-paper/95" : "fill-paper/90"} ${isAuto ? index === 2 ? "stroke-teal" : "stroke-teal/45" : "stroke-ink/22"}`}
                   x={x}
                   y="8"
                   width="88"
                   height="56"
                   rx="3"
-                  fill={
-                    isAuto
-                      ? index === 2
-                        ? "rgba(0,166,200,0.14)"
-                        : "rgba(255,253,248,0.95)"
-                      : "rgba(255,253,248,0.9)"
-                  }
-                  stroke={
-                    isAuto
-                      ? index === 2
-                        ? "#00A6C8"
-                        : "rgba(0,166,200,0.45)"
-                      : "rgba(17,24,32,0.22)"
-                  }
                   strokeWidth={isAuto && index === 2 ? 2 : 1.25}
                 />
-                <text
+                <text className="fill-ink"
                   x={x + 44}
                   y="30"
                   textAnchor="middle"
-                  fill="#111820"
                   fontFamily="var(--font-display), sans-serif"
                   fontSize="11"
                   fontWeight="700"
                 >
                   {step.label}
                 </text>
-                <text
+                <text className="fill-muted"
                   x={x + 44}
                   y="48"
                   textAnchor="middle"
-                  fill="#65707B"
-                  fontFamily="ui-monospace, monospace"
                   fontSize="8"
                   fontWeight="600"
                 >
@@ -193,28 +175,28 @@ function WorkflowRow({
                 "flex min-h-[52px] flex-1 items-center justify-between gap-3 border px-3 py-2",
                 isAuto
                   ? index === 2
-                    ? "border-[var(--color-cyan)] bg-[rgba(0,166,200,0.12)]"
-                    : "border-[rgba(0,166,200,0.35)] bg-[rgba(255,253,248,0.95)]"
-                  : "border-[rgba(17,24,32,0.18)] bg-[rgba(255,253,248,0.9)]",
+                    ? "border-teal bg-teal-tint"
+                    : "border-teal/35 bg-paper/95"
+                  : "border-ink/18 bg-paper/90",
               )}
             >
               <div>
                 <div className="font-[family-name:var(--font-display)] text-sm font-bold tracking-[-0.01em]">
                   {step.label}
                 </div>
-                <div className="mt-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--color-muted)]">
+                <div className="mt-0.5 text-[13px] font-bold text-[var(--color-muted)]">
                   {step.detail}
                 </div>
               </div>
-              <span className="font-mono text-[10px] font-bold text-[var(--color-muted)]">
-                {String(index + 1).padStart(2, "0")}
+              <span className="t-data text-[13px] text-[var(--color-muted)]">
+                {index + 1}
               </span>
             </div>
             {index < steps.length - 1 ? (
               <span
                 className={cn(
-                  "flex w-4 shrink-0 items-center justify-center font-mono text-sm",
-                  isAuto ? "text-[var(--color-cyan-strong)]" : "text-[var(--color-muted)]",
+                  "flex w-4 shrink-0 items-center justify-center text-sm",
+                  isAuto ? "text-teal" : "text-[var(--color-muted)]",
                 )}
                 aria-hidden
               >

@@ -11,7 +11,6 @@ export type GuideSection = {
 type GuidePageProps = {
   breadcrumbName: string;
   path: string;
-  eyebrow: string;
   title: string;
   subhead: string;
   answer: string;
@@ -26,7 +25,6 @@ type GuidePageProps = {
 export function GuidePage({
   breadcrumbName,
   path,
-  eyebrow,
   title,
   subhead,
   answer,
@@ -48,7 +46,6 @@ export function GuidePage({
       />
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
-          <p className="eyebrow">{eyebrow}</p>
           <h1 className="display !max-w-[18ch]">{title}</h1>
           <p className="subhead mt-5">{subhead}</p>
           <DirectAnswer
@@ -84,22 +81,21 @@ export function GuidePage({
 
       <section className="section">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Path</p>
           <h2 className="headline">Diagnostic. Audit. Implementation.</h2>
           <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2 text-sm">
-            <Link href="/free-pmo-diagnostic" className="font-semibold text-[var(--color-cyan-strong)]">
+            <Link href="/free-pmo-diagnostic" className="font-semibold text-teal">
               Free PMO Diagnostic
             </Link>
-            <Link href="/pmo-automation-audit" className="font-semibold text-[var(--color-cyan-strong)]">
+            <Link href="/pmo-automation-audit" className="font-semibold text-teal">
               PMO Automation Audit
             </Link>
-            <Link href="/implementation" className="font-semibold text-[var(--color-cyan-strong)]">
+            <Link href="/implementation" className="font-semibold text-teal">
               Implementation
             </Link>
-            <Link href="/faq" className="font-semibold text-[var(--color-cyan-strong)]">
+            <Link href="/faq" className="font-semibold text-teal">
               FAQ
             </Link>
-            <Link href="/glossary" className="font-semibold text-[var(--color-cyan-strong)]">
+            <Link href="/glossary" className="font-semibold text-teal">
               Glossary
             </Link>
           </div>

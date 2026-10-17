@@ -25,7 +25,6 @@ export default async function ContactPage({ searchParams }: Props) {
     <section className="section pt-16">
       <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
-          <p className="eyebrow">Fit call</p>
           <h1 className="display">Audit Fit Call.</h1>
           <p className="subhead mt-5">
             Starting at PMO reporting. Share brief context — then schedule.
@@ -34,7 +33,7 @@ export default async function ContactPage({ searchParams }: Props) {
             <p>
               Prefer email?{" "}
               <a
-                className="font-bold text-[var(--color-cyan-strong)]"
+                className="font-bold text-teal"
                 href={`mailto:${siteConfig.email}`}
               >
                 {siteConfig.email}
@@ -43,7 +42,7 @@ export default async function ContactPage({ searchParams }: Props) {
             <p>
               Not ready for a call? Start with the{" "}
               <Link
-                className="font-bold text-[var(--color-cyan-strong)]"
+                className="font-bold text-teal"
                 href="/free-pmo-diagnostic"
               >
                 Free PMO Diagnostic
@@ -53,7 +52,7 @@ export default async function ContactPage({ searchParams }: Props) {
             <p>
               Want the offer detail first?{" "}
               <Link
-                className="font-bold text-[var(--color-cyan-strong)]"
+                className="font-bold text-teal"
                 href="/pmo-automation-audit"
               >
                 Review the audit

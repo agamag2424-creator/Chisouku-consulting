@@ -17,7 +17,44 @@ export const siteConfig = {
     secondary: "Singapore",
   },
   systems: ["Jira", "Sheets", "Power BI", "Slack / Teams"] as const,
+  // Offer keys from PRD 6.4, added early for PriceBlock (E0.3). E1.1 completes the schema.
+  currency: "USD",
+  offers: {
+    evidenceCheck: {
+      name: "Readiness Evidence Check",
+      days: 5,
+      listPrice: 5000,
+      foundingPrice: 2500,
+      path: "/readiness-evidence-check",
+    },
+    decisionReview: {
+      name: "Go-Live Decision Review",
+      days: 10,
+      listPrice: 12000,
+      foundingPrice: 6000,
+      path: "/go-live-decision-review",
+    },
+    continuous: {
+      name: "Continuous readiness assurance",
+      listPriceFromMonthly: 6000,
+      foundingPriceFromMonthly: 3000,
+    },
+  },
+  feeCreditDays: 90,
+  foundingSlotsRemaining: 3,
 } as const;
+
+export type OfferKey = keyof typeof siteConfig.offers;
+
+/** "USD 5,000" — every displayed price goes through here. */
+export function formatPrice(amount: number): string {
+  return `${siteConfig.currency} ${amount.toLocaleString("en-US")}`;
+}
+
+/** Founding-client prices show only while places remain (PRD 6.3). */
+export function foundingActive(slotsRemaining: number = siteConfig.foundingSlotsRemaining): boolean {
+  return slotsRemaining > 0;
+}
 
 /** Display form of the audit price, so quoted figures cannot drift from config. */
 export const auditPriceRange = `${siteConfig.pricing.currency} ${siteConfig.pricing.min.toLocaleString(

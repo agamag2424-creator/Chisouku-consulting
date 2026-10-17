@@ -41,7 +41,6 @@ export default function FaqPage() {
 
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Answers</p>
           <h1 className="display !max-w-[16ch]">FAQ — Diagnostic, Audit & Implementation</h1>
           <p className="subhead mt-5">
             Direct answers on the Free PMO Diagnostic, PMO Automation Audit, and
@@ -50,11 +49,11 @@ export default function FaqPage() {
           </p>
           <p className="mt-4 text-sm text-[var(--color-muted)]">
             Definitions:{" "}
-            <Link href="/glossary" className="font-semibold text-[var(--color-cyan-strong)]">
+            <Link href="/glossary" className="font-semibold text-teal">
               Glossary
             </Link>
             . Machine-readable map:{" "}
-            <a href="/llms.txt" className="font-semibold text-[var(--color-cyan-strong)]">
+            <a href="/llms.txt" className="font-semibold text-teal">
               llms.txt
             </a>
             .
@@ -68,7 +67,7 @@ export default function FaqPage() {
             <article
               key={item.id}
               id={item.id}
-              className="scroll-mt-28 border-b border-[rgba(17,24,32,0.1)] pb-10 last:border-b-0"
+              className="scroll-mt-28 border-b border-ink/10 pb-10 last:border-b-0"
             >
               <h2 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-[var(--color-ink)] md:text-2xl">
                 {item.question}
@@ -86,10 +85,10 @@ export default function FaqPage() {
                   Related:{" "}
                   {item.related.map((link, index) => (
                     <span key={link.href}>
-                      {index > 0 ? " · " : null}
+                      {index > 0 ? ", " : null}
                       <Link
                         href={link.href}
-                        className="font-semibold text-[var(--color-cyan-strong)]"
+                        className="font-semibold text-teal"
                       >
                         {link.label}
                       </Link>
@@ -104,7 +103,6 @@ export default function FaqPage() {
 
       <section className="section">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Next step</p>
           <h2 className="headline">Start with the baseline.</h2>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/free-pmo-diagnostic" className="button button-primary">

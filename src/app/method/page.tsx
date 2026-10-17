@@ -72,7 +72,6 @@ export default function MethodPage() {
       />
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Method</p>
           <h1 className="display">AI Impact Model for PMO reporting.</h1>
           <p className="subhead mt-5">
             {siteConfig.tagline}. {siteConfig.subline}.
@@ -81,7 +80,7 @@ export default function MethodPage() {
             answer={canonicalAnswers.method}
             bullets={[
               "Go/No-Go gates after each phase — prevent runaway scope",
-              "PMO reporting starts at Assess → Architect (the audit)",
+              "PMO reporting starts at Assess, then Architect (the audit)",
               "Definitions: pack cycle, reporting drag — see glossary",
             ]}
             primaryHref="/pmo-automation-audit"
@@ -96,7 +95,7 @@ export default function MethodPage() {
         <div className="container">
           <AiImpactModel />
           <p className="mt-6 max-w-2xl text-sm leading-relaxed text-[var(--color-muted)]">
-            PMO reporting is Assess → Architect. Implementation is Activate.
+            PMO reporting is Assess, then Architect. Implementation is Activate.
             Accelerate expands beyond the reporting layer once the pack cycle is
             stable.
           </p>
@@ -105,21 +104,20 @@ export default function MethodPage() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">Decision gates</p>
           <h2 className="headline">Go / No-Go at each phase.</h2>
-          <div className="report-board paper-grain ink-corners mt-10">
+          <div className="report-board ink-corners mt-10">
             {gates.map((item, index) => (
               <div
                 key={item.gate}
                 className={[
                   "grid gap-4 p-5 md:grid-cols-[0.7fr_1.2fr_1.1fr_1.1fr] md:items-start",
                   index < gates.length - 1
-                    ? "border-b border-[rgba(17,24,32,0.1)]"
+                    ? "border-b border-ink/10"
                     : "",
                 ].join(" ")}
               >
                 <div>
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+                  <div className="text-[13px] font-bold text-teal">
                     {item.gate}
                   </div>
                   <div className="mt-2 text-sm font-bold text-[var(--color-ink)]">
@@ -127,7 +125,7 @@ export default function MethodPage() {
                   </div>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+                  <div className="text-[13px] font-bold text-[var(--color-muted)]">
                     Question
                   </div>
                   <p className="mt-2 text-sm font-semibold leading-relaxed">
@@ -135,7 +133,7 @@ export default function MethodPage() {
                   </p>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+                  <div className="text-[13px] font-bold text-[var(--color-muted)]">
                     Go
                   </div>
                   <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
@@ -143,7 +141,7 @@ export default function MethodPage() {
                   </p>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+                  <div className="text-[13px] font-bold text-[var(--color-muted)]">
                     No-Go
                   </div>
                   <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
@@ -159,7 +157,6 @@ export default function MethodPage() {
       <section className="section dark-band atmosphere-band">
         <div className="container flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Start</p>
             <h2 className="headline">Begin at the reporting layer.</h2>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">

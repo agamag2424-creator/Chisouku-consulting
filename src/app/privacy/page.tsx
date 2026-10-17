@@ -11,7 +11,6 @@ export default function PrivacyPage() {
   return (
     <section className="section pt-16">
       <div className="container max-w-[860px]">
-        <p className="eyebrow">Legal</p>
         <h1 className="headline">Privacy Policy and Terms of Service</h1>
         <p className="body-copy mt-4">Last updated: August 2026</p>
 
@@ -72,7 +71,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold">Contact</h2>
             <p className="body-copy mt-4">
               For privacy or legal questions, contact{" "}
-              <a className="font-bold text-[var(--color-cyan-strong)] underline" href="mailto:agam@chisokulabs.com">
+              <a className="font-bold text-teal underline" href="mailto:agam@chisokulabs.com">
                 agam@chisokulabs.com
               </a>
               .

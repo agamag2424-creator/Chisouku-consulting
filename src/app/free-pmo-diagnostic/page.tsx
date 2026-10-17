@@ -50,7 +50,6 @@ export default function DiagnosticPage() {
       <section className="section pt-16">
         <div className="container grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
           <div>
-            <p className="eyebrow">Start here</p>
             <h1 className="display">Free PMO Diagnostic</h1>
             <p className="subhead mt-5">
               A 5-minute baseline that shows where AI automation can remove
@@ -59,7 +58,7 @@ export default function DiagnosticPage() {
             <DirectAnswer
               answer={canonicalAnswers.diagnostic}
               bullets={[
-                "20 questions · No account · Email used for results follow-up",
+                "20 questions, No account, Email used for results follow-up",
                 "Maturity profile, dimension scores, 90-day priority actions",
                 "Next step if the gap is material: Audit Fit Call",
               ]}
@@ -75,9 +74,8 @@ export default function DiagnosticPage() {
 
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
-          <p className="eyebrow">What it measures</p>
           <h2 className="headline">Five operating signals. One baseline.</h2>
-          <div className="report-board paper-grain mt-10">
+          <div className="report-board mt-10">
             {measures.map(([title, detail], index) => (
               <div
                 key={title}
@@ -85,12 +83,12 @@ export default function DiagnosticPage() {
                   "editorial-row px-5 md:px-6",
                   index === 0 ? "border-t-0" : "",
                   title === "AI & Digital Readiness"
-                    ? "bg-[rgba(0,166,200,0.04)]"
+                    ? "bg-teal/4"
                     : "",
                 ].join(" ")}
               >
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
-                  {String(index + 1).padStart(2, "0")}
+                <span className="text-[13px] font-bold text-[var(--color-muted)]">
+                  {index + 1}
                 </span>
                 <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
                   {title}
@@ -109,7 +107,7 @@ export default function DiagnosticPage() {
             ["What the score means", "A directional maturity baseline — not a certification"],
             ["What to do next", "If drag is material, review the paid audit and book a fit call"],
           ].map(([title, copy]) => (
-            <div key={title} className="border-t border-[rgba(17,24,32,0.16)] pt-5">
+            <div key={title} className="border-t border-ink/16 pt-5">
               <h2 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">
                 {title}
               </h2>
@@ -122,7 +120,6 @@ export default function DiagnosticPage() {
       <section className="section dark-band atmosphere-band">
         <div className="container grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-center">
           <div>
-            <p className="eyebrow !text-[rgba(0,166,200,0.9)]">After the diagnostic</p>
             <h2 className="headline">If the gap is material, map the audit.</h2>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
@@ -133,17 +130,17 @@ export default function DiagnosticPage() {
               Book Audit Fit Call
             </Link>
           </div>
-          <p className="text-sm text-[rgba(255,253,248,0.72)] lg:col-span-2">
+          <p className="text-sm text-paper/72 lg:col-span-2">
             Related:{" "}
-            <Link href="/implementation" className="font-semibold text-[#fffdf8]">
+            <Link href="/implementation" className="font-semibold text-paper">
               Implementation
             </Link>
-            {" · "}
-            <Link href="/method" className="font-semibold text-[#fffdf8]">
+            {", "}
+            <Link href="/method" className="font-semibold text-paper">
               Method
             </Link>
-            {" · "}
-            <Link href="/sample-outputs" className="font-semibold text-[#fffdf8]">
+            {", "}
+            <Link href="/sample-outputs" className="font-semibold text-paper">
               Sample outputs
             </Link>
           </p>

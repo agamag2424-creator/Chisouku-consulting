@@ -39,6 +39,17 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Founder documents are no longer published (PRD L4, L8); old links land on the homepage.
+      {
+        source: "/documents/agam-agrawwal-resume.pdf",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/images/:file(founder-agam-agrawwal\\.jpg|founder-agam\\.jpg|founder-agam\\.png|founder-agam\\.webp)",
+        destination: "/",
+        permanent: true,
+      },
       {
         source: "/aeva/:path*",
         destination: "/method",

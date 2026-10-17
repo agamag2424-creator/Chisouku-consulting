@@ -25,17 +25,17 @@ type Props = {
 /** Implementation blueprint artifact. */
 export function ImplementationBlueprint({ className }: Props) {
   return (
-    <div className={cn("artifact-sheet paper-grain ink-corners overflow-hidden", className)}>
-      <div className="flex items-start justify-between gap-4 border-b border-[rgba(17,24,32,0.12)] px-6 py-5">
+    <div className={cn("artifact-sheet ink-corners overflow-hidden", className)}>
+      <div className="flex items-start justify-between gap-4 border-b border-ink/12 px-6 py-5">
         <div>
-          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+          <p className="text-[13px] font-bold text-teal">
             Artifact
           </p>
           <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
             Implementation Blueprint
           </h3>
         </div>
-        <span className="shrink-0 border border-[rgba(0,166,200,0.35)] bg-[rgba(0,166,200,0.08)] px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-cyan-strong)]">
+        <span className="shrink-0 border border-teal/35 bg-teal/8 px-2 py-1 text-[13px] font-bold text-teal">
           Blueprint
         </span>
       </div>
@@ -47,14 +47,14 @@ export function ImplementationBlueprint({ className }: Props) {
             className={cn(
               "border p-5",
               index === 0
-                ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-[#fffdf8]"
-                : "border-[rgba(17,24,32,0.14)] bg-[rgba(255,253,248,0.9)]",
+                ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-paper"
+                : "border-ink/14 bg-paper/90",
             )}
           >
             <div
               className={cn(
-                "font-mono text-[10px] font-bold uppercase tracking-[0.14em]",
-                index === 0 ? "text-[rgba(0,166,200,0.9)]" : "text-[var(--color-muted)]",
+                "text-[13px] font-bold",
+                index === 0 ? "text-teal-tint" : "text-[var(--color-muted)]",
               )}
             >
               {phase.window}
@@ -62,7 +62,7 @@ export function ImplementationBlueprint({ className }: Props) {
             <h4
               className={cn(
                 "mt-3 font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]",
-                index === 0 ? "text-[#fffdf8]" : "text-[var(--color-ink)]",
+                index === 0 ? "text-paper" : "text-[var(--color-ink)]",
               )}
             >
               {phase.title}
@@ -74,8 +74,8 @@ export function ImplementationBlueprint({ className }: Props) {
                   className={cn(
                     "border-t pt-2 text-sm",
                     index === 0
-                      ? "border-white/15 text-[#c7ced3]"
-                      : "border-[rgba(17,24,32,0.1)] text-[var(--color-muted)]",
+                      ? "border-white/15 text-paper/80"
+                      : "border-ink/10 text-[var(--color-muted)]",
                   )}
                 >
                   {item}
