@@ -106,6 +106,20 @@ export const guides: readonly Guide[] = [
         ],
       },
       {
+        id: "who-runs-it",
+        heading: "Who should run it",
+        blocks: [
+          {
+            kind: "p",
+            text: "The programme director usually owns the checklist, but the evidence should be checked by someone who did not produce it. If the system integrator fills it in and the steering committee reads it, the checklist repeats the status report in a different format.",
+          },
+          {
+            kind: "p",
+            text: "Ask each workstream lead to attach the artefact behind every claim, and have someone outside delivery open them. Where an artefact cannot be produced, mark the element missing, not partial. Where two workstreams describe the same thing differently, treat it as a finding until it is explained.",
+          },
+        ],
+      },
+      {
         id: "decision",
         heading: "From checklist to decision",
         blocks: [
@@ -243,6 +257,10 @@ export const guides: readonly Guide[] = [
             text: "Each workstream can be right about its own piece while the programme is not ready. The risks that delay go-lives most often sit between workstreams:",
           },
           contradictions,
+          {
+            kind: "p",
+            text: "A contradiction rarely means one team is wrong. Usually two teams are measuring different things, or the same thing at different dates. Each one is a question for the go/no-go meeting: which statement is true today, who owns closing the gap, and by when.",
+          },
         ],
       },
       {
@@ -256,12 +274,36 @@ export const guides: readonly Guide[] = [
         ],
       },
       {
+        id: "go-no-go-pack",
+        heading: "What to ask for in the go/no-go pack",
+        blocks: [
+          {
+            kind: "p",
+            text: "A go/no-go pack built from workstream status reports tells you how each team feels about its piece. Ask for a pack built from claims instead:",
+          },
+          {
+            kind: "list",
+            items: [
+              "The list of critical readiness claims, not only workstream statuses.",
+              "For each claim, the artefact behind it, or a note that there is none.",
+              "The open defects, data issues and risks being accepted, and who accepted each one.",
+              "The rollback point, and the person who can call it.",
+              "The conditions that must be met before go-live, each with an owner and a date.",
+            ],
+          },
+        ],
+      },
+      {
         id: "if-unsure",
         heading: "If you are not sure",
         blocks: [
           {
             kind: "p",
             text: "Start with the evidence, not a new plan. A short, independent review of the readiness documents shows which claims hold and which are assumptions, and leaves time to act on them. If the decision is close, a fuller review gives the steering committee a Go, Conditional Go or No-Go with the conditions, owners and dates behind it.",
+          },
+          {
+            kind: "p",
+            text: "Either way, it takes days rather than weeks when the documents are shared on day one: five business days for a Readiness Evidence Check, ten for a Go-Live Decision Review, with interviews only where the evidence conflicts.",
           },
         ],
       },
@@ -285,6 +327,20 @@ export const guides: readonly Guide[] = [
           {
             kind: "p",
             text: "But it is part of delivery. The integrator is reporting on its own work, and its final milestone depends on the date holding. That is a structural position, not a question of honesty, and it is why a steering committee needs a second view before it signs.",
+          },
+        ],
+      },
+      {
+        id: "incentives",
+        heading: "Why the position matters",
+        blocks: [
+          {
+            kind: "p",
+            text: "An integrator’s commercial plan, staffing and next phase usually assume the date holds. Teams under that pressure can report faithfully and still read every ambiguity in the direction of the plan: a test cycle “substantially complete”, a reconciliation “with minor differences”, a cutover plan “approved in principle”.",
+          },
+          {
+            kind: "p",
+            text: "Each of those is defensible on its own. Together they can add up to a Green status that the evidence does not support. The same applies to any team whose fee, bonus or next phase depends on the date, including internal ones. Independent assurance does not replace the integrator’s judgement. It checks it.",
           },
         ],
       },
@@ -336,7 +392,48 @@ export const guides: readonly Guide[] = [
               "Tests claims against evidence, rather than reviewing documents for completeness.",
               "Reports to the sponsor, and the person who signs the findings is the person who did the review.",
               "Says plainly that a review does not guarantee go-live success.",
+              "Can start within days, because the review works from the documents you already have.",
             ],
+          },
+        ],
+      },
+      {
+        id: "when",
+        heading: "When to bring in independent assurance",
+        blocks: [
+          {
+            kind: "list",
+            items: [
+              "Six to sixteen weeks before the go-live decision. Earlier is fine.",
+              "When the date is fixed by something outside the programme, such as a regulatory deadline or the end of mainstream maintenance for the current system.",
+              "When workstreams report Green but the steering committee cannot see the evidence behind it.",
+              "When the integrator’s milestone payment is tied to the go-live date.",
+              "Before rolling out to further entities or countries.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "what-it-needs",
+        heading: "What a review needs from you",
+        blocks: [
+          {
+            kind: "p",
+            text: "Mostly, documents the programme already has: test logs and defect lists, reconciliation outputs, the cutover plan and rehearsal results, the RAID log and the latest status reports. Then short interviews with workstream leads, held only where the documents disagree.",
+          },
+          {
+            kind: "p",
+            text: "It also needs a sponsor who receives the findings directly. If the findings reach the steering committee only through the delivery team, the review loses the independence it was bought for.",
+          },
+        ],
+      },
+      {
+        id: "what-you-get",
+        heading: "What you should get at the end",
+        blocks: [
+          {
+            kind: "p",
+            text: "A decision brief the steering committee can read in minutes, an evidence register showing each claim and the evidence behind it, a contradiction map, dated decision conditions with owners, the leadership actions for the next 30 days, and a readout for the sponsor. If a provider cannot show you a sample of these before you sign, ask why.",
           },
         ],
       },
@@ -348,10 +445,14 @@ export const guides: readonly Guide[] = [
             kind: "p",
             text: "Independent assurance is not an audit of the integrator. The review asks for the documents the programme already has on day one, and holds interviews only where the evidence conflicts, which keeps everyone’s time to a minimum. Findings name who should own each fix. The assurance provider does not implement the fixes, so its view stays independent.",
           },
+          {
+            kind: "p",
+            text: "Done well, the review helps the integrator too. A Conditional Go with clear conditions, owners and dates is easier to deliver against than a Green status that nobody fully believes, and it gives the integrator a defensible record of what was agreed before go-live.",
+          },
         ],
       },
     ],
-    sources: [],
+    sources: [sapSource],
   },
 ];
 

@@ -135,4 +135,27 @@ export function definedTermSetJsonLd(
   };
 }
 
+/** HowTo for a checklist guide (E8.3): one step per checklist domain, one direction per item. */
+export function howToJsonLd(guide: {
+  name: string;
+  description: string;
+  path: string;
+  steps: readonly { name: string; items: readonly string[] }[];
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: guide.name,
+    description: guide.description,
+    url: `${siteUrl}${guide.path}`,
+    step: guide.steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      url: `${siteUrl}${guide.path}#checklist`,
+      itemListElement: step.items.map((item) => ({ "@type": "HowToDirection", text: item })),
+    })),
+  };
+}
+
 export { stringifyJsonLd } from "./safeJson";
