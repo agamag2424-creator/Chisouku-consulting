@@ -295,3 +295,72 @@ export function OfferClosing() {
 }
 
 export { CTA as offerCta };
+
+/** Review scope: the core domains as solid tiles, an optional one dashed with its condition. */
+export function ScopeTiles({ core, optional }: { core: readonly string[]; optional?: { name: string; note: string } }) {
+  return (
+    <ul className="mt-10 grid grid-cols-2 gap-3 min-[641px]:grid-cols-3 min-[1100px]:grid-cols-6">
+      {core.map((name) => (
+        <li key={name} className="flex min-h-20 items-end rounded-sheet bg-ink p-4 min-[641px]:min-h-24">
+          <span className="t-small font-semibold text-paper">{name}</span>
+        </li>
+      ))}
+      {optional && (
+        <li className="flex min-h-20 flex-col justify-end gap-1 rounded-sheet border-2 border-dashed border-ink/40 p-4 min-[641px]:min-h-24">
+          <span className="t-small font-semibold text-ink">{optional.name}</span>
+          <span className="text-[13px] text-muted">{optional.note}</span>
+        </li>
+      )}
+    </ul>
+  );
+}
+
+/** The method as three steps in order, joined by arrows (stacked on phones). */
+export function MethodFlow({ steps }: { steps: readonly string[] }) {
+  return (
+    <ol className="mt-10 grid gap-3 min-[900px]:grid-cols-[repeat(3,minmax(0,1fr))] min-[900px]:gap-10">
+      {steps.map((step, index) => (
+        <li
+          key={step}
+          className={cn(
+            "relative flex items-start gap-4 rounded-sheet border border-line bg-paper p-5",
+            index < steps.length - 1 &&
+              "min-[900px]:after:absolute min-[900px]:after:-right-8 min-[900px]:after:top-1/2 min-[900px]:after:size-4 min-[900px]:after:-translate-y-1/2 min-[900px]:after:rotate-45 min-[900px]:after:border-r-2 min-[900px]:after:border-t-2 min-[900px]:after:border-ink",
+          )}
+        >
+          <span className="t-data flex size-8 shrink-0 items-center justify-center rounded-full bg-teal text-[14px] text-paper">
+            {index + 1}
+          </span>
+          <span className="t-small font-semibold text-ink">{step}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** Speed note as two bars on one business-day scale: the usual 4–6 weeks against this offer's days. */
+export function SpeedBars({ days, usual }: { days: number; usual: { label: string; fromDays: number; toDays: number } }) {
+  const pct = (value: number) => `${(value / usual.toDays) * 100}%`;
+  return (
+    <div aria-hidden className="grid gap-4">
+      <div className="grid gap-2">
+        <span className="flex justify-between gap-3 text-[13px]">
+          <span className="font-semibold text-ink">{usual.label}</span>
+        </span>
+        <span className="relative block h-4 rounded-full bg-faint">
+          <span className="absolute inset-y-0 left-0 rounded-full bg-line" style={{ width: pct(usual.fromDays) }} />
+          <span
+            className="absolute inset-y-0 rounded-r-full border-2 border-l-0 border-dashed border-line"
+            style={{ left: pct(usual.fromDays), right: 0 }}
+          />
+        </span>
+      </div>
+      <div className="grid gap-2">
+        <span className="t-data text-[13px] text-teal">{`${days} business days`}</span>
+        <span className="relative block h-4 rounded-full bg-faint">
+          <span className="absolute inset-y-0 left-0 rounded-full bg-teal" style={{ width: pct(days) }} />
+        </span>
+      </div>
+    </div>
+  );
+}
