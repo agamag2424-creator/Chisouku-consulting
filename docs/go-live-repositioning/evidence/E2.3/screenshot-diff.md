@@ -9,4 +9,4 @@ Full-page screenshots of both offer pages from a local production build, before 
 | `/go-live-decision-review` | 1440 | 1440 × 4709 | identical (0 px differ) |
 | `/go-live-decision-review` | 390 | 390 × 7497 | identical (0 px differ) |
 
-Page files: Evidence Check 120 → 58 lines, Decision Review 151 → 65 lines; the structure now lives once in `src/components/offers/OfferLayout.tsx`.
+Page files: Evidence Check 124 → 58 lines, Decision Review 146 → 65 lines; the structure now lives once in `src/components/offers/OfferLayout.tsx`.
