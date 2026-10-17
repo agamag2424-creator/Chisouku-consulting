@@ -60,7 +60,7 @@ export const routeLive = {
   "/faq": true,
   "/glossary": true,
   "/privacy": true,
-  "/readiness-evidence-check": false,
+  "/readiness-evidence-check": true,
   "/go-live-decision-review": false,
   "/see-it-first": false,
   "/pricing": false,
