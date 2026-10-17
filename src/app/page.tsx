@@ -7,14 +7,13 @@ import {
   CrossCheckStrip,
   IndependencePanel,
   PackIllustration,
-  PrincipalChips,
-  PrincipalSignature,
   ReadinessTiles,
   VerdictCards,
   WeekStrip,
   WorkstreamMap,
 } from "../components/home/HomeVisuals";
 import { OfferPanels } from "../components/home/OfferPanels";
+import { PrincipalBlock } from "../components/trust/PrincipalBlock";
 import { SlipCostEstimator } from "../components/home/SlipCostEstimator";
 import { Button } from "../components/ui/Button";
 import { Section } from "../components/ui/Section";
@@ -234,24 +233,8 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* 9. Principal-led (PRD 8.3, IN-3 approved) */}
-      {siteConfig.principalBlock && (
-        <Section tone="paper">
-          <div className={cn(split, "min-[1100px]:items-center")}>
-            <div className="flex flex-col gap-5">
-              <h2 className="t-h2 text-ink">Principal-led</h2>
-              <PrincipalSignature />
-            </div>
-            <div className="flex flex-col gap-6">
-              <p className="t-body text-ink">
-                Every review is led and signed by a principal with 11+ years leading ERP and transformation programmes
-                across aviation, banking and manufacturing, including multi-country go-lives.
-              </p>
-              <PrincipalChips />
-            </div>
-          </div>
-        </Section>
-      )}
+      {/* 9. Principal-led (PRD 8.3, IN-3 approved; shared block, E6.2) */}
+      <PrincipalBlock />
 
       {/* 10. Closing CTA (ink band) */}
       <Section tone="ink">
