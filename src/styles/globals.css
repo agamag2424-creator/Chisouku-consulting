@@ -116,6 +116,70 @@ body {
   }
 }
 
+/* Hero Evidence Check (PRD 7): the site's only orchestrated motion. Transitions only, driven by data attributes. */
+@layer components {
+  .ec [data-on="false"] > .ec-final {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  .ec .ec-final {
+    transition:
+      opacity 200ms ease-out,
+      transform 200ms ease-out;
+  }
+
+  .ec [data-on="true"] > .ec-pending {
+    display: none;
+  }
+
+  .ec .ec-link path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 450ms ease-out;
+  }
+
+  .ec[data-linked="true"] .ec-link path {
+    stroke-dashoffset: 0;
+  }
+
+  .ec .ec-label {
+    opacity: 0;
+    transition: opacity 300ms ease-out 250ms;
+  }
+
+  .ec[data-linked="true"] .ec-label {
+    opacity: 1;
+  }
+
+  /* Reduced motion: final state on first paint, even before JavaScript runs; no replay. */
+  @media (prefers-reduced-motion: reduce) {
+    .ec [data-on] > .ec-final {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .ec [data-on] > .ec-pending {
+      display: none;
+    }
+
+    .ec .ec-link path {
+      stroke-dashoffset: 0;
+      transition: none;
+    }
+
+    .ec .ec-label {
+      opacity: 1;
+      transition: none;
+    }
+
+    .ec .ec-replay {
+      display: none;
+    }
+  }
+}
+
 /* In the components layer so Tailwind utilities can still override them. */
 @layer components {
   /* Type scale (PRD 5.2). Mobile values first; desktop from 641px. */
