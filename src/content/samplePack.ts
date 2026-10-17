@@ -96,3 +96,19 @@ export const packConditions = [
 export const packMethodNote =
   "Every critical readiness claim tested for Status, Owner, Evidence, Date and Action (READINESS-5), then cross-checked between workstreams.";
 export const packJudgementNote = "ChisokuLabs forms the judgement; the review does not guarantee go-live success.";
+
+/** Page images of the pack PDF (public/images/sample-pack), rendered at 1600px from the PDF with pdftoppm. */
+export const packPages = [
+  {
+    src: "/images/sample-pack/page-1.png",
+    width: 1600,
+    height: 1133,
+    alt: "Sample decision pack, page 1, the decision brief: a Conditional Go recommendation for a fictional SAP S/4HANA programme, 22 of 50 readiness elements evidenced against a reported Green, evidence by domain, four contradictions between workstreams and three dated conditions with owners.",
+  },
+  {
+    src: "/images/sample-pack/page-2.png",
+    width: 1600,
+    height: 1133,
+    alt: "Sample decision pack, page 2, the evidence register: ten claims as reported, each scored on Status, Owner, Evidence, Date and Action with a finding, followed by leadership actions for the next 21 days and what the review covers and does not.",
+  },
+] as const;
