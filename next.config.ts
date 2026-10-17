@@ -46,6 +46,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/images/:file(founder-agam-agrawwal\\.jpg|founder-agam\\.jpg|founder-agam\\.png|founder-agam\\.webp)",
+        destination: "/",
+        permanent: true,
+      },
+      {
         source: "/aeva/:path*",
         destination: "/method",
         permanent: true,
