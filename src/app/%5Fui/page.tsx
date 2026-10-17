@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import { EvidenceCheckHero } from "../../components/hero/EvidenceCheckHero";
 import { Accordion } from "../../components/ui/Accordion";
 import { Button } from "../../components/ui/Button";
 import { Callout } from "../../components/ui/Callout";
@@ -74,6 +75,12 @@ export default function UiPage() {
             Internal reference for the decision-instrument system (E0.3). Not indexed, not in the sitemap.
           </p>
         </header>
+
+        <Demo title="Hero Evidence Check">
+          <div className="max-w-[720px]">
+            <EvidenceCheckHero />
+          </div>
+        </Demo>
 
         <Demo title="Type scale">
           <div className="grid gap-3">
