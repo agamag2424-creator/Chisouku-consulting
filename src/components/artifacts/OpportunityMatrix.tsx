@@ -15,24 +15,24 @@ type Props = {
 /** Automation opportunity matrix artifact. */
 export function OpportunityMatrix({ className }: Props) {
   return (
-    <div className={cn("artifact-sheet paper-grain ink-corners overflow-hidden", className)}>
-      <div className="flex items-start justify-between gap-4 border-b border-[rgba(17,24,32,0.12)] px-6 py-5">
+    <div className={cn("artifact-sheet ink-corners overflow-hidden", className)}>
+      <div className="flex items-start justify-between gap-4 border-b border-ink/12 px-6 py-5">
         <div>
-          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+          <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
             Artifact
           </p>
           <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
             Automation Opportunity Matrix
           </h3>
         </div>
-        <span className="shrink-0 border border-[rgba(0,166,200,0.35)] bg-[rgba(0,166,200,0.08)] px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-cyan-strong)]">
+        <span className="shrink-0 border border-teal/35 bg-teal/8 px-2 py-1 text-[13px] font-bold text-[var(--color-cyan-strong)]">
           Matrix
         </span>
       </div>
 
       <div className="relative p-6">
-        <div className="mb-4 flex justify-between font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
-          <span>Low effort →</span>
+        <div className="mb-4 flex justify-between text-[13px] font-bold text-[var(--color-muted)]">
+          <span>Low effort</span>
           <span>High impact ↑</span>
         </div>
         <svg
@@ -41,46 +41,43 @@ export function OpportunityMatrix({ className }: Props) {
           role="img"
           aria-label="Automation opportunity matrix plotting impact versus effort"
         >
-          <rect
+          <rect className="fill-paper/70 stroke-ink/18"
             x="48"
             y="24"
             width="400"
             height="260"
-            fill="rgba(255,253,248,0.7)"
-            stroke="rgba(17,24,32,0.18)"
           />
-          <path d="M248 24 V284 M48 154 H448" stroke="rgba(17,24,32,0.12)" />
-          <text x="58" y="44" fill="#65707B" fontFamily="ui-monospace, monospace" fontSize="10" fontWeight="700">
-            QUICK WINS
+          <path className="stroke-ink/12" d="M248 24 V284 M48 154 H448" />
+          <text className="fill-muted" x="58" y="44" fontSize="10" fontWeight="700">
+            Quick wins
           </text>
-          <text x="360" y="44" fill="#65707B" fontFamily="ui-monospace, monospace" fontSize="10" fontWeight="700">
-            STRATEGIC
+          <text className="fill-muted" x="360" y="44" fontSize="10" fontWeight="700">
+            Strategic
           </text>
-          <text x="58" y="272" fill="#65707B" fontFamily="ui-monospace, monospace" fontSize="10" fontWeight="700">
-            FILL LATER
+          <text className="fill-muted" x="58" y="272" fontSize="10" fontWeight="700">
+            Fill later
           </text>
-          <text x="352" y="272" fill="#65707B" fontFamily="ui-monospace, monospace" fontSize="10" fontWeight="700">
-            HEAVY LIFT
+          <text className="fill-muted" x="352" y="272" fontSize="10" fontWeight="700">
+            Heavy lift
           </text>
 
           {points.map((point) => {
             const cx = 48 + (point.x / 100) * 400;
             const cy = 284 - (point.y / 100) * 260;
-            const fill =
+            const fillClass =
               point.tone === "cyan"
-                ? "#00A6C8"
+                ? "fill-teal"
                 : point.tone === "gold"
-                  ? "#B9965B"
+                  ? "fill-muted"
                   : point.tone === "ink"
-                    ? "#111820"
-                    : "rgba(17,24,32,0.35)";
+                    ? "fill-ink"
+                    : "fill-ink/35";
             return (
               <g key={point.label}>
-                <circle cx={cx} cy={cy} r={point.size} fill={fill} opacity="0.92" />
-                <text
+                <circle className={fillClass} cx={cx} cy={cy} r={point.size} opacity="0.92" />
+                <text className="fill-ink"
                   x={cx + point.size + 8}
                   y={cy + 4}
-                  fill="#111820"
                   fontFamily="var(--font-display), sans-serif"
                   fontSize="12"
                   fontWeight="700"
@@ -91,7 +88,7 @@ export function OpportunityMatrix({ className }: Props) {
             );
           })}
         </svg>
-        <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+        <p className="mt-3 text-[13px] font-bold text-[var(--color-muted)]">
           Impact × effort scoring
         </p>
       </div>

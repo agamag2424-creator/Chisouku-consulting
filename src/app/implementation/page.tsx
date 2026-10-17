@@ -10,7 +10,7 @@ import { siteConfig } from "../../lib/siteConfig";
 
 const title = "Implementation after the PMO Automation Audit";
 const description =
-  "What implementation looks like after the PMO Automation Audit — Data → Integration → Logic → Interface for the reporting pack cycle.";
+  "What implementation looks like after the PMO Automation Audit — Data, then Integration, then Logic, then Interface for the reporting pack cycle.";
 
 export const metadata: Metadata = {
   title,
@@ -56,7 +56,6 @@ export default function ImplementationPage() {
       />
       <section className="section report-cover pt-16">
         <div className="container max-w-3xl">
-          <p className="eyebrow">Implementation · Activate phase</p>
           <h1 className="display">Implementation after the PMO Automation Audit.</h1>
           <p className="subhead mt-5">
             After the audit blueprint — build AI automation into the pack cycle.
@@ -65,7 +64,7 @@ export default function ImplementationPage() {
           <DirectAnswer
             answer={canonicalAnswers.implementation}
             bullets={[
-              "Automate first: collection → consolidation → narrative → distribution",
+              "Automate first: collection, then consolidation, then narrative, then distribution",
               canonicalAnswers.systems,
               "Not sold: tool licenses, multi-year rebuilds, strategy without a reporting start",
             ]}
@@ -79,8 +78,7 @@ export default function ImplementationPage() {
 
       <section className="section bg-[var(--color-paper)]">
         <div className="container">
-          <p className="eyebrow">Architecture</p>
-          <h2 className="headline">Data → Integration → Logic → Interface.</h2>
+          <h2 className="headline">Data, then Integration, then Logic, then Interface.</h2>
           <p className="subhead mt-4">
             The implementation stack for the PMO reporting layer.
           </p>
@@ -92,13 +90,12 @@ export default function ImplementationPage() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">What we automate first</p>
           <h2 className="headline">Where drag repeats weekly.</h2>
           <div className="mt-10">
             {automateFirst.map(([title, detail], index) => (
               <div key={title} className="editorial-row">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
-                  {String(index + 1).padStart(2, "0")}
+                <span className="text-[13px] font-bold text-[var(--color-muted)]">
+                  {index + 1}
                 </span>
                 <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
                   {title}
@@ -116,12 +113,11 @@ export default function ImplementationPage() {
       <section className="section bg-[var(--color-paper)]">
         <div className="container grid gap-12 md:grid-cols-2">
           <div>
-            <p className="eyebrow">What we do not sell</p>
             <h2 className="headline">No licence theatre.</h2>
             <ul className="mt-8">
               {doNotSell.map((item) => (
                 <li key={item} className="editorial-row !grid-cols-1 md:!grid-cols-[16px_1fr]">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-[rgba(17,24,32,0.25)]" aria-hidden />
+                  <span className="mt-1 h-2 w-2 rounded-full bg-ink/25" aria-hidden />
                   <span className="text-sm font-semibold leading-relaxed text-[var(--color-ink)]">
                     {item}
                   </span>
@@ -130,10 +126,9 @@ export default function ImplementationPage() {
             </ul>
           </div>
           <div>
-            <p className="eyebrow">Systems</p>
             <h2 className="headline">Automate against what you run.</h2>
-            <p className="mt-6 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
-              {siteConfig.systems.join(" · ")}
+            <p className="mt-6 text-[13px] font-bold text-[var(--color-muted)]">
+              {siteConfig.systems.join(", ")}
             </p>
             <p className="mt-6 text-sm leading-relaxed text-[var(--color-muted)]">
               Audit first when the reporting layer is unclear. Implementation when
@@ -149,28 +144,27 @@ export default function ImplementationPage() {
       <section className="section dark-band atmosphere-band">
         <div className="container flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow !text-[rgba(0,166,200,0.9)]">Fit call</p>
             <h2 className="headline">Ready to implement?</h2>
           </div>
           <Link href="/contact?interest=AI%20Implementation" className="button button-light">
             Book Implementation Fit Call
           </Link>
         </div>
-        <p className="container mt-6 text-sm text-[rgba(255,253,248,0.72)]">
+        <p className="container mt-6 text-sm text-paper/72">
           Related:{" "}
-          <Link href="/free-pmo-diagnostic" className="font-semibold text-[#fffdf8]">
+          <Link href="/free-pmo-diagnostic" className="font-semibold text-paper">
             Free PMO Diagnostic
           </Link>
-          {" · "}
-          <Link href="/pmo-automation-audit" className="font-semibold text-[#fffdf8]">
+          {", "}
+          <Link href="/pmo-automation-audit" className="font-semibold text-paper">
             PMO Automation Audit
           </Link>
-          {" · "}
-          <Link href="/method" className="font-semibold text-[#fffdf8]">
+          {", "}
+          <Link href="/method" className="font-semibold text-paper">
             Method
           </Link>
-          {" · "}
-          <Link href="/sample-outputs" className="font-semibold text-[#fffdf8]">
+          {", "}
+          <Link href="/sample-outputs" className="font-semibold text-paper">
             Sample outputs
           </Link>
         </p>

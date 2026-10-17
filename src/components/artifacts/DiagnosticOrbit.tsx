@@ -20,73 +20,66 @@ export function DiagnosticOrbit({ className }: Props) {
   return (
     <div
       className={cn(
-        "glass-canvas paper-grain ink-corners relative flex items-center justify-center overflow-hidden p-6",
+        "artifact-sheet ink-corners relative flex items-center justify-center overflow-hidden p-6",
         className,
       )}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,166,200,0.12),transparent_58%)]" />
       <svg
         viewBox="0 0 420 420"
         className="relative z-10 h-auto w-full max-w-[420px]"
         role="img"
         aria-label="PMO diagnostic orbit graphic"
       >
-        <circle cx="210" cy="210" r="168" fill="none" stroke="rgba(17,24,32,0.08)" strokeWidth="1" />
-        <circle
+        <circle className="stroke-ink/8" cx="210" cy="210" r="168" fill="none" strokeWidth="1" />
+        <circle className="stroke-teal/18"
           cx="210"
           cy="210"
           r="148"
           fill="none"
-          stroke="rgba(0,166,200,0.18)"
           strokeWidth="1.5"
           strokeDasharray="4 8"
         />
-        <circle cx="210" cy="210" r="118" fill="none" stroke="rgba(17,24,32,0.14)" strokeWidth="1.5" />
+        <circle className="stroke-ink/14" cx="210" cy="210" r="118" fill="none" strokeWidth="1.5" />
 
-        <circle cx="210" cy="210" r="54" fill="#111820" />
-        <circle cx="210" cy="210" r="62" fill="none" stroke="rgba(0,166,200,0.45)" strokeWidth="2" />
-        <text
+        <circle className="fill-ink" cx="210" cy="210" r="54" />
+        <circle className="stroke-teal/45" cx="210" cy="210" r="62" fill="none" strokeWidth="2" />
+        <text className="fill-paper"
           x="210"
           y="204"
           textAnchor="middle"
-          fill="#FFFDF8"
           fontFamily="var(--font-display), sans-serif"
           fontSize="13"
           fontWeight="700"
         >
           PMO Score
         </text>
-        <text
+        <text className="fill-paper/65"
           x="210"
           y="224"
           textAnchor="middle"
-          fill="#AAB3BA"
-          fontFamily="ui-monospace, monospace"
           fontSize="10"
           fontWeight="700"
         >
-          BASELINE
+          Baseline
         </text>
 
-        <g className="orbit-ring">
+        <g>
           {inner.map((planet) => {
             const rad = (planet.angle * Math.PI) / 180;
             const x = 210 + Math.cos(rad) * 118;
             const y = 210 + Math.sin(rad) * 118;
             return (
               <g key={planet.label} transform={`translate(${x} ${y})`}>
-                <circle r="18" fill="rgba(255,253,248,0.96)" stroke="rgba(17,24,32,0.2)" strokeWidth="1.5" />
-                <circle r="4" fill="#00A6C8" />
-                <g className="orbit-label-fix">
-                  <text
+                <circle className="fill-paper/96 stroke-ink/20" r="18" strokeWidth="1.5" />
+                <circle className="fill-teal" r="4" />
+                <g>
+                  <text className="fill-muted"
                     y="34"
                     textAnchor="middle"
-                    fill="#65707B"
-                    fontFamily="ui-monospace, monospace"
                     fontSize="9"
                     fontWeight="700"
                   >
-                    {planet.label.toUpperCase()}
+                    {planet.label}
                   </text>
                 </g>
               </g>
@@ -94,7 +87,7 @@ export function DiagnosticOrbit({ className }: Props) {
           })}
         </g>
 
-        <g className="orbit-ring-slow">
+        <g>
           {outer.map((planet) => {
             const rad = (planet.angle * Math.PI) / 180;
             const x = 210 + Math.cos(rad) * 148;
@@ -102,23 +95,19 @@ export function DiagnosticOrbit({ className }: Props) {
             const emphasize = "emphasize" in planet && planet.emphasize;
             return (
               <g key={planet.label} transform={`translate(${x} ${y})`}>
-                <circle
+                <circle className={`${emphasize ? "fill-teal/12" : "fill-paper/96"} ${emphasize ? "stroke-teal" : "stroke-ink/20"}`}
                   r={emphasize ? 22 : 18}
-                  fill={emphasize ? "rgba(0,166,200,0.12)" : "rgba(255,253,248,0.96)"}
-                  stroke={emphasize ? "#00A6C8" : "rgba(17,24,32,0.2)"}
                   strokeWidth={emphasize ? 2 : 1.5}
                 />
-                <circle r="4" fill="#00A6C8" />
-                <g className="orbit-label-fix-slow">
-                  <text
+                <circle className="fill-teal" r="4" />
+                <g>
+                  <text className={`${emphasize ? "fill-teal" : "fill-muted"}`}
                     y={emphasize ? 38 : 34}
                     textAnchor="middle"
-                    fill={emphasize ? "#007F9C" : "#65707B"}
-                    fontFamily="ui-monospace, monospace"
                     fontSize="9"
                     fontWeight="700"
                   >
-                    {planet.label.toUpperCase()}
+                    {planet.label}
                   </text>
                 </g>
               </g>
@@ -126,7 +115,7 @@ export function DiagnosticOrbit({ className }: Props) {
           })}
         </g>
       </svg>
-      <p className="absolute bottom-4 left-0 right-0 text-center font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+      <p className="absolute bottom-4 left-0 right-0 text-center text-[13px] font-bold text-[var(--color-muted)]">
         PMO Diagnostic
       </p>
     </div>

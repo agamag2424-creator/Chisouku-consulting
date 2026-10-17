@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 type DirectAnswerProps = {
-  eyebrow?: string;
+  label?: string;
   answer: string;
   bullets: readonly string[];
   primaryHref: string;
@@ -13,7 +13,7 @@ type DirectAnswerProps = {
 
 /** Visible quotable strip for AEO — one declarative sentence + bullets + CTA. */
 export function DirectAnswer({
-  eyebrow = "Direct answer",
+  label = "Direct answer",
   answer,
   bullets,
   primaryHref,
@@ -23,8 +23,8 @@ export function DirectAnswer({
   secondaryExternal = false,
 }: DirectAnswerProps) {
   return (
-    <aside className="artifact-sheet paper-grain mt-10 p-6 md:p-7" aria-label={eyebrow}>
-      <p className="kicker-title">{eyebrow}</p>
+    <aside className="artifact-sheet mt-10 p-6 md:p-7" aria-label={label}>
+      <p className="kicker-title">{label}</p>
       <p className="mt-3 text-base font-semibold leading-relaxed text-[var(--color-ink)] md:text-lg">
         {answer}
       </p>

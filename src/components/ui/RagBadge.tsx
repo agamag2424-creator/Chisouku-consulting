@@ -10,7 +10,7 @@ const rag: Record<RagStatus, { label: string; dot: string; tint: string }> = {
 
 type RagBadgeProps = {
   status: RagStatus;
-  /** Optional lead-in, e.g. "Reported" → "Reported: Green". */
+  /** Optional lead-in, e.g. "Reported" gives "Reported: Green". */
   prefix?: string;
   className?: string;
 };

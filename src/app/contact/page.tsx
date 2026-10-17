@@ -25,7 +25,6 @@ export default async function ContactPage({ searchParams }: Props) {
     <section className="section pt-16">
       <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
-          <p className="eyebrow">Fit call</p>
           <h1 className="display">Audit Fit Call.</h1>
           <p className="subhead mt-5">
             Starting at PMO reporting. Share brief context — then schedule.

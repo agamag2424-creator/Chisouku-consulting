@@ -18,7 +18,7 @@ export function Nav() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-[100] border-b border-[rgba(17,24,32,0.1)] bg-[rgba(247,244,238,0.9)] backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-[100] border-b border-line bg-paper">
         <div
           className={cn(
             "mx-auto flex h-20 max-w-[var(--content-max-width)] items-center justify-between",
@@ -58,7 +58,7 @@ export function Nav() {
           <button
             type="button"
             aria-label="Toggle navigation"
-            className="flex h-10 w-10 items-center justify-center border border-[rgba(17,24,32,0.16)] bg-[var(--color-paper)] lg:hidden"
+            className="flex h-10 w-10 items-center justify-center border border-ink/16 bg-[var(--color-paper)] lg:hidden"
             onClick={() => setOpen(true)}
           >
             <span className="flex h-4 w-5 flex-col justify-between">
@@ -73,7 +73,7 @@ export function Nav() {
       {open && (
         <div className="fixed inset-0 z-[200] flex flex-col bg-[var(--color-page)] text-[var(--color-ink)]">
           <div className="flex items-center justify-between px-6 pt-4">
-            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-muted)]">
+            <span className="text-[13px] font-bold text-[var(--color-muted)]">
               Menu
             </span>
             <button

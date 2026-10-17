@@ -91,8 +91,8 @@ export function AuditFitForm({ defaultInterest }: Props) {
 
   if (status === "success") {
     return (
-      <div className="border border-[rgba(17,24,32,0.14)] bg-[rgba(251,250,247,0.92)] p-6 md:p-8">
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+      <div className="border border-ink/14 bg-paper/92 p-6 md:p-8">
+        <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
           Received
         </p>
         <h2 className="mt-3 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
@@ -128,10 +128,10 @@ export function AuditFitForm({ defaultInterest }: Props) {
   return (
     <form
       onSubmit={onSubmit}
-      className="grid gap-5 border border-[rgba(17,24,32,0.14)] bg-[rgba(251,250,247,0.92)] p-6 md:p-8"
+      className="grid gap-5 border border-ink/14 bg-paper/92 p-6 md:p-8"
     >
-      <div className="mb-1 border-b border-[rgba(17,24,32,0.1)] pb-4">
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-cyan-strong)]">
+      <div className="mb-1 border-b border-ink/10 pb-4">
+        <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
           Fit call
         </p>
         <p className="mt-2 text-sm text-[var(--color-muted)]">
