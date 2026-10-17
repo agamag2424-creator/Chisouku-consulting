@@ -40,3 +40,24 @@ export const sampleLabel = "Illustrative example. Fictional programme. Not a cli
 export function evidencedCount(marks: HeroClaim["marks"]): number {
   return marks.filter((mark) => mark === "present").length;
 }
+
+/** Interface wording for the hero card (PRD 9.12, IN-9). */
+export const heroCard = {
+  title: "Go-live readiness check",
+  subtitle: "Three critical claims, all reported Green",
+  views: { reported: "As reported", evidenced: "As evidenced" },
+  reportedLabel: "claims reported Green",
+  notCheckedLabel: "evidence not yet checked",
+  evidencedLabel: "claims have most of their evidence",
+  contradictionLabel: "contradiction between workstreams",
+  detailSuffix: "what the evidence shows",
+} as const;
+
+export const evidenceStateLabel: Record<EvidenceState, string> = {
+  present: "Evidenced",
+  partial: "Partial",
+  missing: "Missing",
+};
+
+/** A claim "has most of its evidence" at 3 or more of 5 (matches heroCompletionSummary). */
+export const MOSTLY_EVIDENCED = 3;

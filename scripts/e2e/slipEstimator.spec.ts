@@ -1,4 +1,4 @@
-// Homepage slipped go-live cost estimator (E1.5). Not part of the app build (tsconfig excludes scripts/e2e).
+// Homepage slipped go-live cost estimator (E1.5; sliders added in E1.6). Not part of the app build (tsconfig excludes scripts/e2e).
 //
 // Run against a local production build (see hero.spec.ts):
 //   HERO_URL=http://localhost:3100/ npx -y @playwright/test@1.56.1 test scripts/e2e
@@ -6,7 +6,8 @@ import { expect, test, type Page } from "@playwright/test";
 
 const url = process.env.HERO_URL ?? "http://localhost:3100/";
 
-const field = (page: Page, label: string) => page.getByLabel(label, { exact: false });
+// The number field (each field also has a slider with the same label).
+const field = (page: Page, label: string) => page.getByRole("spinbutton", { name: label });
 const result = (page: Page, term: string) =>
   page.locator("dt", { hasText: term }).locator("xpath=following-sibling::dd[1]");
 
@@ -42,6 +43,13 @@ test.describe("with JavaScript", () => {
     await field(page, "People working on the programme").fill("0");
     await expect(result(page, "Cost per week of slip")).toHaveText("USD 12,000");
     await expect(page.getByText(/working days of your programme's run-rate/)).toHaveCount(0);
+  });
+
+  test("the slider moves the same value", async ({ page }) => {
+    await page.goto(url);
+    await page.getByRole("slider", { name: "Weeks the go-live could slip" }).fill("10");
+    await expect(field(page, "Weeks the go-live could slip")).toHaveValue("10");
+    await expect(result(page, "Cost of a 10-week slip")).toHaveText("USD 1,200,000");
   });
 
   test("fits 360px without horizontal scroll", async ({ page }) => {

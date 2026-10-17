@@ -107,7 +107,7 @@ Story IDs are `E<epic>.<n>`. Each story lists **Type**, **Files** (expected; ver
 **Type:** Code · **Files:** `src/components/layout/Nav.tsx`, `Footer.tsx`, `src/components/brand/BrandMark.tsx`
 **Tasks**
 1. Restyle nav: white bar, 1px bottom line, Plex Sans 15px links, primary button "Discuss your programme" (→ `/contact?request=review`). Keep current links for now (E1.4 changes them).
-2. Footer: ink background allowed (single dark surface on the site), tokens only, no mono caps.
+2. Footer: ink background allowed (single dark surface on the site; PRD v1.2 adds the homepage hero, cross-check strip and closing CTA), tokens only, no mono caps.
 3. Brand mark: keep the existing mark; ensure it renders in ink on light and white on the footer.
 4. Delete token aliases added in E0.1; fix any remaining references.
 **AC:** keyboard tab order logical; mobile menu works and traps focus; no alias tokens remain.
@@ -148,9 +148,9 @@ Read `src/app/page.tsx`, `src/lib/siteConfig.ts`, `src/lib/jsonLd.ts`, `src/lib/
 3. Timing per PRD 7; total ≤ 4.5 s; uses CSS transitions only; no new dependency.
 4. Contradiction line: SVG path between T1 and I1 rows on ≥ 641px; note under T1 on ≤ 640px.
 5. "Run the check again" text button; `aria-live="polite"` summary once on completion.
-6. `prefers-reduced-motion`: final state on first paint, replay hidden.
+6. `prefers-reduced-motion`: final state on first paint, replay hidden. (Superseded by E1.6: switch instead of replay.)
 7. "Illustrative example. Fictional programme." label under the table.
-8. Track `hero_check_replay` (E9 adds the analytics helper; until then, a no-op stub).
+8. Track `hero_check_replay`, renamed `hero_view_toggle` in E1.6 (E9 adds the analytics helper; until then, a no-op stub).
 **AC:**
 - With JS disabled, the table and reported statuses are visible and readable.
 - With JS, the full sequence plays once on load and ends in the exact final state of PRD 7.
@@ -194,6 +194,17 @@ Read `src/app/page.tsx`, `src/lib/siteConfig.ts`, `src/lib/jsonLd.ts`, `src/lib/
 - No hex literals, no evidence colours, no word "drag"; prices and defaults appear only in config.
 - Client JS impact ≤ 3 KB gzipped; axe clean on `/`; Lighthouse mobile on `/` stays ≥ 90 (three-run median on the preview).
 **[FOUNDER APPROVES]** copy and example values (IN-7) before merge.
+
+### E1.6 Homepage visual redesign (added in PRD v1.2)
+**Type:** Code + Copy · **Files:** `src/components/hero/EvidenceCheckHero.tsx`, new `src/components/home/*` visuals, `OfferPanels.tsx`, `SlipCostEstimator.tsx`, `src/components/ui/Section.tsx` / `Button.tsx` (ink tone, inverse buttons), `src/styles/globals.css`, `src/app/page.tsx`
+**Depends on:** E1.5 · **Reference:** the approved design canvas (`evidence/E1.6/design/`)
+**Tasks**
+1. Hero per PRD 7 (v1.2): reported/evidenced switch, one automatic move to the evidenced view, claim detail, no replay; real table with headers on desktop, stacked list on mobile; `hero_view_toggle` stub event.
+2. Section visuals per PRD 9.12, with 9.1 copy verbatim and 9.12 interface wording.
+3. Estimator: slider beside each number field, week-by-week bars, comparison bar; E1.5 behaviour and copy unchanged.
+4. Nothing internal ships: no placeholders (the comparison table still waits for E5.2), and links to routes that are not live stay inactive.
+**AC:** tokens only (no hex in components); evidence colours only on evidence status; no-JS shows the reported view and the estimator example; reduced motion shows the evidenced view on first paint; axe clean on `/`; 360px without horizontal scroll; hero JS < 6 KB and estimator ≤ 3 KB gzipped; Lighthouse mobile on `/` ≥ 90 (three-run median).
+**[FOUNDER APPROVES]** interface wording (IN-9) and screenshots before merge.
 
 **Definition of done (E1):** preview deployment reviewed by founder; Lighthouse mobile ≥ 90 on `/`.
 
