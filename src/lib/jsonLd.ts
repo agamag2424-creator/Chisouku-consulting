@@ -186,6 +186,4 @@ export function definedTermSetJsonLd(
   };
 }
 
-export function stringifyJsonLd(data: JsonLd): string {
-  return JSON.stringify(data);
-}
+export { stringifyJsonLd } from "./safeJson";

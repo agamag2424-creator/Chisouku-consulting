@@ -101,105 +101,92 @@ export function EvidenceCheckHero({ className }: { className?: string }) {
         <Stat className="ec-ev border-l border-faint" value="1" valueClassName="text-ev-miss" label={heroCard.contradictionLabel} />
       </div>
 
-      {/* Desktop and tablet: one table; the contradiction bracket sits in the left gutter. */}
-      <table className="hidden w-full border-collapse text-left min-[641px]:table">
+      {/* One table for every width. From 641px a classic table with the contradiction bracket in the gutter; below,
+          each row is a small grid (ID and claim, then the marks with their letters, then the score). ARIA roles
+          keep the table semantics when the display changes. */}
+      <table role="table" className="w-full border-collapse text-left max-[640px]:block">
         <caption className="sr-only">
           Readiness claims reported Green, checked on Status, Owner, Evidence, Date and Action
         </caption>
-        <thead>
-          <tr className="text-[12px] font-semibold text-muted">
+        <thead role="rowgroup" className="max-[640px]:sr-only">
+          <tr role="row" className="text-[12px] font-semibold text-muted">
             <td className="w-6 p-0" aria-hidden />
-            <th scope="col" className="px-2 pb-2 pt-3">
+            <th role="columnheader" scope="col" className="px-2 pb-2 pt-3">
               ID
             </th>
-            <th scope="col" className="px-2 pb-2 pt-3">
+            <th role="columnheader" scope="col" className="px-2 pb-2 pt-3">
               Claim as reported
             </th>
-            <th scope="col" className="ec-rep px-3 pb-2 pt-3">
+            <th role="columnheader" scope="col" className="ec-rep px-3 pb-2 pt-3">
               Reported
             </th>
             {readiness5.map((element) => (
-              <th key={element.key} scope="col" className="ec-ev w-7 px-1 pb-2 pt-3 text-center">
+              <th
+                key={element.key}
+                role="columnheader"
+                scope="col"
+                className="ec-ev w-7 px-1 pb-2 pt-3 text-center"
+              >
                 <abbr title={element.name} className="no-underline">
                   {element.key}
                 </abbr>
               </th>
             ))}
-            <th scope="col" className="ec-ev px-3 pb-2 pt-3">
+            <th role="columnheader" scope="col" className="ec-ev px-3 pb-2 pt-3">
               Evidenced
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody role="rowgroup" className="max-[640px]:block">
           {heroClaims.map((claim, claimIndex) => (
             <tr
               key={claim.id}
-              className={cn("border-t border-faint transition-colors", isPicked(claim.id) && "bg-teal-tint")}
+              role="row"
+              className={cn(
+                "border-t border-faint transition-colors",
+                "max-[640px]:grid max-[640px]:grid-cols-[2.25rem_repeat(5,1.75rem)_minmax(0,1fr)] max-[640px]:items-center max-[640px]:px-4 max-[640px]:py-2",
+                isPicked(claim.id) && "bg-teal-tint",
+              )}
             >
               {claimIndex === contradictionIndex ? (
-                <td rowSpan={2} className="relative w-6 bg-paper p-0" aria-hidden>
+                <td rowSpan={2} className="relative w-6 bg-paper p-0 max-[640px]:hidden" aria-hidden>
                   <ContradictionBracket />
                 </td>
               ) : claimIndex === contradictionIndex + 1 ? null : (
-                <td className="w-6 bg-paper p-0" aria-hidden />
+                <td className="w-6 bg-paper p-0 max-[640px]:hidden" aria-hidden />
               )}
-              <th scope="row" className="t-data px-2 py-2 align-middle text-[14px]">
+              <th role="rowheader" scope="row" className="t-data px-2 py-2 align-middle text-[14px] max-[640px]:p-0">
                 {claim.id}
               </th>
-              <td className="px-2 py-2 align-middle">
+              <td role="cell" className="px-2 py-2 align-middle max-[640px]:col-span-6 max-[640px]:p-0">
                 <ClaimButton text={claim.claim} pressed={isPicked(claim.id)} onClick={() => pick(claim.id)} />
               </td>
-              <td className="ec-rep px-3 py-2 align-middle">
+              <td role="cell" className="ec-rep px-3 py-2 align-middle max-[640px]:col-span-6 max-[640px]:col-start-2 max-[640px]:p-0 max-[640px]:pb-1">
                 <RagBadge status={claim.reported} />
               </td>
               {claim.marks.map((mark, cellIndex) => (
-                <td key={readiness5[cellIndex].key} className="ec-ev px-1 py-2 text-center align-middle">
+                <td
+                  key={readiness5[cellIndex].key}
+                  role="cell"
+                  data-key={readiness5[cellIndex].key}
+                  className={cn(
+                    "ec-ev px-1 py-2 text-center align-middle",
+                    "max-[640px]:flex max-[640px]:flex-col max-[640px]:items-center max-[640px]:gap-1 max-[640px]:p-0 max-[640px]:pb-1",
+                    "max-[640px]:before:text-[12px] max-[640px]:before:font-semibold max-[640px]:before:text-muted max-[640px]:before:content-[attr(data-key)]",
+                    cellIndex === 0 && "max-[640px]:col-start-2",
+                  )}
+                >
                   <EvidenceCell state={mark} label={readiness5[cellIndex].name} />
                 </td>
               ))}
-              <td className="ec-ev px-3 py-2 align-middle">
+              <td role="cell" className="ec-ev px-3 py-2 align-middle max-[640px]:col-span-6 max-[640px]:col-start-2 max-[640px]:p-0 max-[640px]:pb-1 max-[640px]:pt-1">
                 <ScoreBadge score={evidencedCount(claim.marks)} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <ContradictionNote className="mx-5 mt-3 hidden min-[641px]:flex" />
-
-      {/* Mobile: claims stack; the contradiction is a note under T1. */}
-      <ol className="divide-y divide-faint min-[641px]:hidden">
-        {heroClaims.map((claim, claimIndex) => (
-          <li key={claim.id} className={cn("px-4 py-3 transition-colors", isPicked(claim.id) && "bg-teal-tint")}>
-            <div className="flex items-start gap-3">
-              <span className="t-data pt-3 text-[14px]">{claim.id}</span>
-              <div className="min-w-0 flex-1">
-                <ClaimButton text={claim.claim} pressed={isPicked(claim.id)} onClick={() => pick(claim.id)} />
-                <div className="ec-rep mt-1">
-                  <RagBadge status={claim.reported} prefix="Reported" />
-                </div>
-                <div className="ec-ev mt-1 flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <dl className="flex gap-3">
-                    {claim.marks.map((mark, cellIndex) => (
-                      <div key={readiness5[cellIndex].key} className="flex flex-col items-center gap-1">
-                        <dt className="text-[12px] font-semibold text-muted">
-                          <abbr title={readiness5[cellIndex].name} className="no-underline">
-                            {readiness5[cellIndex].key}
-                          </abbr>
-                        </dt>
-                        <dd>
-                          <EvidenceCell state={mark} label={readiness5[cellIndex].name} />
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                  <ScoreBadge score={evidencedCount(claim.marks)} />
-                </div>
-                {claimIndex === contradictionIndex && <ContradictionNote className="mt-3 flex" />}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ol>
+      <ContradictionNote className="mx-4 mt-3 flex min-[641px]:mx-5" />
 
       <div className="ec-ev px-5 pt-4">
         <p className="text-[13px] text-muted">{`${pickedClaim.id} ${pickedClaim.claim}: ${heroCard.detailSuffix}`}</p>
