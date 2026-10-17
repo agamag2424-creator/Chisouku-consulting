@@ -1,6 +1,7 @@
 import { siteConfig } from "./siteConfig";
 import { legacy, legacyAuditPriceRange } from "./legacyOffer"; // old Service blocks, removed in E8.4/E10
 import type { FaqItem } from "./aeoContent";
+import type { Market } from "../content/markets";
 
 const siteUrl = siteConfig.url;
 
@@ -55,6 +56,32 @@ export function offerServiceJsonLd(offer: "evidenceCheck" | "decisionReview", de
       priceCurrency: siteConfig.currency,
       description: `${data.days} business days`,
     },
+  };
+}
+
+/** Service for a market page (E7): the country served, and both fixed-fee offers at list price from config. */
+export function marketServiceJsonLd(market: Market, description: string): JsonLd {
+  const url = `${siteUrl}${market.path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: market.name,
+    serviceType: "Go-live readiness assurance",
+    description,
+    provider: { "@type": "Organization", name: siteConfig.name, url: siteUrl },
+    areaServed: { "@type": "Country", name: market.country.name, identifier: market.country.code },
+    url,
+    offers: (["evidenceCheck", "decisionReview"] as const).map((key) => {
+      const offer = siteConfig.offers[key];
+      return {
+        "@type": "Offer",
+        name: offer.name,
+        url: `${siteUrl}${offer.path}`,
+        price: offer.listPrice,
+        priceCurrency: siteConfig.currency,
+        description: `${offer.days} business days`,
+      };
+    }),
   };
 }
 

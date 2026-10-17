@@ -65,7 +65,7 @@ export const routeLive = {
   "/see-it-first": true,
   "/pricing": true,
   "/independence-and-data": true,
-  "/go-live-readiness-uae": false,
+  "/go-live-readiness-uae": true,
   "/go-live-readiness-saudi-arabia": false,
   "/guides/s4hana-go-no-go-checklist": false,
   "/guides/is-my-erp-ready-to-go-live": false,
