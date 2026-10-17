@@ -53,3 +53,29 @@ test("llms.txt and llms-full.txt: new answers from config, live pages only, noth
   expect(full).toContain("## FAQ");
   expect(full).toContain("### READINESS-5");
 });
+
+test("sitemap lists exactly the live routes; robots disallows /_ui", async ({ request }) => {
+  const xml = await (await request.get(base + "/sitemap.xml")).text();
+  const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1].replace("https://www.chisokulabs.com", "") || "/");
+  expect(urls.sort()).toEqual([...routes, "/contact", "/privacy"].sort());
+  const robots = await (await request.get(base + "/robots.txt")).text();
+  expect(robots).toContain("Disallow: /_ui");
+});
+
+test("offers, method and see-it-first have their own 1200x630 share image", async ({ request, page }) => {
+  const images: Record<string, string> = {
+    "/readiness-evidence-check": "/og-evidence-check.png",
+    "/go-live-decision-review": "/og-decision-review.png",
+    "/method": "/og-method.png",
+    "/see-it-first": "/og-see-it-first.png",
+    "/": "/og.png",
+  };
+  for (const [route, image] of Object.entries(images)) {
+    await page.goto(base + route);
+    const og = await page.locator('meta[property="og:image"]').getAttribute("content");
+    expect(og).toBe("https://www.chisokulabs.com" + image);
+    expect(await page.locator('meta[property="og:image:width"]').getAttribute("content")).toBe("1200");
+    const response = await request.get(base + image);
+    expect(response.status()).toBe(200);
+  }
+});
