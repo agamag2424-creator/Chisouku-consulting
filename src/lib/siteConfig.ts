@@ -80,6 +80,15 @@ export function isRouteLive(href: string): boolean {
   return routeLive[path] ?? false;
 }
 
+/**
+ * Whether a route's page may render. A live route always renders; a route that is not live yet renders only in
+ * development and on Vercel previews (for review), and returns 404 in production. Fails closed when the environment
+ * is unknown (backlog rule 14).
+ */
+export function routeRenders(href: string, env: { NODE_ENV?: string; VERCEL_ENV?: string } = process.env): boolean {
+  return isRouteLive(href) || env.NODE_ENV === "development" || env.VERCEL_ENV === "preview";
+}
+
 /** "USD 5,000": every displayed price goes through here. */
 export function formatPrice(amount: number): string {
   return `${siteConfig.currency} ${amount.toLocaleString("en-US")}`;

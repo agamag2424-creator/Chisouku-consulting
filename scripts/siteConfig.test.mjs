@@ -2,7 +2,7 @@
 // Run: npm run test:unit  (Node 22 strips the TypeScript types; no test dependency needed)
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { formatPrice, foundingActive, isRouteLive, navLinks, offerPriceLabel, routeLive, siteConfig } from "../src/lib/siteConfig.ts";
+import { formatPrice, foundingActive, isRouteLive, navLinks, offerPriceLabel, routeLive, routeRenders, siteConfig } from "../src/lib/siteConfig.ts";
 
 test("formatPrice uses the configured currency and grouping", () => {
   assert.equal(formatPrice(12000), "USD 12,000");
@@ -42,4 +42,13 @@ test("JSON-LD for a script tag escapes '<' so it cannot close the tag", async ()
   const out = stringifyJsonLd({ name: "</script><script>alert(1)</script>" });
   assert.ok(!out.includes("<"));
   assert.deepEqual(JSON.parse(out), { name: "</script><script>alert(1)</script>" });
+});
+
+test("a route that is not live renders only in development and on previews (fails closed)", () => {
+  assert.equal(routeRenders("/independence-and-data", { NODE_ENV: "production", VERCEL_ENV: "production" }), false);
+  assert.equal(routeRenders("/independence-and-data", { NODE_ENV: "production" }), false);
+  assert.equal(routeRenders("/independence-and-data", {}), false);
+  assert.equal(routeRenders("/independence-and-data", { NODE_ENV: "production", VERCEL_ENV: "preview" }), true);
+  assert.equal(routeRenders("/independence-and-data", { NODE_ENV: "development" }), true);
+  assert.equal(routeRenders("/pricing", { NODE_ENV: "production", VERCEL_ENV: "production" }), true);
 });
