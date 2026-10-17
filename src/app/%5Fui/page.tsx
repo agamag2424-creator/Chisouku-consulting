@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import { ComparisonTable } from "../../components/compare/ComparisonTable";
 import { EvidenceCheckHero } from "../../components/hero/EvidenceCheckHero";
 import { Accordion } from "../../components/ui/Accordion";
 import { Button } from "../../components/ui/Button";
@@ -181,6 +182,13 @@ export default function UiPage() {
             <PriceBlock offer="decisionReview" />
             <PriceBlock offer="continuous" />
             <PriceBlock offer="decisionReview" foundingSlotsRemaining={0} />
+          </div>
+        </Demo>
+
+        <Demo title="Comparison table">
+          <div className="grid gap-10">
+            <ComparisonTable id="ui-comparison" />
+            <ComparisonTable id="ui-comparison-compact" rows={4} />
           </div>
         </Demo>
 
