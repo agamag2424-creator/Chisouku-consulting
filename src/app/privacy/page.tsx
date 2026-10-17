@@ -5,7 +5,7 @@ import { Section } from "../../components/ui/Section";
 import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 
-// Privacy policy and terms (PRD 11, E9.3). Retention for enquiries pending founder confirmation (IN-13).
+// Privacy policy and terms (PRD 11, E9.3). Wording and enquiry retention approved by the founder (IN-13, 17 Oct 2026).
 export const metadata: Metadata = pageMetadata("/privacy");
 
 const lastUpdated = "17 October 2026";
