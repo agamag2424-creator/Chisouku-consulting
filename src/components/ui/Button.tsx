@@ -3,7 +3,8 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { isRouteLive } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
-type Variant = "primary" | "secondary" | "text";
+/** The "inverse" variants are for ink surfaces. */
+type Variant = "primary" | "secondary" | "text" | "inverse" | "inverse-outline";
 type Size = "md" | "lg";
 
 type CommonProps = {
@@ -25,6 +26,8 @@ const variantClasses: Record<Variant, string> = {
   primary: "rounded-control border border-ink bg-ink text-paper hover:border-teal hover:bg-teal",
   secondary: "rounded-control border border-line bg-paper text-ink hover:border-ink",
   text: "text-teal underline decoration-1 underline-offset-4 hover:decoration-2",
+  inverse: "rounded-control border border-paper bg-paper text-ink hover:border-teal-tint hover:bg-teal-tint",
+  "inverse-outline": "rounded-control border border-paper/70 text-paper hover:border-paper hover:bg-paper hover:text-ink",
 };
 
 const boxSizes: Record<Size, string> = {

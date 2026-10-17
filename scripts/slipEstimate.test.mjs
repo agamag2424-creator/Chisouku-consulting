@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { siteConfig } from "../src/lib/siteConfig.ts";
-import { slipEstimate } from "../src/lib/slipEstimate.ts";
+import { slipEstimate, slipLabel } from "../src/lib/slipEstimate.ts";
 
 const config = {
   workingDaysPerWeek: siteConfig.slipEstimator.workingDaysPerWeek,
@@ -31,4 +31,13 @@ test("monthly parallel-run cost adds × 12 ÷ 52 per week", () => {
 test("negative or non-numeric input counts as zero", () => {
   const result = slipEstimate({ people: -3, dayRate: Number.NaN, weeks: 2, parallelRunMonthly: -1 }, config);
   assert.deepEqual(result, { weeklyRunRate: 0, totalCost: 0, comparisonDays: null });
+});
+
+test("slip label uses 'an' before 8, 11, 18 and the 80s", () => {
+  assert.equal(slipLabel(4), "Cost of a 4-week slip");
+  assert.equal(slipLabel(8), "Cost of an 8-week slip");
+  assert.equal(slipLabel(11), "Cost of an 11-week slip");
+  assert.equal(slipLabel(18), "Cost of an 18-week slip");
+  assert.equal(slipLabel(1), "Cost of a 1-week slip");
+  assert.equal(slipLabel(12), "Cost of a 12-week slip");
 });

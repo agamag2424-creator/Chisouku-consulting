@@ -39,7 +39,7 @@ export function Footer() {
     .filter((group) => group.links.length > 0);
 
   return (
-    <footer className="bg-ink text-paper/80">
+    <footer className="border-t border-paper/10 bg-ink text-paper/80">
       <div className="mx-auto grid max-w-[var(--content-max-width)] gap-10 px-[var(--content-padding-x-mobile)] py-14 md:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))] md:px-[var(--content-padding-x)]">
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">

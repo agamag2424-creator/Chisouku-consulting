@@ -2,6 +2,7 @@
 
 **Status:** v1.0 · approved direction by the founder, 17 Oct 2026 (IST)
 **Amendment v1.1 (17 Oct 2026):** the founder approved a homepage "slipped go-live cost" estimator (option B) to keep the old site's "see what it costs you" interaction. Adds homepage section 4a (9.1), section 9.11, the `slipEstimator` config key (6.4), the `slip_estimate_used` event (11), inputs IN-7 and IN-8 (14), and backlog story E1.5.
+**Amendment v1.2 (17 Oct 2026):** the founder approved a visual redesign of the homepage (design canvas "ChisokuLabs Homepage Redesign"; source kept in `evidence/E1.6/design/`). Section 7 behaviour 2–4 change: the replay button is replaced by an "As reported / As evidenced" switch. 5.1 gains a rule on dark (ink) surfaces. 9.1 gains section 9.12 (visual treatment and interface wording). `hero_check_replay` becomes `hero_view_toggle` {view} (11). Adds backlog story E1.6.
 **Owner:** Founder, ChisokuLabs Pvt Ltd
 **Repository:** this repo (`chisokulab`, Next.js 16 App Router, Tailwind v4, deployed on Vercel)
 **Companion file:** `BACKLOG.md` in this folder (epics, stories, tasks, acceptance criteria, executor rules)
@@ -44,7 +45,7 @@ ChisokuLabs is repositioning from "AI automation for delivery systems, starting 
 | Goal | Measured by |
 |---|---|
 | G1. A UAE/KSA CIO or sponsor understands the offer within 10 seconds of landing | Hero test with 3 reviewers: each states the offer in one sentence |
-| G2. The moat is visible before any sales copy | The hero Evidence Check runs on load and can be replayed |
+| G2. The moat is visible before any sales copy | The hero Evidence Check runs on load and the visitor can switch between the reported and evidenced views (v1.2) |
 | G3. The visitor can see the output before contacting | Sample decision pack viewable on site and downloadable without a form |
 | G4. Clear path to conversation | Every page has one primary CTA: "Discuss your programme" or "Request a free readiness brief" |
 | G5. Search and answer-engine readiness for go-live queries | New JSON-LD, FAQ, glossary, `llms.txt`, 3 answer guides and 2 market pages indexed in the sitemap |
@@ -157,7 +158,7 @@ Footer: offers, method, see it first, pricing, UAE, Saudi Arabia, guides, FAQ, g
 | `--color-ev-part` / `--color-ev-part-tint` | `#A86C12` / `#FBF2E2` | Partial evidence / Amber |
 | `--color-ev-miss` / `--color-ev-miss-tint` | `#B23B3B` / `#F8E5E5` | Missing evidence / Red |
 
-Rules: evidence colours appear **only** on evidence status (claims, RAG, R5 cells, contradiction marks). No gradients as decoration; remove the radial cyan body gradient. One border radius for controls (6px) and one for sheets (4px).
+Rules: ink surfaces (v1.2): the homepage hero band, the method cross-check strip, the closing CTA band and the footer; nowhere else. Evidence colours appear **only** on evidence status (claims, RAG, R5 cells, contradiction marks). No gradients as decoration; remove the radial cyan body gradient. One border radius for controls (6px) and one for sheets (4px).
 
 ### 5.2 Type
 
@@ -253,9 +254,9 @@ Helpers: `formatPrice(n)`, `offerPriceLabel(offer)` returning list and (if slots
 
 **Behaviour:**
 1. Initial state (server-rendered, visible without JS): the three claims with their **Reported: Green** badges.
-2. After 700 ms, a single sequence: for each claim in turn, the five R5 cells resolve left to right (120 ms apart), then the "Reported: Green" badge is replaced by "3 of 5 evidenced" (colour by score: ≥4 ok, 2–3 partial, 0–1 missing). After all three, the contradiction line draws between T1 and I1 and its label fades in. Total ≤ 4.5 s.
-3. A text button "Run the check again" replays the sequence.
-4. `prefers-reduced-motion: reduce` → render the final state immediately; replay button hidden.
+2. (v1.2) A two-button switch, "As reported" and "As evidenced", sits on the card. About 1.8 s after load the card moves once, on its own, from the reported view to the evidenced view: R5 cells and "N of 5 evidenced" scores (colour by score: ≥4 ok, 2–3 partial, 0–1 missing) replace the "Reported: Green" badges, two summary figures change ("3/3 claims reported Green" → "1/3 claims have most of their evidence" and "1 contradiction between workstreams"), the contradiction bracket draws between T1 and I1 and its label appears. The visitor can switch back and forth at any time.
+3. (v1.2) Selecting a claim shows what the evidence shows for each of its five elements (Evidenced, Partial, Missing). There is no replay button.
+4. `prefers-reduced-motion: reduce` → the evidenced view from first paint, without transitions; the switch still works.
 5. Accessibility: the table is a real `<table>` with headers; R5 cells have visually hidden text ("Evidence: missing"); the live result is announced once via `aria-live="polite"` ("Check complete: 1 of 3 claims has most of its evidence; 1 contradiction found").
 6. Client component only; no network calls; under 6 KB gzipped JS; no new dependency (use CSS transitions + a small state machine; GSAP/framer-motion are already installed but not required).
 7. Mobile (≤ 640px): claims stack as rows with R5 cells beneath the claim text; contradiction shown as a note under T1 instead of a drawn line.
@@ -409,7 +410,7 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - H2: What a slipped go-live costs.
 - Lead: Put in your own numbers. When a go-live date moves, the programme team, the system integrator and the current system all keep running.
 - Labels: as the inputs above. Small note above the fields: "Example values. Replace them with yours."
-- Outputs: "Cost per week of slip: {weekly}" · "Cost of a {weeks}-week slip: {total}"
+- Outputs: "Cost per week of slip: {weekly}" · "Cost of a {weeks}-week slip: {total}" ("an" before 8, 11, 18 and the 80s)
 - Comparison line: "A Readiness Evidence Check costs {price}: about {days} working days of your programme's run-rate." (with founding price: "{list} list, {founding} founding-client rate")
 - Footnote: "Calculated in your browser from your numbers. Directional only: it leaves out lost benefits, contract penalties and business disruption. Not a forecast for your programme."
 - CTA: primary "Request a free readiness brief" (→ `/contact?request=brief`); text link "Discuss your programme" (→ `/contact?request=review`).
@@ -420,6 +421,22 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - Results announced politely (`aria-live="polite"`, debounced); inputs keyboard-accessible; works at 360px without horizontal scroll.
 - Track `slip_estimate_used` once per page view, the first time the visitor changes any input (no values sent).
 - Client JS ≤ 3 KB gzipped; no new dependency.
+
+### 9.12 Homepage visual treatment and interface wording (v1.2, E1.6)
+
+Each homepage section leads with a visual; the 9.1 copy is kept verbatim and may be split around it.
+- Hero: ink band, white Evidence Check card (section 7). Platform line as chips.
+- 2 The problem: four workstream cards (Testing, Migration, Cutover, System integrator), each "Green", joined by dashed lines to a centre marked "?" and "The go-live decision".
+- 3 Method: the lead-in sentence, five R5 tiles (letter, name, question), then the cross-check sentence on an ink strip with the "How READINESS-5 works" link.
+- 4 Verdicts: three cards with an icon each; Conditional Go emphasised; blank lines suggest conditions, owners and dates (no text).
+- 4a Estimator: each number field paired with a slider; a week-by-week bar chart; a bar comparing the slip cost with the Evidence Check list price.
+- 5 Offers: day strips (5 and 10 days; the Evidence Check strip uses the 9.2 sequence), a "Fee credited in full" badge between the panels, founding places shown as dots.
+- 6 See it first: an illustration of the sample pack and of the brief (shapes only, no text).
+- 8 Independence: three "None" tiles and three data-handling lines with icons.
+- 9 Principal-led: a signature line and experience chips taken from the 8.3 paragraph.
+- 10 Closing CTA: ink band with a six-week strip ending at go-live; W-6 highlighted.
+
+Interface wording added by 9.12 ([FOUNDER APPROVES], IN-9): "Go-live readiness check"; "Three critical claims, all reported Green"; "As reported"; "As evidenced"; "claims reported Green"; "evidence not yet checked"; "claims have most of their evidence"; "contradiction between workstreams"; "{ID} {claim}: what the evidence shows"; "Evidenced", "Partial", "Missing"; "The go-live decision"; workstream lines "Reports a pass rate.", "Reports a reconciliation.", "Has a plan.", "Has an opinion, and a milestone tied to the date."; "Fee credited in full"; "None" with "Implementation fees", "Software resold", "System integrator partnerships"; the three data-handling lines (cut from section 8 body); "Led and signed by a principal"; chips "11+ years", "Aviation", "Banking", "Manufacturing", "Multi-country go-lives"; "W-6" to "W-1" and "Go-live"; estimator chart labels "Week 1" and "Week {n}".
 
 ## 10. SEO and answer-engine requirements (E8)
 
@@ -438,7 +455,7 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - Contact form becomes "Discuss your programme" with fields: name*, work email*, company*, country* (UAE, Saudi Arabia, Other GCC, Other), role (CIO/CTO, Transformation Director, Programme Sponsor, Programme/PMO Director, Other), **request type*** (Discuss a review · Free readiness brief · Pricing question), platform (from config + Other), **go-live decision date** (month picker, optional), message.
 - Query param `?request=brief|review|pricing` presets request type; CTAs link with it.
 - API route keeps Resend delivery; update payload and email subject `"[ChisokuLabs] {request type} — {company}"`; keep validation; add honeypot field; rate-limit by simple in-memory guard is **not** required.
-- Analytics via existing `@vercel/analytics` `track()`: `cta_click` {id, page}, `sample_pack_view`, `sample_pack_download`, `hero_check_replay`, `slip_estimate_used`, `form_submit` {request_type}, `form_error`. No cookies beyond Vercel Analytics defaults; privacy page updated.
+- Analytics via existing `@vercel/analytics` `track()`: `cta_click` {id, page}, `sample_pack_view`, `sample_pack_download`, `hero_view_toggle` {view}, `slip_estimate_used`, `form_submit` {request_type}, `form_error`. No cookies beyond Vercel Analytics defaults; privacy page updated.
 - Calendly button stays available on `/contact` as an alternative.
 
 ---
@@ -469,5 +486,6 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-4 | Confirm every data-handling statement in 9.7 is true | E6 merge | Do not publish `/independence-and-data` |
 | IN-5 | Calendly link still valid | E9 | Keep current link |
 | IN-6 | When the Self-Check goes live: URL | Later | `selfCheck.live = false` |
-| IN-7 | Approve the estimator copy and example values in 9.11 | E1.5 merge | Do not merge E1.5 |
+| IN-7 | Approve the estimator copy and example values in 9.11 (**approved 17 Oct 2026**, with "a"/"an" chosen by number in "Cost of a {weeks}-week slip") | E1.5 merge | Do not merge E1.5 |
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
+| IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |

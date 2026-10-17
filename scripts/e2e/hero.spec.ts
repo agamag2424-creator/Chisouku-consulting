@@ -1,15 +1,16 @@
-// Hero Evidence Check (E1.2). Not part of the app build (tsconfig excludes scripts/e2e).
+// Hero Evidence Check (E1.2, reworked in E1.6 per PRD 7 v1.2). Not part of the app build (tsconfig excludes scripts/e2e).
 //
 // Run against a local production build:
 //   npm run build && PORT=3100 npm run start &
 //   HERO_URL=http://localhost:3100/ npx -y @playwright/test@1.56.1 test scripts/e2e
-// HERO_URL defaults to the homepage; before E1.3 point it at /_ui (preview or `next dev` only).
 import { expect, test } from "@playwright/test";
 
 const url = process.env.HERO_URL ?? "http://localhost:3100/";
 const scores = ["3 of 5 evidenced", "2 of 5 evidenced", "0 of 5 evidenced"];
 const contradiction = "The 98% excludes 3 interfaces never tested end to end.";
 const summary = "Check complete: 1 of 3 claims has most of its evidence; 1 contradiction found";
+
+const visible = <T extends { filter: (o: { visible: boolean }) => T }>(locator: T) => locator.filter({ visible: true });
 
 for (const viewport of [
   { name: "desktop", width: 1440, height: 900 },
@@ -18,39 +19,49 @@ for (const viewport of [
   test.describe(viewport.name, () => {
     test.use({ viewport: { width: viewport.width, height: viewport.height } });
 
-    test("plays once and ends in the PRD 7 final state", async ({ page }) => {
+    test("opens as reported, then moves once to the evidenced view", async ({ page }) => {
       await page.goto(url);
-      const started = Date.now();
       const hero = page.locator(".ec").first();
-      // Before the sequence: reported statuses visible, nothing resolved yet.
-      // (Pending marks are hidden with opacity, which Playwright still counts as visible, so assert state.)
-      await expect(hero.getByText(/^(Reported: )?Green$/).filter({ visible: true }).first()).toBeVisible();
-      await expect(hero).toHaveAttribute("data-phase", "idle");
-      expect(await hero.locator('[data-on="true"]').count()).toBe(0);
-      // The sequence ends within 4.5 s of load (allowing 1 s for navigation and hydration).
-      await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 5500 });
-      expect(Date.now() - started).toBeLessThan(5500);
-      expect(await hero.locator('[data-on="false"]').count()).toBe(0);
-      // Exact final state of PRD 7: badges, contradiction, completion announcement, replay.
-      for (const score of scores) {
-        await expect(hero.getByText(score).filter({ visible: true })).toHaveCount(1, { timeout: 5000 });
-      }
-      await expect(hero.getByText(contradiction).filter({ visible: true })).toBeVisible();
+      const asReported = hero.getByRole("button", { name: "As reported" });
+      const asEvidenced = hero.getByRole("button", { name: "As evidenced" });
+
+      // Before the move: three Green badges, no scores, no contradiction.
+      await expect(visible(hero.getByText(/^(Reported: )?Green$/))).toHaveCount(3);
+      expect(await visible(hero.getByText(/of 5 evidenced$/)).count()).toBe(0);
+      await expect(asReported).toHaveAttribute("aria-pressed", "true");
+
+      // The move happens on its own and ends in the PRD 7 evidenced state.
+      await expect(hero).toHaveAttribute("data-view", "evidenced", { timeout: 4000 });
+      await expect(asEvidenced).toHaveAttribute("aria-pressed", "true");
+      for (const score of scores) await expect(visible(hero.getByText(score))).toHaveCount(1);
+      await expect(visible(hero.getByText(contradiction))).toHaveCount(1);
+      expect(await visible(hero.getByText(/^(Reported: )?Green$/)).count()).toBe(0);
       await expect(hero.getByRole("status")).toHaveText(summary);
-      await expect(hero.getByRole("button", { name: "Run the check again" })).toBeVisible();
+      await expect(visible(hero.getByText("T1 SIT complete, 98% pass rate: what the evidence shows"))).toBeVisible();
+
+      // It does not move again.
+      await page.waitForTimeout(2500);
+      await expect(hero).toHaveAttribute("data-view", "evidenced");
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);
-      await hero.screenshot({ path: `test-results/hero-${viewport.name}.png` });
     });
 
-    test("replays from the start", async ({ page }) => {
+    test("the visitor can switch views and pick a claim", async ({ page }) => {
       await page.goto(url);
       const hero = page.locator(".ec").first();
-      const replay = hero.getByRole("button", { name: "Run the check again" });
-      await expect(replay).toBeVisible({ timeout: 6000 });
-      await replay.click();
-      await expect(hero).toHaveAttribute("data-phase", "idle");
-      expect(await hero.locator('[data-on="true"]').count()).toBe(0);
-      await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 5000 });
+      await hero.getByRole("button", { name: "As reported" }).click();
+      await expect(hero).toHaveAttribute("data-view", "reported");
+      await page.waitForTimeout(2500);
+      await expect(hero).toHaveAttribute("data-view", "reported"); // a choice stops the automatic move
+      await expect(visible(hero.getByText(/^(Reported: )?Green$/))).toHaveCount(3);
+
+      // Picking a claim opens the evidenced view on that claim.
+      await visible(hero.getByRole("button", { name: "Rollback plan in place" })).click();
+      await expect(hero).toHaveAttribute("data-view", "evidenced");
+      await expect(visible(hero.getByText("C2 Rollback plan in place: what the evidence shows"))).toBeVisible();
+      await expect(visible(hero.getByRole("button", { name: "Rollback plan in place" }))).toHaveAttribute(
+        "aria-pressed",
+        "true",
+      );
     });
   });
 }
@@ -58,24 +69,18 @@ for (const viewport of [
 test.describe("reduced motion", () => {
   test.use({ contextOptions: { reducedMotion: "reduce" } });
 
-  test("shows the final state immediately and hides replay", async ({ page }) => {
-    await page.goto(url);
+  test("shows the evidenced view at first paint, without the automatic move", async ({ page }) => {
+    await page.goto(url, { waitUntil: "commit" });
     const hero = page.locator(".ec").first();
-    // CSS shows the final state at first paint, before hydration: marks and scores fully opaque, no pending markers.
-    const finals = hero.locator(".ec-final").filter({ visible: true });
-    expect(await finals.count()).toBeGreaterThan(0);
-    for (const opacity of await finals.evaluateAll((els) => els.map((el) => getComputedStyle(el).opacity))) {
-      expect(opacity).toBe("1");
-    }
-    expect(await hero.locator(".ec-pending").filter({ visible: true }).count()).toBe(0);
-    for (const score of scores) {
-      await expect(hero.getByText(score).filter({ visible: true })).toHaveCount(1);
-    }
-    // After hydration the state machine agrees, without playing the sequence.
-    await expect(hero).toHaveAttribute("data-phase", "done", { timeout: 2000 });
-    await expect(hero.getByText(contradiction).filter({ visible: true })).toBeVisible({ timeout: 300 });
-    await expect(hero.getByRole("button", { name: "Run the check again" })).toBeHidden();
-    await hero.screenshot({ path: "test-results/hero-reduced-motion.png" });
+    // CSS shows the evidenced view before hydration ("auto" under reduced motion).
+    await expect(hero).toHaveAttribute("data-view", /auto|evidenced/);
+    for (const score of scores) await expect(visible(hero.getByText(score))).toHaveCount(1);
+    await expect(visible(hero.getByText(contradiction))).toHaveCount(1);
+    expect(await visible(hero.getByText(/^(Reported: )?Green$/)).count()).toBe(0);
+    // After hydration the buttons agree and the switch still works.
+    await expect(hero.getByRole("button", { name: "As evidenced" })).toHaveAttribute("aria-pressed", "true");
+    await hero.getByRole("button", { name: "As reported" }).click();
+    await expect(visible(hero.getByText(/^(Reported: )?Green$/))).toHaveCount(3);
   });
 });
 
@@ -87,6 +92,6 @@ test.describe("without JavaScript", () => {
     const table = page.locator(".ec table").first();
     await expect(table).toBeVisible();
     await expect(table.getByText("SIT complete, 98% pass rate")).toBeVisible();
-    await expect(table.getByText("Green", { exact: true })).toHaveCount(3);
+    await expect(visible(table.getByText("Green", { exact: true }))).toHaveCount(3);
   });
 });

@@ -116,67 +116,52 @@ body {
   }
 }
 
-/* Hero Evidence Check (PRD 7): the site's only orchestrated motion. Transitions only, driven by data attributes. */
-@layer components {
-  .ec [data-on="false"] > .ec-final {
-    opacity: 0;
-    transform: scale(0.7);
-  }
+/* Hero Evidence Check (PRD 7, v1.2): a reported view and an evidenced view, switched by data-view on the root.
+   "auto" is the server-rendered state before the visitor chooses: reported, or evidenced under reduced motion.
+   Unlayered on purpose: it must beat Tailwind display utilities (flex, table) on the same elements. */
+.ec[data-view="evidenced"] .ec-rep,
+.ec[data-view="reported"] .ec-ev {
+  display: none;
+}
 
-  .ec .ec-final {
-    transition:
-      opacity 200ms ease-out,
-      transform 200ms ease-out;
-  }
-
-  .ec [data-on="true"] > .ec-pending {
+@media (prefers-reduced-motion: no-preference) {
+  .ec[data-view="auto"] .ec-ev {
     display: none;
+  }
+
+  .ec .ec-ev {
+    animation: ec-in 400ms ease-out both;
   }
 
   .ec .ec-link path {
     stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 450ms ease-out;
+    animation: ec-draw 600ms ease-out 150ms both;
   }
+}
 
-  .ec[data-linked="true"] .ec-link path {
-    stroke-dashoffset: 0;
+@media (prefers-reduced-motion: reduce) {
+  .ec[data-view="auto"] .ec-rep {
+    display: none;
   }
+}
 
-  .ec .ec-label {
+@keyframes ec-in {
+  from {
     opacity: 0;
-    transition: opacity 300ms ease-out 250ms;
+    transform: translateY(4px);
   }
-
-  .ec[data-linked="true"] .ec-label {
+  to {
     opacity: 1;
+    transform: none;
   }
+}
 
-  /* Reduced motion: final state on first paint, even before JavaScript runs; no replay. */
-  @media (prefers-reduced-motion: reduce) {
-    .ec [data-on] > .ec-final {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-
-    .ec [data-on] > .ec-pending {
-      display: none;
-    }
-
-    .ec .ec-link path {
-      stroke-dashoffset: 0;
-      transition: none;
-    }
-
-    .ec .ec-label {
-      opacity: 1;
-      transition: none;
-    }
-
-    .ec .ec-replay {
-      display: none;
-    }
+@keyframes ec-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -544,9 +529,14 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-/* Teal on ink is under 3:1, so focus on the dark footer uses the tint. */
-footer :focus-visible {
+/* Teal on ink is under 3:1, so focus on ink surfaces uses the tint; white cards on ink go back to teal. */
+footer :focus-visible,
+.bg-ink :focus-visible {
   outline-color: var(--color-teal-tint);
+}
+
+.bg-ink .bg-paper :focus-visible {
+  outline-color: var(--color-teal);
 }
 
 .button-primary {
