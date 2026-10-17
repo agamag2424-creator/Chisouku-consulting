@@ -33,14 +33,14 @@ export function DragLedger({ className }: Props) {
     <div className={cn("artifact-sheet ink-corners overflow-hidden", className)}>
       <div className="flex items-start justify-between gap-4 border-b border-ink/12 px-6 py-5">
         <div>
-          <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+          <p className="text-[13px] font-bold text-teal">
             Artifact
           </p>
           <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
             Drag Ledger
           </h3>
         </div>
-        <span className="shrink-0 border border-teal/35 bg-teal/8 px-2 py-1 text-[13px] font-bold text-[var(--color-cyan-strong)]">
+        <span className="shrink-0 border border-teal/35 bg-teal/8 px-2 py-1 text-[13px] font-bold text-teal">
           Ledger
         </span>
       </div>
@@ -54,7 +54,7 @@ export function DragLedger({ className }: Props) {
         </div>
         {rows.map((row, index) => (
           <div key={row.friction} className="ledger-row">
-            <div className="t-data text-[var(--color-cyan-strong)]">
+            <div className="t-data text-teal">
               {index + 1}
             </div>
             <div className="text-sm font-bold tracking-[-0.01em] text-[var(--color-ink)]">

@@ -19,7 +19,7 @@ export function OperatingDragGrid({ className }: Props) {
   return (
     <div className={cn("report-board ink-corners", className)}>
       <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
-        <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+        <p className="text-[13px] font-bold text-teal">
           Current-state board
         </p>
         <p className="text-[13px] font-bold text-[var(--color-muted)]">

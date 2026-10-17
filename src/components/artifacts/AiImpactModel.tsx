@@ -15,7 +15,7 @@ export function AiImpactModel({ className, compact = false }: Props) {
         )}
       >
         <div>
-          <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+          <p className="text-[13px] font-bold text-teal">
             AI Impact Model
           </p>
           {!compact && (
@@ -48,7 +48,7 @@ export function AiImpactModel({ className, compact = false }: Props) {
               </span>
             </div>
             <div className="mt-6 flex-1">
-              <div className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+              <div className="text-[13px] font-bold text-teal">
                 {phase.buyer}
               </div>
               <p className="mt-2 text-sm font-semibold leading-relaxed text-[var(--color-ink)]">

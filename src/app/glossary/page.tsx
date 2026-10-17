@@ -51,7 +51,7 @@ export default function GlossaryPage() {
           </p>
           <p className="mt-4 text-sm text-[var(--color-muted)]">
             Buyer questions:{" "}
-            <Link href="/faq" className="font-semibold text-[var(--color-cyan-strong)]">
+            <Link href="/faq" className="font-semibold text-teal">
               FAQ
             </Link>
             .
@@ -78,7 +78,7 @@ export default function GlossaryPage() {
                   Related:{" "}
                   <Link
                     href={term.relatedHref}
-                    className="font-semibold text-[var(--color-cyan-strong)]"
+                    className="font-semibold text-teal"
                   >
                     {term.relatedLabel}
                   </Link>

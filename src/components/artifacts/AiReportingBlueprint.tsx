@@ -26,14 +26,14 @@ export function AiReportingBlueprint({ className }: Props) {
     <div className={cn("artifact-sheet ink-corners overflow-hidden", className)}>
       <div className="flex flex-col gap-3 border-b border-ink/12 px-6 py-5 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+          <p className="text-[13px] font-bold text-teal">
             Methodology excerpt: PMO reporting layer
           </p>
           <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
             AI Reporting Automation Blueprint
           </h3>
         </div>
-        <span className="shrink-0 self-start border border-teal/35 bg-teal/8 px-2 py-1 text-[13px] font-bold text-[var(--color-cyan-strong)]">
+        <span className="shrink-0 self-start border border-teal/35 bg-teal/8 px-2 py-1 text-[13px] font-bold text-teal">
           Architecture
         </span>
       </div>

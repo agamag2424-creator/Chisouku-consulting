@@ -71,7 +71,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold">Contact</h2>
             <p className="body-copy mt-4">
               For privacy or legal questions, contact{" "}
-              <a className="font-bold text-[var(--color-cyan-strong)] underline" href="mailto:agam@chisokulabs.com">
+              <a className="font-bold text-teal underline" href="mailto:agam@chisokulabs.com">
                 agam@chisokulabs.com
               </a>
               .
