@@ -9,8 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@fontsource/jetbrains-mono": "^5.2.8",
-    "@fontsource/outfit": "^5.2.8",
     "@gsap/react": "^2.1.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",

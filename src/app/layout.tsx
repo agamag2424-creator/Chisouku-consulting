@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Libre_Franklin, Source_Sans_3 } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "../styles/globals.css";
 import { JsonLdScript } from "../components/aeo/JsonLdScript";
 import { Nav } from "../components/layout/Nav";
@@ -15,25 +15,25 @@ import { siteConfig } from "../lib/siteConfig";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const libreFranklin = Libre_Franklin({
+const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
   weight: ["600", "700", "800"],
 });
 
-const sourceSans = Source_Sans_3({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
-  weight: ["500", "600", "700"],
+  weight: ["500"],
 });
 
 const siteUrl = siteConfig.url;
@@ -96,7 +96,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${libreFranklin.variable} ${sourceSans.variable} ${plexMono.variable}`}
+      className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable}`}
     >
       <body className="antialiased">
         <JsonLdScript id="chisokulabs-org-ld-json" data={organizationJsonLd()} />
