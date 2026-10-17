@@ -89,7 +89,7 @@ Story IDs are `E<epic>.<n>`. Each story lists **Type**, **Files** (expected; ver
 7. `Callout` (info/caution, left rule, no icon fonts).
 8. `PriceBlock` (reads an offer from config; shows list price, founding price and slots if `foundingSlotsRemaining > 0`, fee-credit line).
 9. `Accordion` using native `<details>/<summary>`.
-**AC:** a dev-only route `/_ui` (excluded from sitemap and robots, `noindex`) renders every component in every state, desktop and mobile; components contain no hex literals.
+**AC:** a dev-only route `/_ui` (excluded from sitemap and robots, `noindex`) renders every component in every state, desktop and mobile; components contain no hex literals. The route must fail closed: it renders only under `next dev` or `VERCEL_ENV=preview` and returns 404 in production or when the environment is unknown (founder rule, 17 Oct 2026: internal pages and wording never appear on the live site).
 **Tests:** screenshot of `/_ui`; axe shows no serious issues on `/_ui`.
 
 ### E0.4 Retire legacy patterns site-wide
@@ -389,7 +389,7 @@ List every route, component and asset still referencing the old offer (grep list
 **AC:** each old URL returns 308 to its new target on preview (`curl -I` output pasted).
 
 ### E10.2 Remove unused components and assets
-**Type:** Code · **Files:** `src/components/artifacts/*` no longer imported, unused `public/` images, `/_ui` route (or keep `noindex` + disallowed; founder decides), old OG images
+**Type:** Code · **Files:** `src/components/artifacts/*` no longer imported, unused `public/` images, `/_ui` route (delete it, or keep it only with the fail-closed guard from E0.3; it must return 404 on www.chisokulabs.com either way), old OG images
 **AC:** `npm run build` passes; no unused-import warnings; bundle size not larger than baseline (paste numbers).
 
 ### E10.3 Leak scan
@@ -424,6 +424,7 @@ Add `npm run leak-scan` script.
 9. **Do not touch** the diagnostic subdomain app, Delivery Pulse, Kaname, Brain, Vercel project settings, DNS, or environment variables (except reading names).
 10. **Run locally before pushing:** `npm run lint`, `npm run build`, `npx tsc --noEmit`, and (from E10.3) `npm run leak-scan`.
 11. **Never merge your own PR.** The founder merges. Production promotion is the founder's action.
+14. **Nothing internal reaches production.** Demo pages, component catalogues, test fixtures and placeholder or reference wording must return 404 or be absent in production builds, and must fail closed when the environment is unknown. Check this in every Evidence Report that adds such a page.
 12. **Stop at the end of each story** with the Evidence Report and wait for "approved, next".
 13. **INPUT NEEDED protocol:** write a block `INPUT NEEDED — <ID> — <what> — <why> — <default if any>` in the PR, continue with any story that does not depend on it.
 
