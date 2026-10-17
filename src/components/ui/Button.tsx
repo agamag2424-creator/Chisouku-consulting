@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { isRouteLive } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
 type Variant = "primary" | "secondary" | "text";
@@ -38,7 +39,10 @@ const textSizes: Record<Size, string> = {
 
 const EXTERNAL = /^(https?:|mailto:|tel:)/;
 
-/** Primary, secondary or text-link action. Renders a link when given `href`, otherwise a button. */
+/**
+ * Primary, secondary or text-link action. Renders a link when given `href`, otherwise a button.
+ * An internal `href` whose route is not live yet (siteConfig.routeLive) renders as inactive text, never a dead link.
+ */
 export function Button(props: ButtonProps) {
   const { variant = "primary", size = "md", className, children, ...rest } = props;
   const classes = cn(
@@ -50,6 +54,13 @@ export function Button(props: ButtonProps) {
 
   if (rest.href !== undefined) {
     const { href, ...anchorProps } = rest as Omit<LinkButtonProps, keyof CommonProps>;
+    if (!EXTERNAL.test(href) && !href.startsWith("#") && !isRouteLive(href)) {
+      return (
+        <span aria-disabled="true" className={cn(classes, "pointer-events-none opacity-60")}>
+          {children}
+        </span>
+      );
+    }
     if (EXTERNAL.test(href)) {
       return (
         <a href={href} className={classes} {...anchorProps}>

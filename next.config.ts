@@ -27,7 +27,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   experimental: {
-    optimizeCss: true,
+    // Measured in E1.3 (Lighthouse mobile, 3-run median on /): off 96 / TBT 69 ms vs on 94 / TBT 164 ms.
+    optimizeCss: false,
   },
   async headers() {
     return [
