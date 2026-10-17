@@ -13,10 +13,18 @@ import { Section } from "../../components/ui/Section";
 import { Sheet } from "../../components/ui/Sheet";
 
 // Folder is "%5Fui" because App Router treats "_ui" as a private, unroutable folder.
-export const metadata: Metadata = {
-  title: "UI components",
-  robots: { index: false, follow: false },
-};
+
+/**
+ * Fail closed: the page exists only in `next dev` and on Vercel preview deployments.
+ * Production, or any build where VERCEL_ENV is missing, returns 404.
+ */
+const showUiReference =
+  process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview";
+
+// The 404 still streams this route's metadata, so the internal title is only set where the page renders.
+export const metadata: Metadata = showUiReference
+  ? { title: "UI components", robots: { index: false, follow: false } }
+  : { robots: { index: false, follow: false } };
 
 const R5 = ["Status", "Owner", "Evidence", "Date", "Action"] as const;
 
@@ -53,13 +61,6 @@ function Demo({ title, children }: { title: string; children: ReactNode }) {
     </div>
   );
 }
-
-/**
- * Fail closed: the page exists only in `next dev` and on Vercel preview deployments.
- * Production, or any build where VERCEL_ENV is missing, returns 404.
- */
-const showUiReference =
-  process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview";
 
 export default function UiPage() {
   if (!showUiReference) notFound();
