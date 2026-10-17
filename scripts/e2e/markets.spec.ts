@@ -11,6 +11,13 @@ const pages = [
     dates: ["1 January 2027", "End of 2027"],
     sources: ["https://mof.gov.ae/", "https://support.sap.com/"],
   },
+  {
+    path: "/go-live-readiness-saudi-arabia",
+    h1: "Go-live readiness in Saudi Arabia",
+    country: "SA",
+    dates: ["1 February 2027", "End of 2027"],
+    sources: ["https://zatca.gov.sa/", "https://support.sap.com/"],
+  },
 ];
 
 for (const market of pages) {
