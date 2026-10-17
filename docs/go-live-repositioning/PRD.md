@@ -382,7 +382,7 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - **Saudi Arabia:** why now (ZATCA Phase 2 integration waves continuing, wave 25 from 1 Feb 2027; S/4HANA migrations); same structure. Sources linked.
 - Each ends with the free readiness brief CTA. Facts must carry links; executor verifies each link loads (E7 Step 0).
 
-**Copy (DRAFT — [FOUNDER APPROVES], IN-10).** Sources verified in E7.0 (`evidence/E7.0-sources.md`). The UAE threshold is "AED 50 million or more": the resolution says "equal to or exceeds".
+**Copy (approved 17 Oct 2026, IN-10).** Sources verified in E7.0 (`evidence/E7.0-sources.md`). The UAE threshold is "AED 50 million or more": the resolution says "equal to or exceeds".
 - H1: "Go-live readiness in the UAE" / "Go-live readiness in Saudi Arabia". Lead: "Independent go-live decision assurance for ERP and core-platform programmes in {the UAE | Saudi Arabia}."
 - Hero CTAs: "Request a free readiness brief", "Discuss your programme". Platform chips from config.
 - Card "Why now". UAE: "Two dates are adding go-lives to UAE programmes."
@@ -503,4 +503,4 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-7 | Approve the estimator copy and example values in 9.11 (**approved 17 Oct 2026**, with "a"/"an" chosen by number in "Cost of a {weeks}-week slip") | E1.5 merge | Do not merge E1.5 |
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
 | IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |
-| IN-10 | Approve the market page wording in 9.10 | E7 merge | Do not merge E7.1 / E7.2 |
+| IN-10 | Approve the market page wording in 9.10 (**approved 17 Oct 2026**) | E7 merge | Do not merge E7.1 / E7.2 |

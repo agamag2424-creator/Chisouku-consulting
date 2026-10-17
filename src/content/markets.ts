@@ -1,5 +1,5 @@
 // Market pages (PRD 9.10, E7). Every dated fact carries the issuer's own page as its source; each link was opened and
-// checked against the fact in E7.0 (evidence/E7.0-sources.md). Wording pending founder approval (IN-10).
+// checked against the fact in E7.0 (evidence/E7.0-sources.md). Wording approved by the founder (IN-10, 17 Oct 2026).
 
 export type MarketKey = "uae" | "saudiArabia";
 
