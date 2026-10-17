@@ -35,7 +35,7 @@ export function DirectAnswer({
             className="flex gap-3 text-sm leading-relaxed text-[var(--color-muted)]"
           >
             <span
-              className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-cyan)]"
+              className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal"
               aria-hidden
             />
             <span>{bullet}</span>

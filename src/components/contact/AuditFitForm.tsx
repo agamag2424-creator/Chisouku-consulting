@@ -92,7 +92,7 @@ export function AuditFitForm({ defaultInterest }: Props) {
   if (status === "success") {
     return (
       <div className="border border-ink/14 bg-paper/92 p-6 md:p-8">
-        <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+        <p className="text-[13px] font-bold text-teal">
           Received
         </p>
         <h2 className="mt-3 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
@@ -101,7 +101,7 @@ export function AuditFitForm({ defaultInterest }: Props) {
         <p className="mt-3 text-sm leading-relaxed text-[var(--color-muted)]">
           If Calendly did not open, email{" "}
           <a
-            className="font-bold text-[var(--color-cyan-strong)]"
+            className="font-bold text-teal"
             href={`mailto:${siteConfig.email}`}
           >
             {siteConfig.email}
@@ -131,7 +131,7 @@ export function AuditFitForm({ defaultInterest }: Props) {
       className="grid gap-5 border border-ink/14 bg-paper/92 p-6 md:p-8"
     >
       <div className="mb-1 border-b border-ink/10 pb-4">
-        <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+        <p className="text-[13px] font-bold text-teal">
           Fit call
         </p>
         <p className="mt-2 text-sm text-[var(--color-muted)]">

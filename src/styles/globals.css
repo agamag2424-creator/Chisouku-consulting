@@ -19,14 +19,11 @@
   --color-ev-miss: #b23b3b;
   --color-ev-miss-tint: #f8e5e5;
 
+  /* Logo only (PRD L1: keep the existing mark). Not for UI. */
+  --color-brand-accent: #00a6c8;
+
   --radius-control: 6px;
   --radius-sheet: 4px;
-
-  /* Legacy aliases, kept only until E0.5 removes them. */
-  --color-charcoal: var(--color-ink);
-  --color-cyan: var(--color-teal);
-  --color-cyan-strong: var(--color-teal);
-  --color-gold: var(--color-muted);
 
   --content-max-width: 1216px;
   --content-padding-x: 40px;
@@ -48,13 +45,9 @@
   --color-ev-part-tint: var(--color-ev-part-tint);
   --color-ev-miss: var(--color-ev-miss);
   --color-ev-miss-tint: var(--color-ev-miss-tint);
+  --color-brand-accent: var(--color-brand-accent);
   --radius-control: var(--radius-control);
   --radius-sheet: var(--radius-sheet);
-
-  /* Legacy aliases (removed in E0.5). */
-  --color-charcoal: var(--color-charcoal);
-  --color-cyan: var(--color-cyan);
-  --color-gold: var(--color-gold);
 }
 
 @theme {
@@ -394,7 +387,7 @@ body {
   right: 16px;
   bottom: 0;
   height: 2px;
-  background: var(--color-cyan);
+  background: var(--color-teal);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 220ms ease;
@@ -487,6 +480,11 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+/* Teal on ink is under 3:1, so focus on the dark footer uses the tint. */
+footer :focus-visible {
+  outline-color: var(--color-teal-tint);
+}
+
 .button-primary {
   border: 1px solid var(--color-ink);
   background: var(--color-ink);
@@ -527,7 +525,7 @@ a:focus-visible {
 }
 
 .dark-band {
-  background: var(--color-charcoal);
+  background: var(--color-ink);
   color: var(--color-paper);
 }
 
@@ -628,7 +626,7 @@ a:focus-visible {
   width: 10px;
   border: 2px solid var(--color-paper);
   border-radius: 999px;
-  background: var(--color-cyan);
+  background: var(--color-teal);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 18%, transparent);
 }
 
@@ -658,11 +656,11 @@ a:focus-visible {
 
 .ledger-row:hover {
   background: color-mix(in srgb, var(--color-teal) 5%, transparent);
-  box-shadow: inset 3px 0 0 var(--color-cyan);
+  box-shadow: inset 3px 0 0 var(--color-teal);
 }
 
 .ledger-row:hover .ledger-arrow {
-  color: var(--color-cyan-strong);
+  color: var(--color-teal);
 }
 
 .process-map {
@@ -720,7 +718,7 @@ a:focus-visible {
 .form-label {
   display: block;
   margin-bottom: 7px;
-  color: var(--color-charcoal);
+  color: var(--color-ink);
   font-size: 0.88rem;
   font-weight: 600;
 }

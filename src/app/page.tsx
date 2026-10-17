@@ -156,7 +156,7 @@ export default function Home() {
               >
                 <div className="relative flex h-full min-h-[196px] flex-col">
                   <div className="flex items-center justify-between gap-4">
-                    <span className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+                    <span className="text-[13px] font-bold text-teal">
                       {step.number}
                     </span>
                     <span className="text-[13px] font-bold text-[var(--color-muted)]">
@@ -284,7 +284,7 @@ export default function Home() {
           <div className="mt-10 grid gap-8 border-t border-ink/14 pt-8 md:grid-cols-2 xl:grid-cols-4">
             {trustPoints.map((point) => (
               <div key={point.label}>
-                <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+                <p className="text-[13px] font-bold text-teal">
                   {point.label}
                 </p>
                 <h3 className="mt-3 font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em]">

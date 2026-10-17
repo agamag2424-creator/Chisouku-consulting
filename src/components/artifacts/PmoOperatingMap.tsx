@@ -22,7 +22,7 @@ export function PmoOperatingMap({ className, compact = false }: Props) {
       <div className="relative z-10 flex h-full flex-col p-5 md:p-8">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+            <p className="text-[13px] font-bold text-teal">
               Artifact
             </p>
             <h3 className="mt-2 font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-[var(--color-ink)] md:text-2xl">

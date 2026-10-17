@@ -117,7 +117,7 @@ export default function MethodPage() {
                 ].join(" ")}
               >
                 <div>
-                  <div className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+                  <div className="text-[13px] font-bold text-teal">
                     {item.gate}
                   </div>
                   <div className="mt-2 text-sm font-bold text-[var(--color-ink)]">

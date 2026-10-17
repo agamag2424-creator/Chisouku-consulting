@@ -116,7 +116,7 @@ export default function AuditPage() {
             <ul className="mt-8">
               {forItems.map((item) => (
                 <li key={item} className="editorial-row !grid-cols-1 md:!grid-cols-[16px_1fr]">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-[var(--color-cyan)]" aria-hidden />
+                  <span className="mt-1 h-2 w-2 rounded-full bg-teal" aria-hidden />
                   <span className="text-sm font-semibold leading-relaxed text-[var(--color-ink)]">
                     {item}
                   </span>
@@ -201,19 +201,19 @@ export default function AuditPage() {
             </div>
             <p className="mt-6 text-sm text-[var(--color-muted)] md:col-span-2">
               Related:{" "}
-              <Link href="/free-pmo-diagnostic" className="font-semibold text-[var(--color-cyan-strong)]">
+              <Link href="/free-pmo-diagnostic" className="font-semibold text-teal">
                 Free PMO Diagnostic
               </Link>
               {", "}
-              <Link href="/method" className="font-semibold text-[var(--color-cyan-strong)]">
+              <Link href="/method" className="font-semibold text-teal">
                 Method
               </Link>
               {", "}
-              <Link href="/faq" className="font-semibold text-[var(--color-cyan-strong)]">
+              <Link href="/faq" className="font-semibold text-teal">
                 FAQ
               </Link>
               {", "}
-              <Link href="/diagnostic-vs-audit" className="font-semibold text-[var(--color-cyan-strong)]">
+              <Link href="/diagnostic-vs-audit" className="font-semibold text-teal">
                 Diagnostic vs Audit
               </Link>
             </p>

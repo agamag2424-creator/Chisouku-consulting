@@ -116,7 +116,7 @@ export default function SampleOutputsPage() {
             </div>
           </div>
           <div id="ai-blueprint">
-            <p className="mb-3 text-[13px] font-bold text-[var(--color-cyan-strong)]">
+            <p className="mb-3 text-[13px] font-bold text-teal">
               4. AI Blueprint
             </p>
             <h2 className="headline !max-w-none">AI Reporting Automation Blueprint</h2>
@@ -147,11 +147,11 @@ export default function SampleOutputsPage() {
         </div>
         <p className="container mt-6 text-sm text-[var(--color-muted)]">
           Related:{" "}
-          <Link href="/free-pmo-diagnostic" className="font-semibold text-[var(--color-cyan-strong)]">
+          <Link href="/free-pmo-diagnostic" className="font-semibold text-teal">
             Free PMO Diagnostic
           </Link>
           {", "}
-          <Link href="/method" className="font-semibold text-[var(--color-cyan-strong)]">
+          <Link href="/method" className="font-semibold text-teal">
             Method
           </Link>
         </p>

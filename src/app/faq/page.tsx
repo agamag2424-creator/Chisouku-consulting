@@ -49,11 +49,11 @@ export default function FaqPage() {
           </p>
           <p className="mt-4 text-sm text-[var(--color-muted)]">
             Definitions:{" "}
-            <Link href="/glossary" className="font-semibold text-[var(--color-cyan-strong)]">
+            <Link href="/glossary" className="font-semibold text-teal">
               Glossary
             </Link>
             . Machine-readable map:{" "}
-            <a href="/llms.txt" className="font-semibold text-[var(--color-cyan-strong)]">
+            <a href="/llms.txt" className="font-semibold text-teal">
               llms.txt
             </a>
             .
@@ -88,7 +88,7 @@ export default function FaqPage() {
                       {index > 0 ? ", " : null}
                       <Link
                         href={link.href}
-                        className="font-semibold text-[var(--color-cyan-strong)]"
+                        className="font-semibold text-teal"
                       >
                         {link.label}
                       </Link>

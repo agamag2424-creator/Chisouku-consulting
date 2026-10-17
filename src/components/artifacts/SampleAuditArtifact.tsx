@@ -12,14 +12,14 @@ export function SampleAuditArtifact({ className }: Props) {
         <div className="border-b border-ink/12 p-6 md:p-8 lg:border-b-0 lg:border-r">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+              <p className="text-[13px] font-bold text-teal">
                 Artifact
               </p>
               <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">
                 PMO Operating Map
               </h3>
             </div>
-            <span className="shrink-0 rounded-[2px] border border-teal/35 bg-teal/8 px-2 py-1 text-[13px] font-bold text-[var(--color-cyan-strong)]">
+            <span className="shrink-0 rounded-[2px] border border-teal/35 bg-teal/8 px-2 py-1 text-[13px] font-bold text-teal">
               Excerpt
             </span>
           </div>

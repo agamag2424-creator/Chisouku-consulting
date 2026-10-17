@@ -37,12 +37,12 @@ export function BrandMark({ className, inverted = false }: BrandMarkProps) {
       <path
         d="M41.8 22.4c-2.1-2.1-5-3.3-8.3-3.3-6.4 0-11.4 4.8-11.4 12.1s5 12.1 11.4 12.1c3.3 0 6.2-1.2 8.3-3.4"
         fill="none"
-        className="stroke-teal"
+        className="stroke-brand-accent"
         strokeWidth="2.4"
         strokeLinecap="round"
         opacity="0.9"
       />
-      <circle className="fill-teal" cx="45.5" cy="32" r="2.4" />
+      <circle className="fill-brand-accent" cx="45.5" cy="32" r="2.4" />
     </svg>
   );
 }

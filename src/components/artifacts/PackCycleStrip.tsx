@@ -25,7 +25,7 @@ export function PackCycleStrip({ className }: Props) {
   return (
     <div className={cn("report-board ink-corners", className)}>
       <div className="flex flex-col gap-2 border-b border-ink/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+        <p className="text-[13px] font-bold text-teal">
           Pack cycle: Before / After
         </p>
         <p className="text-[13px] font-bold text-[var(--color-muted)]">
@@ -68,10 +68,10 @@ export function PackCycleStrip({ className }: Props) {
         {/* After — AI-assisted */}
         <div className="bg-teal/4 p-6">
           <div className="flex items-center justify-between gap-3">
-            <span className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+            <span className="text-[13px] font-bold text-teal">
               After
             </span>
-            <span className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+            <span className="text-[13px] font-bold text-teal">
               AI-assisted pack
             </span>
           </div>
@@ -88,7 +88,7 @@ export function PackCycleStrip({ className }: Props) {
             {["Fresh on cadence", "AI narrative", "Owners notified"].map((tag) => (
               <span
                 key={tag}
-                className="border border-teal/35 bg-teal/8 px-2.5 py-1 text-[13px] font-bold text-[var(--color-cyan-strong)]"
+                className="border border-teal/35 bg-teal/8 px-2.5 py-1 text-[13px] font-bold text-teal"
               >
                 {tag}
               </span>
@@ -175,7 +175,7 @@ function WorkflowRow({
                 "flex min-h-[52px] flex-1 items-center justify-between gap-3 border px-3 py-2",
                 isAuto
                   ? index === 2
-                    ? "border-[var(--color-cyan)] bg-teal-tint"
+                    ? "border-teal bg-teal-tint"
                     : "border-teal/35 bg-paper/95"
                   : "border-ink/18 bg-paper/90",
               )}
@@ -196,7 +196,7 @@ function WorkflowRow({
               <span
                 className={cn(
                   "flex w-4 shrink-0 items-center justify-center text-sm",
-                  isAuto ? "text-[var(--color-cyan-strong)]" : "text-[var(--color-muted)]",
+                  isAuto ? "text-teal" : "text-[var(--color-muted)]",
                 )}
                 aria-hidden
               >

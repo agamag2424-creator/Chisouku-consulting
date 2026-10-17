@@ -52,7 +52,7 @@ export function PackDragEstimator({ className }: Props) {
   return (
     <div className={cn("report-board ink-corners overflow-hidden", className)}>
       <div className="flex flex-col gap-2 border-b border-ink/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+        <p className="text-[13px] font-bold text-teal">
           Pack drag estimate
         </p>
         <p className="text-[13px] font-bold text-[var(--color-muted)]">
@@ -71,7 +71,7 @@ export function PackDragEstimator({ className }: Props) {
               "sm:[&:nth-child(2)]:border-r-0 xl:[&:nth-child(2)]:border-r",
             )}
           >
-            <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+            <p className="text-[13px] font-bold text-teal">
               {benefit.label}
             </p>
             <h3 className="mt-3 font-[family-name:var(--font-display)] text-lg font-bold tracking-[-0.02em]">
@@ -144,7 +144,7 @@ export function PackDragEstimator({ className }: Props) {
           </div>
 
           <div className="mt-8 border-t border-ink/12 pt-6">
-            <p className="text-[13px] font-bold text-[var(--color-cyan-strong)]">
+            <p className="text-[13px] font-bold text-teal">
               Planning reclaim: After automation
             </p>
             <p className="mt-2 text-sm text-[var(--color-muted)]">
