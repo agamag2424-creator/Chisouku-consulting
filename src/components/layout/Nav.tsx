@@ -4,11 +4,14 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "../../lib/utils";
-import { navLinks } from "../../lib/siteConfig";
+import { isRouteLive, navLinks } from "../../lib/siteConfig";
 import { BrandMark } from "../brand/BrandMark";
 import { Button } from "../ui/Button";
 
 const CTA = { href: "/contact?request=review", label: "Discuss your programme" } as const;
+
+// Links to routes that are not live yet are left out (siteConfig.routeLive).
+const liveNavLinks = navLinks.filter((link) => isRouteLive(link.href));
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -81,7 +84,7 @@ export function Nav() {
 
           <nav aria-label="Main" className="hidden items-center gap-8 lg:flex">
             <ul className="flex items-center gap-6">
-              {navLinks.map((link) => (
+              {liveNavLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -145,7 +148,7 @@ export function Nav() {
 
           <nav aria-label="Main" className="flex-1 overflow-y-auto px-[var(--content-padding-x-mobile)] py-6">
             <ul className="divide-y divide-line border-y border-line">
-              {navLinks.map((link) => (
+              {liveNavLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

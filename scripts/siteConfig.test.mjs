@@ -2,7 +2,7 @@
 // Run: npm run test:unit  (Node 22 strips the TypeScript types; no test dependency needed)
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { formatPrice, foundingActive, offerPriceLabel, siteConfig } from "../src/lib/siteConfig.ts";
+import { formatPrice, foundingActive, isRouteLive, navLinks, offerPriceLabel, routeLive, siteConfig } from "../src/lib/siteConfig.ts";
 
 test("formatPrice uses the configured currency and grouping", () => {
   assert.equal(formatPrice(12000), "USD 12,000");
@@ -25,4 +25,14 @@ test("offerPriceLabel hides founding prices when 0 places remain", () => {
 test("defaults come from config", () => {
   assert.equal(foundingActive(), siteConfig.foundingSlotsRemaining > 0);
   assert.deepEqual(offerPriceLabel("decisionReview"), offerPriceLabel("decisionReview", siteConfig.foundingSlotsRemaining));
+});
+
+test("isRouteLive ignores query and hash, and rejects unknown paths", () => {
+  assert.equal(isRouteLive("/contact?request=brief"), routeLive["/contact"]);
+  assert.equal(isRouteLive("/see-it-first#sample-pack"), routeLive["/see-it-first"]);
+  assert.equal(isRouteLive("/not-a-route"), false);
+});
+
+test("every nav link has a routeLive entry", () => {
+  for (const link of navLinks) assert.ok(link.href in routeLive, link.href);
 });
