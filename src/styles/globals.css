@@ -1,16 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --color-page: #f5f4f0;
-  --color-paper: #fbfaf7;
-  --color-ink: #111820;
-  --color-charcoal: #1a222c;
-  --color-muted: #5f6a75;
-  --color-faint: #e6e4de;
-  --color-line: #d4d1c9;
-  --color-cyan: #00a6c8;
-  --color-cyan-strong: #007f9c;
-  --color-gold: #a8925f;
+  /* Decision-instrument palette (PRD 5.1). Hex values live here only. */
+  --color-page: #f5f7f8;
+  --color-paper: #ffffff;
+  --color-ink: #14212b;
+  --color-muted: #5a6b77;
+  --color-line: #d5dde2;
+  --color-faint: #ecf0f2;
+  --color-teal: #0b6e6e;
+  --color-teal-tint: #e3f0ef;
+
+  /* Evidence status only: claims, RAG, R5 cells, contradiction marks. */
+  --color-ev-ok: #2e7d4f;
+  --color-ev-ok-tint: #e3f2e8;
+  --color-ev-part: #a86c12;
+  --color-ev-part-tint: #fbf2e2;
+  --color-ev-miss: #b23b3b;
+  --color-ev-miss-tint: #f8e5e5;
+
+  --radius-control: 6px;
+  --radius-sheet: 4px;
+
+  /* Legacy aliases, kept only until E0.5 removes them. */
+  --color-charcoal: var(--color-ink);
+  --color-cyan: var(--color-teal);
+  --color-cyan-strong: var(--color-teal);
+  --color-gold: var(--color-muted);
+
   --content-max-width: 1216px;
   --content-padding-x: 40px;
   --content-padding-x-mobile: 22px;
@@ -20,10 +37,22 @@
   --color-page: var(--color-page);
   --color-paper: var(--color-paper);
   --color-ink: var(--color-ink);
-  --color-charcoal: var(--color-charcoal);
   --color-muted: var(--color-muted);
-  --color-faint: var(--color-faint);
   --color-line: var(--color-line);
+  --color-faint: var(--color-faint);
+  --color-teal: var(--color-teal);
+  --color-teal-tint: var(--color-teal-tint);
+  --color-ev-ok: var(--color-ev-ok);
+  --color-ev-ok-tint: var(--color-ev-ok-tint);
+  --color-ev-part: var(--color-ev-part);
+  --color-ev-part-tint: var(--color-ev-part-tint);
+  --color-ev-miss: var(--color-ev-miss);
+  --color-ev-miss-tint: var(--color-ev-miss-tint);
+  --radius-control: var(--radius-control);
+  --radius-sheet: var(--radius-sheet);
+
+  /* Legacy aliases (removed in E0.5). */
+  --color-charcoal: var(--color-charcoal);
   --color-cyan: var(--color-cyan);
   --color-gold: var(--color-gold);
 }
@@ -39,9 +68,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 84% 6%, rgba(0, 166, 200, 0.07), transparent 30%),
-    linear-gradient(180deg, #f8f7f4 0%, var(--color-page) 52%, #eceae4 100%);
+  background: var(--color-page);
   color: var(--color-ink);
   font-family: var(--font-body), ui-sans-serif, system-ui, -apple-system, sans-serif;
   font-feature-settings: "ss01" on, "kern" on;
@@ -49,7 +76,7 @@ body {
 }
 
 ::selection {
-  background: rgba(0, 166, 200, 0.18);
+  background: color-mix(in srgb, var(--color-teal) 18%, transparent);
 }
 
 .site-shell {
@@ -108,7 +135,7 @@ body {
 .artifact-sheet,
 .report-board {
   position: relative;
-  border: 1px solid rgba(17, 24, 32, 0.14);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
   border-radius: 2px;
   transition:
     transform 220ms ease,
@@ -118,11 +145,11 @@ body {
 
 .glass-canvas {
   background:
-    linear-gradient(160deg, rgba(255, 253, 248, 0.94), rgba(247, 243, 234, 0.9)),
-    rgba(255, 250, 241, 0.82);
+    linear-gradient(160deg, color-mix(in srgb, var(--color-paper) 94%, transparent), color-mix(in srgb, var(--color-page) 90%, transparent)),
+    color-mix(in srgb, var(--color-paper) 82%, transparent);
   box-shadow:
-    0 36px 90px rgba(17, 24, 32, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    0 36px 90px color-mix(in srgb, var(--color-ink) 12%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-paper) 75%, transparent);
 }
 
 /* Atmosphere + glass blur frosts the map — keep hero map sharp */
@@ -136,10 +163,10 @@ body {
 .glass-canvas:hover,
 .artifact-sheet:hover,
 .report-board:hover {
-  border-color: rgba(17, 24, 32, 0.22);
+  border-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
   box-shadow:
-    0 42px 100px rgba(17, 24, 32, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 42px 100px color-mix(in srgb, var(--color-ink) 16%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-paper) 80%, transparent);
   transform: translateY(-2px);
 }
 
@@ -155,8 +182,8 @@ body {
 
 .report-board {
   overflow: hidden;
-  background: rgba(255, 253, 248, 0.96);
-  box-shadow: 0 28px 70px rgba(17, 24, 32, 0.08);
+  background: color-mix(in srgb, var(--color-paper) 96%, transparent);
+  box-shadow: 0 28px 70px color-mix(in srgb, var(--color-ink) 8%, transparent);
 }
 
 .report-board.ink-corners::before,
@@ -171,7 +198,7 @@ body {
   width: 14px;
   height: 14px;
   pointer-events: none;
-  border-color: rgba(17, 24, 32, 0.35);
+  border-color: color-mix(in srgb, var(--color-ink) 35%, transparent);
   border-style: solid;
 }
 
@@ -221,8 +248,8 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(248, 247, 244, 0.82) 0%, rgba(245, 244, 240, 0.92) 55%, rgba(245, 244, 240, 0.98) 100%),
-    radial-gradient(ellipse at 70% 20%, rgba(0, 166, 200, 0.08), transparent 45%);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-page) 82%, transparent) 0%, color-mix(in srgb, var(--color-page) 92%, transparent) 55%, color-mix(in srgb, var(--color-page) 98%, transparent) 100%),
+    radial-gradient(ellipse at 70% 20%, color-mix(in srgb, var(--color-teal) 8%, transparent), transparent 45%);
 }
 
 .photo-atmosphere > .container {
@@ -237,8 +264,8 @@ body {
 
 .photo-atmosphere-dark::after {
   background:
-    linear-gradient(180deg, rgba(26, 34, 44, 0.88) 0%, rgba(17, 24, 32, 0.94) 100%),
-    radial-gradient(ellipse at 30% 0%, rgba(0, 166, 200, 0.18), transparent 50%);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 88%, transparent) 0%, color-mix(in srgb, var(--color-ink) 94%, transparent) 100%),
+    radial-gradient(ellipse at 30% 0%, color-mix(in srgb, var(--color-teal) 18%, transparent), transparent 50%);
 }
 
 .pathway-phase {
@@ -261,10 +288,10 @@ body {
     z-index: 3;
     width: 10px;
     height: 10px;
-    border-top: 1.5px solid rgba(0, 166, 200, 0.7);
-    border-right: 1.5px solid rgba(0, 166, 200, 0.7);
+    border-top: 1.5px solid color-mix(in srgb, var(--color-teal) 70%, transparent);
+    border-right: 1.5px solid color-mix(in srgb, var(--color-teal) 70%, transparent);
     transform: translate(50%, -50%) rotate(45deg);
-    background: rgba(255, 253, 248, 0.96);
+    background: color-mix(in srgb, var(--color-paper) 96%, transparent);
     animation: pathway-pulse 2.4s ease-in-out infinite;
   }
 }
@@ -287,15 +314,15 @@ body {
 }
 
 .metric-chip:hover {
-  border-color: rgba(0, 166, 200, 0.45);
-  background: rgba(0, 166, 200, 0.06);
+  border-color: color-mix(in srgb, var(--color-teal) 45%, transparent);
+  background: color-mix(in srgb, var(--color-teal) 6%, transparent);
   transform: translateY(-1px);
 }
 
 .editorial-row {
   display: grid;
   gap: 12px 28px;
-  border-top: 1px solid rgba(17, 24, 32, 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
   padding: 22px 0;
 }
 
@@ -310,8 +337,8 @@ body {
   display: grid;
   gap: 1px;
   overflow: hidden;
-  border: 1px solid rgba(17, 24, 32, 0.14);
-  background: rgba(17, 24, 32, 0.12);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+  background: color-mix(in srgb, var(--color-ink) 12%, transparent);
 }
 
 @media (min-width: 900px) {
@@ -323,7 +350,7 @@ body {
 .output-strip a {
   position: relative;
   display: block;
-  background: rgba(255, 253, 248, 0.96);
+  background: color-mix(in srgb, var(--color-paper) 96%, transparent);
   padding: 18px 16px;
   text-decoration: none;
   color: inherit;
@@ -344,7 +371,7 @@ body {
 }
 
 .output-strip a:hover {
-  background: #fff;
+  background: var(--color-paper);
 }
 
 .output-strip a:hover::after {
@@ -382,8 +409,8 @@ body {
 
 .map-grid-texture {
   background-image:
-    linear-gradient(90deg, rgba(17, 24, 32, 0.035) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(17, 24, 32, 0.028) 1px, transparent 1px);
+    linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 3.5%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 2.8%, transparent) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
 }
@@ -404,8 +431,8 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(0, 166, 200, 0.14), transparent 42%),
-    radial-gradient(ellipse at 90% 100%, rgba(168, 146, 95, 0.1), transparent 40%);
+    radial-gradient(ellipse at 20% 0%, color-mix(in srgb, var(--color-teal) 14%, transparent), transparent 42%),
+    radial-gradient(ellipse at 90% 100%, color-mix(in srgb, var(--color-line) 10%, transparent), transparent 40%);
   opacity: 0.9;
 }
 
@@ -459,22 +486,22 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 a:focus-visible {
-  outline: 3px solid rgba(0, 166, 200, 0.34);
+  outline: 3px solid color-mix(in srgb, var(--color-teal) 34%, transparent);
   outline-offset: 3px;
 }
 
 .button-primary {
   border: 1px solid var(--color-ink);
   background: var(--color-ink);
-  color: #fffdf8;
+  color: var(--color-paper);
 }
 
 .button-primary:hover {
-  background: #000;
+  background: color-mix(in srgb, var(--color-ink) 82%, var(--color-teal));
 }
 
 .button-secondary {
-  border: 1px solid rgba(17, 24, 32, 0.22);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
   background: transparent;
   color: var(--color-ink);
 }
@@ -484,15 +511,15 @@ a:focus-visible {
 }
 
 .button-light {
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: #fffdf8;
+  border: 1px solid color-mix(in srgb, var(--color-paper) 28%, transparent);
+  background: var(--color-paper);
   color: var(--color-ink);
 }
 
 .button-line-light {
-  border: 1px solid rgba(255, 255, 255, 0.32);
+  border: 1px solid color-mix(in srgb, var(--color-paper) 32%, transparent);
   background: transparent;
-  color: #fffdf8;
+  color: var(--color-paper);
 }
 
 .button:hover {
@@ -500,20 +527,20 @@ a:focus-visible {
 }
 
 .panel {
-  border: 1px solid rgba(17, 24, 32, 0.12);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
   border-radius: 3px;
-  background: rgba(255, 253, 248, 0.86);
-  box-shadow: 0 28px 80px rgba(17, 24, 32, 0.07);
+  background: color-mix(in srgb, var(--color-paper) 86%, transparent);
+  box-shadow: 0 28px 80px color-mix(in srgb, var(--color-ink) 7%, transparent);
 }
 
 .dark-band {
   background: var(--color-charcoal);
-  color: #fffdf8;
+  color: var(--color-paper);
 }
 
 .dark-band .body-copy,
 .dark-band .subhead {
-  color: #c7ced3;
+  color: color-mix(in srgb, var(--color-paper) 78%, var(--color-ink));
 }
 
 .rule {
@@ -524,11 +551,11 @@ a:focus-visible {
 
 .artifact-sheet {
   background:
-    linear-gradient(180deg, rgba(255, 250, 241, 0.96), rgba(250, 246, 236, 0.94)),
-    repeating-linear-gradient(0deg, transparent 0 35px, rgba(17, 24, 32, 0.032) 36px);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-paper) 96%, transparent), color-mix(in srgb, var(--color-page) 94%, transparent)),
+    repeating-linear-gradient(0deg, transparent 0 35px, color-mix(in srgb, var(--color-ink) 3.2%, transparent) 36px);
   box-shadow:
-    0 34px 90px rgba(17, 24, 32, 0.16),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    0 34px 90px color-mix(in srgb, var(--color-ink) 16%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 80%, transparent);
 }
 
 .report-cover {
@@ -542,8 +569,8 @@ a:focus-visible {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(17, 24, 32, 0.028) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(17, 24, 32, 0.022) 1px, transparent 1px);
+    linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 2.8%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 2.2%, transparent) 1px, transparent 1px);
   background-size: 112px 112px;
   mask-image: linear-gradient(90deg, black 0 74%, transparent 100%);
 }
@@ -558,7 +585,7 @@ a:focus-visible {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(255, 250, 241, 0.24), transparent 36%, rgba(0, 166, 200, 0.08));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-paper) 24%, transparent), transparent 36%, color-mix(in srgb, var(--color-teal) 8%, transparent));
 }
 
 .hero-kicker,
@@ -597,21 +624,21 @@ a:focus-visible {
 .map-artifact {
   position: relative;
   min-height: 680px;
-  border: 1px solid rgba(17, 24, 32, 0.16);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 16%, transparent);
   background:
-    linear-gradient(180deg, rgba(255, 250, 241, 0.94), rgba(246, 241, 231, 0.94)),
-    linear-gradient(90deg, rgba(17, 24, 32, 0.028) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(17, 24, 32, 0.024) 1px, transparent 1px);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-paper) 94%, transparent), color-mix(in srgb, var(--color-page) 94%, transparent)),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 2.8%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 2.4%, transparent) 1px, transparent 1px);
   background-size: auto, 64px 64px, 64px 64px;
-  box-shadow: 0 38px 100px rgba(17, 24, 32, 0.16);
+  box-shadow: 0 38px 100px color-mix(in srgb, var(--color-ink) 16%, transparent);
 }
 
 .map-node {
   position: absolute;
-  border: 1px solid rgba(17, 24, 32, 0.2);
-  background: rgba(255, 250, 241, 0.94);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
+  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
   padding: 12px 14px;
-  box-shadow: 0 18px 42px rgba(17, 24, 32, 0.08);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--color-ink) 8%, transparent);
 }
 
 .report-cover .map-node {
@@ -621,26 +648,26 @@ a:focus-visible {
 .map-node-dark {
   border-color: var(--color-ink);
   background: var(--color-ink);
-  color: #fffaf1;
+  color: var(--color-paper);
 }
 
 .map-node-accent {
-  border-color: rgba(0, 166, 200, 0.55);
-  background: rgba(235, 250, 251, 0.92);
+  border-color: color-mix(in srgb, var(--color-teal) 55%, transparent);
+  background: color-mix(in srgb, var(--color-teal-tint) 92%, transparent);
 }
 
 .map-line {
   position: absolute;
   height: 1px;
   transform-origin: left center;
-  background: rgba(17, 24, 32, 0.22);
+  background: color-mix(in srgb, var(--color-ink) 22%, transparent);
   clip-path: inset(0 100% 0 0);
   animation: map-line-draw 860ms ease-out forwards;
   animation-delay: 520ms;
 }
 
 .map-line-accent {
-  background: rgba(0, 166, 200, 0.72);
+  background: color-mix(in srgb, var(--color-teal) 72%, transparent);
 }
 
 .map-dot {
@@ -650,7 +677,7 @@ a:focus-visible {
   border: 2px solid var(--color-paper);
   border-radius: 999px;
   background: var(--color-cyan);
-  box-shadow: 0 0 0 1px rgba(17, 24, 32, 0.18);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 18%, transparent);
   animation: map-dot-settle 760ms ease-out both;
   animation-delay: 680ms;
 }
@@ -665,7 +692,7 @@ a:focus-visible {
 }
 
 .ledger {
-  border-top: 1px solid rgba(17, 24, 32, 0.22);
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
 }
 
 .ledger-row {
@@ -673,7 +700,7 @@ a:focus-visible {
   grid-template-columns: 72px minmax(0, 1fr) 28px minmax(0, 1fr);
   gap: 24px;
   align-items: start;
-  border-bottom: 1px solid rgba(17, 24, 32, 0.14);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
   margin-inline: -8px;
   padding: 22px 8px;
   transition:
@@ -682,7 +709,7 @@ a:focus-visible {
 }
 
 .ledger-row:hover {
-  background: rgba(0, 166, 200, 0.05);
+  background: color-mix(in srgb, var(--color-teal) 5%, transparent);
   box-shadow: inset 3px 0 0 var(--color-cyan);
 }
 
@@ -695,8 +722,8 @@ a:focus-visible {
   display: grid;
   grid-template-columns: 1fr 1.08fr 1fr;
   gap: 34px;
-  border-top: 1px solid rgba(17, 24, 32, 0.2);
-  border-bottom: 1px solid rgba(17, 24, 32, 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
   padding: 34px 0;
 }
 
@@ -707,7 +734,7 @@ a:focus-visible {
   right: 8%;
   top: 50%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(17, 24, 32, 0.14), rgba(0, 166, 200, 0.62), rgba(17, 24, 32, 0.14));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 14%, transparent), color-mix(in srgb, var(--color-teal) 62%, transparent), color-mix(in srgb, var(--color-ink) 14%, transparent));
 }
 
 .process-stage {
@@ -718,9 +745,9 @@ a:focus-visible {
 }
 
 .report-artifact {
-  border: 1px solid rgba(17, 24, 32, 0.17);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 17%, transparent);
   background: var(--color-paper);
-  box-shadow: 0 42px 120px rgba(17, 24, 32, 0.14);
+  box-shadow: 0 42px 120px color-mix(in srgb, var(--color-ink) 14%, transparent);
 }
 
 @keyframes cover-image-reveal {
@@ -819,8 +846,8 @@ a:focus-visible {
 
 .heat-cell {
   min-height: 62px;
-  border-bottom: 1px solid rgba(17, 24, 32, 0.1);
-  background: rgba(255, 253, 248, 0.72);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+  background: color-mix(in srgb, var(--color-paper) 72%, transparent);
 }
 
 .heat-cell:last-child {
@@ -829,9 +856,9 @@ a:focus-visible {
 
 .form-field {
   width: 100%;
-  border: 1px solid rgba(17, 24, 32, 0.18);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
   border-radius: 3px;
-  background: rgba(255, 253, 248, 0.94);
+  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
   padding: 12px 13px;
   color: var(--color-ink);
 }
@@ -848,7 +875,7 @@ a:focus-visible {
   appearance: none;
   height: 6px;
   border-radius: 999px;
-  background: rgba(17, 24, 32, 0.12);
+  background: color-mix(in srgb, var(--color-ink) 12%, transparent);
   outline: none;
   cursor: pointer;
 }
@@ -858,9 +885,9 @@ a:focus-visible {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid #111820;
-  background: #00a6c8;
-  box-shadow: 0 2px 8px rgba(17, 24, 32, 0.2);
+  border: 2px solid var(--color-ink);
+  background: var(--color-teal);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-ink) 20%, transparent);
   cursor: pointer;
 }
 
@@ -868,9 +895,9 @@ a:focus-visible {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid #111820;
-  background: #00a6c8;
-  box-shadow: 0 2px 8px rgba(17, 24, 32, 0.2);
+  border: 2px solid var(--color-ink);
+  background: var(--color-teal);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-ink) 20%, transparent);
   cursor: pointer;
 }
 
@@ -941,7 +968,7 @@ a:focus-visible {
   .photo-atmosphere .glass-canvas {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: rgba(255, 253, 248, 0.97);
+    background: color-mix(in srgb, var(--color-paper) 97%, transparent);
   }
 
   .hero-actions {
@@ -969,8 +996,8 @@ a:focus-visible {
     margin-inline: -8px;
     padding: 96px 14px 18px;
     background:
-      linear-gradient(180deg, rgba(255, 250, 241, 0.96), rgba(247, 241, 231, 0.96)),
-      repeating-linear-gradient(0deg, transparent 0 35px, rgba(17, 24, 32, 0.035) 36px);
+      linear-gradient(180deg, color-mix(in srgb, var(--color-paper) 96%, transparent), color-mix(in srgb, var(--color-page) 96%, transparent)),
+      repeating-linear-gradient(0deg, transparent 0 35px, color-mix(in srgb, var(--color-ink) 3.5%, transparent) 36px);
   }
 
   .map-node {
@@ -1011,7 +1038,7 @@ a:focus-visible {
     bottom: 34px;
     width: 1px;
     height: auto;
-    background: linear-gradient(180deg, rgba(17, 24, 32, 0.14), rgba(0, 166, 200, 0.62), rgba(17, 24, 32, 0.14));
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 14%, transparent), color-mix(in srgb, var(--color-teal) 62%, transparent), color-mix(in srgb, var(--color-ink) 14%, transparent));
   }
 
   .process-stage {
