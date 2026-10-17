@@ -28,7 +28,7 @@ starting the next story.
 | Order | Epic | Outcome | Moat | Depends on |
 |---|---|---|---|---|
 | 1 | **E0 Visual system refresh** | New tokens, type, base components; retired patterns gone | All | — |
-| 2 | **E1 Core repositioning and hero** | `siteConfig` rewritten; homepage rebuilt with the Evidence Check hero | M1, M3 | E0 |
+| 2 | **E1 Core repositioning and hero** | `siteConfig` rewritten; homepage rebuilt with the Evidence Check hero and the slipped go-live cost estimator | M1, M3, M4 | E0 |
 | 3 | **E2 Offer pages** | `/readiness-evidence-check`, `/go-live-decision-review` | M2, M4 | E1 |
 | 4 | **E3 Method page** | `/method` rewritten around READINESS-5 | M3 | E0 |
 | 5 | **E4 See it first** | `/see-it-first` with sample pack and free brief | M1 | E1, E9.1 |
@@ -162,13 +162,14 @@ Read `src/app/page.tsx`, `src/lib/siteConfig.ts`, `src/lib/jsonLd.ts`, `src/lib/
 ### E1.3 Homepage rebuild
 **Type:** Code + Copy · **Files:** `src/app/page.tsx` (+ small section components under `src/components/home/`)
 **Tasks**
-1. Build the ten sections of PRD 9.1 in order, with copy verbatim.
+1. Build the ten sections of PRD 9.1 in order, with copy verbatim. Leave section 4a (slipped go-live cost estimator) to E1.5; if E1.5 has not merged, nothing renders between sections 4 and 5.
 2. Offers section reads from config via `PriceBlock`.
 3. "See it before you sign" shows Self-Check only when `siteConfig.selfCheck.live`.
 4. Compact comparison uses the E5 component if merged; otherwise a placeholder link to `/pricing` (E5.2 replaces it).
 5. Principal block only if IN-3 approved; otherwise omit.
 6. Remove all old homepage artifacts (`PmoOperatingMap`, `OperatingDragGrid`, `PackCycleStrip`, `PackDragEstimator`, `SampleAuditArtifact`, `DiagnosticOrbit`, `AiImpactModel`, `AuditPathway`) from the homepage; do not delete the files yet (E10).
 7. Page metadata: title "Independent Go-Live Decision Assurance | ChisokuLabs", description from PRD 3 one-sentence offer.
+8. Performance (baseline before E1: mobile Perf 57, TBT 2.6 s, LCP 3.4 s on a decorative hero photo; see E0.2 PR): no decorative hero image (LCP should be the H1); no infinite animations; `content-visibility: auto` on sections below the fold; hero motion limited to opacity, transform and SVG stroke; measure `experimental.optimizeCss` on and off and keep the faster; record a three-run median Lighthouse mobile on the preview.
 **AC:** the homepage contains none of: "drag", "PMO reporting", "automation audit", "Singapore", "GCC" (except inside "Other GCC" form option elsewhere), "AI automation". One H1. All CTAs go to `/contact?request=…` or `/see-it-first`.
 **[FOUNDER APPROVES]** copy and layout screenshots before merge.
 
@@ -176,6 +177,24 @@ Read `src/app/page.tsx`, `src/lib/siteConfig.ts`, `src/lib/jsonLd.ts`, `src/lib/
 **Type:** Code · **Files:** `src/lib/siteConfig.ts` (`navLinks`), `Nav.tsx`, `Footer.tsx`
 **Tasks:** nav links per PRD 4.3 (point to routes even if built in later epics; until then, link targets that 404 must not ship — gate the link behind a `routeLive` map in config and enable as each epic merges). Footer per PRD 4.3.
 **AC:** no nav or footer link returns 404 on the deployed preview.
+
+### E1.5 Slipped go-live cost estimator (added in PRD v1.1)
+**Type:** Code + Copy · **Files:** new `src/components/home/SlipCostEstimator.tsx`, `src/lib/slipEstimate.ts` (pure calculation), `src/lib/siteConfig.ts` (`slipEstimator`), `src/app/page.tsx` (section 4a)
+**Depends on:** E0.3 (form controls, `Section`, `Sheet`, `Button`), E1.1 (`offers`, `formatPrice`, `foundingActive()`), E1.3 (homepage)
+**Tasks**
+1. `slipEstimate(inputs, config)` as a pure, typed function returning weekly run-rate, total cost and the comparison in working days; guards against zero people or rate (comparison hidden, no division by zero).
+2. Client component per PRD 9.11: four labelled number inputs, outputs, comparison line, footnote, CTAs. Server-render the example values.
+3. Prices from `siteConfig.offers.evidenceCheck` through `formatPrice`; founding price shown only when `foundingActive()`.
+4. `aria-live="polite"` result (debounced ~400 ms); visible 2px teal focus; 360px without horizontal scroll.
+5. `slip_estimate_used` once per page view on first input change (no-op stub until E9.2).
+6. Insert as homepage section 4a; copy exactly as approved in PRD 9.11 (IN-7). If IN-8 is answered, add the sourced line with its link.
+**AC:**
+- Unit test (`node --test` script under `scripts/`, as E1.1) for `slipEstimate`: defaults give weekly USD 120,000, 4-week total USD 480,000, comparison 0.2 working days at USD 5,000; zero people hides the comparison; the monthly parallel-run cost adds × 12 ÷ 52 per week.
+- With JS disabled the example result is visible; with JS the numbers update as the visitor types.
+- No hex literals, no evidence colours, no word "drag"; prices and defaults appear only in config.
+- Client JS impact ≤ 3 KB gzipped; axe clean on `/`; Lighthouse mobile on `/` stays ≥ 90 (three-run median on the preview).
+**[FOUNDER APPROVES]** copy and example values (IN-7) before merge.
+
 **Definition of done (E1):** preview deployment reviewed by founder; Lighthouse mobile ≥ 90 on `/`.
 
 ---
@@ -349,7 +368,7 @@ Read `AuditFitForm.tsx` and `api/audit-fit/route.ts`; confirm Resend env var nam
 
 ### E9.2 CTA audit and analytics helper
 **Type:** Code · **Files:** new `src/lib/track.ts`, all pages with CTAs
-**Tasks:** `track(event, props)` wrapper over `@vercel/analytics` `track`; add `cta_click` with stable ids to every CTA; `form_submit`/`form_error` in the form; replace E1.2 stub.
+**Tasks:** `track(event, props)` wrapper over `@vercel/analytics` `track`; add `cta_click` with stable ids to every CTA; `form_submit`/`form_error` in the form; replace the E1.2 and E1.5 stubs.
 **AC:** list of CTA ids in `evidence/E9.2-ctas.md`; every page has exactly one primary CTA style.
 
 ### E9.3 Privacy page update
@@ -430,6 +449,7 @@ Risks / follow-ups: <none | list>
 |---|---|
 | After E0 | The new visual system on existing pages |
 | E1.3 | Homepage copy and layout; principal paragraph (IN-3) |
+| E1.5 | Estimator copy and example values (IN-7) |
 | E2 | Prices (IN-1) |
 | E6 | Data-handling statements (IN-4) |
 | E10.4 | Production release |

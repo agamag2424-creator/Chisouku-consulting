@@ -1,6 +1,7 @@
 # ChisokuLabs Website — Go-Live Decision Assurance Repositioning — PRD
 
 **Status:** v1.0 · approved direction by the founder, 17 Oct 2026 (IST)
+**Amendment v1.1 (17 Oct 2026):** the founder approved a homepage "slipped go-live cost" estimator (option B) to keep the old site's "see what it costs you" interaction. Adds homepage section 4a (9.1), section 9.11, the `slipEstimator` config key (6.4), the `slip_estimate_used` event (11), inputs IN-7 and IN-8 (14), and backlog story E1.5.
 **Owner:** Founder, ChisokuLabs Pvt Ltd
 **Repository:** this repo (`chisokulab`, Next.js 16 App Router, Tailwind v4, deployed on Vercel)
 **Companion file:** `BACKLOG.md` in this folder (epics, stories, tasks, acceptance criteria, executor rules)
@@ -80,7 +81,7 @@ Design and copy implication: calm, exact, evidential. No fear-mongering statisti
 | M1 | **See it before you sign.** Evidence, not opinion: the hero Evidence Check, the full sample decision pack, a free readiness brief on the visitor's own programme, and (later) the Self-Check. | Hero (E1), Proof hub `/see-it-first` (E4), every CTA (E9) |
 | M2 | **AI-accelerated, evidence-based delivery.** The same depth as 4–6 week reviews in 5–10 business days; AI extracts and cross-checks every claim, a principal makes the judgement. | Offer pages (E2), comparison (E5) |
 | M3 | **READINESS-5 and contradiction testing.** Each claim tested on Status, Owner, Evidence, Date, Action, then checked against the other workstreams. | Method page (E3), hero, sample pack |
-| M4 | **Pricing that lowers the risk to buy.** Public list prices, founding-client rate, full fee credit from Evidence Check into Decision Review. | Offer pages (E2), pricing (E5) |
+| M4 | **Pricing that lowers the risk to buy.** Public list prices, founding-client rate, full fee credit from Evidence Check into Decision Review; the visitor can set the fee against what a slipped go-live costs them (9.11). | Offer pages (E2), pricing (E5), homepage estimator (E1.5) |
 | M5 | **Built for the UAE and Saudi Arabia.** Local timing pressures and platforms. | Market pages (E7) |
 | M6 | **Secure handling of client evidence.** Published data-handling and AI policy. | Trust page `/independence-and-data` (E6) |
 
@@ -225,6 +226,10 @@ export const siteConfig = {
   foundingSlotsRemaining: 3,
   selfCheck: { live: false, url: null as string | null },
   samplePackPath: "/documents/chisokulabs-go-live-decision-pack-illustrative.pdf",
+  slipEstimator: {                           // 9.11; example values, IN-7
+    defaults: { people: 40, dayRate: 600, weeks: 4, parallelRunMonthly: 0 },
+    workingDaysPerWeek: 5,
+  },
 } as const;
 ```
 
@@ -285,6 +290,7 @@ Next to it: headline "Your programme reports Green. We test whether the evidence
    Body: For each readiness claim across testing, data migration, integration, cutover and governance, we ask: Is the status current? Is there a named owner? Is there evidence behind it? Is there a date? Is there an action if it slips? Then we check the claims against each other, because the most expensive risks sit between workstreams. Link: How READINESS-5 works.
 4. **What you get** — H2: A decision you can defend.
    Three outcomes, presented as the review's actual verdict format: **Go** — the evidence supports the date. **Conditional Go** — named conditions, owners and dates that must be met first. **No-Go** — what is missing and the shortest path back to a date. Link: See a full sample decision pack.
+4a. **What a slipped go-live costs** (added in v1.1; component and copy in 9.11, built by E1.5). Sits between "What you get" and "Offers" so the visitor sees the cost of a slip before the price of a check.
 5. **Offers** — H2: Start small, or go straight to a decision.
    Two offer panels (Evidence Check, Decision Review) with days, one-line outcome, list price, founding rate if slots remain, link to each page. Below: fee-credit sentence (6.2).
 6. **See it before you sign** — H2: See the work before you talk to us.
@@ -377,6 +383,44 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 
 ---
 
+### 9.11 Slipped go-live cost estimator (homepage section 4a; E1.5)
+
+**Purpose:** the visitor enters their own numbers and sees, in seconds, what each week of go-live slip costs their programme, set against the price of a Readiness Evidence Check. It replaces the old homepage cost estimator (removed in E1.3) for the new positioning.
+
+**Rules**
+- Calm and factual (Section 2): no alarm language, no red "danger" styling. Evidence colours are not used here (5.1 reserves them for evidence status).
+- The visitor's numbers only. The example values come from `siteConfig.slipEstimator.defaults`, are labelled "Example values", and are approved by the founder (IN-7). No industry statistic appears unless IN-8 supplies a named, linked source (8.4).
+- Prices are read from config (`offers.evidenceCheck`), never typed in JSX. If founding slots remain, show the founding price as well as the list price.
+- Runs in the browser only: no network calls, nothing stored, no personal data in analytics.
+- Must not use the word "drag" (leak scan, E10.3).
+
+**Inputs** (number fields, each with a visible label, min 0, sensible max)
+1. People working on the programme (your team and partners); default 40
+2. Average cost per person per day (USD, fully loaded); default 600
+3. Weeks the go-live could slip; default 4
+4. Monthly cost of keeping the current system running (USD, optional); default 0
+
+**Calculation**
+- Weekly run-rate = people × day rate × `workingDaysPerWeek` + parallelRunMonthly × 12 ÷ 52
+- Cost of the slip = weekly run-rate × weeks
+- Comparison = Evidence Check price ÷ (people × day rate), shown as working days of run-rate, rounded to one decimal
+
+**Copy (DRAFT — [FOUNDER APPROVES], IN-7)**
+- H2: What a slipped go-live costs.
+- Lead: Put in your own numbers. When a go-live date moves, the programme team, the system integrator and the current system all keep running.
+- Labels: as the inputs above. Small note above the fields: "Example values. Replace them with yours."
+- Outputs: "Cost per week of slip: {weekly}" · "Cost of a {weeks}-week slip: {total}"
+- Comparison line: "A Readiness Evidence Check costs {price}: about {days} working days of your programme's run-rate." (with founding price: "{list} list, {founding} founding-client rate")
+- Footnote: "Calculated in your browser from your numbers. Directional only: it leaves out lost benefits, contract penalties and business disruption. Not a forecast for your programme."
+- CTA: primary "Request a free readiness brief" (→ `/contact?request=brief`); text link "Discuss your programme" (→ `/contact?request=review`).
+- Optional sourced line (only if IN-8 is answered): a survey statistic from 8.4 with its link, placed under the footnote, never as the headline.
+
+**Behaviour and quality**
+- Server-rendered with the example values, so the result is readable without JavaScript; the client component recalculates as the visitor types.
+- Results announced politely (`aria-live="polite"`, debounced); inputs keyboard-accessible; works at 360px without horizontal scroll.
+- Track `slip_estimate_used` once per page view, the first time the visitor changes any input (no values sent).
+- Client JS ≤ 3 KB gzipped; no new dependency.
+
 ## 10. SEO and answer-engine requirements (E8)
 
 - Titles/descriptions per route from a single `src/lib/seo.ts` map; default title "Independent Go-Live Decision Assurance | ChisokuLabs".
@@ -394,7 +438,7 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - Contact form becomes "Discuss your programme" with fields: name*, work email*, company*, country* (UAE, Saudi Arabia, Other GCC, Other), role (CIO/CTO, Transformation Director, Programme Sponsor, Programme/PMO Director, Other), **request type*** (Discuss a review · Free readiness brief · Pricing question), platform (from config + Other), **go-live decision date** (month picker, optional), message.
 - Query param `?request=brief|review|pricing` presets request type; CTAs link with it.
 - API route keeps Resend delivery; update payload and email subject `"[ChisokuLabs] {request type} — {company}"`; keep validation; add honeypot field; rate-limit by simple in-memory guard is **not** required.
-- Analytics via existing `@vercel/analytics` `track()`: `cta_click` {id, page}, `sample_pack_view`, `sample_pack_download`, `hero_check_replay`, `form_submit` {request_type}, `form_error`. No cookies beyond Vercel Analytics defaults; privacy page updated.
+- Analytics via existing `@vercel/analytics` `track()`: `cta_click` {id, page}, `sample_pack_view`, `sample_pack_download`, `hero_check_replay`, `slip_estimate_used`, `form_submit` {request_type}, `form_error`. No cookies beyond Vercel Analytics defaults; privacy page updated.
 - Calendly button stays available on `/contact` as an alternative.
 
 ---
@@ -425,3 +469,5 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-4 | Confirm every data-handling statement in 9.7 is true | E6 merge | Do not publish `/independence-and-data` |
 | IN-5 | Calendly link still valid | E9 | Keep current link |
 | IN-6 | When the Self-Check goes live: URL | Later | `selfCheck.live = false` |
+| IN-7 | Approve the estimator copy and example values in 9.11 | E1.5 merge | Do not merge E1.5 |
+| IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
