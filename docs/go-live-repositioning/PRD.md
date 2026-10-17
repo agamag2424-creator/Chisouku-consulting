@@ -517,4 +517,5 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |
 | IN-10 | Approve the market page wording in 9.10 (**approved 17 Oct 2026**) | E7 merge | Do not merge E7.1 / E7.2 |
 | IN-12 | Approve the E9.1 interface wording (11) | E9 merge | Do not merge E9.1 |
+| IN-13 | Privacy page (E9.3): confirm enquiry retention ("up to 24 months after our last contact", proposed) and approve the rewritten wording | E9 merge | Do not merge E9.3 |
 | IN-11 | Approve the new E8 wording: FAQ answers (9.9), glossary definitions, the three guides (`src/content/guides.ts`) (**approved 17 Oct 2026**) | E8 merge | Do not merge E8 |

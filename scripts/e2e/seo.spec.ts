@@ -18,6 +18,8 @@ const routes = [
   "/guides/s4hana-go-no-go-checklist",
   "/guides/is-my-erp-ready-to-go-live",
   "/guides/independent-assurance-vs-si-readiness-review",
+  "/contact",
+  "/privacy",
 ];
 
 for (const route of routes) {
@@ -59,7 +61,7 @@ test("llms.txt and llms-full.txt: new answers from config, live pages only, noth
 test("sitemap lists exactly the live routes; robots disallows /_ui", async ({ request }) => {
   const xml = await (await request.get(base + "/sitemap.xml")).text();
   const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1].replace("https://www.chisokulabs.com", "") || "/");
-  expect(urls.sort()).toEqual([...routes, "/contact", "/privacy"].sort());
+  expect(urls.sort()).toEqual([...routes].sort());
   const robots = await (await request.get(base + "/robots.txt")).text();
   expect(robots).toContain("Disallow: /_ui");
 });
