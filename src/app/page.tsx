@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EvidenceCheckHero } from "../components/hero/EvidenceCheckHero";
 import { OfferPanels } from "../components/home/OfferPanels";
+import { SlipCostEstimator } from "../components/home/SlipCostEstimator";
 import { Button } from "../components/ui/Button";
 import { Section } from "../components/ui/Section";
 import { Sheet } from "../components/ui/Sheet";
@@ -99,14 +100,24 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* 5. Offers (section 4a, the slipped go-live estimator, is added by E1.5) */}
+      {/* 4a. What a slipped go-live costs (PRD 9.11; copy pending IN-7) */}
       <Section tone="page">
+        <h2 className="t-h2 text-ink">What a slipped go-live costs.</h2>
+        <p className="t-body mt-6 text-ink">
+          Put in your own numbers. When a go-live date moves, the programme team, the system integrator and the current
+          system all keep running.
+        </p>
+        <SlipCostEstimator />
+      </Section>
+
+      {/* 5. Offers */}
+      <Section tone="paper">
         <h2 className="t-h2 text-ink">Start small, or go straight to a decision.</h2>
         <OfferPanels />
       </Section>
 
       {/* 6. See it before you sign */}
-      <Section tone="paper">
+      <Section tone="page">
         <h2 className="t-h2 text-ink">See the work before you talk to us.</h2>
         <ul className="mt-10 grid gap-4 min-[900px]:grid-cols-2">
           <li>
@@ -147,7 +158,7 @@ export default function Home() {
       </Section>
 
       {/* 7. Why not the usual options: the compact comparison table arrives with E5.2 */}
-      <Section tone="page">
+      <Section tone="paper">
         <h2 className="t-h2 text-ink">Why not the usual options</h2>
         <div className="mt-6">
           <Button href="/pricing" variant="text">
@@ -157,7 +168,7 @@ export default function Home() {
       </Section>
 
       {/* 8. Independent, and careful with your data */}
-      <Section tone="paper">
+      <Section tone="page">
         <h2 className="t-h2 text-ink">No stake in your go-live date.</h2>
         <p className="t-body mt-6 text-ink">
           We take no implementation fees, resell no software and hold no system integrator partnerships. Your documents
@@ -173,7 +184,7 @@ export default function Home() {
 
       {/* 9. Principal-led (PRD 8.3, IN-3 approved) */}
       {siteConfig.principalBlock && (
-        <Section tone="page">
+        <Section tone="paper">
           <h2 className="t-h2 text-ink">Principal-led</h2>
           <p className="t-body mt-6 text-ink">
             Every review is led and signed by a principal with 11+ years leading ERP and transformation programmes across
@@ -183,7 +194,7 @@ export default function Home() {
       )}
 
       {/* 10. Closing CTA */}
-      <Section tone="paper">
+      <Section tone="page">
         <h2 className="t-h2 max-w-[22ch] text-ink">Six weeks from go-live? Start with the evidence.</h2>
         <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
           <Button href={CTA.review.href} size="lg">
