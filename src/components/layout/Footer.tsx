@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandMark } from "../brand/BrandMark";
 import { navLinks, siteConfig } from "../../lib/siteConfig";
+import { legacy } from "../../lib/legacyOffer"; // footer copy is replaced in E1.4
 
 const guideLinks = [
   { href: "/pmo-reporting-automation", label: "PMO reporting automation" },
@@ -25,7 +26,7 @@ export function Footer() {
           </Link>
           <p className="t-small font-semibold text-teal-tint">{siteConfig.tagline}</p>
           <p className="t-small mt-3 max-w-[560px]">
-            {siteConfig.subline}. For growth-stage SMEs in the GCC and Singapore —
+            {legacy.subline}. For growth-stage SMEs in the GCC and Singapore —
             Free PMO Diagnostic, then PMO Automation Audit, then optional implementation.
           </p>
         </div>

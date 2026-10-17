@@ -7,7 +7,8 @@ import { DirectAnswer } from "../../components/aeo/DirectAnswer";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { canonicalAnswers } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
-import { auditPriceRange, siteConfig } from "../../lib/siteConfig";
+import { siteConfig } from "../../lib/siteConfig";
+import { legacy, legacyAuditPriceRange } from "../../lib/legacyOffer"; // removed in E10
 
 const title = "PMO Automation Audit — GCC & Singapore";
 const description =
@@ -70,14 +71,14 @@ export default function AuditPage() {
             <h1 className="display">PMO Automation Audit</h1>
             <p className="subhead mt-5">
               Find reporting drag. Score AI automation fit. Leave with a blueprint —
-              in {siteConfig.pricing.timeline}.
+              in {legacy.pricing.timeline}.
             </p>
             <DirectAnswer
               answer={canonicalAnswers.audit}
               bullets={[
-                `Typical range ${auditPriceRange}, timeline ${siteConfig.pricing.timeline}`,
+                `Typical range ${legacyAuditPriceRange}, timeline ${legacy.pricing.timeline}`,
                 "Blueprint deliverables — map, drag ledger, fit score, ROI hypothesis",
-                `Markets: ${siteConfig.markets.primary}, ${siteConfig.markets.secondary}`,
+                `Markets: ${legacy.markets.primary}, ${legacy.markets.secondary}`,
               ]}
               primaryHref="/contact"
               primaryLabel="Book Audit Fit Call"
@@ -90,13 +91,13 @@ export default function AuditPage() {
               <div>
                 <div className="kicker-title">Typical timeline</div>
                 <div className="mt-2 font-[family-name:var(--font-display)] text-4xl font-bold tracking-[-0.03em]">
-                  {siteConfig.pricing.timeline}
+                  {legacy.pricing.timeline}
                 </div>
               </div>
               <div>
                 <div className="kicker-title">Typical range</div>
                 <div className="mt-2 font-[family-name:var(--font-display)] text-4xl font-bold tracking-[-0.03em]">
-                  {auditPriceRange}
+                  {legacyAuditPriceRange}
                 </div>
               </div>
               <div className="rule" />

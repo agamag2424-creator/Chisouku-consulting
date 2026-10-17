@@ -1,9 +1,4 @@
-import {
-  foundingActive,
-  formatPrice,
-  siteConfig,
-  type OfferKey,
-} from "../../lib/siteConfig";
+import { offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
 type PriceBlockProps = {
@@ -23,13 +18,9 @@ export function PriceBlock({
   className,
 }: PriceBlockProps) {
   const data = siteConfig.offers[offer];
-  const founding = foundingActive(foundingSlotsRemaining);
-  const oneOff = "listPrice" in data;
-  const list = oneOff ? formatPrice(data.listPrice) : `From ${formatPrice(data.listPriceFromMonthly)} / month`;
-  const foundingPrice = oneOff
-    ? formatPrice(data.foundingPrice)
-    : `From ${formatPrice(data.foundingPriceFromMonthly)} / month`;
-  const feeCredit = showFeeCredit ?? oneOff;
+  const { list, founding: foundingPrice } = offerPriceLabel(offer, foundingSlotsRemaining);
+  const founding = foundingPrice !== null;
+  const feeCredit = showFeeCredit ?? "listPrice" in data;
 
   return (
     <div className={cn("rounded-sheet border border-line bg-paper p-6", className)}>
