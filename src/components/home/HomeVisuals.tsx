@@ -287,30 +287,6 @@ export function IndependencePanel() {
   );
 }
 
-const principalChips = ["11+ years", "Aviation", "Banking", "Manufacturing", "Multi-country go-lives"] as const;
-
-/** Section 9: a signature line, no name or photo (PRD L4). */
-export function PrincipalSignature() {
-  return (
-    <span aria-hidden className="flex items-center gap-4">
-      <span className="w-full max-w-[220px] border-t border-ink" />
-      <span className="shrink-0 text-[13px] text-muted">Led and signed by a principal</span>
-    </span>
-  );
-}
-
-export function PrincipalChips() {
-  return (
-    <ul className="flex flex-wrap gap-2" aria-label="Experience">
-      {principalChips.map((chip) => (
-        <li key={chip} className="rounded-full border border-line bg-paper px-3.5 py-2 text-[14px] font-medium text-ink">
-          {chip}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 const weeks = ["W-6", "W-5", "W-4", "W-3", "W-2", "W-1", "Go-live"] as const;
 
 /** Section 10: six weeks to go-live; the first week is where the evidence work starts. */

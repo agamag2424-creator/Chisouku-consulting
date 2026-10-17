@@ -3,6 +3,7 @@ import { breadcrumbJsonLd, offerServiceJsonLd } from "../../lib/jsonLd";
 import { ogImage } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 import { JsonLdScript } from "../aeo/JsonLdScript";
+import { PrincipalBlock } from "../trust/PrincipalBlock";
 import { Button } from "../ui/Button";
 import { PriceBlock } from "../ui/PriceBlock";
 import { Section } from "../ui/Section";
@@ -88,6 +89,7 @@ export function OfferLayout({ offer, lead, blocks }: OfferLayoutProps) {
           </Section>
         );
       })}
+      <PrincipalBlock tone="paper" />
       <OfferClosing />
     </>
   );
