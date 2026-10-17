@@ -300,7 +300,7 @@ export function ClaimCard({ id, label }: { id: string; label: string }) {
               </abbr>
             </dt>
             <dd>
-              <EvidenceCell state={mark} label={readiness5[index].name} className="[&_svg]:size-5" />
+              <EvidenceCell state={mark} label={readiness5[index].name} className="[--glyph:20px]" />
             </dd>
           </div>
         ))}

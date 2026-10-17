@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fragment } from "react";
+import { ComparisonTable } from "../components/compare/ComparisonTable";
 import { EvidenceCheckHero } from "../components/hero/EvidenceCheckHero";
 import {
   BriefIllustration,
@@ -202,9 +203,10 @@ export default function Home() {
         </ul>
       </Section>
 
-      {/* 7. Why not the usual options: the compact comparison table arrives with E5.2 */}
+      {/* 7. Why not the usual options: compact comparison (first 4 rows), full table on /pricing */}
       <Section tone="paper">
         <h2 className="t-h2 text-ink">Why not the usual options</h2>
+        <ComparisonTable id="home-comparison" rows={4} className="mt-10" />
         <div className="mt-6">
           <Button href="/pricing" variant="text">
             Pricing
