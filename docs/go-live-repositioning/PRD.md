@@ -388,7 +388,11 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - Card "Why now". UAE: "Two dates are adding go-lives to UAE programmes."
   - "1 January 2027" · "UAE e-invoicing becomes mandatory" · "For businesses with revenue of AED 50 million or more. For many programmes, that adds an ERP integration go-live." Source: UAE Ministry of Finance, Ministerial Resolution No. 66 of 2026.
   - "End of 2027" · "SAP Business Suite 7 mainstream maintenance ends" · "This includes SAP ERP 6.0. Optional extended maintenance runs to the end of 2030." Source: SAP Support, maintenance strategy for SAP Business Suite 7.
+- Card "Why now". Saudi Arabia: "Two dates are adding go-lives to Saudi programmes."
+  - "1 February 2027" · "ZATCA e-invoicing integration, wave 25" · "Taxpayers whose VAT-subject revenue exceeded SAR 187,500 in any year from 2022 to 2025 connect their invoicing systems to the Fatoora platform. Phase 2 integration continues in waves." Source: ZATCA, twenty-fifth integration wave, 24 July 2026.
+  - "End of 2027": as for the UAE.
 - "Typical programmes". UAE: "Multi-entity groups" · "Several companies going live on one platform, often in waves."; "Free-zone and mainland entities" · "Entities under different rules, on one platform and one go-live plan."; "S/4HANA migrations" · "Moving from SAP ERP 6.0 before mainstream maintenance ends."
+- "Typical programmes". Saudi Arabia: "Multi-entity groups" and "S/4HANA migrations" as for the UAE; "Fatoora integrations" · "Connecting invoicing to ZATCA inside a wider ERP programme."
 - "How an engagement runs" · "Remote by default, on site by arrangement." followed by the two offer panels from the homepage (prices from config).
 - Closing: "A free readiness brief on your programme" · "Prepared from public information." (homepage section 6 wording) with "Request a free readiness brief" and "Discuss your programme".
 

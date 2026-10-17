@@ -1,7 +1,7 @@
 // Market pages (PRD 9.10, E7). Every dated fact carries the issuer's own page as its source; each link was opened and
 // checked against the fact in E7.0 (evidence/E7.0-sources.md). Wording pending founder approval (IN-10).
 
-export type MarketKey = "uae";
+export type MarketKey = "uae" | "saudiArabia";
 
 export type MarketFact = {
   /** Written in full, as the source states it. */
@@ -12,7 +12,7 @@ export type MarketFact = {
 };
 
 export type Market = {
-  path: "/go-live-readiness-uae";
+  path: "/go-live-readiness-uae" | "/go-live-readiness-saudi-arabia";
   /** Breadcrumb and title. */
   name: string;
   country: { name: string; code: string };
@@ -66,6 +66,30 @@ export const markets: Record<MarketKey, Market> = {
       multiEntity,
       { title: "Free-zone and mainland entities", text: "Entities under different rules, on one platform and one go-live plan." },
       s4Migration,
+    ],
+  },
+  saudiArabia: {
+    path: "/go-live-readiness-saudi-arabia",
+    name: "Go-live readiness in Saudi Arabia",
+    country: { name: "Saudi Arabia", code: "SA" },
+    inName: "Saudi Arabia",
+    whyNow: "Two dates are adding go-lives to Saudi programmes.",
+    facts: [
+      {
+        date: "1 February 2027",
+        title: "ZATCA e-invoicing integration, wave 25",
+        text: "Taxpayers whose VAT-subject revenue exceeded SAR 187,500 in any year from 2022 to 2025 connect their invoicing systems to the Fatoora platform. Phase 2 integration continues in waves.",
+        source: {
+          label: "ZATCA: twenty-fifth integration wave, 24 July 2026",
+          url: "https://zatca.gov.sa/en/MediaCenter/News/Pages/Wave25-E-invoicing.aspx",
+        },
+      },
+      sapMaintenance,
+    ],
+    programmes: [
+      multiEntity,
+      s4Migration,
+      { title: "Fatoora integrations", text: "Connecting invoicing to ZATCA inside a wider ERP programme." },
     ],
   },
 };
