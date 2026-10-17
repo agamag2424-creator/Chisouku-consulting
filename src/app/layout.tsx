@@ -8,6 +8,7 @@ import { organizationJsonLd, websiteJsonLd } from "../lib/jsonLd";
 import { defaultDescription, defaultTitle, ogImage } from "../lib/seo";
 import { siteConfig } from "../lib/siteConfig";
 import { Analytics } from "@vercel/analytics/next";
+import { CtaTracker } from "../components/analytics/CtaTracker";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const archivo = Archivo({
@@ -86,6 +87,7 @@ export default function RootLayout({
         </div>
         {/* The old-offer Service JSON-LD is gone; E8.4 adds Service and Offer blocks for the new offers. */}
         <Analytics />
+        <CtaTracker />
         <SpeedInsights />
       </body>
     </html>
