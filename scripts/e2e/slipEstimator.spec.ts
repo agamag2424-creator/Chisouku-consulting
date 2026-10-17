@@ -5,6 +5,8 @@
 import { expect, test, type Page } from "@playwright/test";
 
 const url = process.env.HERO_URL ?? "http://localhost:3100/";
+// Interact only after hydration, or React resets the inputs to the server-rendered values.
+const settled = { waitUntil: "networkidle" } as const;
 
 // The number field (each field also has a slider with the same label).
 const field = (page: Page, label: string) => page.getByRole("spinbutton", { name: label });
@@ -15,7 +17,7 @@ test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
   test("shows the example result from config", async ({ page }) => {
-    await page.goto(url);
+    await page.goto(url, settled);
     await expect(page.getByText("Example values. Replace them with yours.")).toBeVisible();
     await expect(result(page, "Cost per week of slip")).toHaveText("USD 120,000");
     await expect(result(page, "Cost of a 4-week slip")).toHaveText("USD 480,000");
@@ -25,7 +27,7 @@ test.describe("without JavaScript", () => {
 
 test.describe("with JavaScript", () => {
   test("recalculates as the visitor types and announces the result", async ({ page }) => {
-    await page.goto(url);
+    await page.goto(url, settled);
     await field(page, "People working on the programme").fill("20");
     await field(page, "Weeks the go-live could slip").fill("6");
     await expect(result(page, "Cost per week of slip")).toHaveText("USD 60,000");
@@ -37,7 +39,7 @@ test.describe("with JavaScript", () => {
   });
 
   test("adds the parallel-run cost and hides the comparison at zero people", async ({ page }) => {
-    await page.goto(url);
+    await page.goto(url, settled);
     await field(page, "Monthly cost of keeping the current system running").fill("52000");
     await expect(result(page, "Cost per week of slip")).toHaveText("USD 132,000");
     await field(page, "People working on the programme").fill("0");
@@ -46,7 +48,7 @@ test.describe("with JavaScript", () => {
   });
 
   test("the slider moves the same value", async ({ page }) => {
-    await page.goto(url);
+    await page.goto(url, settled);
     await page.getByRole("slider", { name: "Weeks the go-live could slip" }).fill("10");
     await expect(field(page, "Weeks the go-live could slip")).toHaveValue("10");
     await expect(result(page, "Cost of a 10-week slip")).toHaveText("USD 1,200,000");
@@ -54,7 +56,7 @@ test.describe("with JavaScript", () => {
 
   test("fits 360px without horizontal scroll", async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 800 });
-    await page.goto(url);
+    await page.goto(url, settled);
     await field(page, "People working on the programme").scrollIntoViewIfNeeded();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(0);
