@@ -45,10 +45,10 @@ test("JSON-LD for a script tag escapes '<' so it cannot close the tag", async ()
 });
 
 test("a route that is not live renders only in development and on previews (fails closed)", () => {
-  assert.equal(routeRenders("/guides/s4hana-go-no-go-checklist", { NODE_ENV: "production", VERCEL_ENV: "production" }), false);
-  assert.equal(routeRenders("/guides/s4hana-go-no-go-checklist", { NODE_ENV: "production" }), false);
-  assert.equal(routeRenders("/guides/s4hana-go-no-go-checklist", {}), false);
-  assert.equal(routeRenders("/guides/s4hana-go-no-go-checklist", { NODE_ENV: "production", VERCEL_ENV: "preview" }), true);
-  assert.equal(routeRenders("/guides/s4hana-go-no-go-checklist", { NODE_ENV: "development" }), true);
+  assert.equal(routeRenders("/not-a-live-route", { NODE_ENV: "production", VERCEL_ENV: "production" }), false);
+  assert.equal(routeRenders("/not-a-live-route", { NODE_ENV: "production" }), false);
+  assert.equal(routeRenders("/not-a-live-route", {}), false);
+  assert.equal(routeRenders("/not-a-live-route", { NODE_ENV: "production", VERCEL_ENV: "preview" }), true);
+  assert.equal(routeRenders("/not-a-live-route", { NODE_ENV: "development" }), true);
   assert.equal(routeRenders("/pricing", { NODE_ENV: "production", VERCEL_ENV: "production" }), true);
 });
