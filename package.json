@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:unit": "node --test scripts/*.test.mjs"
+    "test:unit": "node --test scripts/*.test.mjs",
+    "leak-scan": "node scripts/leak-scan.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

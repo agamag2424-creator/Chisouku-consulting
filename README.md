@@ -62,6 +62,21 @@ src/styles/         Global tokens and utilities
 
 Legacy URLs from earlier versions of the site are redirected in `next.config.ts`.
 
+## Leak scan
+
+Nothing internal or off-message may reach the site (BACKLOG rule 14). After a build, run:
+
+```bash
+npm run build
+npm run leak-scan
+```
+
+`scripts/leak-scan.mjs` scans the built pages (`.next/server/app/**/*.{html,body,rsc}`) and `src/` for forbidden terms
+(old offer wording, client and employer names, the founder's name, certification claims, "guarantee"), whole-word and
+case-insensitive, and exits with code 1 on any hit, printing file, line and context. A short list of reviewed phrases is
+allowed (the public email address, and sentences that say the review does *not* guarantee success); change that list
+only with the founder's agreement. `docs/` and the script itself are not scanned. Unit tests: `npm run test:unit`.
+
 ## Proof rules
 
 The site makes no client claims that cannot be substantiated. Sample artifacts are labelled as methodology excerpts and the drag estimator is framed as directional. Keep new copy within these constraints.
