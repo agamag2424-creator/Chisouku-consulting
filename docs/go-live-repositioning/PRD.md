@@ -2,6 +2,7 @@
 
 **Status:** v1.0 · approved direction by the founder, 17 Oct 2026 (IST)
 **Amendment v1.1 (17 Oct 2026):** the founder approved a homepage "slipped go-live cost" estimator (option B) to keep the old site's "see what it costs you" interaction. Adds homepage section 4a (9.1), section 9.11, the `slipEstimator` config key (6.4), the `slip_estimate_used` event (11), inputs IN-7 and IN-8 (14), and backlog story E1.5.
+**Amendment v1.2 (17 Oct 2026):** the founder approved a visual redesign of the homepage (design canvas "ChisokuLabs Homepage Redesign"; source kept in `evidence/E1.6/design/`). Section 7 behaviour 2–4 change: the replay button is replaced by an "As reported / As evidenced" switch. 5.1 gains a rule on dark (ink) surfaces. 9.1 gains section 9.12 (visual treatment and interface wording). `hero_check_replay` becomes `hero_view_toggle` {view} (11). Adds backlog story E1.6.
 **Owner:** Founder, ChisokuLabs Pvt Ltd
 **Repository:** this repo (`chisokulab`, Next.js 16 App Router, Tailwind v4, deployed on Vercel)
 **Companion file:** `BACKLOG.md` in this folder (epics, stories, tasks, acceptance criteria, executor rules)
@@ -44,7 +45,7 @@ ChisokuLabs is repositioning from "AI automation for delivery systems, starting 
 | Goal | Measured by |
 |---|---|
 | G1. A UAE/KSA CIO or sponsor understands the offer within 10 seconds of landing | Hero test with 3 reviewers: each states the offer in one sentence |
-| G2. The moat is visible before any sales copy | The hero Evidence Check runs on load and can be replayed |
+| G2. The moat is visible before any sales copy | The hero Evidence Check runs on load and the visitor can switch between the reported and evidenced views (v1.2) |
 | G3. The visitor can see the output before contacting | Sample decision pack viewable on site and downloadable without a form |
 | G4. Clear path to conversation | Every page has one primary CTA: "Discuss your programme" or "Request a free readiness brief" |
 | G5. Search and answer-engine readiness for go-live queries | New JSON-LD, FAQ, glossary, `llms.txt`, 3 answer guides and 2 market pages indexed in the sitemap |
@@ -157,7 +158,7 @@ Footer: offers, method, see it first, pricing, UAE, Saudi Arabia, guides, FAQ, g
 | `--color-ev-part` / `--color-ev-part-tint` | `#A86C12` / `#FBF2E2` | Partial evidence / Amber |
 | `--color-ev-miss` / `--color-ev-miss-tint` | `#B23B3B` / `#F8E5E5` | Missing evidence / Red |
 
-Rules: evidence colours appear **only** on evidence status (claims, RAG, R5 cells, contradiction marks). No gradients as decoration; remove the radial cyan body gradient. One border radius for controls (6px) and one for sheets (4px).
+Rules: ink surfaces (v1.2): the homepage hero band, the method cross-check strip, the closing CTA band and the footer; nowhere else. Evidence colours appear **only** on evidence status (claims, RAG, R5 cells, contradiction marks). No gradients as decoration; remove the radial cyan body gradient. One border radius for controls (6px) and one for sheets (4px).
 
 ### 5.2 Type
 
@@ -253,9 +254,9 @@ Helpers: `formatPrice(n)`, `offerPriceLabel(offer)` returning list and (if slots
 
 **Behaviour:**
 1. Initial state (server-rendered, visible without JS): the three claims with their **Reported: Green** badges.
-2. After 700 ms, a single sequence: for each claim in turn, the five R5 cells resolve left to right (120 ms apart), then the "Reported: Green" badge is replaced by "3 of 5 evidenced" (colour by score: ≥4 ok, 2–3 partial, 0–1 missing). After all three, the contradiction line draws between T1 and I1 and its label fades in. Total ≤ 4.5 s.
-3. A text button "Run the check again" replays the sequence.
-4. `prefers-reduced-motion: reduce` → render the final state immediately; replay button hidden.
+2. (v1.2) A two-button switch, "As reported" and "As evidenced", sits on the card. About 1.8 s after load the card moves once, on its own, from the reported view to the evidenced view: R5 cells and "N of 5 evidenced" scores (colour by score: ≥4 ok, 2–3 partial, 0–1 missing) replace the "Reported: Green" badges, two summary figures change ("3/3 claims reported Green" → "1/3 claims have most of their evidence" and "1 contradiction between workstreams"), the contradiction bracket draws between T1 and I1 and its label appears. The visitor can switch back and forth at any time.
+3. (v1.2) Selecting a claim shows what the evidence shows for each of its five elements (Evidenced, Partial, Missing). There is no replay button.
+4. `prefers-reduced-motion: reduce` → the evidenced view from first paint, without transitions; the switch still works.
 5. Accessibility: the table is a real `<table>` with headers; R5 cells have visually hidden text ("Evidence: missing"); the live result is announced once via `aria-live="polite"` ("Check complete: 1 of 3 claims has most of its evidence; 1 contradiction found").
 6. Client component only; no network calls; under 6 KB gzipped JS; no new dependency (use CSS transitions + a small state machine; GSAP/framer-motion are already installed but not required).
 7. Mobile (≤ 640px): claims stack as rows with R5 cells beneath the claim text; contradiction shown as a note under T1 instead of a drawn line.
@@ -297,7 +298,7 @@ Next to it: headline "Your programme reports Green. We test whether the evidence
    Items: The full sample decision pack (view or download, no form) · A free readiness brief on your programme, prepared from public information · The Readiness Self-Check (if `selfCheck.live`; otherwise omitted).
 7. **Why not the usual options** — compact version of the comparison table (E5), link to `/pricing`.
 8. **Independent, and careful with your data** — H2: No stake in your go-live date.
-   Body: We take no implementation fees, resell no software and hold no system integrator partnerships. Your documents are processed under a written data-handling policy: never used to train models, deleted at the end of the engagement unless you ask us to keep them. Link: Independence and data handling.
+   Body: We take no implementation fees, resell no software and hold no system integrator partnerships. Your documents are processed under a written data-handling policy: never used to train models, deleted within 30 days of the final readout unless you ask us to keep them. Link: Independence and data handling.
 9. **Principal-led** — one paragraph from 8.3. No photo.
 10. **Closing CTA** — H2: Six weeks from go-live? Start with the evidence. Buttons: Discuss your programme · Request a free readiness brief.
 
@@ -376,10 +377,33 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 12. Do you work in Saudi Arabia? (yes; remote by default, on site by arrangement)
 13. Do you implement or fix what you find? (no; we stay independent, and we tell you who should own each fix)
 
+**Answers (E8.1).** Items 4, 6, 9, 10, 11 and 13 reuse wording already approved on `/pricing`. Item 2 reuses the homepage section 2 wording; items 7 and 8 reuse the approved 9.7 statements. New wording (approved 17 Oct 2026, IN-11):
+- 1: "We are independent of delivery, and your system integrator is not: its review is part of delivery, and its final milestone depends on the date holding. We test every critical claim on READINESS-5, check the claims against each other, and give a Go, Conditional Go or No-Go with the conditions, owners and dates behind it."
+- 2 (opening): "Because leadership is asked to approve the go-live on reports written by the people being judged on delivery."
+- 3: "Six to sixteen weeks before the go-live decision. Earlier is fine."
+- 5: the platform list from config.
+- 7 (opening): "Under a written data-handling policy." 8 (opening): "Yes, to extract claims and cross-check evidence, under the policy."
+- 12: "Yes. Remote by default, on site by arrangement."
+- Canonical answers in `src/lib/aeoContent.ts` (for llms.txt): what we do (homepage meta description), offers (config), method, markets, policy (9.7).
+
 ### 9.10 Market pages (E7)
 - **UAE:** why now (SAP Business Suite 7 mainstream maintenance ends 2027 with optional extended maintenance to 2030; UAE e-invoicing for businesses above AED 50M turnover from 1 Jan 2027 adds an ERP integration go-live to many programmes); platforms; typical programme shapes (multi-entity groups, free-zone and mainland entities); how engagements run remotely with on-site option. Sources linked.
 - **Saudi Arabia:** why now (ZATCA Phase 2 integration waves continuing, wave 25 from 1 Feb 2027; S/4HANA migrations); same structure. Sources linked.
 - Each ends with the free readiness brief CTA. Facts must carry links; executor verifies each link loads (E7 Step 0).
+
+**Copy (approved 17 Oct 2026, IN-10).** Sources verified in E7.0 (`evidence/E7.0-sources.md`). The UAE threshold is "AED 50 million or more": the resolution says "equal to or exceeds".
+- H1: "Go-live readiness in the UAE" / "Go-live readiness in Saudi Arabia". Lead: "Independent go-live decision assurance for ERP and core-platform programmes in {the UAE | Saudi Arabia}."
+- Hero CTAs: "Request a free readiness brief", "Discuss your programme". Platform chips from config.
+- Card "Why now". UAE: "Two dates are adding go-lives to UAE programmes."
+  - "1 January 2027" · "UAE e-invoicing becomes mandatory" · "For businesses with revenue of AED 50 million or more. For many programmes, that adds an ERP integration go-live." Source: UAE Ministry of Finance, Ministerial Resolution No. 66 of 2026.
+  - "End of 2027" · "SAP Business Suite 7 mainstream maintenance ends" · "This includes SAP ERP 6.0. Optional extended maintenance runs to the end of 2030." Source: SAP Support, maintenance strategy for SAP Business Suite 7.
+- Card "Why now". Saudi Arabia: "Two dates are adding go-lives to Saudi programmes."
+  - "1 February 2027" · "ZATCA e-invoicing integration, wave 25" · "Taxpayers whose VAT-subject revenue exceeded SAR 187,500 in any year from 2022 to 2025 connect their invoicing systems to the Fatoora platform. Phase 2 integration continues in waves." Source: ZATCA, twenty-fifth integration wave, 24 July 2026.
+  - "End of 2027": as for the UAE.
+- "Typical programmes". UAE: "Multi-entity groups" · "Several companies going live on one platform, often in waves."; "Free-zone and mainland entities" · "Entities under different rules, on one platform and one go-live plan."; "S/4HANA migrations" · "Moving from SAP ERP 6.0 before mainstream maintenance ends."
+- "Typical programmes". Saudi Arabia: "Multi-entity groups" and "S/4HANA migrations" as for the UAE; "Fatoora integrations" · "Connecting invoicing to ZATCA inside a wider ERP programme."
+- "How an engagement runs" · "Remote by default, on site by arrangement." followed by the two offer panels from the homepage (prices from config).
+- Closing: "A free readiness brief on your programme" · "Prepared from public information." (homepage section 6 wording) with "Request a free readiness brief" and "Discuss your programme".
 
 ---
 
@@ -409,7 +433,7 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - H2: What a slipped go-live costs.
 - Lead: Put in your own numbers. When a go-live date moves, the programme team, the system integrator and the current system all keep running.
 - Labels: as the inputs above. Small note above the fields: "Example values. Replace them with yours."
-- Outputs: "Cost per week of slip: {weekly}" · "Cost of a {weeks}-week slip: {total}"
+- Outputs: "Cost per week of slip: {weekly}" · "Cost of a {weeks}-week slip: {total}" ("an" before 8, 11, 18 and the 80s)
 - Comparison line: "A Readiness Evidence Check costs {price}: about {days} working days of your programme's run-rate." (with founding price: "{list} list, {founding} founding-client rate")
 - Footnote: "Calculated in your browser from your numbers. Directional only: it leaves out lost benefits, contract penalties and business disruption. Not a forecast for your programme."
 - CTA: primary "Request a free readiness brief" (→ `/contact?request=brief`); text link "Discuss your programme" (→ `/contact?request=review`).
@@ -421,12 +445,29 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - Track `slip_estimate_used` once per page view, the first time the visitor changes any input (no values sent).
 - Client JS ≤ 3 KB gzipped; no new dependency.
 
+### 9.12 Homepage visual treatment and interface wording (v1.2, E1.6)
+
+Each homepage section leads with a visual; the 9.1 copy is kept verbatim and may be split around it.
+- Hero: ink band, white Evidence Check card (section 7). Platform line as chips.
+- 2 The problem: four workstream cards (Testing, Migration, Cutover, System integrator), each "Green", joined by dashed lines to a centre marked "?" and "The go-live decision".
+- 3 Method: the lead-in sentence, five R5 tiles (letter, name, question), then the cross-check sentence on an ink strip with the "How READINESS-5 works" link.
+- 4 Verdicts: three cards with an icon each; Conditional Go emphasised; blank lines suggest conditions, owners and dates (no text).
+- 4a Estimator: each number field paired with a slider; a week-by-week bar chart; a bar comparing the slip cost with the Evidence Check list price.
+- 5 Offers: day strips (5 and 10 days; the Evidence Check strip uses the 9.2 sequence), a "Fee credited in full" badge between the panels, founding places shown as dots.
+- 6 See it first: an illustration of the sample pack and of the brief (shapes only, no text).
+- 8 Independence: three "None" tiles and three data-handling lines with icons.
+- 9 Principal-led: a signature line and experience chips taken from the 8.3 paragraph.
+- 10 Closing CTA: ink band with a six-week strip ending at go-live; W-6 highlighted.
+
+Interface wording added by 9.12 ([FOUNDER APPROVES], IN-9): "Go-live readiness check"; "Three critical claims, all reported Green"; "As reported"; "As evidenced"; "claims reported Green"; "evidence not yet checked"; "claims have most of their evidence"; "contradiction between workstreams"; "{ID} {claim}: what the evidence shows"; "Evidenced", "Partial", "Missing"; "The go-live decision"; workstream lines "Reports a pass rate.", "Reports a reconciliation.", "Has a plan.", "Has an opinion, and a milestone tied to the date."; "Fee credited in full"; "None" with "Implementation fees", "Software resold", "System integrator partnerships"; the three data-handling lines (cut from section 8 body); on `/independence-and-data` (approved 17 Oct 2026): "Shared", "Stored", "Processed", "Deleted", "Last updated: {date}", "Questions about how we handle your data:"; "Led and signed by a principal"; chips "11+ years", "Aviation", "Banking", "Manufacturing", "Multi-country go-lives"; "W-6" to "W-1" and "Go-live"; estimator chart labels "Week 1" and "Week {n}".
+
 ## 10. SEO and answer-engine requirements (E8)
 
 - Titles/descriptions per route from a single `src/lib/seo.ts` map; default title "Independent Go-Live Decision Assurance | ChisokuLabs".
 - JSON-LD: Organization (areaServed AE, SA; no founder), WebSite, `Service` + `Offer` for both offers (prices from config), `FAQPage` on `/faq`, `DefinedTermSet` on `/glossary`, `HowTo` on the S/4HANA checklist guide, `BreadcrumbList` on guides.
 - `llms.txt` / `llms-full.txt`: rebuilt from new canonical answers (what ChisokuLabs does, offers, prices, method, markets, policy).
 - Glossary (≥ 15 terms): go-live readiness, go/no-go decision, conditional go, cutover, rollback point, point of no return, hypercare, SIT, UAT, data migration reconciliation, mock load, RAID log, readiness claim, READINESS-5, contradiction testing, decision condition.
+  Definitions (E8.2, approved 17 Oct 2026, IN-11) are in `src/lib/aeoContent.ts` (`glossaryTerms`), one to three sentences each; READINESS-5 and contradiction testing reuse 9.4 wording.
 - Sitemap and `robots.ts` updated; remove deleted routes; set new `lastModified`.
 - OG images: replace `og*.png` with new-system images (static PNGs generated from an internal route or design file; no runtime OG service).
 - Canonicals on every page; no duplicate H1s.
@@ -438,8 +479,10 @@ Footnote: "Comparisons describe typical market practice, not specific firms."
 - Contact form becomes "Discuss your programme" with fields: name*, work email*, company*, country* (UAE, Saudi Arabia, Other GCC, Other), role (CIO/CTO, Transformation Director, Programme Sponsor, Programme/PMO Director, Other), **request type*** (Discuss a review · Free readiness brief · Pricing question), platform (from config + Other), **go-live decision date** (month picker, optional), message.
 - Query param `?request=brief|review|pricing` presets request type; CTAs link with it.
 - API route keeps Resend delivery; update payload and email subject `"[ChisokuLabs] {request type} — {company}"`; keep validation; add honeypot field; rate-limit by simple in-memory guard is **not** required.
-- Analytics via existing `@vercel/analytics` `track()`: `cta_click` {id, page}, `sample_pack_view`, `sample_pack_download`, `hero_check_replay`, `slip_estimate_used`, `form_submit` {request_type}, `form_error`. No cookies beyond Vercel Analytics defaults; privacy page updated.
+- Analytics via existing `@vercel/analytics` `track()`: `cta_click` {id, page}, `sample_pack_view`, `sample_pack_download`, `hero_view_toggle` {view}, `slip_estimate_used`, `form_submit` {request_type}, `form_error`. No cookies beyond Vercel Analytics defaults; privacy page updated.
 - Calendly button stays available on `/contact` as an alternative.
+- Delivery (E9.1): Resend, sender `website@chisokulabs.com` (domain verified), reply-to the visitor; the API returns an error when the key is missing or Resend rejects the send, and the form then shows the email address. `RESEND_API_KEY` is set in Vercel by the founder.
+- New interface wording (E9.1, approved 17 Oct 2026, IN-12): "We reply within one business day." (under the H1, from the approved success message); "Prefer to talk? Book a call"; "Email:"; "Choose…" in selects; field messages "Enter your name.", "Enter your company name.", "Choose a country."; failure "We could not send your message. Please email us at {email}."; `/contact` description "Discuss a go-live review, request a free readiness brief, or ask about pricing. We reply within one business day."
 
 ---
 
@@ -463,11 +506,16 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 
 | ID | Input | Needed by | Default if not answered |
 |---|---|---|---|
-| IN-1 | Approve prices in 6.1 | E2 merge | Do not merge E2 |
-| IN-2 | Public contact email (role address vs personal) | E9 | Keep current `siteConfig.email` |
-| IN-3 | Approve principal paragraph (8.3) | E1 merge | Omit the principal block |
-| IN-4 | Confirm every data-handling statement in 9.7 is true | E6 merge | Do not publish `/independence-and-data` |
-| IN-5 | Calendly link still valid | E9 | Keep current link |
+| IN-1 | Approve prices in 6.1 (**approved 17 Oct 2026**) | E2 merge | Do not merge E2 |
+| IN-2 | Public contact email (role address vs personal) | E9 | **Keep `agam@chisokulabs.com` for launch; revisit after go-live (founder, 18 Oct 2026)** |
+| IN-3 | Approve principal paragraph (8.3) | E1 merge | **Approved as written, 17 Oct 2026** |
+| IN-4 | Confirm every data-handling statement in 9.7 is true (**confirmed 17 Oct 2026**, all twelve; the homepage deletion line aligned to 9.7) | E6 merge | Do not publish `/independence-and-data` |
+| IN-5 | Calendly link still valid | E9 | **Old link dead (404); founder gave https://calendly.com/agam-agrawwal (17 Oct 2026) and keeps it for launch; a link without the founder's name after go-live (18 Oct 2026)** |
 | IN-6 | When the Self-Check goes live: URL | Later | `selfCheck.live = false` |
-| IN-7 | Approve the estimator copy and example values in 9.11 | E1.5 merge | Do not merge E1.5 |
+| IN-7 | Approve the estimator copy and example values in 9.11 (**approved 17 Oct 2026**, with "a"/"an" chosen by number in "Cost of a {weeks}-week slip") | E1.5 merge | Do not merge E1.5 |
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
+| IN-9 | Approve the interface wording in 9.12 (**approved 17 Oct 2026**) | E1.6 merge | Do not merge E1.6 |
+| IN-10 | Approve the market page wording in 9.10 (**approved 17 Oct 2026**) | E7 merge | Do not merge E7.1 / E7.2 |
+| IN-12 | Approve the E9.1 interface wording (11) (**approved 17 Oct 2026**) | E9 merge | Do not merge E9.1 |
+| IN-13 | Privacy page (E9.3): enquiry retention "up to 24 months after our last contact" and the rewritten wording (**approved 17 Oct 2026**) | E9 merge | Do not merge E9.3 |
+| IN-11 | Approve the new E8 wording: FAQ answers (9.9), glossary definitions, the three guides (`src/content/guides.ts`) (**approved 17 Oct 2026**) | E8 merge | Do not merge E8 |

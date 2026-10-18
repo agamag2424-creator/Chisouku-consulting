@@ -25,16 +25,20 @@ export function EvidenceCell({ state, label, className }: EvidenceCellProps) {
   );
 }
 
-/** Drawn as SVG so the three marks render identically whatever font is loaded. */
+/**
+ * Drawn with CSS (one element) so the three marks render identically whatever font is loaded.
+ * Same geometry as the earlier SVG: a disc 13/16 of its box, ring 1.5px, partial fills the left half.
+ * The box is 16px; a caller can set `--glyph` (e.g. `[--glyph:12px]`) to resize it.
+ */
 function EvidenceGlyph({ state }: { state: EvidenceState }) {
   return (
-    <svg viewBox="0 0 16 16" className="size-4" aria-hidden focusable="false">
-      {state === "present" ? (
-        <circle cx="8" cy="8" r="6.5" fill="currentColor" />
-      ) : (
-        <circle cx="8" cy="8" r="5.75" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    <span
+      aria-hidden
+      className={cn(
+        "inline-block size-[calc(var(--glyph,16px)*0.8125)] m-[calc(var(--glyph,16px)*0.09375)] rounded-full",
+        state === "present" ? "bg-current" : "border-[1.5px] border-current",
+        state === "partial" && "bg-[linear-gradient(90deg,currentColor_50%,transparent_50%)]",
       )}
-      {state === "partial" && <path d="M8 2.25a5.75 5.75 0 0 0 0 11.5z" fill="currentColor" />}
-    </svg>
+    />
   );
 }

@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ChisokuLabs homepage</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F5F7F8;color:#14212B;font-family:"IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#0B6E6E}a:hover{color:#14212B}
+*{box-sizing:border-box}
+.cl{width:100%;background:#F5F7F8}
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+.sec{padding:112px 0}
+.paper{background:#FFFFFF}
+.ink{background:#14212B;color:#FFFFFF}
+.tint{background:#E3F0EF}
+.disp{font-family:Archivo,sans-serif;font-weight:700;letter-spacing:-0.02em;text-wrap:balance;margin:0}
+.h1{font-size:54px;line-height:1.06}
+.h2{font-size:40px;line-height:1.12}
+.h3{font-size:22px;line-height:1.25}
+.lead{font-size:19px;line-height:1.6;margin:0}
+.body{font-size:17px;line-height:1.65;margin:0}
+.small{font-size:15px;line-height:1.5;margin:0}
+.tiny{font-size:13px;line-height:1.4;margin:0}
+.mono{font-family:"IBM Plex Mono",monospace;font-weight:500;letter-spacing:-0.01em}
+.muted{color:#5A6B77}
+.onink-muted{color:#B9C7D0}
+.sheet{background:#FFFFFF;border:1px solid #D5DDE2;border-radius:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:6px;font:600 16px/1 "IBM Plex Sans",sans-serif;text-decoration:none;border:1.5px solid transparent;cursor:pointer}
+.btn-ink{background:#14212B;color:#FFFFFF}.btn-ink:hover{background:#0B6E6E;color:#FFFFFF}
+.btn-paper{background:#FFFFFF;color:#14212B}.btn-paper:hover{background:#E3F0EF;color:#14212B}
+.btn-line{border-color:#14212B;color:#14212B;background:transparent}.btn-line:hover{background:#14212B;color:#FFFFFF}
+.btn-line-inv{border-color:#FFFFFF;color:#FFFFFF;background:transparent}.btn-line-inv:hover{background:#FFFFFF;color:#14212B}
+.tlink{font-weight:600;color:#0B6E6E;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.tlink:hover{text-decoration-thickness:2px;color:#0B6E6E}
+:focus-visible{outline:2px solid #0B6E6E;outline-offset:2px}
+.ink :focus-visible{outline-color:#E3F0EF}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.g5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:64px;align-items:center}
+.split{display:grid;grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr);gap:64px;align-items:start}
+/* nav */
+.nav{position:sticky;top:0;z-index:5;background:rgba(255,255,255,0.96);border-bottom:1px solid #D5DDE2}
+.nav-in{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-links{display:flex;gap:28px;font-size:15px;font-weight:500}
+.nav-links a{color:#5A6B77;text-decoration:none}.nav-links a:hover{color:#14212B}
+.menu-btn{display:none;width:44px;height:44px;border:1px solid #D5DDE2;border-radius:6px;background:#FFFFFF;align-items:center;justify-content:center}
+/* evidence marks */
+.mk{display:inline-block;width:14px;height:14px;border-radius:50%;flex:none}
+.mk-present{background:#2E7D4F}
+.mk-partial{border:2px solid #A86C12;background:linear-gradient(90deg,#A86C12 50%,transparent 50%)}
+.mk-missing{border:2px solid #B23B3B;background:#FFFFFF}
+.rag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#E3F2E8;color:#1F5C39;font-size:13px;font-weight:600}
+.rag-dot{width:8px;height:8px;border-radius:50%;background:#2E7D4F}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* hero check */
+.lens{display:inline-flex;padding:4px;border-radius:8px;background:#ECF0F2;gap:4px}
+.lens button{min-height:40px;padding:0 16px;border:0;border-radius:6px;background:transparent;font:600 14px "IBM Plex Sans",sans-serif;color:#5A6B77;cursor:pointer}
+.lens button[aria-pressed="true"]{background:#FFFFFF;color:#14212B;box-shadow:0 1px 2px rgba(20,33,43,0.12)}
+.claims{position:relative;margin-left:14px}
+.claim{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:12px;min-height:68px;padding:10px 16px;border:0;border-top:1px solid #ECF0F2;background:#FFFFFF;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:background .2s}
+.claim:hover{background:#F5F7F8}
+.claim.is-picked{background:#E3F0EF}
+.marks{display:flex;gap:8px;align-items:center}
+.score{font-family:"IBM Plex Mono",monospace;font-size:13px;padding:3px 8px;border-radius:4px;background:#ECF0F2;color:#14212B;white-space:nowrap}
+.fade{animation:fade .5s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.bracket{position:absolute;left:-14px;top:0;width:10px;height:136px;border:2px solid #B23B3B;border-right:0;border-radius:3px 0 0 3px;animation:draw .6s ease both}
+@keyframes draw{from{opacity:0;height:0}to{opacity:1;height:136px}}
+.detail{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.cell{padding:10px;border-radius:4px;background:#F5F7F8;display:flex;flex-direction:column;gap:6px}
+.st{font-size:12px;font-weight:600}
+.st-present{color:#1F5C39}.st-partial{color:#7A4E0C}.st-missing{color:#8E2F2F}
+/* problem diagram */
+.ws{display:grid;grid-template-columns:minmax(0,1fr) 260px minmax(0,1fr);gap:0;align-items:center}
+.ws-col{display:flex;flex-direction:column;gap:20px}
+.ws-card{padding:20px;display:flex;flex-direction:column;gap:10px;position:relative}
+.ws-l .ws-card::after,.ws-r .ws-card::before{content:"";position:absolute;top:50%;width:48px;border-top:2px dashed #B9C7D0}
+.ws-l .ws-card::after{right:-50px}.ws-r .ws-card::before{left:-50px}
+.ws-l{padding-right:48px}.ws-r{padding-left:48px}
+.hub{width:220px;height:220px;margin:0 auto;border-radius:50%;border:2px dashed #14212B;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;background:#FFFFFF}
+.hub-q{font-family:Archivo,sans-serif;font-weight:800;font-size:56px;line-height:1;color:#0B6E6E}
+/* method */
+.r5{padding:24px 20px;display:flex;flex-direction:column;gap:14px;min-height:200px}
+.r5-key{font-family:Archivo,sans-serif;font-weight:800;font-size:64px;line-height:.9;color:#0B6E6E}
+.xcheck{margin-top:28px;padding:22px 24px;display:flex;align-items:center;gap:24px}
+.chain{display:flex;align-items:center;flex:none}
+.chain span{width:14px;height:14px;border-radius:50%;background:#14212B}
+.chain i{width:26px;border-top:2px solid #14212B}
+/* verdicts */
+.verdict{padding:28px;display:flex;flex-direction:column;gap:18px;min-height:300px}
+.v-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.skel{display:flex;flex-direction:column;gap:9px;margin-top:auto;padding-top:18px;border-top:1px solid #ECF0F2}
+.skel-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}
+.skel-row span{height:8px;border-radius:4px;background:#ECF0F2}
+/* estimator */
+.est{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr)}
+.est-in{padding:36px;border-right:1px solid #D5DDE2;display:flex;flex-direction:column;gap:24px}
+.est-out{padding:36px;display:flex;flex-direction:column;gap:22px;background:#FBFCFC}
+.fld{display:flex;flex-direction:column;gap:10px}
+.fld-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.fld label{font-size:15px;font-weight:600;line-height:1.35}
+.num{width:132px;min-height:44px;padding:0 12px;border:1px solid #D5DDE2;border-radius:6px;font:500 16px "IBM Plex Mono",monospace;color:#14212B;background:#FFFFFF;text-align:right;flex:none}
+input[type=range]{width:100%;accent-color:#0B6E6E;height:28px;margin:0}
+.big{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:44px;line-height:1;letter-spacing:-0.03em}
+.chart{height:170px;display:flex;align-items:flex-end;gap:6px;padding-bottom:4px;border-bottom:1px solid #D5DDE2}
+.bar{flex:1;min-width:6px;background:#14212B;border-radius:3px 3px 0 0;transition:height .35s ease}
+.cmp{display:flex;flex-direction:column;gap:8px}
+.track{height:14px;border-radius:7px;background:#ECF0F2;overflow:hidden}
+.fill-ink{height:100%;background:#14212B}
+.fill-teal{height:100%;background:#0B6E6E;min-width:4px;transition:width .35s ease}
+/* offers */
+.offer{padding:32px;display:flex;flex-direction:column;gap:18px;position:relative}
+.days{display:grid;gap:4px}
+.day{height:34px;border-radius:3px;background:#E3F0EF;display:flex;align-items:center;justify-content:center;font:500 12px "IBM Plex Mono",monospace;color:#0B6E6E}
+.day-ink{background:#14212B;color:#FFFFFF}
+.price{display:flex;gap:36px;padding-top:18px;border-top:1px solid #D5DDE2}
+.credit{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;background:#14212B;color:#FFFFFF;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:600;white-space:nowrap;display:flex;gap:8px;align-items:center}
+.slots{display:flex;gap:6px}
+.slots span{width:12px;height:12px;border-radius:50%;background:#0B6E6E}
+/* see it first */
+.pack{position:relative;height:250px;margin-bottom:8px}
+.pg{position:absolute;width:62%;height:220px;background:#FFFFFF;border:1px solid #D5DDE2;border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 8px 24px rgba(20,33,43,0.08)}
+.pg span{height:7px;border-radius:4px;background:#ECF0F2}
+.pg-row{display:flex;gap:6px;align-items:center}
+.pg-row span{flex:1}
+/* comparison */
+.cmp-table{width:100%;border-collapse:collapse;font-size:15px}
+.cmp-table th,.cmp-table td{padding:16px;border-bottom:1px solid #D5DDE2;text-align:left;vertical-align:top}
+.cmp-table thead th{font-size:14px;color:#5A6B77;font-weight:600}
+.cmp-table .us{background:#E3F0EF;color:#14212B;font-weight:600}
+.ph{color:#5A6B77;font-style:italic}
+/* independence */
+.no{padding:24px;display:flex;flex-direction:column;gap:14px;background:#FFFFFF;border-radius:4px}
+.no-mark{font-family:Archivo,sans-serif;font-weight:800;font-size:15px;color:#0B6E6E;letter-spacing:.02em}
+.data-li{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-top:1px solid #B9D6D3}
+/* principal */
+.sig{display:flex;align-items:center;gap:18px}
+.sig-line{flex:1;border-top:1px solid #14212B;max-width:220px}
+.chip{display:inline-flex;padding:8px 14px;border:1px solid #D5DDE2;border-radius:999px;font-size:14px;font-weight:500;background:#FFFFFF}
+/* closing */
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:48px}
+.wk div{height:72px;border-radius:4px;background:rgba(255,255,255,0.08);display:flex;flex-direction:column;justify-content:flex-end;padding:10px;font:500 13px "IBM Plex Mono",monospace;color:#B9C7D0}
+.wk .now{background:#0B6E6E;color:#FFFFFF}
+.wk .gl{background:#FFFFFF;color:#14212B}
+.foot{background:#0E1820;color:#B9C7D0;padding:64px 0 40px}
+.foot a{color:#FFFFFF;text-decoration:none}.foot a:hover{color:#E3F0EF}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+@media (max-width:1100px){
+ .hero-grid,.split{grid-template-columns:minmax(0,1fr);gap:48px}
+ .g5{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .nav-links{display:none}
+}
+@media (max-width:900px){
+ .g2,.g3,.est{grid-template-columns:minmax(0,1fr)}
+ .est-in{border-right:0;border-bottom:1px solid #D5DDE2}
+ .ws{grid-template-columns:minmax(0,1fr);gap:24px}
+ .ws-l,.ws-r{padding:0}
+ .ws-l .ws-card::after,.ws-r .ws-card::before{display:none}
+ .hub{order:-1;width:180px;height:180px}
+ .credit{position:static;transform:none;align-self:center;margin:-8px auto}
+ .foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+ .wrap{padding:0 20px}
+ .sec{padding:72px 0}
+ .h1{font-size:36px}.h2{font-size:29px}.lead{font-size:17px}
+ .g5{grid-template-columns:minmax(0,1fr)}
+ .r5{min-height:0;flex-direction:row;align-items:flex-start;gap:16px}
+ .r5-key{font-size:44px;width:44px}
+ .xcheck{flex-direction:column;align-items:flex-start}
+ .nav-cta{display:none}
+ .menu-btn{display:inline-flex}
+ .claim{grid-template-columns:36px minmax(0,1fr);row-gap:8px}
+ .claim .right{grid-column:2}
+ .detail{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .est-in,.est-out{padding:22px}
+ .big{font-size:34px}
+ .num{width:112px}
+ .btn{width:100%}
+ .wk{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .cmp-wrap{overflow-x:auto}
+ .cmp-table{min-width:640px}
+ .foot-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="cl">
+
+<!-- Navigation -->
+<header class="nav">
+<div class="wrap nav-in">
+<a href="#top" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #14212B">
+<svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><rect x="0.5" y="0.5" width="35" height="35" rx="7" fill="#FFFFFF" stroke="#D5DDE2"></rect><path d="M24 11.5a9 9 0 1 0 0 13" fill="none" stroke="#14212B" stroke-width="3.2" stroke-linecap="round"></path><circle cx="21" cy="18" r="2.6" fill="#00A6C8"></circle></svg>
+<span style="font-family: Archivo, sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.03em">ChisokuLabs</span>
+</a>
+<nav aria-label="Main" style="display: flex; align-items: center; gap: 32px">
+<div class="nav-links">
+<a href="#offers">Decision Review</a>
+<a href="#offers">Evidence Check</a>
+<a href="#method">Method</a>
+<a href="#see">See it first</a>
+<a href="#compare">Pricing</a>
+</div>
+<a class="btn btn-ink nav-cta" href="#cta" style="min-height: 44px">Discuss your programme</a>
+<button class="menu-btn" type="button" aria-label="Open menu"><svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="#14212B" stroke-width="2"></path></svg></button>
+</nav>
+</div>
+</header>
+
+<!-- 1. Hero -->
+<section id="top" class="ink" style="padding: 88px 0 104px">
+<div class="wrap hero-grid">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<h1 class="disp h1">Your programme reports Green. We test whether the evidence agrees.</h1>
+<p class="lead onink-muted" style="max-width: 46ch">Independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia.</p>
+<div class="row" style="margin-top: 8px">
+<a class="btn btn-paper" href="#cta">Discuss your programme</a>
+<a class="btn btn-line-inv" href="#see">See a full sample decision pack</a>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px">
+<sc-for list="{{ platforms }}" as="pl" hint-placeholder-count="5">
+<span style="padding: 6px 12px; border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; font-size: 13px; color: #DCE5EA">{{ pl }}</span>
+</sc-for>
+</div>
+</div>
+
+<div class="sheet" style="color: #14212B; border-color: #2B3A45; box-shadow: 0 24px 64px rgba(0,0,0,0.35)">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 18px 20px; border-bottom: 1px solid #ECF0F2">
+<div>
+<p class="small" style="font-weight: 600">Go-live readiness check</p>
+<p class="tiny muted">Three critical claims, all reported Green</p>
+</div>
+<div class="lens" role="group" aria-label="View">
+<button type="button" aria-pressed="{{ repPressed }}" onClick="{{ showReported }}">As reported</button>
+<button type="button" aria-pressed="{{ evPressed }}" onClick="{{ showEvidenced }}">As evidenced</button>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid #ECF0F2">
+<sc-if value="{{ reported }}" hint-placeholder-val="{{ false }}">
+<div style="padding: 18px 20px; display: flex; gap: 12px; align-items: baseline"><span class="big">3/3</span><span class="small muted">claims reported Green</span></div>
+<div style="padding: 18px 20px; display: flex; gap: 12px; align-items: baseline; border-left: 1px solid #ECF0F2"><span class="big" style="color: #B9C7D0">?</span><span class="small muted">evidence not yet checked</span></div>
+</sc-if>
+<sc-if value="{{ evidenced }}" hint-placeholder-val="{{ true }}">
+<div class="fade" style="padding: 18px 20px; display: flex; gap: 12px; align-items: baseline"><span class="big">1/3</span><span class="small muted">claims have most of their evidence</span></div>
+<div class="fade" style="padding: 18px 20px; display: flex; gap: 12px; align-items: baseline; border-left: 1px solid #ECF0F2"><span class="big" style="color: #B23B3B">1</span><span class="small muted">contradiction between workstreams</span></div>
+</sc-if>
+</div>
+
+<div style="padding: 10px 20px 0 6px">
+<div style="display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 12px; padding: 0 16px 8px 30px; font-size: 12px; font-weight: 600; color: #5A6B77">
+<span>ID</span><span>Claim as reported</span>
+<sc-if value="{{ evidenced }}" hint-placeholder-val="{{ true }}"><span style="display: flex; gap: 8px"><abbr title="Status" style="width: 14px; text-align: center; text-decoration: none">S</abbr><abbr title="Owner" style="width: 14px; text-align: center; text-decoration: none">O</abbr><abbr title="Evidence" style="width: 14px; text-align: center; text-decoration: none">E</abbr><abbr title="Date" style="width: 14px; text-align: center; text-decoration: none">D</abbr><abbr title="Action" style="width: 14px; text-align: center; text-decoration: none">A</abbr><span style="width: 68px"></span></span></sc-if>
+<sc-if value="{{ reported }}" hint-placeholder-val="{{ false }}"><span>Reported</span></sc-if>
+</div>
+<div class="claims">
+<sc-if value="{{ evidenced }}" hint-placeholder-val="{{ true }}"><span class="bracket" aria-hidden="true"></span></sc-if>
+<sc-for list="{{ claims }}" as="c" hint-placeholder-count="3">
+<button type="button" class="{{ c.rowCls }}" aria-pressed="{{ c.pressed }}" onClick="{{ c.pick }}">
+<span class="mono" style="font-size: 14px">{{ c.id }}</span>
+<span class="small">{{ c.text }}</span>
+<span class="right" style="display: flex; align-items: center; gap: 8px">
+<sc-if value="{{ reported }}" hint-placeholder-val="{{ false }}"><span class="rag"><span class="rag-dot"></span>Green</span></sc-if>
+<sc-if value="{{ evidenced }}" hint-placeholder-val="{{ true }}">
+<span class="marks fade">
+<sc-for list="{{ c.marks }}" as="m" hint-placeholder-count="5"><span class="{{ m.cls }}" title="{{ m.sr }}"><span class="sr">{{ m.sr }}</span></span></sc-for>
+</span>
+<span class="score fade">{{ c.score }}</span>
+</sc-if>
+</span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{ evidenced }}" hint-placeholder-val="{{ true }}">
+<div class="fade" style="margin: 12px 20px 0; padding: 12px 14px; border-radius: 4px; background: #F8E5E5; display: flex; gap: 10px; align-items: flex-start">
+<span class="mk mk-missing" style="margin-top: 3px; background: #B23B3B; border-color: #B23B3B; width: 10px; height: 10px"></span>
+<p class="small" style="color: #6E2525"><span class="sr">Contradiction between T1 and I1: </span>The 98% excludes 3 interfaces never tested end to end.</p>
+</div>
+<div class="fade" style="padding: 16px 20px 0">
+<p class="tiny muted" style="margin-bottom: 10px">{{ pickedLabel }}</p>
+<div class="detail">
+<sc-for list="{{ pickedDetails }}" as="d" hint-placeholder-count="5">
+<div class="cell"><span style="display: flex; align-items: center; gap: 8px"><span class="{{ d.cls }}"></span><span class="tiny" style="font-weight: 600">{{ d.name }}</span></span><span class="{{ d.stateCls }}">{{ d.state }}</span></div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<div style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; padding: 16px 20px 18px; margin-top: 16px; border-top: 1px solid #ECF0F2">
+<p class="tiny muted">Illustrative example. Fictional programme. Not a client engagement.</p>
+<span class="tiny muted" style="display: flex; gap: 14px; align-items: center"><span style="display: flex; gap: 6px; align-items: center"><span class="mk mk-present" style="width: 10px; height: 10px"></span>Evidenced</span><span style="display: flex; gap: 6px; align-items: center"><span class="mk mk-partial" style="width: 10px; height: 10px; border-width: 1.5px"></span>Partial</span><span style="display: flex; gap: 6px; align-items: center"><span class="mk mk-missing" style="width: 10px; height: 10px; border-width: 1.5px"></span>Missing</span></span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 2. The problem -->
+<section class="sec paper">
+<div class="wrap">
+<div class="split">
+<h2 class="disp h2">Every workstream can explain its piece. Nobody owns the whole picture.</h2>
+<p class="body muted" style="max-width: 62ch">Testing reports a pass rate. Migration reports a reconciliation. Cutover has a plan. The system integrator has an opinion, and its final milestone depends on the date holding. Weeks before go-live, leadership is asked to approve a decision on reports written by the people being judged on delivery. We don't assume anyone is misleading you. We check whether the evidence supports what is being reported.</p>
+</div>
+<div class="ws" style="margin-top: 72px">
+<div class="ws-col ws-l">
+<div class="sheet ws-card"><div style="display: flex; justify-content: space-between; align-items: center"><span class="h3 disp" style="font-size: 19px">Testing</span><span class="rag"><span class="rag-dot"></span>Green</span></div><p class="small muted">Reports a pass rate.</p></div>
+<div class="sheet ws-card"><div style="display: flex; justify-content: space-between; align-items: center"><span class="h3 disp" style="font-size: 19px">Migration</span><span class="rag"><span class="rag-dot"></span>Green</span></div><p class="small muted">Reports a reconciliation.</p></div>
+</div>
+<div class="hub">
+<span class="hub-q">?</span>
+<span class="small" style="font-weight: 600">The go-live decision</span>
+</div>
+<div class="ws-col ws-r">
+<div class="sheet ws-card"><div style="display: flex; justify-content: space-between; align-items: center"><span class="h3 disp" style="font-size: 19px">Cutover</span><span class="rag"><span class="rag-dot"></span>Green</span></div><p class="small muted">Has a plan.</p></div>
+<div class="sheet ws-card"><div style="display: flex; justify-content: space-between; align-items: center"><span class="h3 disp" style="font-size: 19px">System integrator</span><span class="rag"><span class="rag-dot"></span>Green</span></div><p class="small muted">Has an opinion, and a milestone tied to the date.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 3. How we test readiness -->
+<section id="method" class="sec">
+<div class="wrap">
+<div class="split" style="align-items: end">
+<h2 class="disp h2">Five questions for every critical claim.</h2>
+<p class="body muted" style="max-width: 60ch">For each readiness claim across testing, data migration, integration, cutover and governance, we ask:</p>
+</div>
+<div class="g5" style="margin-top: 48px">
+<div class="sheet r5"><span class="r5-key" aria-hidden="true">S</span><div><p class="small" style="font-weight: 600">Status</p><p class="body" style="margin-top: 4px">Is the status current?</p></div></div>
+<div class="sheet r5"><span class="r5-key" aria-hidden="true">O</span><div><p class="small" style="font-weight: 600">Owner</p><p class="body" style="margin-top: 4px">Is there a named owner?</p></div></div>
+<div class="sheet r5"><span class="r5-key" aria-hidden="true">E</span><div><p class="small" style="font-weight: 600">Evidence</p><p class="body" style="margin-top: 4px">Is there evidence behind it?</p></div></div>
+<div class="sheet r5"><span class="r5-key" aria-hidden="true">D</span><div><p class="small" style="font-weight: 600">Date</p><p class="body" style="margin-top: 4px">Is there a date?</p></div></div>
+<div class="sheet r5"><span class="r5-key" aria-hidden="true">A</span><div><p class="small" style="font-weight: 600">Action</p><p class="body" style="margin-top: 4px">Is there an action if it slips?</p></div></div>
+</div>
+<div class="sheet xcheck" style="background: #14212B; border-color: #14212B; color: #FFFFFF">
+<div class="chain" aria-hidden="true"><span></span><i></i><span style="background: #B23B3B"></span><i style="border-color: #B23B3B; border-top-style: dashed"></i><span style="background: #B23B3B"></span><i></i><span></span></div>
+<p class="body" style="flex: 1">Then we check the claims against each other, because the most expensive risks sit between workstreams.</p>
+<a class="tlink" href="#method" style="color: #E3F0EF">How READINESS-5 works</a>
+</div>
+</div>
+</section>
+
+<!-- 4. What you get -->
+<section class="sec paper">
+<div class="wrap">
+<h2 class="disp h2">A decision you can defend.</h2>
+<div class="g3" style="margin-top: 48px">
+<article class="sheet verdict">
+<span class="v-icon" style="background: #14212B"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 11.5l4.5 4.5L18 6.5" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+<h3 class="disp" style="font-size: 32px">Go</h3>
+<p class="body">The evidence supports the date.</p>
+<div class="skel" aria-hidden="true"><div class="skel-row"><span></span><span></span><span></span></div></div>
+</article>
+<article class="sheet verdict" style="border: 2px solid #0B6E6E">
+<span class="v-icon" style="background: #0B6E6E"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M5 7h12M5 11h12M5 15h7" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg></span>
+<h3 class="disp" style="font-size: 32px">Conditional Go</h3>
+<p class="body">Named conditions, owners and dates that must be met first.</p>
+<div class="skel" aria-hidden="true"><div class="skel-row"><span style="background: #E3F0EF"></span><span></span><span></span></div><div class="skel-row"><span style="background: #E3F0EF"></span><span></span><span></span></div><div class="skel-row"><span style="background: #E3F0EF"></span><span></span><span></span></div></div>
+</article>
+<article class="sheet verdict">
+<span class="v-icon" style="border: 2px solid #14212B"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M6 6l10 10M16 6L6 16" fill="none" stroke="#14212B" stroke-width="2.4" stroke-linecap="round"></path></svg></span>
+<h3 class="disp" style="font-size: 32px">No-Go</h3>
+<p class="body">What is missing and the shortest path back to a date.</p>
+<div class="skel" aria-hidden="true"><div class="skel-row"><span></span><span></span><span></span></div><div class="skel-row"><span></span><span></span><span></span></div></div>
+</article>
+</div>
+<p style="margin-top: 28px"><a class="tlink" href="#see">See a full sample decision pack</a></p>
+</div>
+</section>
+
+<!-- 4a. What a slipped go-live costs -->
+<section class="sec">
+<div class="wrap">
+<div class="split" style="align-items: end">
+<h2 class="disp h2">What a slipped go-live costs.</h2>
+<p class="body muted" style="max-width: 60ch">Put in your own numbers. When a go-live date moves, the programme team, the system integrator and the current system all keep running.</p>
+</div>
+<div class="sheet est" style="margin-top: 48px">
+<form class="est-in">
+<p class="small muted">Example values. Replace them with yours.</p>
+<div class="fld">
+<div class="fld-top"><label for="f-people">People working on the programme (your team and partners)</label><input class="num" id="f-people" type="number" min="0" max="500" value="{{ people }}" onChange="{{ onPeople }}"></div>
+<input type="range" min="0" max="500" step="5" value="{{ people }}" onChange="{{ onPeople }}" aria-label="People working on the programme">
+</div>
+<div class="fld">
+<div class="fld-top"><label for="f-rate">Average cost per person per day (USD, fully loaded)</label><input class="num" id="f-rate" type="number" min="0" max="5000" value="{{ rate }}" onChange="{{ onRate }}"></div>
+<input type="range" min="0" max="3000" step="50" value="{{ rate }}" onChange="{{ onRate }}" aria-label="Average cost per person per day">
+</div>
+<div class="fld">
+<div class="fld-top"><label for="f-weeks">Weeks the go-live could slip</label><input class="num" id="f-weeks" type="number" min="0" max="52" value="{{ weeks }}" onChange="{{ onWeeks }}"></div>
+<input type="range" min="0" max="26" step="1" value="{{ weeks }}" onChange="{{ onWeeks }}" aria-label="Weeks the go-live could slip">
+</div>
+<div class="fld">
+<div class="fld-top"><label for="f-month">Monthly cost of keeping the current system running (USD, optional)</label><input class="num" id="f-month" type="number" min="0" value="{{ monthly }}" onChange="{{ onMonthly }}"></div>
+<input type="range" min="0" max="500000" step="5000" value="{{ monthly }}" onChange="{{ onMonthly }}" aria-label="Monthly cost of keeping the current system running">
+</div>
+</form>
+<div class="est-out">
+<div class="g2" style="gap: 16px">
+<div><p class="small muted">Cost per week of slip</p><p class="big" style="margin-top: 8px">{{ weekly }}</p></div>
+<div><p class="small muted">{{ totalLabel }}</p><p class="big" style="margin-top: 8px">{{ total }}</p></div>
+</div>
+<div>
+<div class="chart" aria-hidden="true">
+<sc-for list="{{ bars }}" as="b" hint-placeholder-count="4"><span class="bar" style="height: {{ b.h }}" title="{{ b.t }}"></span></sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; margin-top: 6px" class="tiny muted"><span>Week 1</span><span>{{ lastWeek }}</span></div>
+</div>
+<div class="cmp">
+<div style="display: flex; justify-content: space-between; gap: 12px" class="tiny"><span style="font-weight: 600">{{ totalLabel }}</span><span class="mono">{{ total }}</span></div>
+<div class="track"><div class="fill-ink" style="width: 100%"></div></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; margin-top: 6px" class="tiny"><span style="font-weight: 600; color: #0B6E6E">Readiness Evidence Check</span><span class="mono">USD 5,000</span></div>
+<div class="track"><div class="fill-teal" style="width: {{ ecPct }}"></div></div>
+</div>
+<sc-if value="{{ hasDays }}" hint-placeholder-val="{{ true }}"><p class="body">A Readiness Evidence Check costs USD 5,000 list, USD 2,500 founding-client rate: about <strong class="mono">{{ days }}</strong> working days of your programme's run-rate.</p></sc-if>
+<p class="tiny muted">Calculated in your browser from your numbers. Directional only: it leaves out lost benefits, contract penalties and business disruption. Not a forecast for your programme.</p>
+<div class="row"><a class="btn btn-ink" href="#cta">Request a free readiness brief</a><a class="tlink" href="#cta">Discuss your programme</a></div>
+<p class="sr" role="status" aria-live="polite">{{ announce }}</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 5. Offers -->
+<section id="offers" class="sec paper">
+<div class="wrap">
+<h2 class="disp h2">Start small, or go straight to a decision.</h2>
+<div class="g2" style="margin-top: 48px; position: relative; gap: 32px">
+<article class="sheet offer">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><h3 class="disp h3">Readiness Evidence Check</h3><span class="mono tiny muted">5 business days</span></div>
+<p class="body">A five-day written review of your programme's readiness evidence.</p>
+<div class="days" style="grid-template-columns: repeat(5, minmax(0, 1fr))" aria-hidden="true"><span class="day day-ink">D1</span><span class="day">D2</span><span class="day">D3</span><span class="day">D4</span><span class="day day-ink">D5</span></div>
+<p class="tiny muted">Day 1 scoping call and document request. Days 2–4 evidence review. Day 5 written findings and readout.</p>
+<div class="price">
+<div><p class="tiny muted">List price</p><p class="mono" style="font-size: 26px; margin: 6px 0 0">USD 5,000</p></div>
+<div><p class="tiny muted">Founding-client rate</p><p class="mono" style="font-size: 26px; margin: 6px 0 0; color: #0B6E6E">USD 2,500</p></div>
+</div>
+<a class="tlink" href="#offers">Readiness Evidence Check</a>
+</article>
+<span class="credit"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9 1l5 5-5 5" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Fee credited in full</span>
+<article class="sheet offer" style="border: 2px solid #14212B">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><h3 class="disp h3">Go-Live Decision Review</h3><span class="mono tiny muted">10 business days</span></div>
+<p class="body">A ten-day independent review that gives your steering committee a defensible go-live decision: Go, Conditional Go or No-Go, with the conditions, owners and dates behind it.</p>
+<div class="days" style="grid-template-columns: repeat(10, minmax(0, 1fr))" aria-hidden="true"><span class="day day-ink">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day day-ink">10</span></div>
+<div class="price">
+<div><p class="tiny muted">List price</p><p class="mono" style="font-size: 26px; margin: 6px 0 0">USD 12,000</p></div>
+<div><p class="tiny muted">Founding-client rate</p><p class="mono" style="font-size: 26px; margin: 6px 0 0; color: #0B6E6E">USD 6,000</p></div>
+</div>
+<a class="tlink" href="#offers">Go-Live Decision Review</a>
+</article>
+</div>
+<div class="g2" style="margin-top: 28px; gap: 32px">
+<p class="small" style="font-weight: 600">The full Evidence Check fee is credited against a Go-Live Decision Review signed within 90 days of the Evidence Check report.</p>
+<div style="display: flex; gap: 16px; align-items: flex-start">
+<span class="slots" aria-hidden="true" style="margin-top: 4px"><span></span><span></span><span></span></span>
+<p class="small muted">Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised case study. Founding-client places remaining: 3.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 6. See it before you sign -->
+<section id="see" class="sec">
+<div class="wrap">
+<h2 class="disp h2">See the work before you talk to us.</h2>
+<div class="g2" style="margin-top: 48px">
+<article class="sheet" style="padding: 32px; display: flex; flex-direction: column; gap: 12px; overflow: hidden">
+<div class="pack" aria-hidden="true">
+<div class="pg" style="left: 24%; top: 22px; transform: rotate(4deg)"><span style="width: 50%"></span><span></span><span></span><span style="width: 70%"></span></div>
+<div class="pg" style="left: 14%; top: 12px; transform: rotate(-2deg)"><span style="width: 40%"></span><span></span><span style="width: 80%"></span></div>
+<div class="pg" style="left: 4%; top: 0">
+<span style="width: 46%; height: 10px; background: #14212B"></span>
+<span style="width: 70%"></span>
+<div class="pg-row" style="margin-top: 8px"><span></span><i class="mk mk-present" style="width: 10px; height: 10px"></i><i class="mk mk-present" style="width: 10px; height: 10px"></i><i class="mk mk-partial" style="width: 10px; height: 10px; border-width: 1.5px"></i></div>
+<div class="pg-row"><span></span><i class="mk mk-present" style="width: 10px; height: 10px"></i><i class="mk mk-missing" style="width: 10px; height: 10px; border-width: 1.5px"></i><i class="mk mk-missing" style="width: 10px; height: 10px; border-width: 1.5px"></i></div>
+<div class="pg-row"><span></span><i class="mk mk-partial" style="width: 10px; height: 10px; border-width: 1.5px"></i><i class="mk mk-missing" style="width: 10px; height: 10px; border-width: 1.5px"></i><i class="mk mk-missing" style="width: 10px; height: 10px; border-width: 1.5px"></i></div>
+<span style="width: 60%; margin-top: auto; background: #E3F0EF; height: 22px"></span>
+</div>
+</div>
+<h3 class="disp h3">The full sample decision pack</h3>
+<p class="small muted">View or download, no form.</p>
+<div style="margin-top: 8px"><a class="btn btn-ink" href="#see">See a full sample decision pack</a></div>
+</article>
+<article class="sheet" style="padding: 32px; display: flex; flex-direction: column; gap: 12px; overflow: hidden">
+<div class="pack" aria-hidden="true">
+<div class="pg" style="left: 18%; top: 0; width: 64%">
+<span style="width: 38%; height: 10px; background: #0B6E6E"></span>
+<span></span><span style="width: 85%"></span><span></span><span style="width: 60%"></span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 10px"><span style="height: 38px; background: #E3F0EF"></span><span style="height: 38px; background: #ECF0F2"></span><span style="height: 38px; background: #ECF0F2"></span></div>
+</div>
+</div>
+<h3 class="disp h3">A free readiness brief on your programme</h3>
+<p class="small muted">Prepared from public information.</p>
+<div style="margin-top: 8px"><a class="btn btn-line" href="#cta">Request a free readiness brief</a></div>
+</article>
+</div>
+</div>
+</section>
+
+<!-- 7. Why not the usual options -->
+<section id="compare" class="sec paper">
+<div class="wrap">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap">
+<h2 class="disp h2">Why not the usual options</h2>
+<a class="tlink" href="#compare">Pricing</a>
+</div>
+<div class="cmp-wrap" style="margin-top: 40px">
+<table class="cmp-table">
+<caption class="sr">Comparison of go-live assurance options</caption>
+<thead><tr><th scope="col" style="width: 24%"></th><th scope="col">Big Four review</th><th scope="col">System integrator's own readiness review</th><th scope="col">Typical boutique assurance</th><th scope="col" class="us">ChisokuLabs</th></tr></thead>
+<tbody>
+<tr><th scope="row">[E5 criterion 1]</th><td class="ph">[E5]</td><td class="ph">[E5]</td><td class="ph">[E5]</td><td class="us">[E5]</td></tr>
+<tr><th scope="row">[E5 criterion 2]</th><td class="ph">[E5]</td><td class="ph">[E5]</td><td class="ph">[E5]</td><td class="us">[E5]</td></tr>
+<tr><th scope="row">[E5 criterion 3]</th><td class="ph">[E5]</td><td class="ph">[E5]</td><td class="ph">[E5]</td><td class="us">[E5]</td></tr>
+<tr><th scope="row">[E5 criterion 4]</th><td class="ph">[E5]</td><td class="ph">[E5]</td><td class="ph">[E5]</td><td class="us">[E5]</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- 8. Independent, and careful with your data -->
+<section class="sec tint">
+<div class="wrap split">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<h2 class="disp h2">No stake in your go-live date.</h2>
+<p class="body" style="max-width: 52ch">We take no implementation fees, resell no software and hold no system integrator partnerships. Your documents are processed under a written data-handling policy: never used to train models, deleted at the end of the engagement unless you ask us to keep them.</p>
+<a class="tlink" href="#top">Independence and data handling</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div class="g3" style="gap: 12px">
+<div class="no"><span class="no-mark">NONE</span><p class="small" style="font-weight: 600">Implementation fees</p></div>
+<div class="no"><span class="no-mark">NONE</span><p class="small" style="font-weight: 600">Software resold</p></div>
+<div class="no"><span class="no-mark">NONE</span><p class="small" style="font-weight: 600">System integrator partnerships</p></div>
+</div>
+<div>
+<div class="data-li"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="4" y="9" width="14" height="10" rx="2" fill="none" stroke="#0B6E6E" stroke-width="1.8"></rect><path d="M7 9V6.5a4 4 0 0 1 8 0V9" fill="none" stroke="#0B6E6E" stroke-width="1.8"></path></svg><p class="small">Processed under a written data-handling policy</p></div>
+<div class="data-li"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="8" fill="none" stroke="#0B6E6E" stroke-width="1.8"></circle><path d="M5.5 16.5l11-11" stroke="#0B6E6E" stroke-width="1.8"></path></svg><p class="small">Never used to train models</p></div>
+<div class="data-li" style="border-bottom: 1px solid #B9D6D3"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 6h14M8 6V4h6v2M6 6l1 12h8l1-12" fill="none" stroke="#0B6E6E" stroke-width="1.8" stroke-linejoin="round"></path></svg><p class="small">Deleted at the end of the engagement unless you ask us to keep them</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 9. Principal-led -->
+<section class="sec paper" style="padding: 88px 0">
+<div class="wrap split" style="align-items: center">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="disp h2">Principal-led</h2>
+<div class="sig" aria-hidden="true"><span class="sig-line"></span><span class="tiny muted">Led and signed by a principal</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 24px">
+<p class="lead">Every review is led and signed by a principal with 11+ years leading ERP and transformation programmes across aviation, banking and manufacturing, including multi-country go-lives.</p>
+<div class="row" style="gap: 8px"><span class="chip">11+ years</span><span class="chip">Aviation</span><span class="chip">Banking</span><span class="chip">Manufacturing</span><span class="chip">Multi-country go-lives</span></div>
+</div>
+</div>
+</section>
+
+<!-- 10. Closing CTA -->
+<section id="cta" class="sec ink">
+<div class="wrap">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap">
+<h2 class="disp h2" style="max-width: 18ch">Six weeks from go-live? Start with the evidence.</h2>
+<div class="row"><a class="btn btn-paper" href="#cta">Discuss your programme</a><a class="btn btn-line-inv" href="#cta">Request a free readiness brief</a></div>
+</div>
+<div class="wk" aria-hidden="true">
+<div class="now">W-6</div><div>W-5</div><div>W-4</div><div>W-3</div><div>W-2</div><div>W-1</div><div class="gl">Go-live</div>
+</div>
+</div>
+</section>
+
+<footer class="foot">
+<div class="wrap">
+<div class="foot-grid">
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="font-family: Archivo, sans-serif; font-weight: 700; font-size: 20px; color: #FFFFFF">ChisokuLabs</span><p class="small" style="max-width: 32ch">Independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia.</p></div>
+<div style="display: flex; flex-direction: column; gap: 10px" class="small"><span style="color: #FFFFFF; font-weight: 600">Site</span><a href="#offers">Go-Live Decision Review</a><a href="#offers">Readiness Evidence Check</a><a href="#method">Method</a><a href="#see">See it first</a><a href="#compare">Pricing</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px" class="small"><span style="color: #FFFFFF; font-weight: 600">Markets</span><a href="#top">United Arab Emirates</a><a href="#top">Saudi Arabia</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px" class="small"><span style="color: #FFFFFF; font-weight: 600">Contact</span><a href="#cta">agam@chisokulabs.com</a><a href="#cta">Discuss your programme</a></div>
+</div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":7900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { lens: 'reported', picked: 'T1', people: 40, rate: 600, weeks: 4, monthly: 0, touched: false };
+  }
+  componentDidMount() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.timer = setTimeout(() => { if (this.state.lens === 'reported') this.setState({ lens: 'evidenced' }); }, reduce ? 0 : 1800);
+  }
+  componentWillUnmount() { clearTimeout(this.timer); }
+  renderVals() {
+    var s = this.state;
+    var R5 = [['S', 'Status'], ['O', 'Owner'], ['E', 'Evidence'], ['D', 'Date'], ['A', 'Action']];
+    var LAB = { present: 'Evidenced', partial: 'Partial', missing: 'Missing' };
+    var data = [
+      { id: 'T1', text: 'SIT complete, 98% pass rate', marks: ['present', 'present', 'partial', 'present', 'missing'] },
+      { id: 'I1', text: 'All 23 interfaces built and tested', marks: ['present', 'present', 'missing', 'missing', 'missing'] },
+      { id: 'C2', text: 'Rollback plan in place', marks: ['partial', 'missing', 'missing', 'missing', 'missing'] }
+    ];
+    var claims = data.map((c) => {
+      var n = c.marks.filter((m) => m === 'present').length;
+      var picked = s.lens === 'evidenced' && s.picked === c.id;
+      return {
+        id: c.id, text: c.text, score: n + ' of 5',
+        rowCls: picked ? 'claim is-picked' : 'claim',
+        pressed: picked ? 'true' : 'false',
+        pick: () => this.setState({ lens: 'evidenced', picked: c.id }),
+        marks: c.marks.map((m, i) => ({ cls: 'mk mk-' + m, sr: R5[i][1] + ': ' + LAB[m] })),
+        details: c.marks.map((m, i) => ({ name: R5[i][1], cls: 'mk mk-' + m, state: LAB[m], stateCls: 'st st-' + m }))
+      };
+    });
+    var pickedClaim = claims.filter((c) => c.id === s.picked)[0] || claims[0];
+
+    var fmt = (v) => 'USD ' + Math.round(v).toLocaleString('en-US');
+    var num = (v) => { var x = Number(v); return isFinite(x) && x > 0 ? x : 0; };
+    var p = num(s.people), r = num(s.rate), w = num(s.weeks), m = num(s.monthly);
+    var weekly = p * r * 5 + m * 12 / 52;
+    var total = weekly * w;
+    var days = p * r > 0 ? Math.round(5000 / (p * r) * 10) / 10 : null;
+    var nBars = Math.min(Math.round(w), 26);
+    var bars = [];
+    for (var i = 1; i <= nBars; i++) bars.push({ h: (i / nBars * 100) + '%', t: 'Week ' + i + ': ' + fmt(weekly * i) });
+    var ecPct = total > 0 ? Math.max(5000 / total * 100, 0.8) : 100;
+    var set = (k) => (e) => this.setState({ [k]: e.target.value, touched: true });
+
+    return {
+      platforms: ['SAP S/4HANA', 'Oracle Fusion', 'Microsoft Dynamics 365', 'Salesforce', 'Workday'],
+      reported: s.lens === 'reported', evidenced: s.lens === 'evidenced',
+      repPressed: s.lens === 'reported' ? 'true' : 'false', evPressed: s.lens === 'evidenced' ? 'true' : 'false',
+      showReported: () => { clearTimeout(this.timer); this.setState({ lens: 'reported' }); },
+      showEvidenced: () => { clearTimeout(this.timer); this.setState({ lens: 'evidenced' }); },
+      claims: claims,
+      pickedLabel: pickedClaim.id + ' ' + pickedClaim.text + ': what the evidence shows',
+      pickedDetails: pickedClaim.details,
+      people: s.people, rate: s.rate, weeks: s.weeks, monthly: s.monthly,
+      onPeople: set('people'), onRate: set('rate'), onWeeks: set('weeks'), onMonthly: set('monthly'),
+      weekly: fmt(weekly), total: fmt(total), totalLabel: 'Cost of a ' + w + '-week slip',
+      bars: bars, lastWeek: 'Week ' + nBars, ecPct: Math.min(ecPct, 100) + '%',
+      hasDays: days !== null, days: days === null ? '' : String(days),
+      announce: s.touched ? 'Cost per week of slip: ' + fmt(weekly) + '. Cost of a ' + w + '-week slip: ' + fmt(total) + '.' : ''
+    };
+  }
+}
+</script>
+</body>
+</html>

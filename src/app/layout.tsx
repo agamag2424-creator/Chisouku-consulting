@@ -4,15 +4,11 @@ import "../styles/globals.css";
 import { JsonLdScript } from "../components/aeo/JsonLdScript";
 import { Nav } from "../components/layout/Nav";
 import { Footer } from "../components/layout/Footer";
-import {
-  auditServiceJsonLd,
-  diagnosticServiceJsonLd,
-  implementationServiceJsonLd,
-  organizationJsonLd,
-  websiteJsonLd,
-} from "../lib/jsonLd";
+import { organizationJsonLd, websiteJsonLd } from "../lib/jsonLd";
+import { defaultDescription, defaultTitle, ogImage } from "../lib/seo";
 import { siteConfig } from "../lib/siteConfig";
 import { Analytics } from "@vercel/analytics/next";
+import { CtaTracker } from "../components/analytics/CtaTracker";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const archivo = Archivo({
@@ -41,43 +37,26 @@ const siteUrl = siteConfig.url;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "PMO Reporting Automation | ChisokuLabs",
+    default: defaultTitle,
     template: "%s | ChisokuLabs",
   },
-  description:
-    "ChisokuLabs builds AI automation into delivery systems—starting with the PMO reporting layer for growth-stage SMEs in the GCC and Singapore.",
-  keywords: [
-    "AI automation delivery systems",
-    "PMO reporting automation",
-    "PMO automation audit GCC",
-    "project reporting AI Singapore",
-    "ChisokuLabs",
-  ],
+  description: defaultDescription,
   alternates: {
     canonical: siteUrl,
   },
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "AI Automation for Delivery Systems | ChisokuLabs",
-    description:
-      "Find delivery drag in the PMO reporting layer—then automate what repeats.",
+    title: defaultTitle,
+    description: defaultDescription,
     siteName: "ChisokuLabs",
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "ChisokuLabs — AI automation for delivery systems",
-      },
-    ],
+    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Automation for Delivery Systems | ChisokuLabs",
-    description:
-      "Starting with the PMO reporting layer for GCC and Singapore growth-stage SMEs.",
-    images: ["/og.png"],
+    title: defaultTitle,
+    description: defaultDescription,
+    images: [ogImage.url],
   },
   icons: {
     icon: "/brand/favicon-mark.png",
@@ -106,16 +85,9 @@ export default function RootLayout({
           <main className="site-main pt-20">{children}</main>
           <Footer />
         </div>
-        <JsonLdScript id="chisokulabs-audit-service-ld-json" data={auditServiceJsonLd()} />
-        <JsonLdScript
-          id="chisokulabs-diagnostic-service-ld-json"
-          data={diagnosticServiceJsonLd()}
-        />
-        <JsonLdScript
-          id="chisokulabs-implementation-service-ld-json"
-          data={implementationServiceJsonLd()}
-        />
+        {/* The old-offer Service JSON-LD is gone; E8.4 adds Service and Offer blocks for the new offers. */}
         <Analytics />
+        <CtaTracker />
         <SpeedInsights />
       </body>
     </html>

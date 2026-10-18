@@ -1,9 +1,4 @@
-import {
-  foundingActive,
-  formatPrice,
-  siteConfig,
-  type OfferKey,
-} from "../../lib/siteConfig";
+import { offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
 type PriceBlockProps = {
@@ -12,6 +7,8 @@ type PriceBlockProps = {
   foundingSlotsRemaining?: number;
   /** Defaults to on for the Evidence Check and Decision Review (PRD 6.2). */
   showFeeCredit?: boolean;
+  /** Off when a heading beside the block already names the offer. */
+  showName?: boolean;
   className?: string;
 };
 
@@ -20,23 +17,20 @@ export function PriceBlock({
   offer,
   foundingSlotsRemaining = siteConfig.foundingSlotsRemaining,
   showFeeCredit,
+  showName = true,
   className,
 }: PriceBlockProps) {
   const data = siteConfig.offers[offer];
-  const founding = foundingActive(foundingSlotsRemaining);
-  const oneOff = "listPrice" in data;
-  const list = oneOff ? formatPrice(data.listPrice) : `From ${formatPrice(data.listPriceFromMonthly)} / month`;
-  const foundingPrice = oneOff
-    ? formatPrice(data.foundingPrice)
-    : `From ${formatPrice(data.foundingPriceFromMonthly)} / month`;
-  const feeCredit = showFeeCredit ?? oneOff;
+  const { list, founding: foundingPrice } = offerPriceLabel(offer, foundingSlotsRemaining);
+  const founding = foundingPrice !== null;
+  const feeCredit = showFeeCredit ?? "listPrice" in data;
 
   return (
     <div className={cn("rounded-sheet border border-line bg-paper p-6", className)}>
-      <p className="t-h3 text-ink">{data.name}</p>
+      {showName && <p className="t-h3 text-ink">{data.name}</p>}
       {"days" in data && <p className="mt-1 t-small text-muted">{`${data.days} business days`}</p>}
 
-      <dl className="mt-5 flex flex-wrap gap-x-10 gap-y-4">
+      <dl className={cn("flex flex-wrap gap-x-10 gap-y-4", (showName || "days" in data) && "mt-5")}>
         <div>
           <dt className="t-small text-muted">List price</dt>
           <dd className="t-data mt-1 text-[20px] text-ink">{list}</dd>

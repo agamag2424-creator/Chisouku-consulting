@@ -95,24 +95,60 @@ body {
   flex: 1;
 }
 
-.section {
-  padding: 124px var(--content-padding-x-mobile);
-}
-
-.section-tight {
-  padding: 78px var(--content-padding-x-mobile);
-}
-
-.container {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-}
-
 @layer base {
   h1,
   h2,
   h3 {
     text-wrap: balance;
+  }
+}
+
+/* Hero Evidence Check (PRD 7, v1.2): a reported view and an evidenced view, switched by data-view on the root.
+   "auto" is the server-rendered state before the visitor chooses: reported, or evidenced under reduced motion.
+   Unlayered on purpose: it must beat Tailwind display utilities (flex, table) on the same elements. */
+.ec[data-view="evidenced"] .ec-rep,
+.ec[data-view="reported"] .ec-ev {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ec[data-view="auto"] .ec-ev {
+    display: none;
+  }
+
+  .ec .ec-ev {
+    animation: ec-in 400ms ease-out both;
+  }
+
+  .ec .ec-link path {
+    stroke-dasharray: 1;
+    animation: ec-draw 600ms ease-out 150ms both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ec[data-view="auto"] .ec-rep {
+    display: none;
+  }
+}
+
+@keyframes ec-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ec-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -197,278 +233,6 @@ body {
   }
 }
 
-.display {
-  max-width: 16ch;
-  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.05;
-  font-weight: 800;
-  letter-spacing: -0.028em;
-}
-
-.headline {
-  max-width: 20ch;
-  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(1.7rem, 2.9vw, 2.55rem);
-  line-height: 1.12;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.artifact-sheet,
-.report-board {
-  position: relative;
-  background: var(--color-paper);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-sheet);
-}
-
-.report-board {
-  overflow: hidden;
-}
-
-.report-board.ink-corners::before,
-.report-board.ink-corners::after,
-.artifact-sheet.ink-corners::before,
-.artifact-sheet.ink-corners::after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  width: 14px;
-  height: 14px;
-  pointer-events: none;
-  border-color: color-mix(in srgb, var(--color-ink) 35%, transparent);
-  border-style: solid;
-}
-
-.report-board.ink-corners::before,
-.artifact-sheet.ink-corners::before {
-  top: 8px;
-  left: 8px;
-  border-width: 1.5px 0 0 1.5px;
-}
-
-.report-board.ink-corners::after,
-.artifact-sheet.ink-corners::after {
-  right: 8px;
-  bottom: 8px;
-  border-width: 0 1.5px 1.5px 0;
-}
-
-.photo-atmosphere {
-  position: relative;
-  isolation: isolate;
-}
-
-.photo-atmosphere-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.photo-atmosphere-media img {
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-  height: 100%;
-  transform: scale(1.06);
-  filter: saturate(0.75) contrast(1.05);
-  opacity: 0.18;
-}
-
-.photo-atmosphere::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--color-page) 82%, transparent) 0%, color-mix(in srgb, var(--color-page) 92%, transparent) 55%, color-mix(in srgb, var(--color-page) 98%, transparent) 100%),
-    radial-gradient(ellipse at 70% 20%, color-mix(in srgb, var(--color-teal) 8%, transparent), transparent 45%);
-}
-
-.photo-atmosphere > .container {
-  position: relative;
-  z-index: 1;
-}
-
-.photo-atmosphere-dark .photo-atmosphere-media img {
-  opacity: 0.28;
-  filter: saturate(0.55) contrast(1.1) brightness(0.55);
-}
-
-.photo-atmosphere-dark::after {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 88%, transparent) 0%, color-mix(in srgb, var(--color-ink) 94%, transparent) 100%),
-    radial-gradient(ellipse at 30% 0%, color-mix(in srgb, var(--color-teal) 18%, transparent), transparent 50%);
-}
-
-.pathway-phase {
-  position: relative;
-}
-
-.pathway-phase::after {
-  content: "";
-  display: none;
-}
-
-@media (min-width: 1280px) {
-  .pathway-phase:not(:last-child)::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: -1px;
-    z-index: 3;
-    width: 10px;
-    height: 10px;
-    border-top: 1.5px solid color-mix(in srgb, var(--color-teal) 70%, transparent);
-    border-right: 1.5px solid color-mix(in srgb, var(--color-teal) 70%, transparent);
-    transform: translate(50%, -50%) rotate(45deg);
-    background: color-mix(in srgb, var(--color-paper) 96%, transparent);
-  }
-}
-
-.metric-chip {
-  transition:
-    background 180ms ease,
-    border-color 180ms ease;
-}
-
-.metric-chip:hover {
-  border-color: color-mix(in srgb, var(--color-teal) 45%, transparent);
-  background: color-mix(in srgb, var(--color-teal) 6%, transparent);
-}
-
-.editorial-row {
-  display: grid;
-  gap: 12px 28px;
-  border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
-  padding: 22px 0;
-}
-
-@media (min-width: 768px) {
-  .editorial-row {
-    grid-template-columns: 72px 1.1fr 1.4fr;
-    align-items: baseline;
-  }
-}
-
-.output-strip {
-  display: grid;
-  gap: 1px;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
-  background: color-mix(in srgb, var(--color-ink) 12%, transparent);
-}
-
-@media (min-width: 900px) {
-  .output-strip {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.output-strip a {
-  position: relative;
-  display: block;
-  background: color-mix(in srgb, var(--color-paper) 96%, transparent);
-  padding: 18px 16px;
-  text-decoration: none;
-  color: inherit;
-  transition: background 180ms ease;
-}
-
-.output-strip a::after {
-  content: "";
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 0;
-  height: 2px;
-  background: var(--color-teal);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 220ms ease;
-}
-
-.output-strip a:hover {
-  background: var(--color-paper);
-}
-
-.output-strip a:hover::after {
-  transform: scaleX(1);
-}
-
-
-
-.map-grid-texture {
-  background-image:
-    linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 3.5%, transparent) 1px, transparent 1px),
-    linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 2.8%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
-}
-
-.atmosphere-band {
-  position: relative;
-  overflow: hidden;
-}
-
-.atmosphere-band::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 20% 0%, color-mix(in srgb, var(--color-teal) 14%, transparent), transparent 42%),
-    radial-gradient(ellipse at 90% 100%, color-mix(in srgb, var(--color-line) 10%, transparent), transparent 40%);
-  opacity: 0.9;
-}
-
-.atmosphere-band > * {
-  position: relative;
-  z-index: 1;
-}
-
-.kicker-title {
-  color: var(--color-muted);
-  font-size: 0.86rem;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
-.subhead {
-  max-width: 740px;
-  color: var(--color-muted);
-  font-size: clamp(1.06rem, 1.7vw, 1.28rem);
-  line-height: 1.72;
-}
-
-.body-copy {
-  color: var(--color-muted);
-  font-size: 1rem;
-  line-height: 1.78;
-}
-
-.button {
-  display: inline-flex;
-  min-height: 46px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px;
-  padding: 0 19px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    border-color 180ms ease,
-    background 180ms ease,
-    color 180ms ease;
-}
-
-.button:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
@@ -480,426 +244,13 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-/* Teal on ink is under 3:1, so focus on the dark footer uses the tint. */
-footer :focus-visible {
+/* Teal on ink is under 3:1, so focus on ink surfaces uses the tint; white cards on ink go back to teal. */
+footer :focus-visible,
+.bg-ink :focus-visible {
   outline-color: var(--color-teal-tint);
 }
 
-.button-primary {
-  border: 1px solid var(--color-ink);
-  background: var(--color-ink);
-  color: var(--color-paper);
+.bg-ink .bg-paper :focus-visible {
+  outline-color: var(--color-teal);
 }
 
-.button-primary:hover {
-  background: color-mix(in srgb, var(--color-ink) 82%, var(--color-teal));
-}
-
-.button-secondary {
-  border: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
-  background: transparent;
-  color: var(--color-ink);
-}
-
-.button-secondary:hover {
-  border-color: var(--color-ink);
-}
-
-.button-light {
-  border: 1px solid color-mix(in srgb, var(--color-paper) 28%, transparent);
-  background: var(--color-paper);
-  color: var(--color-ink);
-}
-
-.button-line-light {
-  border: 1px solid color-mix(in srgb, var(--color-paper) 32%, transparent);
-  background: transparent;
-  color: var(--color-paper);
-}
-
-.panel {
-  border: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--color-paper) 86%, transparent);
-  box-shadow: 0 28px 80px color-mix(in srgb, var(--color-ink) 7%, transparent);
-}
-
-.dark-band {
-  background: var(--color-ink);
-  color: var(--color-paper);
-}
-
-.dark-band .body-copy,
-.dark-band .subhead {
-  color: color-mix(in srgb, var(--color-paper) 78%, var(--color-ink));
-}
-
-.rule {
-  height: 1px;
-  background: linear-gradient(90deg, var(--color-ink), transparent);
-  opacity: 0.22;
-}
-
-.artifact-sheet {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--color-paper) 96%, transparent), color-mix(in srgb, var(--color-page) 94%, transparent)),
-    repeating-linear-gradient(0deg, transparent 0 35px, color-mix(in srgb, var(--color-ink) 3.2%, transparent) 36px);
-  box-shadow:
-    0 34px 90px color-mix(in srgb, var(--color-ink) 16%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 80%, transparent);
-}
-
-.report-cover {
-  position: relative;
-  overflow: hidden;
-}
-
-.report-cover::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 2.8%, transparent) 1px, transparent 1px),
-    linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 2.2%, transparent) 1px, transparent 1px);
-  background-size: 112px 112px;
-  mask-image: linear-gradient(90deg, black 0 74%, transparent 100%);
-}
-
-.hero-top-image {
-  position: relative;
-}
-
-.hero-top-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--color-paper) 24%, transparent), transparent 36%, color-mix(in srgb, var(--color-teal) 8%, transparent));
-}
-
-.map-artifact {
-  position: relative;
-  min-height: 680px;
-  border: 1px solid color-mix(in srgb, var(--color-ink) 16%, transparent);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--color-paper) 94%, transparent), color-mix(in srgb, var(--color-page) 94%, transparent)),
-    linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 2.8%, transparent) 1px, transparent 1px),
-    linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 2.4%, transparent) 1px, transparent 1px);
-  background-size: auto, 64px 64px, 64px 64px;
-  box-shadow: 0 38px 100px color-mix(in srgb, var(--color-ink) 16%, transparent);
-}
-
-.map-node {
-  position: absolute;
-  border: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
-  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
-  padding: 12px 14px;
-  box-shadow: 0 18px 42px color-mix(in srgb, var(--color-ink) 8%, transparent);
-}
-
-.map-node-dark {
-  border-color: var(--color-ink);
-  background: var(--color-ink);
-  color: var(--color-paper);
-}
-
-.map-node-accent {
-  border-color: color-mix(in srgb, var(--color-teal) 55%, transparent);
-  background: color-mix(in srgb, var(--color-teal-tint) 92%, transparent);
-}
-
-.map-line {
-  position: absolute;
-  height: 1px;
-  transform-origin: left center;
-  background: color-mix(in srgb, var(--color-ink) 22%, transparent);
-}
-
-.map-line-accent {
-  background: color-mix(in srgb, var(--color-teal) 72%, transparent);
-}
-
-.map-dot {
-  position: absolute;
-  height: 10px;
-  width: 10px;
-  border: 2px solid var(--color-paper);
-  border-radius: 999px;
-  background: var(--color-teal);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 18%, transparent);
-}
-
-.annotation {
-  color: var(--color-muted);
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1.45;
-}
-
-.ledger {
-  border-top: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
-}
-
-.ledger-row {
-  display: grid;
-  grid-template-columns: 72px minmax(0, 1fr) 28px minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
-  margin-inline: -8px;
-  padding: 22px 8px;
-  transition:
-    background 180ms ease,
-    box-shadow 180ms ease;
-}
-
-.ledger-row:hover {
-  background: color-mix(in srgb, var(--color-teal) 5%, transparent);
-  box-shadow: inset 3px 0 0 var(--color-teal);
-}
-
-.ledger-row:hover .ledger-arrow {
-  color: var(--color-teal);
-}
-
-.process-map {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1.08fr 1fr;
-  gap: 34px;
-  border-top: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
-  padding: 34px 0;
-}
-
-.process-map::before {
-  content: "";
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 50%;
-  height: 1px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 14%, transparent), color-mix(in srgb, var(--color-teal) 62%, transparent), color-mix(in srgb, var(--color-ink) 14%, transparent));
-}
-
-.process-stage {
-  position: relative;
-  z-index: 1;
-  background: var(--color-page);
-  padding: 0 10px;
-}
-
-.report-artifact {
-  border: 1px solid color-mix(in srgb, var(--color-ink) 17%, transparent);
-  background: var(--color-paper);
-  box-shadow: 0 42px 120px color-mix(in srgb, var(--color-ink) 14%, transparent);
-}
-
-.heat-cell {
-  min-height: 62px;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
-  background: color-mix(in srgb, var(--color-paper) 72%, transparent);
-}
-
-.heat-cell:last-child {
-  border-bottom: 0;
-}
-
-.form-field {
-  width: 100%;
-  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
-  padding: 12px 13px;
-  color: var(--color-ink);
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 7px;
-  color: var(--color-ink);
-  font-size: 0.88rem;
-  font-weight: 600;
-}
-
-.drag-slider {
-  appearance: none;
-  height: 6px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-ink) 12%, transparent);
-  outline: none;
-  cursor: pointer;
-}
-
-.drag-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid var(--color-ink);
-  background: var(--color-teal);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-ink) 20%, transparent);
-  cursor: pointer;
-}
-
-.drag-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid var(--color-ink);
-  background: var(--color-teal);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-ink) 20%, transparent);
-  cursor: pointer;
-}
-
-.table-like {
-  display: grid;
-  border-top: 1px solid var(--color-line);
-}
-
-.table-row {
-  display: grid;
-  grid-template-columns: minmax(150px, 0.9fr) minmax(0, 1.5fr);
-  gap: 0;
-  border-bottom: 1px solid var(--color-line);
-}
-
-.table-cell {
-  padding: 20px 0;
-}
-
-.table-cell + .table-cell {
-  padding-left: 28px;
-}
-
-@media (max-width: 760px) {
-  .section {
-    padding: 82px var(--content-padding-x-mobile);
-  }
-
-  .section-tight {
-    padding: 58px var(--content-padding-x-mobile);
-  }
-
-  .display {
-    font-size: clamp(2.15rem, 8.2vw, 2.7rem);
-    letter-spacing: -0.025em;
-    max-width: 100%;
-  }
-
-  .headline {
-    font-size: clamp(1.55rem, 6.4vw, 2rem);
-    max-width: 100%;
-  }
-
-  .report-cover::before {
-    display: none;
-  }
-
-  .report-cover.section {
-    padding-top: 28px;
-  }
-
-  /* Hero map: full-bleed readable, CTAs clear of frost */
-  .photo-atmosphere.report-cover .photo-atmosphere-media img {
-    opacity: 0.1;
-  }
-
-  .photo-atmosphere.report-cover::after {
-    opacity: 0.85;
-  }
-
-  .hero-actions {
-    width: 100%;
-  }
-
-  .hero-actions .button {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .hero-top-image {
-    margin-inline: -22px;
-    margin-bottom: 42px;
-    border-left: 0;
-    border-right: 0;
-  }
-
-  .hero-top-image img {
-    height: 190px;
-  }
-
-  .map-artifact {
-    min-height: auto;
-    margin-inline: -8px;
-    padding: 96px 14px 18px;
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--color-paper) 96%, transparent), color-mix(in srgb, var(--color-page) 96%, transparent)),
-      repeating-linear-gradient(0deg, transparent 0 35px, color-mix(in srgb, var(--color-ink) 3.5%, transparent) 36px);
-  }
-
-  .map-node {
-    position: static;
-    width: auto !important;
-    margin-top: 12px;
-    padding: 10px 11px;
-  }
-
-  .map-line,
-  .map-dot {
-    display: none;
-  }
-
-  .ledger-row {
-    grid-template-columns: 44px 1fr;
-    gap: 12px;
-  }
-
-  .ledger-row .ledger-arrow,
-  .ledger-row .ledger-impact {
-    grid-column: 2;
-  }
-
-  .process-map {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .process-map::before {
-    left: 20px;
-    right: auto;
-    top: 34px;
-    bottom: 34px;
-    width: 1px;
-    height: auto;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 14%, transparent), color-mix(in srgb, var(--color-teal) 62%, transparent), color-mix(in srgb, var(--color-ink) 14%, transparent));
-  }
-
-  .process-stage {
-    padding-left: 42px;
-    background: transparent;
-  }
-
-  .table-row {
-    grid-template-columns: 1fr;
-    padding: 16px 0;
-  }
-
-  .table-cell {
-    padding: 0;
-  }
-
-  .table-cell + .table-cell {
-    padding-left: 0;
-    padding-top: 8px;
-  }
-}
-
-@media (min-width: 768px) {
-  .section,
-  .section-tight {
-    padding-left: var(--content-padding-x);
-    padding-right: var(--content-padding-x);
-  }
-}

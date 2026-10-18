@@ -1,0 +1,7 @@
+e104-home perf [82,85,91] median 85 | a11y 100 bp 96 seo 100 | median LCP 2323 ms TBT 401 ms CLS 0.000 FCP 919
+e104-rec perf [94,95,95] median 95 | a11y 100 bp 96 seo 100 | median LCP 2767 ms TBT 124 ms CLS 0.000 FCP 766
+e104-gldr perf [92,93,94] median 93 | a11y 100 bp 96 seo 100 | median LCP 2910 ms TBT 151 ms CLS 0.000 FCP 918
+e104-sif perf [92,93,94] median 93 | a11y 100 bp 96 seo 100 | median LCP 3010 ms TBT 142 ms CLS 0.000 FCP 768
+--- re-run
+e104-home2 perf [87,93,96] median 93 | a11y 100 bp 96 seo 100
+e104-rec2 perf [91,95,96] median 95 | a11y 100 bp 96 seo 100

@@ -1,64 +1,32 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { AiImpactModel } from "../../components/artifacts/AiImpactModel";
-import { DirectAnswer } from "../../components/aeo/DirectAnswer";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
-import { canonicalAnswers } from "../../lib/aeoContent";
+import {
+  ClaimCard,
+  ConditionsTable,
+  ContradictionTable,
+  ElementCards,
+  EvidenceRegister,
+  ReportedVersusScore,
+  ScoreKey,
+} from "../../components/method/MethodVisuals";
+import { ClaimFlow } from "../../components/method/ClaimFlow";
+import { OfferClosing, SectionHead, offerCta } from "../../components/offers/OfferSections";
+import { Button } from "../../components/ui/Button";
+import { Section } from "../../components/ui/Section";
+import { Sheet } from "../../components/ui/Sheet";
+import {
+  packJudgementNote,
+  packMethodNote,
+  packRecommendation,
+  sampleLabel,
+} from "../../content/samplePack";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
-import { siteConfig } from "../../lib/siteConfig";
+import { pageMetadata } from "../../lib/seo";
 
-const title = "Method — AI Impact Model for PMO Reporting";
-const description =
-  "ChisokuLabs AI Impact Model for PMO reporting automation: Assess, Architect, Activate, Accelerate — starting with the reporting pack cycle.";
+// PRD 9.4. Headings and one-line tests are 9.4's; examples and their wording come from the sample pack.
+const title = "READINESS-5: how we test a go-live claim";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/method" },
-  openGraph: {
-    title: `${title} | ChisokuLabs`,
-    description,
-    url: `${siteConfig.url}/method`,
-    images: ["/og.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${title} | ChisokuLabs`,
-    description,
-    images: ["/og.png"],
-  },
-};
-
-const gates = [
-  {
-    gate: "Gate 1",
-    after: "Post-Assess",
-    question: "Is the reporting drag material?",
-    go: "Clear pack-cycle friction with automation upside",
-    nogo: "Stop or refocus scope",
-  },
-  {
-    gate: "Gate 2",
-    after: "Post-Architect",
-    question: "Is the automation path viable?",
-    go: "Blueprint + fit confirmed for Activate",
-    nogo: "Descope or redesign",
-  },
-  {
-    gate: "Gate 3",
-    after: "Post-Activate",
-    question: "Is the pack cycle working as designed?",
-    go: "Acceptance met — ready to scale",
-    nogo: "Fix before expanding",
-  },
-  {
-    gate: "Gate 4",
-    after: "Quarterly",
-    question: "Is the system still earning its keep?",
-    go: "Continue / expand beyond reporting",
-    nogo: "Optimize or sunset underperforming flows",
-  },
-] as const;
+export const metadata: Metadata = pageMetadata("/method");
 
 export default function MethodPage() {
   return (
@@ -70,108 +38,88 @@ export default function MethodPage() {
           { name: "Method", path: "/method" },
         ])}
       />
-      <section className="section report-cover pt-16">
-        <div className="container max-w-3xl">
-          <h1 className="display">AI Impact Model for PMO reporting.</h1>
-          <p className="subhead mt-5">
-            {siteConfig.tagline}. {siteConfig.subline}.
-          </p>
-          <DirectAnswer
-            answer={canonicalAnswers.method}
-            bullets={[
-              "Go/No-Go gates after each phase — prevent runaway scope",
-              "PMO reporting starts at Assess, then Architect (the audit)",
-              "Definitions: pack cycle, reporting drag — see glossary",
-            ]}
-            primaryHref="/pmo-automation-audit"
-            primaryLabel="View PMO Automation Audit"
-            secondaryHref="/implementation"
-            secondaryLabel="Implementation path"
-          />
-        </div>
-      </section>
 
-      <section className="section bg-[var(--color-paper)] pt-0">
-        <div className="container">
-          <AiImpactModel />
-          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-[var(--color-muted)]">
-            PMO reporting is Assess, then Architect. Implementation is Activate.
-            Accelerate expands beyond the reporting layer once the pack cycle is
-            stable.
-          </p>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <h2 className="headline">Go / No-Go at each phase.</h2>
-          <div className="report-board ink-corners mt-10">
-            {gates.map((item, index) => (
-              <div
-                key={item.gate}
-                className={[
-                  "grid gap-4 p-5 md:grid-cols-[0.7fr_1.2fr_1.1fr_1.1fr] md:items-start",
-                  index < gates.length - 1
-                    ? "border-b border-ink/10"
-                    : "",
-                ].join(" ")}
-              >
-                <div>
-                  <div className="text-[13px] font-bold text-teal">
-                    {item.gate}
-                  </div>
-                  <div className="mt-2 text-sm font-bold text-[var(--color-ink)]">
-                    {item.after}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-[13px] font-bold text-[var(--color-muted)]">
-                    Question
-                  </div>
-                  <p className="mt-2 text-sm font-semibold leading-relaxed">
-                    {item.question}
-                  </p>
-                </div>
-                <div>
-                  <div className="text-[13px] font-bold text-[var(--color-muted)]">
-                    Go
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
-                    {item.go}
-                  </p>
-                </div>
-                <div>
-                  <div className="text-[13px] font-bold text-[var(--color-muted)]">
-                    No-Go
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
-                    {item.nogo}
-                  </p>
-                </div>
-              </div>
-            ))}
+      <Section
+        tone="ink"
+        containerClassName="grid gap-12 min-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] min-[1100px]:items-center min-[1100px]:gap-16"
+      >
+        <div>
+          <h1 className="t-h1 max-w-[20ch] text-paper">{title}</h1>
+          <p className="t-body mt-5 max-w-[58ch] text-paper/80">{packMethodNote}</p>
+          <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
+            <Button href={offerCta.review.href} variant="inverse" size="lg">
+              {offerCta.review.label}
+            </Button>
+            <Button href={offerCta.samplePack.href} variant="inverse-outline" size="lg">
+              {offerCta.samplePack.label}
+            </Button>
           </div>
         </div>
-      </section>
+        <ClaimCard id="T1" label={sampleLabel} />
+      </Section>
 
-      <section className="section dark-band atmosphere-band">
-        <div className="container flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="headline">Begin at the reporting layer.</h2>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link href="/free-pmo-diagnostic" className="button button-light">
-              Free PMO Diagnostic
-            </Link>
-            <Link href="/pmo-automation-audit" className="button button-line-light">
-              PMO Automation Audit
-            </Link>
-            <Link href="/implementation" className="button button-line-light">
-              Implementation
-            </Link>
-          </div>
+      <Section tone="paper">
+        <SectionHead title="The five elements" />
+        <ClaimFlow className="mt-10" />
+        <ElementCards />
+        <p className="mt-6 text-[13px] text-muted">{sampleLabel}</p>
+      </Section>
+
+      <Section tone="page">
+        <SectionHead title="Scoring">
+          <p>A claim reported Green with 2 of 5 is an assumption, not a fact.</p>
+        </SectionHead>
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-6">
+          <ScoreKey />
+          <ReportedVersusScore id="I1" />
         </div>
-      </section>
+        <EvidenceRegister />
+        <p className="mt-4 text-[13px] text-muted">{sampleLabel}</p>
+      </Section>
+
+      <Section tone="paper">
+        <SectionHead title="Contradiction testing" />
+        <ContradictionTable />
+        <p className="mt-4 text-[13px] text-muted">{sampleLabel}</p>
+      </Section>
+
+      <Section tone="page">
+        <SectionHead title="From findings to a decision">
+          <p>Each condition names the evidence that closes it, its owner and the date that evidence is due.</p>
+        </SectionHead>
+        <div className="mt-10 grid gap-6 min-[1100px]:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
+          <Sheet className="flex flex-col gap-4 border-2 border-teal p-6 min-[641px]:p-8">
+            <span className="self-start rounded-full bg-teal px-3 py-1 text-[13px] font-semibold text-paper">
+              {packRecommendation.verdict}
+            </span>
+            <p className="t-body text-ink">{packRecommendation.summary}</p>
+            <p className="t-small border-t border-line pt-4 text-ink">{packRecommendation.fallback}</p>
+          </Sheet>
+          <ConditionsTable />
+        </div>
+        <p className="mt-4 text-[13px] text-muted">{sampleLabel}</p>
+      </Section>
+
+      <Section tone="tint">
+        <SectionHead title="What tooling does and doesn't do" />
+        <ul className="mt-10 grid gap-4 min-[900px]:grid-cols-2">
+          <li className="flex flex-col gap-3 rounded-sheet bg-paper p-6">
+            <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold tracking-[0.02em] text-teal">
+              Does
+            </span>
+            <span className="t-body text-ink">Extracts and cross-checks every claim.</span>
+          </li>
+          <li className="flex flex-col gap-3 rounded-sheet bg-paper p-6">
+            <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold tracking-[0.02em] text-ink">
+              Doesn&apos;t
+            </span>
+            <span className="t-body text-ink">Decide. A principal reviews every finding and makes the judgement.</span>
+          </li>
+        </ul>
+        <p className="t-small mt-6 text-ink">{packJudgementNote}</p>
+      </Section>
+
+      <OfferClosing />
     </>
   );
 }

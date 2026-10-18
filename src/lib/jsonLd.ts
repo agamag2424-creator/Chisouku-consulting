@@ -1,5 +1,6 @@
-import { auditPriceRange, siteConfig } from "./siteConfig";
+import { siteConfig } from "./siteConfig";
 import type { FaqItem } from "./aeoContent";
+import type { Market } from "../content/markets";
 
 const siteUrl = siteConfig.url;
 
@@ -13,7 +14,7 @@ export function organizationJsonLd(): JsonLd {
     legalName: "ChisokuLabs Pvt Ltd",
     url: siteUrl,
     email: siteConfig.email,
-    description: `${siteConfig.tagline}. ${siteConfig.subline}.`,
+    description: `${siteConfig.tagline}. ${siteConfig.positioning}`,
     areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
     logo: `${siteUrl}/brand/favicon-mark.png`,
   };
@@ -25,7 +26,7 @@ export function websiteJsonLd(): JsonLd {
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteUrl,
-    description: `${siteConfig.tagline}. ${siteConfig.subline}.`,
+    description: `${siteConfig.tagline}. ${siteConfig.positioning}`,
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
@@ -34,57 +35,52 @@ export function websiteJsonLd(): JsonLd {
   };
 }
 
-export function auditServiceJsonLd(): JsonLd {
+/** Service + Offer for one of the two fixed-fee offers, from config (E2). List price only; the founding rate is a promotion. */
+export function offerServiceJsonLd(offer: "evidenceCheck" | "decisionReview", description: string): JsonLd {
+  const data = siteConfig.offers[offer];
+  const url = `${siteUrl}${data.path}`;
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "PMO Automation Audit",
-    serviceType: "PMO Automation Audit",
-    description:
-      "AI automation for delivery systems, starting with the PMO reporting layer. Map reporting drag, score AI automation fit, leave with a blueprint.",
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteUrl,
-    },
+    name: data.name,
+    serviceType: "Go-live readiness assurance",
+    description,
+    provider: { "@type": "Organization", name: siteConfig.name, url: siteUrl },
     areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
+    url,
     offers: {
       "@type": "Offer",
-      url: `${siteUrl}/pmo-automation-audit`,
-      priceCurrency: siteConfig.pricing.currency,
-      description: `Typical range ${auditPriceRange}; timeline ${siteConfig.pricing.timeline}.`,
-      priceSpecification: {
-        "@type": "PriceSpecification",
-        minPrice: siteConfig.pricing.min,
-        maxPrice: siteConfig.pricing.max,
-        priceCurrency: siteConfig.pricing.currency,
-      },
+      url,
+      price: data.listPrice,
+      priceCurrency: siteConfig.currency,
+      description: `${data.days} business days`,
     },
-    url: `${siteUrl}/pmo-automation-audit`,
   };
 }
 
-export function diagnosticServiceJsonLd(): JsonLd {
+/** Service for a market page (E7): the country served, and both fixed-fee offers at list price from config. */
+export function marketServiceJsonLd(market: Market, description: string): JsonLd {
+  const url = `${siteUrl}${market.path}`;
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Free PMO Diagnostic",
-    serviceType: "Free PMO Diagnostic",
-    description:
-      "Five-minute baseline of reporting maturity, operating drag, and AI automation fit.",
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteUrl,
-    },
-    areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
-    offers: {
-      "@type": "Offer",
-      price: 0,
-      priceCurrency: siteConfig.pricing.currency,
-      url: siteConfig.diagnosticUrl,
-    },
-    url: `${siteUrl}/free-pmo-diagnostic`,
+    name: market.name,
+    serviceType: "Go-live readiness assurance",
+    description,
+    provider: { "@type": "Organization", name: siteConfig.name, url: siteUrl },
+    areaServed: { "@type": "Country", name: market.country.name, identifier: market.country.code },
+    url,
+    offers: (["evidenceCheck", "decisionReview"] as const).map((key) => {
+      const offer = siteConfig.offers[key];
+      return {
+        "@type": "Offer",
+        name: offer.name,
+        url: `${siteUrl}${offer.path}`,
+        price: offer.listPrice,
+        priceCurrency: siteConfig.currency,
+        description: `${offer.days} business days`,
+      };
+    }),
   };
 }
 
@@ -97,7 +93,7 @@ export function faqPageJsonLd(items: FaqItem[]): JsonLd {
       name: item.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: item.detail ? `${item.answer} ${item.detail}` : item.answer,
+        text: item.answer,
       },
     })),
   };
@@ -121,36 +117,13 @@ export function breadcrumbJsonLd(items: BreadcrumbItem[]): JsonLd {
   };
 }
 
-export function implementationServiceJsonLd(): JsonLd {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "PMO Reporting Implementation",
-    serviceType: "AI automation implementation for PMO reporting",
-    description:
-      "Optional build after the PMO Automation Audit — AI automation into the pack cycle. Scope and commercial terms confirmed after the blueprint.",
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteUrl,
-    },
-    areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
-    offers: {
-      "@type": "Offer",
-      url: `${siteUrl}/implementation`,
-      description: "Quoted after audit blueprint and fit conversation — not a fixed list price.",
-    },
-    url: `${siteUrl}/implementation`,
-  };
-}
-
 export function definedTermSetJsonLd(
   terms: { id: string; term: string; definition: string }[],
 ): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "DefinedTermSet",
-    name: "ChisokuLabs PMO reporting glossary",
+    name: "ChisokuLabs go-live readiness glossary",
     url: `${siteUrl}/glossary`,
     hasDefinedTerm: terms.map((term) => ({
       "@type": "DefinedTerm",
@@ -162,6 +135,27 @@ export function definedTermSetJsonLd(
   };
 }
 
-export function stringifyJsonLd(data: JsonLd): string {
-  return JSON.stringify(data);
+/** HowTo for a checklist guide (E8.3): one step per checklist domain, one direction per item. */
+export function howToJsonLd(guide: {
+  name: string;
+  description: string;
+  path: string;
+  steps: readonly { name: string; items: readonly string[] }[];
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: guide.name,
+    description: guide.description,
+    url: `${siteUrl}${guide.path}`,
+    step: guide.steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      url: `${siteUrl}${guide.path}#checklist`,
+      itemListElement: step.items.map((item) => ({ "@type": "HowToDirection", text: item })),
+    })),
+  };
 }
+
+export { stringifyJsonLd } from "./safeJson";

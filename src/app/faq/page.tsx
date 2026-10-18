@@ -1,31 +1,17 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
+import { OfferClosing } from "../../components/offers/OfferSections";
+import { Accordion } from "../../components/ui/Accordion";
+import { Button } from "../../components/ui/Button";
+import { Section } from "../../components/ui/Section";
 import { faqItems } from "../../lib/aeoContent";
 import { breadcrumbJsonLd, faqPageJsonLd } from "../../lib/jsonLd";
-import { siteConfig } from "../../lib/siteConfig";
+import { pageMetadata } from "../../lib/seo";
 
-const title = "FAQ — PMO Diagnostic, Audit & Implementation";
-const description =
-  "Answers on ChisokuLabs: Free PMO Diagnostic, PMO Automation Audit pricing and timeline, pack cycle, reporting drag, and how to start in the GCC and Singapore.";
+// PRD 9.9 (E8.1). The page and its FAQPage JSON-LD read the same array.
+const title = "FAQ";
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/faq" },
-  openGraph: {
-    title: `${title} | ChisokuLabs`,
-    description,
-    url: `${siteConfig.url}/faq`,
-    images: ["/og.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${title} | ChisokuLabs`,
-    description,
-    images: ["/og.png"],
-  },
-};
+export const metadata: Metadata = pageMetadata("/faq");
 
 export default function FaqPage() {
   return (
@@ -35,85 +21,37 @@ export default function FaqPage() {
         id="faq-breadcrumb-ld-json"
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "FAQ", path: "/faq" },
+          { name: title, path: "/faq" },
         ])}
       />
 
-      <section className="section report-cover pt-16">
-        <div className="container max-w-3xl">
-          <h1 className="display !max-w-[16ch]">FAQ — Diagnostic, Audit & Implementation</h1>
-          <p className="subhead mt-5">
-            Direct answers on the Free PMO Diagnostic, PMO Automation Audit, and
-            implementation path — for growth-stage SMEs in the{" "}
-            {siteConfig.markets.primary} and {siteConfig.markets.secondary}.
-          </p>
-          <p className="mt-4 text-sm text-[var(--color-muted)]">
-            Definitions:{" "}
-            <Link href="/glossary" className="font-semibold text-teal">
-              Glossary
-            </Link>
-            . Machine-readable map:{" "}
-            <a href="/llms.txt" className="font-semibold text-teal">
-              llms.txt
-            </a>
-            .
-          </p>
-        </div>
-      </section>
+      <Section tone="ink">
+        <h1 className="t-h1 text-paper">{title}</h1>
+      </Section>
 
-      <section className="section bg-[var(--color-paper)]">
-        <div className="container max-w-3xl space-y-10">
-          {faqItems.map((item) => (
-            <article
-              key={item.id}
-              id={item.id}
-              className="scroll-mt-28 border-b border-ink/10 pb-10 last:border-b-0"
-            >
-              <h2 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-[var(--color-ink)] md:text-2xl">
-                {item.question}
-              </h2>
-              <p className="mt-4 text-base font-semibold leading-relaxed text-[var(--color-ink)]">
-                {item.answer}
-              </p>
-              {item.detail ? (
-                <p className="mt-3 text-sm leading-relaxed text-[var(--color-muted)]">
-                  {item.detail}
-                </p>
-              ) : null}
-              {item.related && item.related.length > 0 ? (
-                <p className="mt-4 text-sm text-[var(--color-muted)]">
-                  Related:{" "}
-                  {item.related.map((link, index) => (
-                    <span key={link.href}>
-                      {index > 0 ? ", " : null}
-                      <Link
-                        href={link.href}
-                        className="font-semibold text-teal"
-                      >
-                        {link.label}
-                      </Link>
-                    </span>
-                  ))}
-                </p>
-              ) : null}
-            </article>
-          ))}
-        </div>
-      </section>
+      <Section tone="paper">
+        <Accordion
+          className="max-w-[860px]"
+          items={faqItems.map((item) => ({
+            id: item.id,
+            summary: item.question,
+            content: (
+              <>
+                <p className="t-body">{item.answer}</p>
+                {item.related?.map((link) => (
+                  <div key={link.href} className="mt-3">
+                    <Button href={link.href} variant="text">
+                      {link.label}
+                    </Button>
+                  </div>
+                ))}
+              </>
+            ),
+          }))}
+        />
+      </Section>
 
-      <section className="section">
-        <div className="container max-w-3xl">
-          <h2 className="headline">Start with the baseline.</h2>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/free-pmo-diagnostic" className="button button-primary">
-              Free PMO Diagnostic
-            </Link>
-            <Link href="/contact" className="button button-secondary">
-              Book Audit Fit Call
-            </Link>
-          </div>
-        </div>
-      </section>
+      <OfferClosing />
     </>
   );
 }

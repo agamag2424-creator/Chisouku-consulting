@@ -1,14 +1,19 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { isRouteLive } from "../../lib/siteConfig";
+import { ctaIdFromHref } from "../../lib/track";
 import { cn } from "../../lib/utils";
 
-type Variant = "primary" | "secondary" | "text";
+/** The "inverse" variants are for ink surfaces. */
+type Variant = "primary" | "secondary" | "text" | "inverse" | "inverse-outline";
 type Size = "md" | "lg";
 
 type CommonProps = {
   variant?: Variant;
   size?: Size;
   className?: string;
+  /** Analytics id for `cta_click` (PRD 11). Links get one from their href when not given. */
+  ctaId?: string;
   children: ReactNode;
 };
 
@@ -24,6 +29,8 @@ const variantClasses: Record<Variant, string> = {
   primary: "rounded-control border border-ink bg-ink text-paper hover:border-teal hover:bg-teal",
   secondary: "rounded-control border border-line bg-paper text-ink hover:border-ink",
   text: "text-teal underline decoration-1 underline-offset-4 hover:decoration-2",
+  inverse: "rounded-control border border-paper bg-paper text-ink hover:border-teal-tint hover:bg-teal-tint",
+  "inverse-outline": "rounded-control border border-paper/70 text-paper hover:border-paper hover:bg-paper hover:text-ink",
 };
 
 const boxSizes: Record<Size, string> = {
@@ -38,9 +45,12 @@ const textSizes: Record<Size, string> = {
 
 const EXTERNAL = /^(https?:|mailto:|tel:)/;
 
-/** Primary, secondary or text-link action. Renders a link when given `href`, otherwise a button. */
+/**
+ * Primary, secondary or text-link action. Renders a link when given `href`, otherwise a button.
+ * An internal `href` whose route is not live yet (siteConfig.routeLive) renders as inactive text, never a dead link.
+ */
 export function Button(props: ButtonProps) {
-  const { variant = "primary", size = "md", className, children, ...rest } = props;
+  const { variant = "primary", size = "md", className, ctaId, children, ...rest } = props;
   const classes = cn(
     "inline-flex items-center justify-center gap-2 font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50",
     variantClasses[variant],
@@ -50,15 +60,23 @@ export function Button(props: ButtonProps) {
 
   if (rest.href !== undefined) {
     const { href, ...anchorProps } = rest as Omit<LinkButtonProps, keyof CommonProps>;
+    if (!EXTERNAL.test(href) && !href.startsWith("#") && !isRouteLive(href)) {
+      return (
+        <span aria-disabled="true" className={cn(classes, "pointer-events-none opacity-60")}>
+          {children}
+        </span>
+      );
+    }
+    const tracking = { "data-cta": ctaId ?? ctaIdFromHref(href), "data-cta-variant": variant };
     if (EXTERNAL.test(href)) {
       return (
-        <a href={href} className={classes} {...anchorProps}>
+        <a href={href} className={classes} {...tracking} {...anchorProps}>
           {children}
         </a>
       );
     }
     return (
-      <Link href={href} className={classes} {...anchorProps}>
+      <Link href={href} className={classes} {...tracking} {...anchorProps}>
         {children}
       </Link>
     );
