@@ -37,6 +37,7 @@ export const siteConfig = {
     },
   },
   feeCreditDays: 90,
+  // Founding prices show while above 0. The count itself is not shown on the site (founder, 18 Oct 2026).
   foundingSlotsRemaining: 3,
   selfCheck: { live: false, url: null as string | null },
   samplePackPath: "/documents/chisokulabs-go-live-decision-pack-illustrative.pdf",

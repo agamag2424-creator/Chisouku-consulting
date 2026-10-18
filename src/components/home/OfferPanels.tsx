@@ -84,17 +84,10 @@ export function OfferPanels() {
           {`The full Evidence Check fee is credited against a Go-Live Decision Review signed within ${siteConfig.feeCreditDays} days of the Evidence Check report.`}
         </p>
         {foundingPlaces > 0 && (
-          <div className="flex items-start gap-4">
-            <span aria-hidden className="mt-1 flex shrink-0 gap-1.5">
-              {Array.from({ length: foundingPlaces }, (_, place) => (
-                <span key={place} className="size-3 rounded-full bg-teal" />
-              ))}
-            </span>
-            <p className="t-small text-muted">
-              Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised
-              case study. {`Founding-client places remaining: ${foundingPlaces}.`}
-            </p>
-          </div>
+          <p className="t-small text-muted">
+            Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised
+            case study.
+          </p>
         )}
       </div>
     </>

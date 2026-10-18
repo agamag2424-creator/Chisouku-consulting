@@ -71,7 +71,7 @@ const faq = [
         {
           id: "founding-rate",
           summary: "What is the founding-client rate?",
-          content: `The first three clients pay 50% of list price in exchange for a named or anonymised case study. Founding-client places remaining: ${siteConfig.foundingSlotsRemaining}.`,
+          content: "The first three clients pay 50% of list price in exchange for a named or anonymised case study.",
         },
       ]
     : []),
@@ -193,17 +193,10 @@ export default function PricingPage() {
         <div className="mt-8 grid gap-6 min-[900px]:grid-cols-2 min-[900px]:gap-8">
           <p className="t-small font-semibold text-ink">{feeCredit}</p>
           {foundingPlaces > 0 && (
-            <div className="flex items-start gap-4">
-              <span aria-hidden className="mt-1 flex shrink-0 gap-1.5">
-                {Array.from({ length: foundingPlaces }, (_, place) => (
-                  <span key={place} className="size-3 rounded-full bg-teal" />
-                ))}
-              </span>
-              <p className="t-small text-muted">
-                Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised
-                case study. {`Founding-client places remaining: ${foundingPlaces}.`}
-              </p>
-            </div>
+            <p className="t-small text-muted">
+              Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised
+              case study.
+            </p>
           )}
         </div>
       </Section>
