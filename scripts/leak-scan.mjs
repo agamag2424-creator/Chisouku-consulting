@@ -38,6 +38,8 @@ export const forbidden = [
 export const allowed = [
   // IN-2: the public contact address stays as it is.
   "agam@chisokulabs.com",
+  // IN-5: founder kept this Calendly link for launch (18 Oct 2026) and will change it after go-live.
+  "calendly.com/agam-agrawwal",
   // Negations of "guarantee" (PRD 8.6 requires saying it plainly).
   "does not guarantee go-live success",
   "Do you guarantee a successful go-live?",

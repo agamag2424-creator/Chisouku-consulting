@@ -507,10 +507,10 @@ Self-Check app; Arabic site; blog/CMS; testimonials, logos, case studies; founde
 | ID | Input | Needed by | Default if not answered |
 |---|---|---|---|
 | IN-1 | Approve prices in 6.1 (**approved 17 Oct 2026**) | E2 merge | Do not merge E2 |
-| IN-2 | Public contact email (role address vs personal) | E9 | Keep current `siteConfig.email` (not answered; default applies) |
+| IN-2 | Public contact email (role address vs personal) | E9 | **Keep `agam@chisokulabs.com` for launch; revisit after go-live (founder, 18 Oct 2026)** |
 | IN-3 | Approve principal paragraph (8.3) | E1 merge | **Approved as written, 17 Oct 2026** |
 | IN-4 | Confirm every data-handling statement in 9.7 is true (**confirmed 17 Oct 2026**, all twelve; the homepage deletion line aligned to 9.7) | E6 merge | Do not publish `/independence-and-data` |
-| IN-5 | Calendly link still valid | E9 | **Old link dead (404); founder gave https://calendly.com/agam-agrawwal, 17 Oct 2026** |
+| IN-5 | Calendly link still valid | E9 | **Old link dead (404); founder gave https://calendly.com/agam-agrawwal (17 Oct 2026) and keeps it for launch; a link without the founder's name after go-live (18 Oct 2026)** |
 | IN-6 | When the Self-Check goes live: URL | Later | `selfCheck.live = false` |
 | IN-7 | Approve the estimator copy and example values in 9.11 (**approved 17 Oct 2026**, with "a"/"an" chosen by number in "Cost of a {weeks}-week slip") | E1.5 merge | Do not merge E1.5 |
 | IN-8 | Optional: one survey statistic for the estimator, with its source URL | E1.5 | Omit the sourced line |
