@@ -203,7 +203,7 @@ Responsive to 360px; no horizontal scroll; visible keyboard focus; `prefers-redu
 "The full Evidence Check fee is credited against a Go-Live Decision Review signed within 90 days of the Evidence Check report." Show on both offer pages and `/pricing`.
 
 ### 6.3 Founding-client rate
-"Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised case study." Show remaining count from config (`foundingSlotsRemaining`, default 3). If 0, hide founding prices automatically.
+"Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised case study." The remaining count is **not shown** (founder, 18 Oct 2026: a lead should not feel they would be the first client); `foundingSlotsRemaining` in config only hides founding prices automatically when it reaches 0.
 
 ### 6.4 Config schema (replace current `pricing`, `markets`, `systems` keys; keep `name`, `url`, `email`, `calendlyUrl`)
 
@@ -340,7 +340,7 @@ Next to it: headline "Your programme reports Green. We test whether the evidence
 
 ### 9.6 `/pricing`
 - H1: Pricing
-- Price table from config; founding rate and slots remaining; fee credit; what's included; payment terms "50% on signature, 50% on delivery".
+- Price table from config; founding rate (no remaining count); fee credit; what's included; payment terms "50% on signature, 50% on delivery".
 - Comparison table (E5).
 - FAQ excerpt: "Why publish prices?", "What if our programme is larger?" (answer: multi-entity reviews are quoted after a scoping call; list price applies to one programme, up to five workstreams).
 

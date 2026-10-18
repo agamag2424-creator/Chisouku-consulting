@@ -33,7 +33,7 @@ export function buildLlmsTxt(): string {
     `- Fee credit: ${feeCreditAnswer}`,
     ...(siteConfig.foundingSlotsRemaining > 0
       ? [
-          `- Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised case study. Places remaining: ${siteConfig.foundingSlotsRemaining}.`,
+          `- Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised case study.`,
         ]
       : []),
     ``,
