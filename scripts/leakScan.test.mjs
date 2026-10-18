@@ -5,7 +5,8 @@ import { scan } from "./leak-scan.mjs";
 
 test("finds forbidden terms whole-word and case-insensitively, including inside URLs and hyphenated names", () => {
   assert.deepEqual(scan("Our PMO Reporting pack").map((hit) => hit.term), ["PMO Reporting"]);
-  assert.deepEqual(scan("https://calendly.com/agam-agrawwal").map((hit) => hit.term.toLowerCase()), ["agam", "agrawwal"]);
+  assert.deepEqual(scan("https://example.com/agam-agrawwal-cv").map((hit) => hit.term.toLowerCase()), ["agam", "agrawwal"]);
+  assert.equal(scan("https://calendly.com/agam-agrawwal").length, 0); // founder decision, IN-5
   assert.equal(scan(".drag-slider { }").length, 1);
   assert.equal(scan("dragon fruit").length, 0);
 });
