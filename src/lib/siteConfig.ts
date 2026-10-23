@@ -49,7 +49,24 @@ export const siteConfig = {
   principalBlock: true,
 } as const;
 
-export function calendlyLink(content: "header" | "hero" | "readiness_result"): string {
+export type CalendlyContent =
+  | "header"
+  | "hero"
+  | "readiness_result"
+  | "pricing"
+  | "evidence_check"
+  | "decision_review"
+  | "evidence_check_price"
+  | "decision_review_price"
+  | "six_weeks"
+  | "brief"
+  | "estimator"
+  | "see_it_first"
+  | "market_hero"
+  | "market_close";
+
+/** Discovery-call URL with the existing UTM scheme. CtaTracker records where on the page the click happened. */
+export function calendlyLink(content: CalendlyContent): string {
   return (
     siteConfig.calendlyUrl +
     "?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=" +

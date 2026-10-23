@@ -16,6 +16,7 @@ import {
 import { OfferPanels } from "../components/home/OfferPanels";
 import { PrincipalBlock } from "../components/trust/PrincipalBlock";
 import { SlipCostEstimator } from "../components/home/SlipCostEstimator";
+import { BookCallButton } from "../components/ui/BookCallButton";
 import { Button } from "../components/ui/Button";
 import { Section } from "../components/ui/Section";
 import { Sheet } from "../components/ui/Sheet";
@@ -186,10 +187,11 @@ export default function Home() {
               <BriefIllustration />
               <h3 className="t-h3 text-ink">A free readiness brief on your programme</h3>
               <p className="t-small text-muted">Prepared from public information.</p>
-              <div className="mt-auto pt-3">
+              <div className="mt-auto flex flex-col gap-3 pt-3 min-[480px]:flex-row min-[480px]:flex-wrap">
                 <Button href={CTA.brief.href} variant="secondary">
                   {CTA.brief.label}
                 </Button>
+                <BookCallButton content="brief" size="md" />
               </div>
             </Sheet>
           </li>
@@ -253,6 +255,7 @@ export default function Home() {
             <Button href={CTA.brief.href} variant="inverse-outline" size="lg">
               {CTA.brief.label}
             </Button>
+            <BookCallButton content="six_weeks" variant="inverse-outline" />
           </div>
         </div>
         <WeekStrip />

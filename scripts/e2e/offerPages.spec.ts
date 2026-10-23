@@ -52,6 +52,22 @@ for (const offer of pages) {
       });
     }
 
+    test("books a 30-minute call beside Discuss your programme", async ({ page }) => {
+      await page.goto(base + offer.path);
+      const hero = page.locator("main > section").first();
+      const content = offer.path === "/readiness-evidence-check" ? "evidence_check" : "decision_review";
+      const book = hero.getByRole("link", { name: "Book a 30-minute call" });
+      await expect(book).toHaveAttribute(
+        "href",
+        `https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=${content}`,
+      );
+      await expect(book).toHaveAttribute("target", "_blank");
+      await expect(hero.getByRole("link", { name: "Discuss your programme" })).toHaveAttribute(
+        "href",
+        "/contact?request=review",
+      );
+    });
+
     test("is linked from the nav and has Service JSON-LD", async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 });
       await page.goto(base + "/");

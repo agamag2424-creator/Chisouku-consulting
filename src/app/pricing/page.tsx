@@ -4,6 +4,7 @@ import { ComparisonTable } from "../../components/compare/ComparisonTable";
 import { DayStrip } from "../../components/offers/DayStrip";
 import { OfferClosing, SectionHead, offerCta } from "../../components/offers/OfferSections";
 import { Accordion } from "../../components/ui/Accordion";
+import { BookCallButton } from "../../components/ui/BookCallButton";
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { Sheet } from "../../components/ui/Sheet";
@@ -176,6 +177,7 @@ export default function PricingPage() {
           <Button href={offerCta.review.href} variant="inverse" size="lg">
             {offerCta.review.label}
           </Button>
+          <BookCallButton content="pricing" variant="inverse-outline" />
           <Button href={offerCta.brief.href} variant="inverse-outline" size="lg">
             {offerCta.brief.label}
           </Button>
