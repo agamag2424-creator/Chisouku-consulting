@@ -11,10 +11,7 @@ export const runtime = "nodejs";
 
 type SupabaseConfig = { url: string; key: string };
 
-function supabaseConfig(env: {
-  SUPABASE_URL?: string;
-  SUPABASE_SERVICE_ROLE_KEY?: string;
-}): SupabaseConfig | null {
+function supabaseConfig(env: NodeJS.ProcessEnv): SupabaseConfig | null {
   const key = env.SUPABASE_SERVICE_ROLE_KEY?.trim();
   const rawUrl = env.SUPABASE_URL?.trim();
   if (!key || !rawUrl) return null;
