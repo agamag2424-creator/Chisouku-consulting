@@ -20,6 +20,7 @@ import {
   packRecommendation,
   sampleLabel,
 } from "../../content/samplePack";
+import { aiOnOurDataAnswer } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { pageMetadata } from "../../lib/seo";
 
@@ -100,23 +101,35 @@ export default function MethodPage() {
         <p className="mt-4 text-[13px] text-muted">{sampleLabel}</p>
       </Section>
 
-      <Section tone="tint">
-        <SectionHead title="What tooling does and doesn't do" />
-        <ul className="mt-10 grid gap-4 min-[900px]:grid-cols-2">
-          <li className="flex flex-col gap-3 rounded-sheet bg-paper p-6">
-            <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold tracking-[0.02em] text-teal">
-              Does
-            </span>
-            <span className="t-body text-ink">Extracts and cross-checks every claim.</span>
-          </li>
-          <li className="flex flex-col gap-3 rounded-sheet bg-paper p-6">
-            <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold tracking-[0.02em] text-ink">
-              Doesn&apos;t
-            </span>
-            <span className="t-body text-ink">Decide. A principal reviews every finding and makes the judgement.</span>
-          </li>
-        </ul>
-        <p className="t-small mt-6 text-ink">{packJudgementNote}</p>
+      <Section
+        tone="tint"
+        aria-label="What tooling does, and how AI is used"
+        containerClassName="grid items-start gap-12 min-[1100px]:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] min-[1100px]:gap-16"
+      >
+        <div>
+          <h2 className="t-h2 text-ink">What tooling does and doesn&apos;t do</h2>
+          <ul className="mt-10 grid gap-4 min-[700px]:grid-cols-2">
+            <li className="flex flex-col gap-3 rounded-sheet bg-paper p-6">
+              <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold tracking-[0.02em] text-teal">
+                Does
+              </span>
+              <span className="t-body text-ink">Extracts and cross-checks every claim.</span>
+            </li>
+            <li className="flex flex-col gap-3 rounded-sheet bg-paper p-6">
+              <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold tracking-[0.02em] text-ink">
+                Doesn&apos;t
+              </span>
+              <span className="t-body text-ink">Decide. A principal reviews every finding and makes the judgement.</span>
+            </li>
+          </ul>
+          <p className="t-small mt-6 text-ink">{packJudgementNote}</p>
+        </div>
+        <section id="how-we-use-ai" aria-labelledby="how-we-use-ai-heading">
+          <h2 id="how-we-use-ai-heading" className="t-h2 text-ink">
+            How we use AI, safely
+          </h2>
+          <p className="t-body mt-6 text-ink min-[1100px]:mt-10">{aiOnOurDataAnswer}</p>
+        </section>
       </Section>
 
       <OfferClosing />
