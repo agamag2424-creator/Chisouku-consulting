@@ -33,6 +33,22 @@ for (const guide of guides) {
       await expect(page.locator(`main a[href="${href}"]`).first()).toBeVisible();
     }
 
+    if (guide.path === "/guides/independent-assurance-vs-si-readiness-review") {
+      await expect(page.getByRole("link", { name: /Ministerial Decision No\. 244 of 2025/ })).toHaveCount(0);
+    } else {
+      const citation = page.getByRole("link", {
+        name: "UAE Ministry of Finance: Ministerial Decision No. 244 of 2025, as amended by Ministerial Resolution No. 66 of 2026",
+      });
+      await expect(citation).toBeVisible();
+      await expect(citation).toHaveAttribute(
+        "href",
+        "https://tax.gov.ae/Datafolder/Files/Pdf/2026/legislation/Ministerial%20Decision%20No.%20244%20of%202025%20on%20The%20Implementation%20of%20the%20Electronic%20Invoicing%20System%20-%20publishing%20-%2007%202026.pdf",
+      );
+      await expect(
+        page.getByRole("link", { name: "UAE Ministry of Finance: Ministerial Resolution No. 66 of 2026", exact: true }),
+      ).toHaveCount(0);
+    }
+
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) => JSON.parse(text));
     expect(ld.some((data) => data["@type"] === "BreadcrumbList")).toBe(true);
     const howTo = ld.find((data) => data["@type"] === "HowTo");

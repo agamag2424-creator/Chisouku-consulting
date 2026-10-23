@@ -4,6 +4,7 @@ import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 import { JsonLdScript } from "../aeo/JsonLdScript";
 import { PrincipalBlock } from "../trust/PrincipalBlock";
+import { BookCallButton } from "../ui/BookCallButton";
 import { Button } from "../ui/Button";
 import { PriceBlock } from "../ui/PriceBlock";
 import { Section } from "../ui/Section";
@@ -159,9 +160,14 @@ function Block({ offer, block }: { offer: FixedOffer; block: OfferBlock }) {
         <div className={priceGrid}>
           <div className="flex flex-col items-start gap-6">
             <h2 className="t-h2 text-ink">Price</h2>
-            <Button href={offerCta.review.href} size="lg">
-              {offerCta.review.label}
-            </Button>
+            <div className="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
+              <Button href={offerCta.review.href} size="lg">
+                {offerCta.review.label}
+              </Button>
+              <BookCallButton
+                content={offer === "evidenceCheck" ? "evidence_check_price" : "decision_review_price"}
+              />
+            </div>
           </div>
           <PriceBlock offer={offer} className="p-6 min-[641px]:p-8" />
         </div>
@@ -173,7 +179,7 @@ function Block({ offer, block }: { offer: FixedOffer; block: OfferBlock }) {
             <h2 className="t-h2 text-ink">{siteConfig.offers.continuous.name}</h2>
             <p className="t-body text-ink">{block.text}</p>
           </div>
-          <PriceBlock offer="continuous" showName={false} className="p-6 min-[641px]:p-8" />
+          <PriceBlock offer="continuous" showName={false} showTerms={false} className="p-6 min-[641px]:p-8" />
         </div>
       );
     case "notIncluded":

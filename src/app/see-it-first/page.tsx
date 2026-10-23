@@ -3,6 +3,7 @@ import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { PackIllustration } from "../../components/home/HomeVisuals";
 import { OfferClosing, SectionHead, offerCta } from "../../components/offers/OfferSections";
 import { SamplePack } from "../../components/see-it-first/SamplePack";
+import { BookCallButton } from "../../components/ui/BookCallButton";
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { Sheet } from "../../components/ui/Sheet";
@@ -66,10 +67,11 @@ export default function SeeItFirstPage() {
           <div className="flex flex-col gap-6">
             <h2 className="t-h2 text-ink">Free readiness brief</h2>
             <p className="t-body text-ink">{briefText}</p>
-            <div>
+            <div className="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
               <Button href={offerCta.brief.href} size="lg">
                 {offerCta.brief.label}
               </Button>
+              <BookCallButton content="see_it_first" />
             </div>
           </div>
           <Sheet as="div" className="p-6 min-[641px]:p-8">

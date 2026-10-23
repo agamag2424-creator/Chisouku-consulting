@@ -51,6 +51,12 @@ const nextConfig: NextConfig = {
         ["/pmo-automation-gcc", "/go-live-readiness-uae"],
         ["/pmo-automation-singapore", "/go-live-readiness-uae"],
       ].map(([source, destination]) => ({ source, destination, permanent: true })),
+      // The principal stays anonymous (brief A3). /about lands on the principal block.
+      {
+        source: "/about",
+        destination: "/#principal",
+        permanent: true,
+      },
       // Founder documents are no longer published (PRD L4, L8); old links land on the homepage.
       {
         source: "/documents/agam-agrawwal-resume.pdf",

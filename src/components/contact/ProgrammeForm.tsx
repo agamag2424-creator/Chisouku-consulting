@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { requestTypes, type RequestKey } from "../../content/contactForm";
 import { siteConfig } from "../../lib/siteConfig";
 import { track } from "../../lib/track";
@@ -22,11 +23,14 @@ type Fields = {
   platform: string;
   decision_month: string;
   message: string;
+  /** Required, and unticked until the visitor agrees. */
+  consent: boolean;
   /** Honeypot: hidden from people, filled only by bots. */
   website: string;
 };
 
-type FieldKey = Exclude<keyof Fields, "website">;
+type FieldKey = Exclude<keyof Fields, "website" | "consent">;
+type ErrorKey = FieldKey | "consent";
 
 const required: Partial<Record<FieldKey, string>> = {
   name: "Enter your name.",
@@ -37,16 +41,17 @@ const required: Partial<Record<FieldKey, string>> = {
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function validate(fields: Fields): Partial<Record<FieldKey, string>> {
-  const errors: Partial<Record<FieldKey, string>> = {};
+function validate(fields: Fields): Partial<Record<ErrorKey, string>> {
+  const errors: Partial<Record<ErrorKey, string>> = {};
   for (const [key, message] of Object.entries(required) as [FieldKey, string][]) {
     if (!String(fields[key]).trim()) errors[key] = message;
   }
   if (!errors.email && !EMAIL.test(fields.email.trim())) errors.email = "Enter a work email so we can reply.";
+  if (!fields.consent) errors.consent = "Tick the box to agree before sending.";
   return errors;
 }
 
-const fieldOrder: FieldKey[] = ["name", "email", "company", "country"];
+const fieldOrder: ErrorKey[] = ["name", "email", "company", "country", "consent"];
 
 export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: RequestKey }) {
   const [fields, setFields] = React.useState<Fields>({
@@ -59,9 +64,10 @@ export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: 
     platform: "",
     decision_month: "",
     message: "",
+    consent: false,
     website: "",
   });
-  const [errors, setErrors] = React.useState<Partial<Record<FieldKey, string>>>({});
+  const [errors, setErrors] = React.useState<Partial<Record<ErrorKey, string>>>({});
   const [status, setStatus] = React.useState<"idle" | "sending" | "sent" | "failed">("idle");
   const formRef = React.useRef<HTMLFormElement>(null);
 
@@ -206,6 +212,33 @@ export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: 
         </p>
       )}
 
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-start gap-3">
+          <input
+            id="pf-consent"
+            name="consent"
+            type="checkbox"
+            checked={fields.consent}
+            onChange={(event) => set("consent", event.target.checked)}
+            aria-invalid={errors.consent ? true : undefined}
+            aria-describedby={errors.consent ? "pf-consent-error" : undefined}
+            className="mt-1 size-4 shrink-0 accent-ink"
+          />
+          <label htmlFor="pf-consent" className="text-[15px] leading-snug text-ink">
+            I agree that ChisokuLabs may use the details in this form to reply to my request, as described in the{" "}
+            <Link href="/privacy" className="font-semibold text-teal underline underline-offset-4">
+              Privacy notice
+            </Link>
+            .
+          </label>
+        </div>
+        {errors.consent && (
+          <p id="pf-consent-error" className="text-[14px] font-semibold text-ev-miss">
+            {errors.consent}
+          </p>
+        )}
+      </div>
+
       <div>
         <button
           type="submit"
@@ -214,6 +247,13 @@ export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: 
         >
           {status === "sending" ? "Sending…" : requestTypes[fields.request_type].submit}
         </button>
+        <p className="mt-3 text-[14px] leading-snug text-muted">
+          See the{" "}
+          <Link href="/privacy" className="font-semibold text-teal underline underline-offset-4">
+            Privacy notice
+          </Link>{" "}
+          for what we store, why, and how to ask us to delete it.
+        </p>
       </div>
     </form>
   );

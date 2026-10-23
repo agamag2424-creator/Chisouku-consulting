@@ -1,3 +1,5 @@
+import { uaeEInvoicingSource } from "../lib/uaeTimeline";
+
 // Answer guides (PRD 4.1, E8.3). Every dated fact links to the issuer's own page (checked in E7.0). Industry statistics
 // are left out: the Horváth and Gartner pages named in PRD 8.4 could not be opened from the build environment to check
 // them. Wording approved by the founder (IN-11, 17 Oct 2026).
@@ -29,10 +31,6 @@ export type Guide = {
 const sapSource = {
   label: "SAP Support: maintenance strategy for SAP Business Suite 7",
   url: "https://support.sap.com/en/release-upgrade-maintenance/maintenance-information/maintenance-strategy/s4hana-business-suite7.html",
-};
-const uaeSource = {
-  label: "UAE Ministry of Finance: Ministerial Resolution No. 66 of 2026",
-  url: "https://mof.gov.ae/wp-content/uploads/2026/05/Ministerial-Resolution-No.-66-of-2026-Amending-Certain-Provisions-of-Ministerial-Resolution-No.-244-of-2025-Regarding-the-Implementation-of-the-Electronic-Invoicing-System-En-20260514.pdf",
 };
 const zatcaSource = {
   label: "ZATCA: twenty-fifth integration wave, 24 July 2026",
@@ -190,7 +188,7 @@ export const guides: readonly Guide[] = [
         },
       ],
     },
-    sources: [sapSource, uaeSource, zatcaSource],
+    sources: [sapSource, uaeEInvoicingSource, zatcaSource],
   },
   {
     path: "/guides/is-my-erp-ready-to-go-live",
@@ -308,7 +306,7 @@ export const guides: readonly Guide[] = [
         ],
       },
     ],
-    sources: [uaeSource, zatcaSource],
+    sources: [uaeEInvoicingSource, zatcaSource],
   },
   {
     path: "/guides/independent-assurance-vs-si-readiness-review",

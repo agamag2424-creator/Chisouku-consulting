@@ -86,7 +86,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-paper/10 px-[var(--content-padding-x-mobile)] py-4 text-center text-[13px] text-paper/65">
-        © 2026 ChisokuLabs Pvt Ltd. All rights reserved.
+        © 2026 {siteConfig.legalName}. All rights reserved.
       </div>
     </footer>
   );

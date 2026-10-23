@@ -49,4 +49,5 @@ test("footer: brand plus four link columns side by side at 1440", async ({ page 
   );
   expect(headings).toHaveLength(4);
   expect(new Set(headings).size).toBe(1);
+  await expect(page.locator("footer")).toContainText("© 2026 ChisokuLab Private Limited. All rights reserved.");
 });

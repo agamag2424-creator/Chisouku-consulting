@@ -19,6 +19,17 @@ for (const preset of presets) {
   });
 }
 
+test("Book a call uses the contact Calendly link", async ({ page }) => {
+  await page.goto(`${base}/contact`);
+  const call = page.getByRole("link", { name: "Book a call" });
+  await expect(call).toHaveAttribute(
+    "href",
+    "https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=contact",
+  );
+  await expect(call).toHaveAttribute("target", "_blank");
+  await expect(call).toHaveAttribute("rel", "noopener noreferrer");
+});
+
 test("missing required fields show plain-language messages and focus the first one", async ({ page }) => {
   await page.goto(`${base}/contact`);
   await page.getByRole("button", { name: "Send" }).click();
@@ -42,19 +53,48 @@ test("keyboard-only submission reaches the server; without delivery it fails vis
   await page.keyboard.press("ArrowDown"); // Country: first option
   await page.getByLabel("Message").focus();
   await page.keyboard.type("Testing");
-  await page.keyboard.press("Tab"); // submit button (honeypot is skipped)
+  await page.keyboard.press("Tab"); // consent checkbox (honeypot is skipped)
+  const consent = page.getByRole("checkbox", { name: /I agree that ChisokuLabs/ });
+  await expect(consent).toBeFocused();
+  await page.keyboard.press("Space");
+  await page.keyboard.press("Tab"); // privacy link inside the label
+  await page.keyboard.press("Tab"); // submit button
   await expect(page.getByRole("button", { name: "Request my readiness brief" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("form").getByRole("alert")).toContainText("We could not send your message. Please email us at");
   await expect(page.getByText("Thanks. We'll reply within one business day.")).toHaveCount(0);
 });
 
-test("API: honeypot answers 200 without sending; missing request type is rejected; no key is a 503", async ({ request }) => {
-  const valid = { name: "T", email: "t@example.com", company: "Acme", country: "UAE", request_type: "review" };
+test("API rejects a request without consent, and a consented request still needs delivery", async ({ request }) => {
+  const valid = { name: "T", email: "t@example.com", company: "Acme", country: "UAE", request_type: "review", consent: true };
   const bot = await request.post(`${base}/api/audit-fit`, { data: { ...valid, website: "spam" } });
   expect(bot.status()).toBe(200);
   const noType = await request.post(`${base}/api/audit-fit`, { data: { ...valid, request_type: "" } });
   expect(noType.status()).toBe(400);
+  const noConsent = await request.post(`${base}/api/audit-fit`, { data: { ...valid, consent: false } });
+  expect(noConsent.status()).toBe(400);
+  const missingConsent = await request.post(`${base}/api/audit-fit`, {
+    data: { name: "T", email: "t@example.com", company: "Acme", country: "UAE", request_type: "review" },
+  });
+  expect(missingConsent.status()).toBe(400);
   const noKey = await request.post(`${base}/api/audit-fit`, { data: valid });
   expect(noKey.status()).toBe(503);
+});
+
+test("submitting without the consent tick shows an inline error and sends nothing", async ({ page }) => {
+  await page.goto(`${base}/contact`);
+  let posted = false;
+  page.on("request", (req) => {
+    if (req.url().includes("/api/audit-fit")) posted = true;
+  });
+  await page.getByLabel("Name").fill("Test Person");
+  await page.getByLabel("Work email").fill("test@example.com");
+  await page.getByLabel("Company").fill("Acme");
+  await page.getByLabel("Country").selectOption("UAE");
+  await page.getByRole("button", { name: "Send" }).click();
+  const error = page.locator("#pf-consent-error");
+  await expect(error).toHaveText("Tick the box to agree before sending.");
+  await expect(page.getByRole("checkbox", { name: /I agree that ChisokuLabs/ })).toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByText("Thanks. We'll reply within one business day.")).toHaveCount(0);
+  expect(posted).toBe(false);
 });

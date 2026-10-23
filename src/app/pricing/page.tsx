@@ -4,9 +4,11 @@ import { ComparisonTable } from "../../components/compare/ComparisonTable";
 import { DayStrip } from "../../components/offers/DayStrip";
 import { OfferClosing, SectionHead, offerCta } from "../../components/offers/OfferSections";
 import { Accordion } from "../../components/ui/Accordion";
+import { BookCallButton } from "../../components/ui/BookCallButton";
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { Sheet } from "../../components/ui/Sheet";
+import { foundingClientStatement } from "../../content/founding";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { pageMetadata } from "../../lib/seo";
 import { offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
@@ -71,7 +73,7 @@ const faq = [
         {
           id: "founding-rate",
           summary: "What is the founding-client rate?",
-          content: `The first three clients pay 50% of list price in exchange for a named or anonymised case study. Founding-client places remaining: ${siteConfig.foundingSlotsRemaining}.`,
+          content: foundingClientStatement(siteConfig.foundingSlotsRemaining),
         },
       ]
     : []),
@@ -175,6 +177,7 @@ export default function PricingPage() {
           <Button href={offerCta.review.href} variant="inverse" size="lg">
             {offerCta.review.label}
           </Button>
+          <BookCallButton content="pricing" variant="inverse-outline" />
           <Button href={offerCta.brief.href} variant="inverse-outline" size="lg">
             {offerCta.brief.label}
           </Button>
@@ -199,10 +202,7 @@ export default function PricingPage() {
                   <span key={place} className="size-3 rounded-full bg-teal" />
                 ))}
               </span>
-              <p className="t-small text-muted">
-                Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised
-                case study. {`Founding-client places remaining: ${foundingPlaces}.`}
-              </p>
+              <p className="t-small text-muted">{foundingClientStatement(foundingPlaces)}</p>
             </div>
           )}
         </div>

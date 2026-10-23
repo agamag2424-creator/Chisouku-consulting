@@ -17,6 +17,13 @@ const redirects: [string, string][] = [
   ["/aeva", "/method"],
 ];
 
+test("/about → 308 /#principal", async ({ request }) => {
+  const response = await request.get(base + "/about", { maxRedirects: 0 });
+  expect(response.status()).toBe(308);
+  const location = response.headers()["location"] ?? "";
+  expect(location.endsWith("/#principal")).toBe(true);
+});
+
 for (const [from, to] of redirects) {
   test(`${from} → 308 ${to}`, async ({ request }) => {
     const response = await request.get(base + from, { maxRedirects: 0 });

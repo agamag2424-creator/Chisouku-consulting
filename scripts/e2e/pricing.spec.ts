@@ -30,6 +30,22 @@ for (const viewport of [
   });
 }
 
+test("pricing top books a 30-minute call beside Discuss your programme", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(base + "/pricing");
+  const hero = page.locator("main > section").first();
+  const book = hero.getByRole("link", { name: "Book a 30-minute call" });
+  await expect(book).toHaveAttribute(
+    "href",
+    "https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=pricing",
+  );
+  await expect(book).toHaveAttribute("rel", "noopener noreferrer");
+  await expect(hero.getByRole("link", { name: "Request a free readiness brief" })).toHaveAttribute(
+    "href",
+    "/contact?request=brief",
+  );
+});
+
 test("homepage shows the compact comparison (4 rows) and links to pricing", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(base + "/", { waitUntil: "networkidle" });

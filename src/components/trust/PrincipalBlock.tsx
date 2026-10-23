@@ -8,10 +8,10 @@ const paragraph =
 const chips = ["11+ years", "Aviation", "Banking", "Manufacturing", "Multi-country go-lives"] as const;
 
 /** "Principal-led" section, shared by the homepage and the offer pages (E6.2). */
-export function PrincipalBlock({ tone = "paper" }: { tone?: "page" | "paper" }) {
+export function PrincipalBlock({ tone = "paper", id }: { tone?: "page" | "paper"; id?: string }) {
   if (!siteConfig.principalBlock) return null;
   return (
-    <Section tone={tone}>
+    <Section tone={tone} id={id}>
       <div className="grid gap-6 min-[1100px]:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] min-[1100px]:items-center min-[1100px]:gap-16">
         <div className="flex flex-col gap-5">
           <h2 className="t-h2 text-ink">Principal-led</h2>

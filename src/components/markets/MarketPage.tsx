@@ -7,6 +7,7 @@ import { JsonLdScript } from "../aeo/JsonLdScript";
 import { OfferPanels } from "../home/OfferPanels";
 import { WeekStrip } from "../home/HomeVisuals";
 import { SectionHead, offerCta } from "../offers/OfferSections";
+import { BookCallButton } from "../ui/BookCallButton";
 import { Button } from "../ui/Button";
 import { Section } from "../ui/Section";
 import { Sheet } from "../ui/Sheet";
@@ -44,6 +45,7 @@ export function MarketPage({ market }: { market: Market }) {
             <Button href={offerCta.brief.href} variant="inverse" size="lg">
               {offerCta.brief.label}
             </Button>
+            <BookCallButton content="market_hero" variant="inverse-outline" />
             <Button href={offerCta.review.href} variant="inverse-outline" size="lg">
               {offerCta.review.label}
             </Button>
@@ -91,6 +93,7 @@ export function MarketPage({ market }: { market: Market }) {
             <Button href={offerCta.brief.href} variant="inverse" size="lg">
               {offerCta.brief.label}
             </Button>
+            <BookCallButton content="market_close" variant="inverse-outline" />
             <Button href={offerCta.review.href} variant="inverse-outline" size="lg">
               {offerCta.review.label}
             </Button>
@@ -126,6 +129,14 @@ function WhyNow({ market }: { market: Market }) {
                 <a href={fact.source.url} className="font-semibold text-teal underline underline-offset-4 hover:text-ink">
                   {fact.source.label}
                 </a>
+                {fact.also && (
+                  <>
+                    {" · "}
+                    <a href={fact.also.url} className="font-semibold text-teal underline underline-offset-4 hover:text-ink">
+                      {fact.also.label}
+                    </a>
+                  </>
+                )}
               </p>
             </div>
           </li>

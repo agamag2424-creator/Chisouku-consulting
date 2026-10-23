@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { offerPriceLabel, siteConfig } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 import { EvidenceCell, type EvidenceState } from "../ui/EvidenceCell";
+import { BookCallButton } from "../ui/BookCallButton";
 import { Button } from "../ui/Button";
 import { Section } from "../ui/Section";
 import { Sheet } from "../ui/Sheet";
@@ -44,6 +45,10 @@ export function OfferHero({ offer, lead }: { offer: FixedOffer; lead: string }) 
           <Button href={CTA.review.href} variant="inverse" size="lg">
             {CTA.review.label}
           </Button>
+          <BookCallButton
+            content={offer === "evidenceCheck" ? "evidence_check" : "decision_review"}
+            variant="inverse-outline"
+          />
           <Button href={CTA.samplePack.href} variant="inverse-outline" size="lg">
             {CTA.samplePack.label}
           </Button>
@@ -287,6 +292,7 @@ export function OfferClosing() {
           <Button href={CTA.brief.href} variant="inverse-outline" size="lg">
             {CTA.brief.label}
           </Button>
+          <BookCallButton content="six_weeks" variant="inverse-outline" />
         </div>
       </div>
       <WeekStrip />

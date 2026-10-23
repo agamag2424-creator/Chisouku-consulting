@@ -1,3 +1,4 @@
+import { foundingClientStatement } from "../../content/founding";
 import { offerPriceLabel, siteConfig } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 import { DayStrip } from "../offers/DayStrip";
@@ -90,10 +91,7 @@ export function OfferPanels() {
                 <span key={place} className="size-3 rounded-full bg-teal" />
               ))}
             </span>
-            <p className="t-small text-muted">
-              Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised
-              case study. {`Founding-client places remaining: ${foundingPlaces}.`}
-            </p>
+            <p className="t-small text-muted">{foundingClientStatement(foundingPlaces)}</p>
           </div>
         )}
       </div>

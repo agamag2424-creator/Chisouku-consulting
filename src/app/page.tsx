@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import { ComparisonTable } from "../components/compare/ComparisonTable";
 import { EvidenceCheckHero } from "../components/hero/EvidenceCheckHero";
+import { DeadlineBand } from "../components/home/DeadlineBand";
 import {
   BriefIllustration,
   CrossCheckStrip,
@@ -15,6 +16,7 @@ import {
 import { OfferPanels } from "../components/home/OfferPanels";
 import { PrincipalBlock } from "../components/trust/PrincipalBlock";
 import { SlipCostEstimator } from "../components/home/SlipCostEstimator";
+import { BookCallButton } from "../components/ui/BookCallButton";
 import { Button } from "../components/ui/Button";
 import { Section } from "../components/ui/Section";
 import { Sheet } from "../components/ui/Sheet";
@@ -23,6 +25,9 @@ import { calendlyLink, siteConfig } from "../lib/siteConfig";
 import { cn } from "../lib/utils";
 
 export const metadata: Metadata = pageMetadata("/");
+
+// The deadline band reads the clock, so this page is rendered per request (brief A2).
+export const dynamic = "force-dynamic";
 
 const CTA = {
   review: { href: "/contact?request=review", label: "Discuss your programme" },
@@ -97,6 +102,8 @@ export default function Home() {
         </div>
         <EvidenceCheckHero />
       </Section>
+
+      <DeadlineBand />
 
       {/* 2. The problem */}
       <Section tone="paper">
@@ -180,10 +187,11 @@ export default function Home() {
               <BriefIllustration />
               <h3 className="t-h3 text-ink">A free readiness brief on your programme</h3>
               <p className="t-small text-muted">Prepared from public information.</p>
-              <div className="mt-auto pt-3">
+              <div className="mt-auto flex flex-col gap-3 pt-3 min-[480px]:flex-row min-[480px]:flex-wrap">
                 <Button href={CTA.brief.href} variant="secondary">
                   {CTA.brief.label}
                 </Button>
+                <BookCallButton content="brief" size="md" />
               </div>
             </Sheet>
           </li>
@@ -233,8 +241,8 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* 9. Principal-led (PRD 8.3, IN-3 approved; shared block, E6.2) */}
-      <PrincipalBlock />
+      {/* 9. Principal-led (PRD 8.3, IN-3 approved; shared block, E6.2). /about redirects here. */}
+      <PrincipalBlock id="principal" />
 
       {/* 10. Closing CTA (ink band) */}
       <Section tone="ink">
@@ -247,6 +255,7 @@ export default function Home() {
             <Button href={CTA.brief.href} variant="inverse-outline" size="lg">
               {CTA.brief.label}
             </Button>
+            <BookCallButton content="six_weeks" variant="inverse-outline" />
           </div>
         </div>
         <WeekStrip />
