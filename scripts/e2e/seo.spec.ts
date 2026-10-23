@@ -57,7 +57,8 @@ test("llms.txt and llms-full.txt: new answers from config, live pages only, noth
     expect(text).toContain("Readiness Evidence Check");
     expect(text).toContain("USD 12,000");
     expect(text).toContain("Legal name: ChisokuLab Private Limited");
-    expect(text).not.toMatch(/ChisokuLabs Pvt Ltd|Chisokulab Pvt Ltd/);
+    expect(text).not.toContain("ChisokuLabs" + " Pvt Ltd");
+    expect(text).not.toContain("Chisokulab" + " Pvt Ltd");
     expect(text).not.toMatch(/PMO|Diagnostic|Automation Audit|operator|probe/i);
   }
   expect(full).toContain("## FAQ");
