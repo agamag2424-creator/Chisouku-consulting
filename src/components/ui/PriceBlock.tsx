@@ -1,3 +1,4 @@
+import { foundingClientStatement } from "../../content/founding";
 import { offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
@@ -9,6 +10,8 @@ type PriceBlockProps = {
   showFeeCredit?: boolean;
   /** Off when a heading beside the block already names the offer. */
   showName?: boolean;
+  /** Full terms once per page. Off when another block on the same page already states them. */
+  showTerms?: boolean;
   className?: string;
 };
 
@@ -18,6 +21,7 @@ export function PriceBlock({
   foundingSlotsRemaining = siteConfig.foundingSlotsRemaining,
   showFeeCredit,
   showName = true,
+  showTerms = true,
   className,
 }: PriceBlockProps) {
   const data = siteConfig.offers[offer];
@@ -43,11 +47,8 @@ export function PriceBlock({
         )}
       </dl>
 
-      {founding && (
-        <p className="mt-4 t-small text-muted">
-          Founding-client rate: the first three clients pay 50% of list price in exchange for a named or
-          anonymised case study. {`Founding-client places remaining: ${foundingSlotsRemaining}.`}
-        </p>
+      {founding && showTerms && (
+        <p className="mt-4 t-small text-muted">{foundingClientStatement(foundingSlotsRemaining)}</p>
       )}
 
       {feeCredit && (

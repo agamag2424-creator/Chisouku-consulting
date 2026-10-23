@@ -203,7 +203,7 @@ Responsive to 360px; no horizontal scroll; visible keyboard focus; `prefers-redu
 "The full Evidence Check fee is credited against a Go-Live Decision Review signed within 90 days of the Evidence Check report." Show on both offer pages and `/pricing`.
 
 ### 6.3 Founding-client rate
-"Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised case study." Show remaining count from config (`foundingSlotsRemaining`, default 3). If 0, hide founding prices automatically.
+"Founding-client rate: the first three clients pay 50% of list price. In exchange, we ask for a named or anonymised case study, a 20-minute reference call with a future prospect, a written testimonial within two weeks of the readout if you are satisfied, and one warm introduction to a peer. The founding-client rate ends after three clients or on 31 January 2027, whichever comes first." Show remaining count from config (`foundingSlotsRemaining`, default 3). If 0, hide founding prices automatically.
 
 ### 6.4 Config schema (replace current `pricing`, `markets`, `systems` keys; keep `name`, `url`, `email`, `calendlyUrl`)
 

@@ -1,3 +1,4 @@
+import { foundingClientStatement } from "../content/founding";
 import { markets } from "../content/markets";
 import { sampleLabel } from "../content/samplePack";
 import { canonicalAnswers, faqItems, feeCreditAnswer, glossaryTerms } from "./aeoContent";
@@ -33,7 +34,7 @@ export function buildLlmsTxt(): string {
     `- Fee credit: ${feeCreditAnswer}`,
     ...(siteConfig.foundingSlotsRemaining > 0
       ? [
-          `- Founding-client rate: the first three clients pay 50% of list price in exchange for a named or anonymised case study. Places remaining: ${siteConfig.foundingSlotsRemaining}.`,
+          `- ${foundingClientStatement(siteConfig.foundingSlotsRemaining)}`,
         ]
       : []),
     ``,

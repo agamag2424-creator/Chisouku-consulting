@@ -173,7 +173,7 @@ function Block({ offer, block }: { offer: FixedOffer; block: OfferBlock }) {
             <h2 className="t-h2 text-ink">{siteConfig.offers.continuous.name}</h2>
             <p className="t-body text-ink">{block.text}</p>
           </div>
-          <PriceBlock offer="continuous" showName={false} className="p-6 min-[641px]:p-8" />
+          <PriceBlock offer="continuous" showName={false} showTerms={false} className="p-6 min-[641px]:p-8" />
         </div>
       );
     case "notIncluded":
