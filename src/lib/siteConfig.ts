@@ -5,8 +5,8 @@
 export const siteConfig = {
   name: "ChisokuLabs",
   url: "https://www.chisokulabs.com",
-  email: "agam@chisokulabs.com", // INPUT NEEDED (IN-2): confirm a role address, e.g. hello@, given L4
-  calendlyUrl: "https://calendly.com/agam-agrawwal", // IN-5, founder 17 Oct 2026
+  email: "hello@chisokulabs.com",
+  calendlyUrl: "https://calendly.com/chisokulabs/discovery-call",
   /** Sender for form emails; chisokulabs.com is verified in Resend. Replies go to the visitor. */
   formSender: "ChisokuLabs website <website@chisokulabs.com>",
   tagline: "Independent go-live decision assurance",
@@ -48,6 +48,14 @@ export const siteConfig = {
   // PRD 8.3 principal paragraph (IN-3 approved 17 Oct 2026)
   principalBlock: true,
 } as const;
+
+export function calendlyLink(content: "header" | "hero" | "readiness_result"): string {
+  return (
+    siteConfig.calendlyUrl +
+    "?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=" +
+    content
+  );
+}
 
 export type OfferKey = keyof typeof siteConfig.offers;
 

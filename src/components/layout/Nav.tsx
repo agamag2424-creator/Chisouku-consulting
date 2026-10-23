@@ -4,11 +4,11 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "../../lib/utils";
-import { isRouteLive, navLinks } from "../../lib/siteConfig";
+import { calendlyLink, isRouteLive, navLinks } from "../../lib/siteConfig";
 import { BrandMark } from "../brand/BrandMark";
 import { Button } from "../ui/Button";
 
-const CTA = { href: "/contact?request=review", label: "Discuss your programme" } as const;
+const CTA = { href: calendlyLink("header"), label: "Book a 30-minute call" } as const;
 
 // Links to routes that are not live yet are left out (siteConfig.routeLive).
 const liveNavLinks = navLinks.filter((link) => isRouteLive(link.href));
@@ -99,7 +99,9 @@ export function Nav() {
                 </li>
               ))}
             </ul>
-            <Button href={CTA.href}>{CTA.label}</Button>
+            <Button href={CTA.href} ctaId="book_call" target="_blank" rel="noopener noreferrer">
+              {CTA.label}
+            </Button>
           </nav>
 
           <button
@@ -146,31 +148,40 @@ export function Nav() {
             </button>
           </div>
 
-          <nav aria-label="Main" className="flex-1 overflow-y-auto px-[var(--content-padding-x-mobile)] py-6">
-            <ul className="divide-y divide-line border-y border-line">
-              {liveNavLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    aria-current={isActive(link.href) ? "page" : undefined}
-                    className={cn(
-                      "block py-4 text-[20px] font-medium",
-                      isActive(link.href) ? "text-ink" : "text-muted hover:text-ink",
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <nav aria-label="Main" className="flex min-h-0 flex-1 flex-col">
+            <div className="flex-1 overflow-y-auto px-[var(--content-padding-x-mobile)] py-6">
+              <ul className="divide-y divide-line border-y border-line">
+                {liveNavLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                      className={cn(
+                        "block py-4 text-[20px] font-medium",
+                        isActive(link.href) ? "text-ink" : "text-muted hover:text-ink",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="px-[var(--content-padding-x-mobile)] pb-8">
+              <Button
+                href={CTA.href}
+                size="lg"
+                className="w-full"
+                ctaId="book_call"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+              >
+                {CTA.label}
+              </Button>
+            </div>
           </nav>
-
-          <div className="px-[var(--content-padding-x-mobile)] pb-8">
-            <Button href={CTA.href} size="lg" className="w-full" onClick={() => setOpen(false)}>
-              {CTA.label}
-            </Button>
-          </div>
         </div>
       )}
     </>
