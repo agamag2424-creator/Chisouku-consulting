@@ -80,6 +80,8 @@ export const routeLive = {
   "/guides/s4hana-go-no-go-checklist": true,
   "/guides/is-my-erp-ready-to-go-live": true,
   "/guides/independent-assurance-vs-si-readiness-review": true,
+  // Unlinked self-check. Renders on dev and Vercel previews only; 404 in production.
+  "/readiness": false,
 } as const;
 
 export type SiteRoute = keyof typeof routeLive;
