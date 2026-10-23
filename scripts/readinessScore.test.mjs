@@ -1,10 +1,24 @@
 // Scoring for /readiness. Run: npm run test:unit
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { areas, questions } from "../src/content/readiness.ts";
+import { answerOptions, areas, helperLine, questions } from "../src/content/readiness.ts";
 import { formatScore, scoreAnswers } from "../src/lib/readinessScore.ts";
 
 const fill = (choice) => Array.from({ length: 12 }, () => choice);
+
+test("helper text describes today, with evidence for Yes, Partly and No", () => {
+  assert.equal(helperLine, "Answer for where things stand today.");
+  assert.deepEqual(
+    answerOptions.map((option) => [option.choice, option.label, option.help]),
+    [
+      ["yes", "Yes", "it's done, and you could show the evidence today."],
+      ["partly", "Partly", "some of it is in place, but you couldn't show full evidence yet."],
+      ["no", "No", "it isn't in place, or you're not sure."],
+    ],
+  );
+  const combined = `${helperLine} ${answerOptions.map((option) => option.help).join(" ")}`;
+  assert.equal(combined.includes("Partly means started but not finished."), false);
+});
 
 test("the check is 6 areas of 2 questions, with jargon on first use", () => {
   assert.equal(areas.length, 6);

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { routeLive, siteConfig } from "../lib/siteConfig";
 
 // PRD 10 (E8.5): the sitemap lists exactly the live routes. Bump the date when the site changes meaningfully.
-const lastModified = new Date("2026-10-17");
+const lastModified = new Date("2026-10-23");
 
 /** Higher for the homepage and the two offers; lowest for legal pages. */
 const priority = (path: string) =>

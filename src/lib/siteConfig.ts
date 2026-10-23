@@ -40,7 +40,7 @@ export const siteConfig = {
   },
   feeCreditDays: 90,
   foundingSlotsRemaining: 3,
-  selfCheck: { live: false, url: null as string | null },
+  selfCheck: { live: true, url: null as string | null },
   samplePackPath: "/documents/chisokulabs-go-live-decision-pack-illustrative.pdf",
   // PRD 9.11; example values approved (IN-7, 17 Oct 2026)
   slipEstimator: {
@@ -100,8 +100,8 @@ export const routeLive = {
   "/guides/s4hana-go-no-go-checklist": true,
   "/guides/is-my-erp-ready-to-go-live": true,
   "/guides/independent-assurance-vs-si-readiness-review": true,
-  // Unlinked self-check. Renders on dev and Vercel previews only; 404 in production.
-  "/readiness": false,
+  // Go-live readiness check. Live in production, so it can be linked and listed in the sitemap.
+  "/readiness": true,
 } as const;
 
 export type SiteRoute = keyof typeof routeLive;

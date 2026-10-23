@@ -2,20 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ReadinessCheck } from "../../components/readiness/ReadinessCheck";
 import { Section } from "../../components/ui/Section";
+import { pageMetadata } from "../../lib/seo";
 import { routeRenders } from "../../lib/siteConfig";
 
 const path = "/readiness";
 
-// Per request, so production 404s and a Vercel preview renders. A static build would bake in one environment.
-export const dynamic = "force-dynamic";
+// Live routes are indexed. A route that is switched off still fails closed, with noindex on the 404.
+const renders = routeRenders(path);
 
-export const metadata: Metadata = {
-  title: "Go-live readiness check",
-  robots: { index: false, follow: false },
-};
+export const metadata: Metadata = renders ? pageMetadata(path) : { robots: { index: false, follow: false } };
 
 export default function ReadinessPage() {
-  if (!routeRenders(path)) notFound();
+  if (!renders) notFound();
   return (
     <Section tone="page">
       <ReadinessCheck />

@@ -9,6 +9,7 @@ const routes = [
   "/go-live-decision-review",
   "/method",
   "/see-it-first",
+  "/readiness",
   "/pricing",
   "/independence-and-data",
   "/go-live-readiness-uae",
