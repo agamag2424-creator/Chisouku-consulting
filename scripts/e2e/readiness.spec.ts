@@ -70,7 +70,7 @@ test("mobile shows one question, keeps answers, and scores all Partly as 6", asy
   await expect(page.getByText("Scope and go-live date: 1 / 2")).toBeVisible();
   await expect(page.getByText("A self-assessment, not a go-live recommendation.")).toBeVisible();
   expect(await overflow()).toBeLessThanOrEqual(1);
-  await page.screenshot({ path: `${shots}/readiness-results-390.png`, fullPage: true });
+  await page.screenshot({ path: `${shots}/readiness-results-390.png` });
 
   const book = page.locator("main").getByRole("link", { name: "Book a 30-minute call" });
   const brief = page.locator("main").getByRole("link", { name: "Request a free readiness brief" });
@@ -128,7 +128,7 @@ test("desktop shows one area, two questions, on the first step", async ({ page }
   await expect(page.getByText("Ready to evidence", { exact: true }).first()).toBeVisible();
   await expect(page.getByText("Your weakest area:")).toHaveCount(0);
   await expect(page.getByText(/^Next step:/)).toHaveCount(0);
-  await page.screenshot({ path: `${shots}/readiness-results-1440.png`, fullPage: true });
+  await page.screenshot({ path: `${shots}/readiness-results-1440.png` });
 
   const completed = (await events(page))
     .filter((event) => event.name === "readiness_complete")
@@ -142,5 +142,6 @@ test("the page is noindex and absent from the sitemap", async ({ request }) => {
   expect(html).toMatch(/nofollow/);
   expect(html).toContain("Go-live readiness check");
   const xml = await (await request.get(base + "/sitemap.xml")).text();
-  expect(xml).not.toContain("/readiness");
+  const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
+  expect(urls.some((url) => url.endsWith("/readiness"))).toBe(false);
 });

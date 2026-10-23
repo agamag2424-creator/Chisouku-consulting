@@ -118,7 +118,7 @@ export function ReadinessCheck() {
     if (!prior || (prior.phase === phase && prior.cursor === cursor)) return;
     const heading =
       phase === "intro" ? introHeadingRef.current : phase === "questions" ? progressHeadingRef.current : resultHeadingRef.current;
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     heading?.focus({ preventScroll: true });
   }, [phase, cursor]);
 
@@ -463,10 +463,12 @@ function Results({
       <div className="flex flex-col gap-6">
         {weakest && result.weakestAreaIndex !== null ? (
           <Sheet className="p-6 min-[641px]:p-8">
-            <h2 className="t-h3 text-ink">{weakestAreaLine(weakest.name)}</h2>
-            <p className="mt-2 t-small font-semibold text-ink">
-              {scoreOfTwo(formatScore(result.areaScores[result.weakestAreaIndex]))}
-            </p>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <h2 className="t-h3 text-ink">{weakestAreaLine(weakest.name)}</h2>
+              <p className="t-small font-semibold text-ink">
+                {scoreOfTwo(formatScore(result.areaScores[result.weakestAreaIndex]))}
+              </p>
+            </div>
             <p className="t-body mt-3 text-ink">{weakest.nextStep}</p>
           </Sheet>
         ) : null}
