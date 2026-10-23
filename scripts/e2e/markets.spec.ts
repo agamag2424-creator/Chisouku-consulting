@@ -56,6 +56,13 @@ for (const market of pages) {
     expect(service?.offers).toHaveLength(2);
   });
 
+  test(`${market.path}: fits 360px without horizontal scroll`, async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 800 });
+    await page.goto(base + market.path);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
+  });
+}
+
 test("homepage deadline band links to both market pages and wraps", async ({ page }) => {
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 900 });
@@ -69,10 +76,3 @@ test("homepage deadline band links to both market pages and wraps", async ({ pag
     expect(overflow).toBeLessThanOrEqual(0);
   }
 });
-
-  test(`${market.path}: fits 360px without horizontal scroll`, async ({ page }) => {
-    await page.setViewportSize({ width: 360, height: 800 });
-    await page.goto(base + market.path);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
-  });
-}
