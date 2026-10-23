@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMetadata("/privacy");
 const lastUpdated = "17 October 2026";
 
 const collected = [
-  "What you enter in the “Discuss your programme” form: name, work email, company, country, role, request type, platform, go-live decision date and your message.",
+  "What you enter in the “Discuss your programme” form: name, work email, company, country, role, request type, platform, go-live decision date and your message, and your consent to be contacted about your request.",
   "Anything you send us by email, or share with us during an engagement.",
   "Anonymous website analytics: pages visited, the buttons clicked, device type, country and referring site. No cookies are used for analytics.",
 ];

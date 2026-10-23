@@ -1,12 +1,23 @@
 import { NextResponse } from "next/server";
 import { isRequestKey, requestTypes } from "../../../content/contactForm";
+import { contactEmailText, hasContactConsent } from "../../../lib/contactConsent";
 import { siteConfig } from "../../../lib/siteConfig";
 
 // "Discuss your programme" delivery (PRD 11, E9.1): validates, drops honeypot submissions, emails the founder through
 // Resend. It never reports success for a message nobody receives, and never logs what a visitor wrote.
 
 type Payload = Partial<Record<
-  "name" | "email" | "company" | "country" | "role" | "request_type" | "platform" | "decision_month" | "message" | "website",
+  | "name"
+  | "email"
+  | "company"
+  | "country"
+  | "role"
+  | "request_type"
+  | "platform"
+  | "decision_month"
+  | "message"
+  | "website"
+  | "consent",
   unknown
 >>;
 
@@ -31,21 +42,24 @@ export async function POST(request: Request) {
   if (!name || !email || !company || !country || !isRequestKey(requestType)) {
     return NextResponse.json({ ok: false, error: "Missing required fields" }, { status: 400 });
   }
+  if (!hasContactConsent(body.consent)) {
+    return NextResponse.json({ ok: false, error: "Consent is required" }, { status: 400 });
+  }
   const requestLabel = requestTypes[requestType as keyof typeof requestTypes].label;
-
-  const summary = [
-    `Request: ${requestLabel}`,
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Company: ${company}`,
-    `Country: ${country}`,
-    `Role: ${text(body.role)}`,
-    `Platform: ${text(body.platform)}`,
-    `Go-live decision date: ${text(body.decision_month)}`,
-    ``,
-    `Message:`,
-    text(body.message, 5000),
-  ].join("\n");
+  const summary = contactEmailText(
+    {
+      requestLabel,
+      name,
+      email,
+      company,
+      country,
+      role: text(body.role),
+      platform: text(body.platform),
+      decisionMonth: text(body.decision_month),
+      message: text(body.message, 5000),
+    },
+    new Date(),
+  );
 
   const resendKey = process.env.RESEND_API_KEY;
   if (!resendKey) {
