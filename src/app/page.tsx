@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import { ComparisonTable } from "../components/compare/ComparisonTable";
 import { EvidenceCheckHero } from "../components/hero/EvidenceCheckHero";
+import { DeadlineBand } from "../components/home/DeadlineBand";
 import {
   BriefIllustration,
   CrossCheckStrip,
@@ -23,6 +24,9 @@ import { calendlyLink, siteConfig } from "../lib/siteConfig";
 import { cn } from "../lib/utils";
 
 export const metadata: Metadata = pageMetadata("/");
+
+// The deadline band reads the clock, so this page is rendered per request (brief A2).
+export const dynamic = "force-dynamic";
 
 const CTA = {
   review: { href: "/contact?request=review", label: "Discuss your programme" },
@@ -97,6 +101,8 @@ export default function Home() {
         </div>
         <EvidenceCheckHero />
       </Section>
+
+      <DeadlineBand />
 
       {/* 2. The problem */}
       <Section tone="paper">

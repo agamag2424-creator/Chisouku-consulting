@@ -8,8 +8,9 @@ const pages = [
     path: "/go-live-readiness-uae",
     h1: "Go-live readiness in the UAE",
     country: "AE",
-    dates: ["1 January 2027", "End of 2027"],
-    sources: ["https://mof.gov.ae/", "https://support.sap.com/"],
+    dates: ["30 October 2026", "31 March 2027 and 1 July 2027", "1 January 2027", "End of 2027"],
+    sources: ["https://tax.gov.ae/", "https://tax.gov.ae/", "https://tax.gov.ae/", "https://support.sap.com/"],
+    whyNow: "Fixed dates are adding go-lives to UAE programmes.",
   },
   {
     path: "/go-live-readiness-saudi-arabia",
@@ -32,10 +33,11 @@ for (const market of pages) {
     for (const [index, date] of market.dates.entries()) {
       const fact = facts.nth(index);
       await expect(fact).toContainText(date);
-      const link = fact.getByRole("link");
+      const link = fact.getByRole("link").first();
       await expect(link).toBeVisible();
       expect(await link.getAttribute("href")).toMatch(new RegExp("^" + market.sources[index].replace(/[.]/g, "\\.")));
     }
+    if ("whyNow" in market) await expect(page.getByText(market.whyNow)).toBeVisible();
 
     await expect(page.getByText("Remote by default, on site by arrangement.")).toBeVisible();
     await expect(page.getByText("USD 5,000").first()).toBeVisible();
@@ -53,6 +55,20 @@ for (const market of pages) {
     expect(service?.areaServed?.identifier).toBe(market.country);
     expect(service?.offers).toHaveLength(2);
   });
+
+test("homepage deadline band links to both market pages and wraps", async ({ page }) => {
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(base + "/");
+    const band = page.getByRole("complementary", { name: "Regulatory dates" });
+    await expect(band.getByRole("link", { name: "UAE e-invoicing" })).toHaveAttribute("href", "/go-live-readiness-uae");
+    await expect(band.getByRole("link", { name: "Saudi Arabia" })).toHaveAttribute("href", "/go-live-readiness-saudi-arabia");
+    await expect(band).toContainText("31 Mar 2027");
+    await expect(band).toContainText("1 Feb 2027");
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+  }
+});
 
   test(`${market.path}: fits 360px without horizontal scroll`, async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 800 });

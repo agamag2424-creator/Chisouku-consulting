@@ -126,6 +126,14 @@ function WhyNow({ market }: { market: Market }) {
                 <a href={fact.source.url} className="font-semibold text-teal underline underline-offset-4 hover:text-ink">
                   {fact.source.label}
                 </a>
+                {fact.also && (
+                  <>
+                    {" · "}
+                    <a href={fact.also.url} className="font-semibold text-teal underline underline-offset-4 hover:text-ink">
+                      {fact.also.label}
+                    </a>
+                  </>
+                )}
               </p>
             </div>
           </li>
