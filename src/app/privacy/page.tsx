@@ -92,7 +92,7 @@ export default function PrivacyPage() {
               timelines, confidentiality and fees are governed by the written agreement for each engagement.
             </p>
             <p className="t-body text-ink">
-              All site text, design, graphics, logos and code are the intellectual property of ChisokuLabs Pvt Ltd unless
+              All site text, design, graphics, logos and code are the intellectual property of Chisokulab Pvt Ltd unless
               otherwise stated. You may not copy or redistribute website content without permission.
             </p>
           </Part>

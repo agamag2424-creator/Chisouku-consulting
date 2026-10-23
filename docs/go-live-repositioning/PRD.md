@@ -3,7 +3,7 @@
 **Status:** v1.0 · approved direction by the founder, 17 Oct 2026 (IST)
 **Amendment v1.1 (17 Oct 2026):** the founder approved a homepage "slipped go-live cost" estimator (option B) to keep the old site's "see what it costs you" interaction. Adds homepage section 4a (9.1), section 9.11, the `slipEstimator` config key (6.4), the `slip_estimate_used` event (11), inputs IN-7 and IN-8 (14), and backlog story E1.5.
 **Amendment v1.2 (17 Oct 2026):** the founder approved a visual redesign of the homepage (design canvas "ChisokuLabs Homepage Redesign"; source kept in `evidence/E1.6/design/`). Section 7 behaviour 2–4 change: the replay button is replaced by an "As reported / As evidenced" switch. 5.1 gains a rule on dark (ink) surfaces. 9.1 gains section 9.12 (visual treatment and interface wording). `hero_check_replay` becomes `hero_view_toggle` {view} (11). Adds backlog story E1.6.
-**Owner:** Founder, ChisokuLabs Pvt Ltd
+**Owner:** Founder, Chisokulab Pvt Ltd
 **Repository:** this repo (`chisokulab`, Next.js 16 App Router, Tailwind v4, deployed on Vercel)
 **Companion file:** `BACKLOG.md` in this folder (epics, stories, tasks, acceptance criteria, executor rules)
 **Sample asset:** `public/documents/chisokulabs-go-live-decision-pack-illustrative.pdf` (added by story E4.1)
