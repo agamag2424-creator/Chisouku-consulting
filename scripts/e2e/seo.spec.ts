@@ -42,7 +42,11 @@ for (const route of routes) {
       .map((text) => JSON.parse(text))
       .find((data) => data["@type"] === "Organization");
     expect(org.areaServed).toEqual(["United Arab Emirates", "Saudi Arabia"]);
+    expect(org.legalName).toBe("ChisokuLab Private Limited");
     expect(JSON.stringify(org)).not.toMatch(/founder/i);
+    if (route === "/privacy") {
+      await expect(page.getByText("intellectual property of ChisokuLab Private Limited")).toBeVisible();
+    }
   });
 }
 
@@ -52,6 +56,8 @@ test("llms.txt and llms-full.txt: new answers from config, live pages only, noth
   for (const text of [short, full]) {
     expect(text).toContain("Readiness Evidence Check");
     expect(text).toContain("USD 12,000");
+    expect(text).toContain("Legal name: ChisokuLab Private Limited");
+    expect(text).not.toMatch(/ChisokuLabs Pvt Ltd|Chisokulab Pvt Ltd/);
     expect(text).not.toMatch(/PMO|Diagnostic|Automation Audit|operator|probe/i);
   }
   expect(full).toContain("## FAQ");

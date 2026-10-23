@@ -19,6 +19,17 @@ for (const preset of presets) {
   });
 }
 
+test("Book a call uses the contact Calendly link", async ({ page }) => {
+  await page.goto(`${base}/contact`);
+  const call = page.getByRole("link", { name: "Book a call" });
+  await expect(call).toHaveAttribute(
+    "href",
+    "https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=contact",
+  );
+  await expect(call).toHaveAttribute("target", "_blank");
+  await expect(call).toHaveAttribute("rel", "noopener noreferrer");
+});
+
 test("missing required fields show plain-language messages and focus the first one", async ({ page }) => {
   await page.goto(`${base}/contact`);
   await page.getByRole("button", { name: "Send" }).click();

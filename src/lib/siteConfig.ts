@@ -4,6 +4,8 @@
  */
 export const siteConfig = {
   name: "ChisokuLabs",
+  /** Registered entity. The trading name stays `name`. */
+  legalName: "ChisokuLab Private Limited",
   url: "https://www.chisokulabs.com",
   email: "hello@chisokulabs.com",
   calendlyUrl: "https://calendly.com/chisokulabs/discovery-call",
@@ -63,7 +65,8 @@ export type CalendlyContent =
   | "estimator"
   | "see_it_first"
   | "market_hero"
-  | "market_close";
+  | "market_close"
+  | "contact";
 
 /** Discovery-call URL with the existing UTM scheme. CtaTracker records where on the page the click happened. */
 export function calendlyLink(content: CalendlyContent): string {

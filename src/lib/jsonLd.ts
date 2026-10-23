@@ -11,7 +11,7 @@ export function organizationJsonLd(): JsonLd {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteConfig.name,
-    legalName: "Chisokulab Pvt Ltd",
+    legalName: siteConfig.legalName,
     url: siteUrl,
     email: siteConfig.email,
     description: `${siteConfig.tagline}. ${siteConfig.positioning}`,

@@ -56,6 +56,7 @@ export function buildLlmsTxt(): string {
     ...keyPages(),
     ``,
     `## Contact`,
+    `- Legal name: ${siteConfig.legalName}`,
     `- Email: ${siteConfig.email}`,
     `- [Discuss your programme](${link("/contact")})`,
     `- Full text: ${link("/llms-full.txt")}`,

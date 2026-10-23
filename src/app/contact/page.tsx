@@ -3,7 +3,7 @@ import { ProgrammeForm } from "../../components/contact/ProgrammeForm";
 import { isRequestKey } from "../../content/contactForm";
 import { Section } from "../../components/ui/Section";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
-import { siteConfig } from "../../lib/siteConfig";
+import { calendlyLink, siteConfig } from "../../lib/siteConfig";
 
 // "Discuss your programme" (PRD 11, E9.1). `?request=brief|review|pricing` presets the request type.
 const title = "Discuss your programme";
@@ -34,7 +34,7 @@ export default async function ContactPage({ searchParams }: Props) {
             <p>
               Prefer to talk?{" "}
               <a
-                href={siteConfig.calendlyUrl}
+                href={calendlyLink("contact")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold text-teal underline underline-offset-4 hover:text-ink"
