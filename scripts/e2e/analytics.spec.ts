@@ -15,6 +15,23 @@ test.beforeEach(async ({ page }) => {
   await page.route("**/_vercel/insights/**", (route) => route.fulfill({ status: 200, body: "" }));
 });
 
+test("book_call in the header is nav and in the hero is the section number", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(base + "/", { waitUntil: "networkidle" });
+
+  const header = page.locator('header [data-cta="book_call"]');
+  await header.evaluate((node) => node.addEventListener("click", (event) => event.preventDefault(), { once: true }));
+  await header.click();
+
+  const hero = page.locator('main [data-cta="book_call"]').first();
+  await hero.evaluate((node) => node.addEventListener("click", (event) => event.preventDefault(), { once: true }));
+  await hero.click();
+
+  const sent = await events(page);
+  expect(sent).toContainEqual({ name: "cta_click", data: { id: "book_call", page: "/", placement: "nav" } });
+  expect(sent).toContainEqual({ name: "cta_click", data: { id: "book_call", page: "/", placement: "section-1" } });
+});
+
 test("cta_click carries the CTA id, the page and its placement", async ({ page }) => {
   await page.goto(base + "/", { waitUntil: "networkidle" });
   const cta = page.locator('main [data-cta="see-it-first-sample-pack"]').first();

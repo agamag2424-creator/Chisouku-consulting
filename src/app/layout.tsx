@@ -74,7 +74,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-GB"
       className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable}`}
     >
       <body className="antialiased">

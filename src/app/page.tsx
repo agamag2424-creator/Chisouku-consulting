@@ -19,7 +19,7 @@ import { Button } from "../components/ui/Button";
 import { Section } from "../components/ui/Section";
 import { Sheet } from "../components/ui/Sheet";
 import { pageMetadata } from "../lib/seo";
-import { siteConfig } from "../lib/siteConfig";
+import { calendlyLink, siteConfig } from "../lib/siteConfig";
 import { cn } from "../lib/utils";
 
 export const metadata: Metadata = pageMetadata("/");
@@ -70,7 +70,17 @@ export default function Home() {
             Independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia.
           </p>
           <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-            <Button href={CTA.review.href} variant="inverse" size="lg">
+            <Button
+              href={calendlyLink("hero")}
+              variant="inverse"
+              size="lg"
+              ctaId="book_call"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Book a 30-minute call
+            </Button>
+            <Button href={CTA.review.href} variant="inverse-outline" size="lg">
               {CTA.review.label}
             </Button>
             <Button href={CTA.samplePack.href} variant="inverse-outline" size="lg">
