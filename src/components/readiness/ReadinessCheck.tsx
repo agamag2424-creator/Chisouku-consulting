@@ -38,6 +38,7 @@ import {
   type Choice,
   type ReadinessScore,
 } from "../../lib/readinessScore";
+import { postReadinessCompletion } from "../../lib/readinessCompletion";
 import { track } from "../../lib/track";
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/Button";
@@ -149,6 +150,7 @@ export function ReadinessCheck() {
     const weakest =
       scored.weakestAreaIndex === null ? NO_WEAKEST_AREA : areas[scored.weakestAreaIndex].name;
     track("readiness_complete", { band: bands[scored.band].label, weakest_area: weakest });
+    postReadinessCompletion(scored.band);
     setPhase("results");
   }
 

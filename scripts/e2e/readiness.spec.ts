@@ -60,10 +60,20 @@ test("mobile shows one question, keeps answers, and scores all Partly as 6", asy
   await expect(page.getByRole("radio", { name: "Partly", exact: true })).toBeChecked();
   await expect(next).toBeEnabled();
 
+  const completionPost = page.waitForRequest(
+    (req) => req.method() === "POST" && new URL(req.url()).pathname === "/api/readiness-complete",
+  );
   for (let step = 0; step < 12; step += 1) await answerVisible(page, "Partly");
 
   const score = page.getByRole("heading", { level: 1, name: "Your score: 6 out of 12" });
   await expect(score).toBeVisible();
+  expect((await completionPost).postDataJSON()).toEqual({
+    score_band: "partly_ready",
+    utm_source: null,
+    utm_medium: null,
+    utm_campaign: null,
+    referrer_host: null,
+  });
   await expect(score).toBeFocused();
   await expect(page.getByText("Partly ready", { exact: true }).first()).toBeVisible();
   await expect(page.getByRole("heading", { level: 2 })).toHaveText("Your weakest area: Scope and go-live date");
@@ -123,8 +133,18 @@ test("desktop shows one area, two questions, on the first step", async ({ page }
   expect(overflow).toBeLessThanOrEqual(1);
   await page.screenshot({ path: `${shots}/readiness-question-1440.png` });
 
+  const completionPost = page.waitForRequest(
+    (req) => req.method() === "POST" && new URL(req.url()).pathname === "/api/readiness-complete",
+  );
   for (let step = 0; step < 6; step += 1) await answerVisible(page, "Yes");
   await expect(page.getByRole("heading", { level: 1, name: "Your score: 12 out of 12" })).toBeVisible();
+  expect((await completionPost).postDataJSON()).toEqual({
+    score_band: "ready",
+    utm_source: null,
+    utm_medium: null,
+    utm_campaign: null,
+    referrer_host: null,
+  });
   await expect(page.getByText("Ready to evidence", { exact: true }).first()).toBeVisible();
   await expect(page.getByText("Your weakest area:")).toHaveCount(0);
   await expect(page.getByText(/^Next step:/)).toHaveCount(0);
