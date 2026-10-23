@@ -91,6 +91,13 @@ export default function Home() {
             <Button href={CTA.samplePack.href} variant="inverse-outline" size="lg">
               {CTA.samplePack.label}
             </Button>
+            <Button
+              href="/readiness"
+              variant="text"
+              className="inline max-w-full min-w-0 whitespace-normal text-balance text-left text-paper/80 decoration-paper/55 hover:text-paper hover:decoration-paper min-[480px]:self-center"
+            >
+              Take the 12-question readiness check
+            </Button>
           </div>
           <ul className="mt-8 flex flex-wrap gap-2" aria-label="Platforms">
             {siteConfig.platforms.map((platform) => (

@@ -1,7 +1,7 @@
 // Go-live readiness check. Not part of the app build (tsconfig excludes scripts/e2e).
 //
-// The page renders in development and on Vercel previews. Against a production build:
-//   VERCEL_ENV=preview PORT=3100 npm run start
+// Live in production. Against a production build:
+//   VERCEL_ENV=production PORT=3100 npm run start
 //   HERO_URL=http://localhost:3100/ npx playwright test scripts/e2e/readiness.spec.ts
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
@@ -38,6 +38,13 @@ test("mobile shows one question, keeps answers, and scores all Partly as 6", asy
 
   await page.getByRole("button", { name: "Start the readiness check" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Question 1 of 12");
+  await expect(page.locator("#q1-hint")).toHaveText("Answer for where things stand today.");
+  const help = page.locator("#q1-help");
+  await expect(help).toHaveText(
+    "Yes: it's done, and you could show the evidence today. Partly: some of it is in place, but you couldn't show full evidence yet. No: it isn't in place, or you're not sure.",
+  );
+  await expect(help.locator("span.font-semibold")).toHaveText(["Yes:", "Partly:", "No:"]);
+  await expect(page.getByText("Partly means started but not finished.")).toHaveCount(0);
   await expect(page.getByRole("group")).toHaveCount(1);
   await expect(page.getByText("Is scope frozen?")).toHaveCount(0);
   await expect(page.locator("p").filter({ hasText: /^Scope and go-live date$/ })).toBeVisible();
@@ -136,12 +143,14 @@ test("desktop shows one area, two questions, on the first step", async ({ page }
   expect(completed).toEqual([{ name: "readiness_complete", data: { band: "Ready to evidence", weakest_area: "none" } }]);
 });
 
-test("the page is noindex and absent from the sitemap", async ({ request }) => {
-  const html = await (await request.get(base + "/readiness")).text();
-  expect(html).toMatch(/noindex/);
-  expect(html).toMatch(/nofollow/);
+test("a production-like build returns 200, allows indexing, and lists /readiness in the sitemap", async ({ request }) => {
+  const response = await request.get(base + "/readiness");
+  expect(response.status()).toBe(200);
+  const html = await response.text();
+  expect(html).not.toMatch(/noindex/);
   expect(html).toContain("Go-live readiness check");
+  expect(html).toMatch(/<link rel="canonical" href="https:\/\/www\.chisokulabs\.com\/readiness"/);
   const xml = await (await request.get(base + "/sitemap.xml")).text();
   const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-  expect(urls.some((url) => url.endsWith("/readiness"))).toBe(false);
+  expect(urls.some((url) => url.endsWith("/readiness"))).toBe(true);
 });

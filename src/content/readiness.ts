@@ -19,12 +19,12 @@ export function progressLabel(n: number): string {
   return `Question ${n} of 12`;
 }
 
-export const helperLine = "Pick the answer closest to today. Partly means started but not finished.";
+export const helperLine = "Answer for where things stand today.";
 
 export const answerOptions: readonly { choice: Choice; label: string; help: string }[] = [
-  { choice: "yes", label: "Yes", help: "done, and you could show the evidence today." },
-  { choice: "partly", label: "Partly", help: "started but not finished." },
-  { choice: "no", label: "No", help: "not started, or you are not sure." },
+  { choice: "yes", label: "Yes", help: "it's done, and you could show the evidence today." },
+  { choice: "partly", label: "Partly", help: "some of it is in place, but you couldn't show full evidence yet." },
+  { choice: "no", label: "No", help: "it isn't in place, or you're not sure." },
 ];
 
 export const scorePrefix = "Your score:";

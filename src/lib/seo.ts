@@ -91,6 +91,11 @@ export const routeSeo = {
     description:
       "Go-live readiness terms: go/no-go decision, Conditional Go, cutover, rollback point, hypercare, SIT, UAT, data migration reconciliation and READINESS-5.",
   },
+  "/readiness": {
+    title: "Go-live readiness check",
+    description:
+      "Your programme reports Green. These 12 questions test whether the evidence agrees.",
+  },
 } as const satisfies Record<string, { title: string; description: string; image?: string }>;
 
 export type SeoRoute = keyof typeof routeSeo;
