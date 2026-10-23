@@ -36,8 +36,21 @@ for (const viewport of [
       for (const old of ["Assess", "Architect", "Activate", "Accelerate", "AI Impact Model", "PMO"]) {
         expect(body).not.toContain(old);
       }
+      await expect(page.getByRole("heading", { level: 2, name: "How we use AI, safely" })).toBeVisible();
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow).toBeLessThanOrEqual(0);
     });
   });
 }
+
+test("method AI section equals the FAQ answer verbatim", async ({ page }) => {
+  const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
+  await page.goto(base + "/faq");
+  await page.locator("#ai-on-our-data > summary").click();
+  const faq = (await page.locator("#ai-on-our-data p").innerText()).replace(/\s+/g, " ").trim();
+
+  await page.goto(url);
+  const method = (await page.locator("#how-we-use-ai p").innerText()).replace(/\s+/g, " ").trim();
+  expect(method).toBe(faq);
+  expect(method.length).toBeGreaterThan(0);
+});

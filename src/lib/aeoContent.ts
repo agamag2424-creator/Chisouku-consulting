@@ -25,6 +25,10 @@ export type FaqItem = {
   related?: { href: string; label: string }[];
 };
 
+/** Shared verbatim by the FAQ item "Do you use AI on our data?" and /method ("How we use AI, safely"). */
+export const aiOnOurDataAnswer =
+  "Yes, to extract claims and cross-check evidence, under the policy. AI processing runs only through providers contracted for zero data retention, and your data is never used to train AI models. Every finding is reviewed and signed by the principal; AI does not make the go-live recommendation.";
+
 /** PRD 9.9, in order. */
 export const faqItems: FaqItem[] = [
   {
@@ -72,8 +76,7 @@ export const faqItems: FaqItem[] = [
   {
     id: "ai-on-our-data",
     question: "Do you use AI on our data?",
-    answer:
-      "Yes, to extract claims and cross-check evidence, under the policy. AI processing runs only through providers contracted for zero data retention, and your data is never used to train AI models. Every finding is reviewed and signed by the principal; AI does not make the go-live recommendation.",
+    answer: aiOnOurDataAnswer,
     related: [{ href: "/independence-and-data#ai-use", label: "How AI is used" }],
   },
   {
