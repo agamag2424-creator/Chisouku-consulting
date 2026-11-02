@@ -13,7 +13,8 @@ const presets = [
 for (const preset of presets) {
   test(`?request=${preset.request} presets the request type and the button`, async ({ page }) => {
     await page.goto(`${base}/contact?request=${preset.request}`);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Discuss your programme");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Contact Us");
+    await expect(page.getByRole("heading", { level: 2, name: "Discuss your programme" })).toBeVisible();
     await expect(page.getByRole("radio", { name: preset.checked })).toBeChecked();
     await expect(page.getByRole("button", { name: preset.submit })).toBeVisible();
   });

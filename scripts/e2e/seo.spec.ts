@@ -20,7 +20,11 @@ const routes = [
   "/guides/is-my-erp-ready-to-go-live",
   "/guides/independent-assurance-vs-si-readiness-review",
   "/contact",
+  "/about",
   "/privacy",
+  "/terms",
+  "/refund-policy",
+  "/shipping-policy",
 ];
 
 for (const route of routes) {
@@ -46,7 +50,7 @@ for (const route of routes) {
     expect(org.legalName).toBe("ChisokuLab Private Limited");
     expect(JSON.stringify(org)).not.toMatch(/founder/i);
     if (route === "/privacy") {
-      await expect(page.getByText("intellectual property of ChisokuLab Private Limited")).toBeVisible();
+      await expect(page.getByText("Digital Personal Data Protection Act, 2023")).toBeVisible();
     }
   });
 }

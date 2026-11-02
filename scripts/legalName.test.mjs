@@ -13,6 +13,11 @@ const skip = new Set(["node_modules", ".next", ".git"]);
 const usesLegalName = [
   "src/components/layout/Footer.tsx",
   "src/app/privacy/page.tsx",
+  "src/app/terms/page.tsx",
+  "src/app/refund-policy/page.tsx",
+  "src/app/shipping-policy/page.tsx",
+  "src/app/about/page.tsx",
+  "src/app/contact/page.tsx",
   "src/lib/jsonLd.ts",
   "src/lib/llms.ts",
 ];

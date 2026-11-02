@@ -8,6 +8,9 @@ export const siteConfig = {
   legalName: "ChisokuLab Private Limited",
   url: "https://www.chisokulabs.com",
   email: "hello@chisokulabs.com",
+  phone: "+91 9277482755",
+  /** Registered office address (legal / policy pages). */
+  address: "190X/6/1, Kalindipuram, Prayagraj, U.P. 211011, India",
   calendlyUrl: "https://calendly.com/chisokulabs/discovery-call",
   /** Sender for form emails; chisokulabs.com is verified in Resend. Replies go to the visitor. */
   formSender: "ChisokuLabs website <website@chisokulabs.com>",
@@ -87,9 +90,13 @@ export const routeLive = {
   "/": true,
   "/method": true,
   "/contact": true,
+  "/about": true,
   "/faq": true,
   "/glossary": true,
   "/privacy": true,
+  "/terms": true,
+  "/refund-policy": true,
+  "/shipping-policy": true,
   "/readiness-evidence-check": true,
   "/go-live-decision-review": true,
   "/see-it-first": true,
