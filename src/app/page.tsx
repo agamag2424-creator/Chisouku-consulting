@@ -248,7 +248,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* 9. Principal-led (PRD 8.3, IN-3 approved; shared block, E6.2). /about redirects here. */}
+      {/* 9. Principal-led (PRD 8.3, IN-3 approved; shared block, E6.2). */}
       <PrincipalBlock id="principal" />
 
       {/* 10. Closing CTA (ink band) */}

@@ -77,14 +77,34 @@ export const routeSeo = {
       "What a system integrator's readiness review does well, where it falls short, and what independent go-live assurance adds to the decision.",
   },
   "/contact": {
-    title: "Discuss your programme",
+    title: "Contact Us",
     description:
-      "Discuss a go-live review, request a free readiness brief, or ask about pricing. We reply within one business day.",
+      "Email hello@chisokulabs.com or call +91 9277482755. Registered office in Prayagraj, India. We reply within 2 business days.",
+  },
+  "/about": {
+    title: "About Us",
+    description:
+      "ChisokuLabs provides independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia.",
+  },
+  "/terms": {
+    title: "Terms of Service",
+    description:
+      "Terms that apply when you use chisokulabs.com or buy from ChisokuLabs: products, prices, licences, liability, governing law and contact.",
+  },
+  "/refund-policy": {
+    title: "Refund and Cancellation Policy",
+    description:
+      "When you can cancel, when you get a refund for the Go-Live Readiness Report, Pack or consulting, and how to ask hello@chisokulabs.com.",
+  },
+  "/shipping-policy": {
+    title: "Shipping and Delivery Policy",
+    description:
+      "We do not ship physical goods. Digital products and consulting are delivered electronically; timelines, re-sends and contact details.",
   },
   "/privacy": {
-    title: "Privacy Policy and Terms",
+    title: "Privacy Policy",
     description:
-      "What ChisokuLabs collects through this website, why, who processes it, how long it is kept, and how to ask for it to be deleted.",
+      "How ChisokuLabs handles personal data under India's DPDP Act: what we collect, payments via Razorpay, retention, rights and grievance officer.",
   },
   "/glossary": {
     title: "Glossary",
