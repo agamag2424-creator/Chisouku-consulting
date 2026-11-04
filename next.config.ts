@@ -36,6 +36,12 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: securityHeaders,
       },
+      // Razorpay Checkout opens the card bank page (3-D Secure) in a popup and needs to talk to it; "same-origin"
+      // cuts that link and the popup stays blank. Only the checkout pages relax it.
+      ...["/readiness-report", "/readiness-pack", "/readiness-pack/upgrade"].map((source) => ({
+        source,
+        headers: [{ key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" }],
+      })),
     ];
   },
   async redirects() {

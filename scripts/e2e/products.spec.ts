@@ -40,7 +40,10 @@ if (!preview) {
 } else {
   for (const product of pages) {
     test(`${product.path}: verbatim copy, placeholders, test banner, footer line, Product JSON-LD`, async ({ page }) => {
-      expect((await page.goto(base + product.path))?.status()).toBe(200);
+      const response = await page.goto(base + product.path);
+      expect(response?.status()).toBe(200);
+      // Razorpay's card bank page opens in a popup that must keep its link to this page.
+      expect(response?.headers()["cross-origin-opener-policy"]).toBe("same-origin-allow-popups");
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(product.h1);
       await expect(page.getByText(/^\[PLACEHOLDER: /).first()).toBeVisible();
       await expect(page.getByText("TEST MODE: payments use Razorpay test cards. No real money is taken.")).toBeVisible();
