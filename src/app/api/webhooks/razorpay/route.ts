@@ -15,5 +15,6 @@ export async function POST(request: Request): Promise<Response> {
     now: new Date(),
     siteUrl: siteUrl(process.env),
     sendEmail: (email) => sendEmail(email),
+    adminToken: process.env.ADMIN_API_TOKEN,
   });
 }

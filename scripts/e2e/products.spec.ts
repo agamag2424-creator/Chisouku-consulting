@@ -23,6 +23,11 @@ const pages = [
   },
 ];
 
+test("the private report delivery page is a 404 without its key", async ({ page }) => {
+  expect((await page.goto(base + "/ops/deliver"))?.status()).toBe(404);
+  expect((await page.goto(base + "/ops/deliver?key=wrong&order=x"))?.status()).toBe(404);
+});
+
 if (!preview) {
   test("production build: product pages are off, and nothing links to them yet", async ({ page }) => {
     for (const { path } of pages) {

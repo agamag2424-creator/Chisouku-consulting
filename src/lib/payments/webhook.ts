@@ -13,6 +13,8 @@ export type WebhookDeps = {
   now: Date;
   siteUrl: string;
   sendEmail: (email: Email) => Promise<boolean>;
+  /** ADMIN_API_TOKEN; when set, the ops alert links to the private delivery page. */
+  adminToken?: string;
 };
 
 export type WebhookOutcome =
@@ -72,12 +74,19 @@ async function paymentCaptured(payment: PaymentEntity, deps: WebhookDeps): Promi
 
   if (paid.product === "report_149") {
     await deps.sendEmail(reportConfirmation(paid));
-    await deps.sendEmail(opsReportAlert(paid, deps.now));
+    await deps.sendEmail(opsReportAlert(paid, deps.now, deliverPageUrl(deps, paid.id)));
   } else {
     await deliverPack(paid, deps);
   }
   if (reasons.length) await deps.sendEmail(opsReviewAlert(paid, reasons.join("; ")));
   return reasons.length ? "needs_review" : "paid";
+}
+
+/** The private report delivery page for one order, or null when no admin token is configured. */
+function deliverPageUrl(deps: WebhookDeps, orderId: string): string | null {
+  const key = deps.adminToken?.trim();
+  if (!key || key.length < 32) return null;
+  return `${deps.siteUrl}/ops/deliver?order=${orderId}&key=${encodeURIComponent(key)}`;
 }
 
 /** Pack and upgrade orders: a 30-day download link, emailed and shown on the thank-you page. */

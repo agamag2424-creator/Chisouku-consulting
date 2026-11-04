@@ -91,8 +91,11 @@ export function istTime(date: Date): string {
   return `${get("day")} ${get("month")} ${get("year")}, ${get("hour")}:${get("minute")} IST`;
 }
 
-/** Internal alert to the ops inbox for a new report order, with the 48-hour due time. */
-export function opsReportAlert(order: Order, paidAt: Date): Email {
+/**
+ * Internal alert to the ops inbox for a new report order, with the 48-hour due time. `deliverUrl` is the private
+ * delivery page (it carries the admin key, so this email must only ever go to the ops inbox).
+ */
+export function opsReportAlert(order: Order, paidAt: Date, deliverUrl: string | null): Email {
   const due = new Date(paidAt.getTime() + 48 * 60 * 60 * 1000);
   return {
     to: siteConfig.email,
@@ -106,8 +109,9 @@ export function opsReportAlert(order: Order, paidAt: Date): Email {
       `Free check band: ${order.readiness_band ?? "none"}`,
       `Campaign: ${[order.utm_source, order.utm_medium, order.utm_campaign, order.utm_content].filter(Boolean).join(" / ") || "none"}`,
       "",
-      "When the PDF is ready, deliver it with:",
-      `node scripts/ops/deliver-report.mjs --order ${order.id} --pdf <path-to-report.pdf>`,
+      ...(deliverUrl
+        ? ["When the PDF is ready, open this private link, choose the PDF and press Send:", deliverUrl]
+        : ["When the PDF is ready, deliver it with:", `node scripts/ops/deliver-report.mjs --order ${order.id} --pdf <path-to-report.pdf>`]),
     ].join("\n"),
   };
 }

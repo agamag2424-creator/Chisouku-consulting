@@ -19,7 +19,7 @@ const razorpay = await import("../src/lib/payments/razorpay.ts");
 const orders = await import("../src/lib/payments/orders.ts");
 const { handleRazorpayEvent } = await import("../src/lib/payments/webhook.ts");
 const { handleCreateOrder } = await import("../src/lib/server/routes/checkout.ts");
-const { handleDownload, handleWebhook } = await import("../src/lib/server/routes/orders.ts");
+const { handleDownload, handleWebhook, isAdminKey } = await import("../src/lib/server/routes/orders.ts");
 const { blobConfig, signedBlobUrl } = await import("../src/lib/server/blob.ts");
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -281,6 +281,27 @@ describe("webhook", () => {
     assert.equal(await handleRazorpayEvent(refund, deps(db)), "refund_unknown");
     assert.equal(db.tables.events.filter((e) => e.name === "refunded").length, 1);
     assert.equal(orders.downloadLinkState(db.tables.orders[0], NOW), "refunded");
+  });
+
+  test("the ops alert links to the private delivery page only when an admin token is set", async () => {
+    const token = "a".repeat(48);
+    for (const [adminToken, expectLink] of [[token, true], [undefined, false]]) {
+      const db = fakeDb();
+      seedOrder(db, { razorpay_order_id: "order_o" });
+      const sent = [];
+      await handleRazorpayEvent(captured("order_o", "pay_o"), { ...deps(db, sent), adminToken });
+      const alert = sent.find((email) => email.subject.startsWith("New report order"));
+      assert.equal(alert.to, "hello@chisokulabs.com");
+      assert.equal(alert.text.includes(`/ops/deliver?order=${db.tables.orders[0].id}&key=${token}`), expectLink);
+    }
+  });
+
+  test("admin keys: exact match only, and the token must be at least 32 characters", () => {
+    const token = "b".repeat(40);
+    assert.equal(isAdminKey(token, token), true);
+    assert.equal(isAdminKey(`${token}x`, token), false);
+    assert.equal(isAdminKey(undefined, token), false);
+    assert.equal(isAdminKey("short", "short"), false);
   });
 
   test("unknown events and unknown orders are ignored", async () => {

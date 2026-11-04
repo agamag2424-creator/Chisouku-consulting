@@ -90,14 +90,19 @@ export async function handleWebhook(
   }
 }
 
-/** Bearer token check for the ops action. The token must be at least 32 characters. */
-export function isAdmin(request: Request, adminToken: string | undefined): boolean {
+/** Constant-time check of an admin key against ADMIN_API_TOKEN, which must be at least 32 characters. */
+export function isAdminKey(key: unknown, adminToken: string | undefined): boolean {
   const expected = adminToken?.trim();
-  const header = request.headers.get("authorization") ?? "";
-  if (!expected || expected.length < 32 || !header.startsWith("Bearer ")) return false;
-  const a = Buffer.from(header.slice(7));
+  if (!expected || expected.length < 32 || typeof key !== "string") return false;
+  const a = Buffer.from(key);
   const b = Buffer.from(expected);
   return a.length === b.length && timingSafeEqual(a, b);
+}
+
+/** Bearer token check for the ops action. */
+export function isAdmin(request: Request, adminToken: string | undefined): boolean {
+  const header = request.headers.get("authorization") ?? "";
+  return header.startsWith("Bearer ") && isAdminKey(header.slice(7), adminToken);
 }
 
 /**
