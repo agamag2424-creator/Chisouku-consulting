@@ -17,6 +17,7 @@ APP_PW=$(openssl rand -hex 24)
 echo ""
 echo "Step 1 of 6: checking your Azure subscription..."
 echo "Using subscription: $(az account show --query name -o tsv)"
+echo "Azure CLI version: $(az version --query '"azure-cli"' -o tsv)"
 az provider register --namespace Microsoft.DBforPostgreSQL --wait
 az provider register --namespace Microsoft.Storage --wait
 
@@ -27,13 +28,18 @@ for TRY in eastus eastus2 centralus; do
   if az postgres flexible-server create -g $RG -n $SERVER -l $TRY \
       --tier Burstable --sku-name Standard_B1ms --storage-size 32 --version 16 \
       --admin-user $ADMIN_USER --admin-password "$ADMIN_PW" \
-      --public-access All --database-name $DB --high-availability Disabled --backup-retention 7 \
-      --yes -o none; then
+      --public-access All --database-name $DB --yes -o none 2>/tmp/chisoku-err.txt; then
     LOCATION=$TRY
     break
   fi
+  cat /tmp/chisoku-err.txt
+  if grep -qi "unrecognized arguments\|not recognized\|invalid choice" /tmp/chisoku-err.txt; then
+    echo "SETUP STOPPED: the Azure tools did not accept a setting. Send this screen to Claude."
+    exit 1
+  fi
   echo "That region was not available. Trying the next one..."
 done
+rm -f /tmp/chisoku-err.txt
 if [ -z "$LOCATION" ]; then
   echo "SETUP STOPPED: no region had room for the database. Send this message to Claude."
   exit 1
