@@ -1,9 +1,9 @@
-// POST /api/readiness-complete. Run: npm run test:unit
-// Node needs a file extension on relative imports. The route uses the extensionless
+// POST /api/readiness-complete, stored in Azure Database for PostgreSQL. Run: npm run test:unit
+// Node needs a file extension on relative imports. The source uses the extensionless
 // style the Next.js build resolves, so this file adds .ts while the tests load it.
 import assert from "node:assert/strict";
 import { registerHooks } from "node:module";
-import { afterEach, beforeEach, describe, test } from "node:test";
+import { describe, test } from "node:test";
 
 registerHooks({
   resolve(specifier, context, nextResolve) {
@@ -17,9 +17,8 @@ registerHooks({
   },
 });
 
-const { POST } = await import("../src/app/api/readiness-complete/route.ts");
-
-const ENV_KEYS = ["SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"];
+const { handleCompletion } = await import("../src/lib/server/routes/readinessComplete.ts");
+const { databaseConfig } = await import("../src/lib/server/db.ts");
 
 function completionRequest(body, { broken = false } = {}) {
   return new Request("https://www.chisokulabs.com/api/readiness-complete", {
@@ -33,63 +32,47 @@ function completionRequest(body, { broken = false } = {}) {
   });
 }
 
-describe("POST /api/readiness-complete", { concurrency: 1 }, () => {
-  /** @type {Record<string, string | undefined>} */
-  let savedEnv;
-  /** @type {typeof fetch} */
-  let savedFetch;
+/** Records every statement and its parameters. */
+function recordingDb({ fail = false } = {}) {
+  const calls = [];
+  return {
+    calls,
+    async query(text, params) {
+      calls.push({ text, params });
+      if (fail) throw new Error("connection refused");
+      return { rows: [], rowCount: 1 };
+    },
+  };
+}
 
-  beforeEach(() => {
-    savedEnv = Object.fromEntries(ENV_KEYS.map((key) => [key, process.env[key]]));
-    savedFetch = globalThis.fetch;
-    for (const key of ENV_KEYS) delete process.env[key];
+describe("POST /api/readiness-complete", () => {
+  test("no database configured: 204 and nothing written", async () => {
+    const response = await handleCompletion(completionRequest({ score_band: "ready" }), null);
+    assert.equal(response.status, 204);
+    assert.equal(await response.text(), "");
   });
 
-  afterEach(() => {
-    for (const key of ENV_KEYS) {
-      if (savedEnv[key] === undefined) delete process.env[key];
-      else process.env[key] = savedEnv[key];
-    }
-    globalThis.fetch = savedFetch;
+  test("DATABASE_URL must be a postgres URL with a user and password; sslmode is dropped (TLS is always on)", () => {
+    assert.equal(databaseConfig({}), null);
+    assert.equal(databaseConfig({ DATABASE_URL: "   " }), null);
+    assert.equal(databaseConfig({ DATABASE_URL: "https://example.com" }), null);
+    assert.equal(databaseConfig({ DATABASE_URL: "postgres://example.postgres.database.azure.com/db" }), null);
+    const config = databaseConfig({
+      DATABASE_URL: "postgres://website_app:secret@example.postgres.database.azure.com:5432/chisokulabs?sslmode=disable",
+    });
+    assert.ok(config);
+    assert.equal(config.connectionString.includes("sslmode"), false);
   });
 
-  test("a missing env var returns 204 and does not call Supabase", async () => {
-    let calls = 0;
-    globalThis.fetch = async () => {
-      calls += 1;
-      throw new Error("Supabase must not be called");
-    };
-
-    const missingBoth = await POST(completionRequest("{", { broken: true }));
-    assert.equal(missingBoth.status, 204);
-    assert.equal(await missingBoth.text(), "");
-
-    process.env.SUPABASE_URL = "https://example.supabase.co";
-    const missingKey = await POST(completionRequest({ score_band: "ready", email: "person@example.com" }));
-    assert.equal(missingKey.status, 204);
-
-    delete process.env.SUPABASE_URL;
-    process.env.SUPABASE_SERVICE_ROLE_KEY = "test-service-role-key";
-    const missingUrl = await POST(completionRequest({ score_band: "ready" }));
-    assert.equal(missingUrl.status, 204);
-
-    process.env.SUPABASE_URL = "   ";
-    process.env.SUPABASE_SERVICE_ROLE_KEY = "   ";
-    const blank = await POST(completionRequest({ score_band: "ready" }));
-    assert.equal(blank.status, 204);
-
-    process.env.SUPABASE_URL = "http://example.supabase.co";
-    process.env.SUPABASE_SERVICE_ROLE_KEY = "test-service-role-key";
-    const insecure = await POST(completionRequest({ score_band: "ready" }));
-    assert.equal(insecure.status, 204);
-
-    assert.equal(calls, 0);
+  test("bad input is a 400 and nothing is written", async () => {
+    const db = recordingDb();
+    assert.equal((await handleCompletion(completionRequest(null, { broken: true }), db)).status, 400);
+    assert.equal((await handleCompletion(completionRequest({ score_band: "excellent" }), db)).status, 400);
+    assert.equal(db.calls.length, 0);
   });
 
-  test("the Supabase payload has no personal data", async () => {
-    process.env.SUPABASE_URL = "https://example.supabase.co/rest/v1/";
-    process.env.SUPABASE_SERVICE_ROLE_KEY = "test-service-role-key";
-
+  test("the stored row has no personal data", async () => {
+    const db = recordingDb();
     const personal = {
       score_band: "partly_ready",
       utm_source: "linkedin",
@@ -104,42 +87,21 @@ describe("POST /api/readiness-complete", { concurrency: 1 }, () => {
       message: "Example Person, person@example.com, 203.0.113.8",
     };
 
-    /** @type {{ url: string, headers: Record<string, string>, body: string } | null} */
-    let captured = null;
-    globalThis.fetch = async (url, init) => {
-      const headers = init?.headers ?? {};
-      captured = {
-        url: String(url),
-        headers: Object.fromEntries(Object.entries(headers)),
-        body: String(init?.body ?? ""),
-      };
-      return new Response(null, { status: 201 });
-    };
-
-    const response = await POST(completionRequest(personal));
+    const response = await handleCompletion(completionRequest(personal), db);
     assert.equal(response.status, 204);
-    assert.ok(captured);
+    assert.equal(db.calls.length, 1);
 
-    assert.equal(captured.url, "https://example.supabase.co/rest/v1/readiness_completions");
-    assert.deepEqual(Object.keys(captured.headers).sort(), ["Authorization", "Content-Type", "Prefer", "apikey"]);
-    assert.equal(captured.headers.Authorization, "Bearer test-service-role-key");
-    assert.equal(captured.headers.apikey, "test-service-role-key");
-    assert.equal(captured.headers["x-forwarded-for"], undefined);
-    assert.equal(captured.headers["x-real-ip"], undefined);
+    const [{ text, params }] = db.calls;
+    assert.match(text, /insert into readiness_completions \(score_band, utm_source, utm_medium, utm_campaign, referrer_host\)/);
+    assert.deepEqual(params, ["partly_ready", "linkedin", "social", null, "www.linkedin.com"]);
+    const sent = JSON.stringify(params);
+    for (const secret of ["person@example.com", "Example Person", "203.0.113.8", "answers", "Scope and go-live date"]) {
+      assert.equal(sent.includes(secret), false);
+    }
+  });
 
-    const row = JSON.parse(captured.body);
-    assert.deepEqual(row, {
-      score_band: "partly_ready",
-      utm_source: "linkedin",
-      utm_medium: "social",
-      utm_campaign: null,
-      referrer_host: "www.linkedin.com",
-    });
-    assert.equal(captured.body.includes("person@example.com"), false);
-    assert.equal(captured.body.includes("Example Person"), false);
-    assert.equal(captured.body.includes("203.0.113.8"), false);
-    assert.equal(captured.body.includes("answers"), false);
-    assert.equal(captured.body.includes("weakest_area"), false);
-    assert.equal(captured.body.includes("test-service-role-key"), false);
+  test("a database error is a 502, so the result screen is not affected", async () => {
+    const response = await handleCompletion(completionRequest({ score_band: "ready" }), recordingDb({ fail: true }));
+    assert.equal(response.status, 502);
   });
 });

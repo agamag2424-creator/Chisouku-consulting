@@ -72,13 +72,14 @@ test("mobile menu: Book a 30-minute call opens the header Calendly link", async 
   await expect(call).toHaveAttribute("data-cta", "book_call");
 });
 
-test("footer: brand plus four link columns side by side at 1440", async ({ page }) => {
+test("footer: brand plus five link columns side by side at 1440", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(base + "/");
-  const headings = await page.locator("footer").getByText(/^(Site|Markets|Guides|Contact)$/).evaluateAll((nodes) =>
+  // Column titles only (the Legal column also has a "Contact" link).
+  const headings = await page.locator("footer p.mb-3.font-semibold").evaluateAll((nodes) =>
     nodes.map((node) => Math.round(node.getBoundingClientRect().top)),
   );
-  expect(headings).toHaveLength(4);
+  expect(headings).toHaveLength(5);
   expect(new Set(headings).size).toBe(1);
   await expect(page.locator("footer")).toContainText("© 2026 ChisokuLab Private Limited. All rights reserved.");
 });

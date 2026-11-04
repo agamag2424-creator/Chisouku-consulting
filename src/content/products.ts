@@ -1,3 +1,5 @@
+import { siteConfig } from "../lib/siteConfig";
+
 // Copy for /readiness-report and /readiness-pack: verbatim from the paid funnel brief (sections 3a–3c).
 // `placeholder` values are open owner decisions; the pages show them visibly and the PR lists them. Never fill one in.
 
@@ -5,8 +7,8 @@
 export type Line = { lead?: string; text: string };
 export type Faq = { id: string; question: string; answer: string };
 
-export const productFooterLine =
-  "ChisokuLabs provides independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia. No implementation fees, no software resale, no system integrator partnerships. ChisokuLabs is a trading name of ChisokuLab Private Limited, 190X/6/1, Kalindipuram, Prayagraj, U.P. 211011, India.";
+/** Brief 3c, word for word; the legal name and address come from siteConfig so they are written in one place. */
+export const productFooterLine = `ChisokuLabs provides independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia. No implementation fees, no software resale, no system integrator partnerships. ChisokuLabs is a trading name of ${siteConfig.legalName}, ${siteConfig.address}.`;
 
 export const report = {
   headline: "Before you sign the go-live, see where the evidence is thin.",
