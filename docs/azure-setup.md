@@ -5,6 +5,9 @@ Everything the paid funnel stores lives in your Azure subscription:
 - **Azure Database for PostgreSQL (flexible server):** orders, funnel events and the anonymous `/readiness` counter.
 - **Azure Blob Storage:** the private Pack ZIP, handed out through 10-minute signed links.
 
+> **Easiest way:** paste `scripts/azure/setup-azure.sh` into Azure Cloud Shell (Bash). It does steps 1–4 below in one go
+> (it also uploads a small test Pack file) and prints the values for step 5. The manual steps below are for reference.
+
 The website stays on Vercel and reaches both over the internet with TLS. Allow about 45 minutes. Do the steps in order;
 each one says exactly what to copy for the next.
 
