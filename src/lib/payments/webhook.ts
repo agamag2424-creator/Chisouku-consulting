@@ -36,7 +36,9 @@ type RazorpayEvent = {
 const text = (value: unknown) => (typeof value === "string" && value.length > 0 && value.length <= 64 ? value : null);
 
 export async function handleRazorpayEvent(event: RazorpayEvent, deps: WebhookDeps): Promise<WebhookOutcome> {
-  if (event.event === "payment.captured") return paymentCaptured(event.payload?.payment?.entity ?? {}, deps);
+  // order.paid carries the same payment entity; some Razorpay dashboards offer it instead of payment.captured.
+  // Either or both may arrive: the order is marked paid once, and a second event is a duplicate.
+  if (event.event === "payment.captured" || event.event === "order.paid") return paymentCaptured(event.payload?.payment?.entity ?? {}, deps);
   if (event.event === "refund.processed") return refundProcessed(event.payload?.refund?.entity ?? {}, deps);
   return "ignored";
 }

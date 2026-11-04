@@ -133,7 +133,7 @@ longer used.
    - URL: `https://chisouku-consulting-git-feat-paid-funnel-agam-agrawals-projects.vercel.app/api/webhooks/razorpay?x-vercel-protection-bypass=<bypass secret>`
      (the branch address stays the same across redeploys)
    - Secret: a long random string; put the same value in `RAZORPAY_WEBHOOK_SECRET`
-   - Events: **payment.captured** and **refund.processed**
+   - Events: **payment.captured** (or **order.paid**, if the dashboard does not list it) and **refund.processed**
 4. USD payments need international payments enabled on the Razorpay account before going live; in test mode they
    work already.
 

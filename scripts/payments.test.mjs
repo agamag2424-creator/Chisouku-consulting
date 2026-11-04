@@ -305,6 +305,16 @@ describe("webhook", () => {
     assert.ok(sent.some((email) => email.subject.startsWith("Order needs review")));
   });
 
+  test("order.paid is handled like payment.captured, and the two together count once", async () => {
+    const db = fakeDb();
+    seedOrder(db, { razorpay_order_id: "order_op" });
+    const sent = [];
+    const orderPaid = { ...captured("order_op", "pay_op"), event: "order.paid" };
+    assert.equal(await handleRazorpayEvent(orderPaid, deps(db, sent)), "paid");
+    assert.equal(await handleRazorpayEvent(captured("order_op", "pay_op"), deps(db, sent)), "duplicate");
+    assert.equal(db.tables.events.filter((e) => e.name === "purchase").length, 1);
+  });
+
   test("a wrong amount is accepted but flagged needs_review", async () => {
     const db = fakeDb();
     seedOrder(db, { razorpay_order_id: "order_w" });
