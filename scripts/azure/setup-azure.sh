@@ -28,13 +28,14 @@ for TRY in eastus eastus2 centralus; do
   if az postgres flexible-server create -g $RG -n $SERVER -l $TRY \
       --tier Burstable --sku-name Standard_B1ms --storage-size 32 --version 16 \
       --admin-user $ADMIN_USER --admin-password "$ADMIN_PW" \
-      --public-access All --database-name $DB --yes -o none 2>/tmp/chisoku-err.txt; then
+      --public-access All --yes -o none 2>/tmp/chisoku-err.txt; then
     LOCATION=$TRY
     break
   fi
   cat /tmp/chisoku-err.txt
-  if grep -qi "unrecognized arguments\|not recognized\|invalid choice" /tmp/chisoku-err.txt; then
-    echo "SETUP STOPPED: the Azure tools did not accept a setting. Send this screen to Claude."
+  # Only a lack of room in a region is worth trying elsewhere; any other error stops here with its real reason.
+  if ! grep -qi "location\|region\|capacity\|quota\|not available\|restricted\|sku" /tmp/chisoku-err.txt; then
+    echo "SETUP STOPPED: Azure did not accept the request (see the message above). Send this screen to Claude."
     exit 1
   fi
   echo "That region was not available. Trying the next one..."
@@ -45,7 +46,11 @@ if [ -z "$LOCATION" ]; then
   exit 1
 fi
 
-echo "Step 3 of 6: creating the tables..."
+echo "Step 3 of 6: creating the database and its tables..."
+PGPASSWORD="$ADMIN_PW" psql "host=$SERVER.postgres.database.azure.com port=5432 dbname=postgres user=$ADMIN_USER sslmode=require" \
+  -v ON_ERROR_STOP=1 -q <<SQL
+select 'create database $DB' where not exists (select from pg_database where datname = '$DB') \gexec
+SQL
 cat > /tmp/chisoku.sql <<'SQL'
 -- ChisokuLabs website database (Azure Database for PostgreSQL, flexible server).
 -- Run once, as the server admin, in the database the website uses (see docs/azure-setup.md). Safe to re-run.
