@@ -11,7 +11,7 @@ Production: [www.chisokulabs.com](https://www.chisokulabs.com). Requirements and
 - Next.js 16 (App Router, Turbopack), React 19, TypeScript
 - Tailwind CSS v4; design tokens in `src/styles/globals.css` (no hex values anywhere else)
 - Resend for the "Discuss your programme" form (`POST /api/audit-fit`)
-- Supabase, optional, for anonymous `/readiness` completion counts (`POST /api/readiness-complete`). The site runs without it.
+- Azure Database for PostgreSQL (orders, funnel events, anonymous `/readiness` counts) and Azure Blob Storage (Pack ZIP), via `pg` and signed links; Razorpay for payments. The site runs without them; the funnel needs them.
 - Vercel hosting and Vercel Analytics (cookieless)
 
 ## Getting started
@@ -96,7 +96,7 @@ Old URLs (the PMO offer pages and earlier routes) redirect permanently in `next.
 `track()` in `src/lib/track.ts` sends to Vercel Analytics: `cta_click {id, page, placement}` (every `Button` link
 carries a `data-cta` id), `hero_view_toggle`, `slip_estimate_used`, `sample_pack_view`, `sample_pack_download`,
 `form_submit {request_type}`, `form_error {reason, request_type}`, `readiness_start`, `readiness_complete {band, weakest_area}`.
-Never send what a visitor typed. Completion counts are a separate anonymous Supabase row (see above), not a change to this event.
+Never send what a visitor typed. Completion counts are a separate anonymous database row (see above), not a change to this event.
 
 ## Leak scan
 
