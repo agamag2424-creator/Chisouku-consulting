@@ -25,28 +25,67 @@ az provider register --namespace Microsoft.Storage --wait
 echo "Step 2 of 6: creating the database server. This takes 5 to 10 minutes. Please wait..."
 # The group may already exist from an earlier attempt; resources can sit in any region inside it.
 if [ "$(az group exists -n $RG)" != "true" ]; then az group create -n $RG -l centralindia -o none; fi
-LOCATION=""
-for TRY in centralindia; do
-  if az postgres flexible-server create -g $RG -n $SERVER -l $TRY \
-      --tier Burstable --sku-name Standard_B1ms --storage-size 32 --version 16 \
-      --admin-user $ADMIN_USER --admin-password "$ADMIN_PW" \
-      --public-access All --yes -o none 2>/tmp/chisoku-err.txt; then
-    LOCATION=$TRY
-    break
-  fi
-  cat /tmp/chisoku-err.txt
-  # Only a lack of room in a region is worth trying elsewhere; any other error stops here with its real reason.
-  if ! grep -qi "location\|region\|capacity\|quota\|not available\|restricted\|sku" /tmp/chisoku-err.txt; then
-    echo "SETUP STOPPED: Azure did not accept the request (see the message above). Send this screen to Claude."
-    exit 1
-  fi
-  echo "That region was not available. Trying the next one..."
+LOCATION=centralindia
+SKU=""
+# Azure can refuse the smallest size (or one zone) for a subscription, so try the small Burstable sizes, cheapest first,
+# with and without a zone. Each refusal comes back within seconds.
+for TRY_SKU in Standard_B1ms Standard_B2s Standard_B2ms; do
+  for TRY_ZONE in none 1 2 3; do
+    ZONE_ARG=""
+    if [ "$TRY_ZONE" != "none" ]; then ZONE_ARG="--zone $TRY_ZONE"; fi
+    echo "Trying size $TRY_SKU (zone: $TRY_ZONE)..."
+    if az postgres flexible-server create -g $RG -n $SERVER -l $LOCATION $ZONE_ARG \
+        --tier Burstable --sku-name $TRY_SKU --storage-size 32 --version 16 \
+        --admin-user $ADMIN_USER --admin-password "$ADMIN_PW" \
+        --public-access All --yes -o none 2>/tmp/chisoku-err.txt; then
+      SKU=$TRY_SKU
+      break 2
+    fi
+    # Only "this size is not offered here" is worth another try; any other error stops with its real reason.
+    if ! grep -qi "sku\|not available\|capacity\|zone\|restricted" /tmp/chisoku-err.txt; then
+      cat /tmp/chisoku-err.txt
+      echo "SETUP STOPPED: Azure did not accept the request (see the message above). Send this screen to Claude."
+      exit 1
+    fi
+    echo "  Not offered. Trying the next option..."
+  done
 done
-rm -f /tmp/chisoku-err.txt
-if [ -z "$LOCATION" ]; then
-  echo "SETUP STOPPED: Azure could not create the database in Central India (see above). Send this screen to Claude."
+if [ -z "$SKU" ]; then
+  cat /tmp/chisoku-err.txt
+  echo ""
+  echo "Sizes Azure lists for your subscription in Central India:"
+  az postgres flexible-server list-skus -l $LOCATION -o json > /tmp/chisoku-skus.json 2>/dev/null || true
+  python3 - <<'PY'
+import json
+try:
+    data = json.load(open("/tmp/chisoku-skus.json"))
+except Exception:
+    data = []
+seen = set()
+def walk(node, edition=""):
+    if isinstance(node, dict):
+        if "restricted" in node or "reason" in node:
+            print("  note:", node.get("restricted", ""), node.get("reason", ""))
+        name = node.get("name")
+        if isinstance(name, str) and name in ("Burstable", "GeneralPurpose", "MemoryOptimized"):
+            edition = name
+        if isinstance(name, str) and name.startswith("Standard_") and name not in seen:
+            seen.add(name)
+            print(f"  {edition} {name} {node.get('status', '')}")
+        for value in node.values():
+            walk(value, edition)
+    elif isinstance(node, list):
+        for value in node:
+            walk(value, edition)
+walk(data)
+if not seen:
+    print("  (none listed)")
+PY
+  rm -f /tmp/chisoku-skus.json /tmp/chisoku-err.txt
+  echo "SETUP STOPPED: no small database size is offered in Central India. Nothing was built. Send this screen to Claude."
   exit 1
 fi
+rm -f /tmp/chisoku-err.txt
 
 echo "Step 3 of 6: creating the database and its tables..."
 PGPASSWORD="$ADMIN_PW" psql "host=$SERVER.postgres.database.azure.com port=5432 dbname=postgres user=$ADMIN_USER sslmode=require" \
@@ -154,7 +193,7 @@ echo "AZURE_STORAGE_ACCOUNT=$STORAGE"
 echo "AZURE_STORAGE_KEY=$KEY"
 echo "PACK_CONTAINER=pack"
 echo "PACK_BLOB_PATH=test-pack.zip"
-echo "REGION=$LOCATION"
+echo "REGION=$LOCATION SIZE=$SKU"
 echo "===================== COPY TO HERE ====================="
 echo ""
 echo "Send everything between the two lines to Claude."

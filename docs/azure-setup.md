@@ -11,7 +11,8 @@ Everything the paid funnel stores lives in your Azure subscription:
 The website stays on Vercel and reaches both over the internet with TLS. Allow about 45 minutes. Do the steps in order;
 each one says exactly what to copy for the next.
 
-> **Cost.** The smallest suitable database (Burstable B1ms, 32 GiB) costs roughly USD 15–20 a month, and Blob
+> **Cost.** The smallest suitable database (Burstable B1ms, 32 GiB) costs roughly USD 15–20 a month. If Azure does not
+> offer B1ms to the subscription, the script falls back to B2s (roughly USD 30–35) or B2ms (roughly USD 60). Blob
 > Storage for one ZIP costs pennies. Your Microsoft for Startups credits cover this while they last (about 7 months).
 > Check the exact figure in the [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/), and set
 > a reminder for when the credits end.
