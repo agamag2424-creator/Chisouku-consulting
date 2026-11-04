@@ -142,6 +142,8 @@ describe("charge currency", () => {
     assert.equal(chargeCurrency({ VERCEL_ENV: "preview" }), "USD");
     assert.equal(chargeCurrency({ VERCEL_ENV: "preview", RAZORPAY_TEST_CURRENCY: "INR" }), "INR");
     assert.equal(chargeCurrency({ VERCEL_ENV: "production", RAZORPAY_TEST_CURRENCY: "INR" }), "USD");
+    // Azure App Service has no VERCEL_ENV: always USD.
+    assert.equal(chargeCurrency({ RAZORPAY_TEST_CURRENCY: "INR" }), "USD");
     assert.equal(chargeCurrency({ VERCEL_ENV: "preview", RAZORPAY_MODE: "live", RAZORPAY_TEST_CURRENCY: "INR" }), "USD");
   });
 

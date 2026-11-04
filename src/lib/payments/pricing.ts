@@ -33,11 +33,11 @@ export const isProductId = (value: unknown): value is ProductId =>
 /**
  * The currency Razorpay charges in. Always USD, except on a test-mode preview with RAZORPAY_TEST_CURRENCY=INR, which
  * charges the same numbers in rupees so checkout can be tested before Razorpay enables international cards. Never INR
- * in production or in live mode.
+ * outside a Vercel preview (production, Azure) or in live mode.
  */
 export function chargeCurrency(env: Record<string, string | undefined>): string {
   const testInr = env.RAZORPAY_TEST_CURRENCY?.trim() === "INR";
-  return testInr && env.VERCEL_ENV !== "production" && env.RAZORPAY_MODE?.trim() !== "live" ? "INR" : CURRENCY;
+  return testInr && env.VERCEL_ENV === "preview" && env.RAZORPAY_MODE?.trim() !== "live" ? "INR" : CURRENCY;
 }
 
 /** Days after the report is delivered during which its USD 149 counts towards the Pack. */
