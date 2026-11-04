@@ -1,6 +1,7 @@
 # Builds the site and deploys it to Azure App Service (Linux, Node 22, Central India).
-# Sign-in uses GitHub's OIDC token and an Azure app registration (no stored Azure password); see
-# scripts/azure/setup-webapp.sh. Repository variables hold the non-secret IDs and settings; secrets hold the rest.
+# Sign-in uses GitHub's OIDC token and an Azure app registration (no stored Azure password). The IDs below are not
+# secrets. The site's settings (database, keys) live in the web app's Environment variables in Azure, set by
+# scripts/azure/setup-webapp.sh; change them in the Azure portal, not here.
 name: Deploy to Azure
 
 on:
@@ -9,6 +10,12 @@ on:
     # Remove it (and its federated credential) after the switch.
     branches: [main, feat/paid-funnel]
   workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: REPLACE_WEBAPP_NAME
+  AZURE_CLIENT_ID: REPLACE_CLIENT_ID
+  AZURE_TENANT_ID: REPLACE_TENANT_ID
+  AZURE_SUBSCRIPTION_ID: REPLACE_SUBSCRIPTION_ID
 
 permissions:
   id-token: write
@@ -21,7 +28,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ vars.AZURE_WEBAPP_NAME != '' }}
+    # Skipped until the IDs above are filled in.
+    if: ${{ !startsWith('REPLACE_WEBAPP_NAME', 'REPLACE') }}
     steps:
       - uses: actions/checkout@v4
 
@@ -35,7 +43,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          GOOGLE_SITE_VERIFICATION: sFP9aPJdlXb8tevdRl8QQsNKjQzTdYV5U7DdwHA8g1k
 
       - name: Package the standalone server
         run: |
@@ -45,44 +53,18 @@ jobs:
 
       - uses: azure/login@v2
         with:
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-
-      # Settings are written on every deploy from GitHub variables and secrets; an empty one is left as it is in Azure.
-      - name: App settings
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          AZURE_STORAGE_ACCOUNT: ${{ vars.AZURE_STORAGE_ACCOUNT }}
-          AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
-          PACK_CONTAINER: ${{ vars.PACK_CONTAINER }}
-          PACK_BLOB_PATH: ${{ vars.PACK_BLOB_PATH }}
-          RAZORPAY_MODE: ${{ vars.RAZORPAY_MODE }}
-          RAZORPAY_KEY_ID: ${{ vars.RAZORPAY_KEY_ID }}
-          RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
-          RAZORPAY_WEBHOOK_SECRET: ${{ secrets.RAZORPAY_WEBHOOK_SECRET }}
-          ADMIN_API_TOKEN: ${{ secrets.ADMIN_API_TOKEN }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          SITE_URL: ${{ vars.SITE_URL }}
-          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
-        run: |
-          settings=(HOSTNAME=0.0.0.0 SCM_DO_BUILD_DURING_DEPLOYMENT=false)
-          for name in DATABASE_URL AZURE_STORAGE_ACCOUNT AZURE_STORAGE_KEY PACK_CONTAINER PACK_BLOB_PATH RAZORPAY_MODE \
-            RAZORPAY_KEY_ID RAZORPAY_KEY_SECRET RAZORPAY_WEBHOOK_SECRET ADMIN_API_TOKEN RESEND_API_KEY SITE_URL \
-            GOOGLE_SITE_VERIFICATION; do
-            if [ -n "${!name}" ]; then settings+=("$name=${!name}"); fi
-          done
-          az webapp config appsettings set -g rg-chisokulabs-website -n "${{ vars.AZURE_WEBAPP_NAME }}" \
-            --settings "${settings[@]}" -o none
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - uses: azure/webapps-deploy@v3
         with:
-          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: site.zip
 
       - name: Smoke test
         run: |
-          url="https://${{ vars.AZURE_WEBAPP_NAME }}.azurewebsites.net"
+          url="https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net"
           for i in $(seq 1 30); do
             code=$(curl -s -o /dev/null -w '%{http_code}' "$url/") || true
             if [ "$code" = 200 ]; then echo "Home page: 200"; break; fi
