@@ -21,8 +21,8 @@ each one says exactly what to copy for the next.
 ## 1. Resource group
 
 1. In the [Azure portal](https://portal.azure.com), search **Resource groups** → **Create**.
-2. **Name:** `rg-chisokulabs-website`. **Region:** **East US** (Vercel runs this site's functions in Washington DC,
-   next door).
+2. **Name:** `rg-chisokulabs-website`. **Region:** **Central India**. The subscription's billing-guard policy allows only this region, and
+   `vercel.json` runs the site's server code in Mumbai, next door.
 3. **Review + create** → **Create**.
 
 Keeping the website's resources in one group makes the later clean-up of your subscription simple.
@@ -33,7 +33,7 @@ Keeping the website's resources in one group makes the later clean-up of your su
 2. **Basics:**
    - Resource group: `rg-chisokulabs-website`
    - Server name: `chisokulabs-db` (or any free name; it becomes `chisokulabs-db.postgres.database.azure.com`)
-   - Region: **East US**
+   - Region: **Central India**
    - PostgreSQL version: **16**
    - Workload type: **Development** (this offers the Burstable tier)
    - Compute + storage → **Configure server**: **Burstable, Standard_B1ms** (1 vCore, 2 GiB), storage **32 GiB**,
@@ -83,7 +83,7 @@ postgres://website_app:<website_app password>@chisokulabs-db.postgres.database.a
 
 1. Search **Storage accounts** → **Create**.
 2. **Basics:** resource group `rg-chisokulabs-website`; name `chisokulabsfiles` (3–24 lowercase letters and digits,
-   must be unique); region **East US**; performance **Standard**; redundancy **LRS**.
+   must be unique); region **Central India**; performance **Standard**; redundancy **LRS**.
 3. **Advanced:** **Require secure transfer**: on. **Allow enabling anonymous access on individual containers**:
    **off**. **Enable storage account key access**: **on** (the website signs download links with the key).
    **Minimum TLS version**: 1.2.

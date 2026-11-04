@@ -1,6 +1,7 @@
 cat > ~/chisoku-setup.sh <<'CHISOKU_SETUP'
 # ChisokuLabs website: one-time Azure setup for the paid funnel. Run once, in Azure Cloud Shell (Bash).
-# Creates: resource group rg-chisokulabs-website, a PostgreSQL database (Burstable B1ms), the tables,
+# Creates (in Central India, the only region the subscription's billing-guard policy allows):
+# resource group rg-chisokulabs-website, a PostgreSQL database (Burstable B1ms), the tables,
 # a private file store for the Pack, and a small test Pack file. Prints the values to send back.
 # Generated from db/migrations/001_paid_funnel.sql; keep the two in step.
 set -euo pipefail
@@ -22,9 +23,10 @@ az provider register --namespace Microsoft.DBforPostgreSQL --wait
 az provider register --namespace Microsoft.Storage --wait
 
 echo "Step 2 of 6: creating the database server. This takes 5 to 10 minutes. Please wait..."
-az group create -n $RG -l eastus -o none
+# The group may already exist from an earlier attempt; resources can sit in any region inside it.
+if [ "$(az group exists -n $RG)" != "true" ]; then az group create -n $RG -l centralindia -o none; fi
 LOCATION=""
-for TRY in eastus eastus2 centralus; do
+for TRY in centralindia; do
   if az postgres flexible-server create -g $RG -n $SERVER -l $TRY \
       --tier Burstable --sku-name Standard_B1ms --storage-size 32 --version 16 \
       --admin-user $ADMIN_USER --admin-password "$ADMIN_PW" \
@@ -42,7 +44,7 @@ for TRY in eastus eastus2 centralus; do
 done
 rm -f /tmp/chisoku-err.txt
 if [ -z "$LOCATION" ]; then
-  echo "SETUP STOPPED: no region had room for the database. Send this message to Claude."
+  echo "SETUP STOPPED: Azure could not create the database in Central India (see above). Send this screen to Claude."
   exit 1
 fi
 
