@@ -16,7 +16,7 @@ export default function ReadinessPage() {
   if (!renders) notFound();
   return (
     <Section tone="page">
-      <ReadinessCheck />
+      <ReadinessCheck reportOffer={routeRenders("/readiness-report")} />
     </Section>
   );
 }

@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/siteConfig";
 // Terms of Service (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/terms");
 
-const lastUpdated = "2 November 2026";
+const lastUpdated = "4 November 2026";
 
 export default function TermsPage() {
   return (
@@ -30,7 +30,8 @@ export default function TermsPage() {
             <List
               items={[
                 "Go-Live Readiness Report (USD 149): a scored PDF report generated from your answers to an online questionnaire. It is based only on what you tell us. We do not read your documents, data or invoices.",
-                "Go-Live Readiness Pack (USD 249). If you have already bought the Go-Live Readiness Report, its USD 149 is credited towards the Pack, so you pay USD 100: editable templates (.xlsx) and a PDF guide, delivered as a download.",
+                "Go-Live Readiness Pack (USD 249). If you have already bought the Go-Live Readiness Report, its USD 149 is credited towards the Pack if you buy the Pack within 60 days of your report being delivered, so you pay USD 100: editable templates (.xlsx) and a PDF guide, delivered as a download.",
+                "Pack buyers receive free updates until 1 July 2027 when an official date or requirement the Pack covers changes.",
               ]}
             />
             <Body>Consulting services, priced as shown on the site:</Body>
@@ -76,10 +77,30 @@ export default function TermsPage() {
           <Part title="1.4 Licence for digital products">
             <List
               items={[
-                "Each purchase gives one company a non-exclusive, non-transferable licence to use and adapt the materials for its own internal work.",
-                "You may not resell, redistribute or publish the materials, or share them outside your company.",
-                "We keep all intellectual property in our materials and our methods, including READINESS-5.",
-                "For consulting, you own the deliverables we prepare for you once you have paid in full. We keep our underlying methods and templates.",
+                {
+                  lead: "Your licence.",
+                  text: "Each purchase gives the buying company a non-exclusive, non-transferable licence to use, copy and adapt the materials for its own internal work and its own project.",
+                },
+                {
+                  lead: "Sharing with your ERP implementation partner.",
+                  text: "You may share your own report and your own Pack materials with your ERP implementation partner, but only for work on your own project. Your partner may not use, copy or adapt them for any other client, project or purpose. You are responsible for making sure your partner keeps to this.",
+                },
+                {
+                  lead: "What is not allowed.",
+                  text: "Except as set out above, you may not resell, sublicense, redistribute or publish the materials, or share them outside your company.",
+                },
+                {
+                  lead: "Partners.",
+                  text: "White-label use, resale, or use of the materials with more than one client is allowed only under a separate written partner agreement signed with us. Email hello@chisokulabs.com to ask about one.",
+                },
+                {
+                  lead: "Ownership.",
+                  text: "We keep all intellectual property in our materials and our methods, including READINESS-5.",
+                },
+                {
+                  lead: "Consulting.",
+                  text: "For consulting, you own the deliverables we prepare for you once you have paid in full. We keep our underlying methods and templates.",
+                },
               ]}
             />
           </Part>

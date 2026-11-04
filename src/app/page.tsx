@@ -14,6 +14,7 @@ import {
   WorkstreamMap,
 } from "../components/home/HomeVisuals";
 import { OfferPanels } from "../components/home/OfferPanels";
+import { SelfServeOptions } from "../components/home/SelfServeOptions";
 import { PrincipalBlock } from "../components/trust/PrincipalBlock";
 import { SlipCostEstimator } from "../components/home/SlipCostEstimator";
 import { BookCallButton } from "../components/ui/BookCallButton";
@@ -21,7 +22,7 @@ import { Button } from "../components/ui/Button";
 import { Section } from "../components/ui/Section";
 import { Sheet } from "../components/ui/Sheet";
 import { pageMetadata } from "../lib/seo";
-import { calendlyLink, siteConfig } from "../lib/siteConfig";
+import { calendlyLink, routeRenders, siteConfig } from "../lib/siteConfig";
 import { cn } from "../lib/utils";
 
 export const metadata: Metadata = pageMetadata("/");
@@ -215,6 +216,7 @@ export default function Home() {
             </li>
           )}
         </ul>
+        {routeRenders("/readiness-report") && <SelfServeOptions />}
       </Section>
 
       {/* 7. Why not the usual options: compact comparison (first 4 rows), full table on /pricing */}

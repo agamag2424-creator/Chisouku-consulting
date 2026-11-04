@@ -223,3 +223,8 @@ export const questions: readonly FlatQuestion[] = areas.flatMap((area, areaIndex
     areaIndex,
   })),
 );
+
+/** Paid funnel brief section 6: under the score, the step up to the paid report (shown once the product is live). */
+export const reportOfferLine =
+  "Want the full picture? The Go-Live Readiness Report has about 40 questions, a score for every area, red flags and a 30-day fix list.";
+export const reportOfferButton = "Go-Live Readiness Report";

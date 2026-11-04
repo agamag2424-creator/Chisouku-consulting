@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type RefObject } from "react";
 import {
   answerOptions,
   areaLine,
@@ -28,6 +29,8 @@ import {
   title,
   weakestAreaLine,
   type FlatQuestion,
+  reportOfferButton,
+  reportOfferLine,
 } from "../../content/readiness";
 import { calendlyLink } from "../../lib/siteConfig";
 import {
@@ -98,7 +101,7 @@ function blankAnswers(): Answers {
   return Array.from({ length: questions.length }, () => null);
 }
 
-export function ReadinessCheck() {
+export function ReadinessCheck({ reportOffer = false }: { reportOffer?: boolean }) {
   const narrow = useNarrowStep();
   const stepSize = narrow ? 1 : 2;
   const [phase, setPhase] = useState<Phase>("intro");
@@ -189,7 +192,9 @@ export function ReadinessCheck() {
   if (phase === "results") {
     const choices = asChoices(answers);
     if (!choices) return null;
-    return <Results headingRef={resultHeadingRef} result={scoreAnswers(choices)} onStartAgain={startAgain} />;
+    return (
+      <Results headingRef={resultHeadingRef} result={scoreAnswers(choices)} onStartAgain={startAgain} reportOffer={reportOffer} />
+    );
   }
 
   const exhaustive: never = phase;
@@ -422,10 +427,12 @@ function Results({
   headingRef,
   result,
   onStartAgain,
+  reportOffer,
 }: {
   headingRef: RefObject<HTMLHeadingElement | null>;
   result: ReadinessScore;
   onStartAgain: () => void;
+  reportOffer: boolean;
 }) {
   const band = bands[result.band];
   const tone = bandTone(result.band);
@@ -434,33 +441,36 @@ function Results({
 
   return (
     <div className="grid gap-6 lg:grid-cols-2 lg:items-start lg:gap-8">
-      <Sheet className="p-6 min-[641px]:p-8">
-        <h1 ref={headingRef} tabIndex={-1} id="readiness-result" className="text-ink">
-          <span className="t-small font-semibold text-muted">{scorePrefix}</span>{" "}
-          <span className="t-display mt-2 block">
-            {totalLabel} <span className="t-h3">{scoreSuffix}</span>
-          </span>
-        </h1>
-        <p className="mt-4">
-          <span className={cn("inline-flex items-center gap-1.5 rounded-control px-2.5 py-1 t-small font-semibold text-ink", tone.tint)}>
-            <span aria-hidden className={cn("size-2 rounded-full", tone.dot)} />
-            {band.label}
-          </span>
-        </p>
-        <p className="t-body mt-4 text-ink">{band.text}</p>
-        <p className="mt-4 font-semibold text-ink">{selfAssessment}</p>
-        <BandMeter result={result} />
-        <ul className="mt-6 flex flex-col gap-2 border-t border-line pt-4">
-          {areas.map((area, index) => (
-            <li
-              key={area.id}
-              className={cn("t-small text-ink", index === result.weakestAreaIndex && "font-semibold")}
-            >
-              {areaLine(area.name, formatScore(result.areaScores[index]))}
-            </li>
-          ))}
-        </ul>
-      </Sheet>
+      <div className="flex flex-col gap-6">
+        <Sheet className="p-6 min-[641px]:p-8">
+          <h1 ref={headingRef} tabIndex={-1} id="readiness-result" className="text-ink">
+            <span className="t-small font-semibold text-muted">{scorePrefix}</span>{" "}
+            <span className="t-display mt-2 block">
+              {totalLabel} <span className="t-h3">{scoreSuffix}</span>
+            </span>
+          </h1>
+          <p className="mt-4">
+            <span className={cn("inline-flex items-center gap-1.5 rounded-control px-2.5 py-1 t-small font-semibold text-ink", tone.tint)}>
+              <span aria-hidden className={cn("size-2 rounded-full", tone.dot)} />
+              {band.label}
+            </span>
+          </p>
+          <p className="t-body mt-4 text-ink">{band.text}</p>
+          <p className="mt-4 font-semibold text-ink">{selfAssessment}</p>
+          <BandMeter result={result} />
+          <ul className="mt-6 flex flex-col gap-2 border-t border-line pt-4">
+            {areas.map((area, index) => (
+              <li
+                key={area.id}
+                className={cn("t-small text-ink", index === result.weakestAreaIndex && "font-semibold")}
+              >
+                {areaLine(area.name, formatScore(result.areaScores[index]))}
+              </li>
+            ))}
+          </ul>
+        </Sheet>
+        {reportOffer && <ReportOffer band={result.band} />}
+      </div>
 
       <div className="flex flex-col gap-6">
         {weakest && result.weakestAreaIndex !== null ? (
@@ -533,5 +543,32 @@ function BandMeter({ result }: { result: ReadinessScore }) {
         ))}
       </ol>
     </div>
+  );
+}
+
+/** Paid funnel brief section 6: the step up to the paid report, carrying the band and the visitor's UTMs. */
+function ReportOffer({ band }: { band: BandId }) {
+  const href = useMemo(() => {
+    const params = new URLSearchParams({ band });
+    const current = new URLSearchParams(typeof window === "undefined" ? "" : window.location.search);
+    for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content"]) {
+      const value = current.get(key);
+      if (value) params.set(key, value);
+    }
+    return `/readiness-report?${params.toString()}`;
+  }, [band]);
+  return (
+    <Sheet className="flex flex-col gap-4 p-6 min-[641px]:p-8">
+      <p className="t-body text-ink">{reportOfferLine}</p>
+      <div>
+        <Link
+          href={href}
+          data-cta="readiness-report"
+          className="inline-flex min-h-12 items-center justify-center rounded-control border border-ink bg-ink px-6 text-[17px] font-semibold text-paper transition-colors hover:border-teal hover:bg-teal"
+        >
+          {reportOfferButton}
+        </Link>
+      </div>
+    </Sheet>
   );
 }

@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/siteConfig";
 // Refund and Cancellation Policy (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/refund-policy");
 
-const lastUpdated = "2 November 2026";
+const lastUpdated = "4 November 2026";
 
 export default function RefundPolicyPage() {
   return (
@@ -36,16 +36,15 @@ export default function RefundPolicyPage() {
               ]}
             />
             <Body>
-              Cancellation: reports are generated within minutes of payment, so an order can&apos;t usually be cancelled
-              once paid. If yours hasn&apos;t been generated yet, email us and we&apos;ll cancel it and refund you in
-              full.
+              Cancellation: If your report hasn&apos;t been generated yet, email us and we&apos;ll cancel it and refund you
+              in full. Once it has been generated, the order can&apos;t be cancelled.
             </Body>
           </Part>
 
           <Part title="2.2 Go-Live Readiness Pack (digital)">
             <Body>
               Price: USD 249, or USD 100 if you&apos;ve already bought the report (its USD 149 is credited towards the
-              Pack).
+              Pack if you buy the Pack within 60 days of your report being delivered). Buying the Pack gives no credit towards the report.
             </Body>
             <Body>
               After download: the files can&apos;t be returned once downloaded, so refunds are limited to these cases:
@@ -99,7 +98,7 @@ export default function RefundPolicyPage() {
           <Part title="2.5 Refund timelines">
             <List
               items={[
-                "Approved refunds go back to your original payment method through Razorpay within 5–7 business days of approval.",
+                "Approved refunds go back to your original payment method through our payment provider within 5–7 business days of approval.",
                 "Your bank may take longer to show the money in your account, especially for international cards.",
                 "We refund the amount we received, in the original currency where possible. We don't control exchange-rate differences or fees charged by your bank.",
               ]}
