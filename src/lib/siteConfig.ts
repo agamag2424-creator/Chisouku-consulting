@@ -109,6 +109,10 @@ export const routeLive = {
   "/guides/independent-assurance-vs-si-readiness-review": true,
   // Go-live readiness check. Live in production, so it can be linked and listed in the sitemap.
   "/readiness": true,
+  // Self-serve products (paid funnel). Off until payments go live: the pages render on previews and in development
+  // only, links to them render as plain text, and the sitemap leaves them out. Set both to true at launch.
+  "/readiness-report": false,
+  "/readiness-pack": false,
 } as const;
 
 export type SiteRoute = keyof typeof routeLive;

@@ -1,0 +1,72 @@
+# Builds the site and deploys it to Azure App Service (Linux, Node 22, Central India).
+# Sign-in uses GitHub's OIDC token and an Azure app registration (no stored Azure password). The IDs below are not
+# secrets. The site's settings (database, keys) live in the web app's Environment variables in Azure, set by
+# scripts/azure/setup-webapp.sh; change them in the Azure portal, not here.
+name: Deploy to Azure
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: chisokulabs-web-318661
+  AZURE_CLIENT_ID: 9f5838d2-acaf-4579-933a-87673d9e9246
+  AZURE_TENANT_ID: 5ebdbe14-12b5-46a3-9f9c-bfe87b039e90
+  AZURE_SUBSCRIPTION_ID: 5a5789b0-1e46-4189-b0ce-4e57323f492f
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: azure-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          GOOGLE_SITE_VERIFICATION: sFP9aPJdlXb8tevdRl8QQsNKjQzTdYV5U7DdwHA8g1k
+
+      - name: Package the standalone server
+        run: |
+          cp -r public .next/standalone/
+          cp -r .next/static .next/standalone/.next/
+          cd .next/standalone && zip -qr ../../site.zip .
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
+      - uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: site.zip
+
+      - name: Smoke test
+        run: |
+          url="https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net"
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$url/") || true
+            if [ "$code" = 200 ]; then echo "Home page: 200"; break; fi
+            sleep 10
+          done
+          [ "$code" = 200 ] || { echo "Home page did not answer 200 (last: $code)"; exit 1; }
+          for path in /readiness /pricing /terms /robots.txt /sitemap.xml; do
+            echo "$path: $(curl -s -o /dev/null -w '%{http_code}' "$url$path")"
+          done

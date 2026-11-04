@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/siteConfig";
 // Shipping and Delivery Policy (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/shipping-policy");
 
-const lastUpdated = "2 November 2026";
+const lastUpdated = "4 November 2026";
 
 export default function ShippingPolicyPage() {
   return (
@@ -26,7 +26,7 @@ export default function ShippingPolicyPage() {
             <List
               items={[
                 "delivered as a PDF to the email address you give at checkout;",
-                "usually within minutes, and always within 48 hours of payment.",
+                "within 48 hours of payment.",
               ]}
             />
             <Body>Go-Live Readiness Pack:</Body>

@@ -10,14 +10,20 @@ export function Part({ title, children }: { title: string; children: ReactNode }
   );
 }
 
-/** Bullet list matching the privacy-page style. */
-export function List({ items }: { items: readonly string[] }) {
+/** Bullet list matching the privacy-page style. An item may start with a bold lead. */
+export function List({ items }: { items: readonly (string | { lead: string; text: string })[] }) {
   return (
     <ul className="flex flex-col gap-2.5">
       {items.map((item) => (
-        <li key={item} className="t-body flex gap-3 text-ink">
+        <li key={typeof item === "string" ? item : item.lead} className="t-body flex gap-3 text-ink">
           <span aria-hidden className="mt-[0.6em] size-2 shrink-0 rounded-full bg-teal" />
-          {item}
+          {typeof item === "string" ? (
+            item
+          ) : (
+            <span>
+              <strong className="font-semibold">{item.lead}</strong> {item.text}
+            </span>
+          )}
         </li>
       ))}
     </ul>

@@ -11,7 +11,7 @@ Production: [www.chisokulabs.com](https://www.chisokulabs.com). Requirements and
 - Next.js 16 (App Router, Turbopack), React 19, TypeScript
 - Tailwind CSS v4; design tokens in `src/styles/globals.css` (no hex values anywhere else)
 - Resend for the "Discuss your programme" form (`POST /api/audit-fit`)
-- Supabase, optional, for anonymous `/readiness` completion counts (`POST /api/readiness-complete`). The site runs without it.
+- Azure Database for PostgreSQL (orders, funnel events, anonymous `/readiness` counts) and Azure Blob Storage (Pack ZIP), via `pg` and signed links; Razorpay for payments. The site runs without them; the funnel needs them.
 - Vercel hosting and Vercel Analytics (cookieless)
 
 ## Getting started
@@ -32,28 +32,35 @@ npm run leak-scan            # after a build
 | --- | --- |
 | `RESEND_API_KEY` | Delivers form messages (Production and Preview). Without it the form reports an error and shows the email address; it never reports a false success. |
 | `GOOGLE_SITE_VERIFICATION` | Google Search Console meta tag |
-| `SUPABASE_URL` | Server-only. Origin of the Supabase project used to count completed readiness checks. If it or the service role key is missing, `POST /api/readiness-complete` returns 204 and writes nothing. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-only. Sent only from the readiness-complete route. Never prefix it with `NEXT_PUBLIC_`, and never use it in client code. |
+| `DATABASE_URL` | Server-only. Azure Database for PostgreSQL (flexible server), login `website_app`. Holds orders, funnel events and the readiness count. TLS with certificate checks is always on. |
+| `AZURE_STORAGE_ACCOUNT`, `AZURE_STORAGE_KEY`, `PACK_CONTAINER`, `PACK_BLOB_PATH` | Server-only. The private Blob container with the Pack ZIP; downloads get a 10-minute signed link. |
+| `RAZORPAY_MODE`, `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET` | Server-only. Razorpay Orders and webhook. Test keys work only with `RAZORPAY_MODE=test`, live keys only with `live`. |
+| `SITE_URL` | Links in buyer emails (Production: `https://www.chisokulabs.com`; previews use their own address). |
+| `ADMIN_API_TOKEN` | Server-only. Lets `scripts/ops/deliver-report.mjs` deliver report PDFs. |
+
+`.env.example` lists every name. Step-by-step setup of the Azure database, storage and these variables:
+[`docs/azure-setup.md`](docs/azure-setup.md).
 
 Form emails are sent from `siteConfig.formSender` (the `chisokulabs.com` domain is verified in Resend), to
-`siteConfig.email`, with reply-to set to the visitor.
+`siteConfig.email`, with reply-to set to the visitor. Buyer emails come from `siteConfig.email`.
 
 ### Readiness completion count
 
-Each completed `/readiness` check can add one anonymous row to Supabase table `readiness_completions`. The row stores
-the score band (`not_ready`, `partly_ready` or `ready`), `utm_source`, `utm_medium`, `utm_campaign` and the referring
-host. It does not store an IP address, an email address, a name or the answers. The browser posts to
-`/api/readiness-complete` without waiting, and the existing Vercel Analytics event still fires.
+Each completed `/readiness` check adds one anonymous row to `readiness_completions` in the Azure Postgres database. The
+row stores the score band (`not_ready`, `partly_ready` or `ready`), `utm_source`, `utm_medium`, `utm_campaign` and the
+referring host. It does not store an IP address, an email address, a name or the answers. The browser posts to
+`/api/readiness-complete` without waiting; without `DATABASE_URL` the route returns 204 and writes nothing.
 
-To turn counting on for the Vercel project `chisouku-consulting`:
+Count rows (as the admin, from Azure Cloud Shell): `select count(*) from readiness_completions;`
 
-1. In the Supabase SQL editor, run `supabase/migrations/20261023180000_readiness_completions.sql`. That creates the
-   table and turns on row-level security. There are no public policies. Only the service role can insert, and only
-   from this server route.
-2. In Vercel, open project `chisouku-consulting` and add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` for
-   Production. Add the same two variables to Preview if preview completions should be counted. Both are server-only.
+### Paid funnel
 
-Count rows from the Supabase SQL editor: `select count(*) from public.readiness_completions;`
+`/readiness-report` (USD 149) and `/readiness-pack` (USD 249) sell through Razorpay Standard Checkout on server-created
+orders. Prices live only in `src/lib/payments/pricing.ts`. The webhook (`/api/webhooks/razorpay`) is the only place an
+order becomes paid: it emails the buyer, alerts ops for reports (48-hour due time) and issues 30-day Pack download
+links. The USD 100 upgrade (`/readiness-pack/upgrade?ref=<report order>`) is unlisted and checked on the server against a
+delivered, unrefunded report from the last 60 days. Both product routes are off in `routeLive` until payments go live.
+Tables: `db/migrations/001_paid_funnel.sql`.
 
 ## Content model
 
@@ -89,7 +96,7 @@ Old URLs (the PMO offer pages and earlier routes) redirect permanently in `next.
 `track()` in `src/lib/track.ts` sends to Vercel Analytics: `cta_click {id, page, placement}` (every `Button` link
 carries a `data-cta` id), `hero_view_toggle`, `slip_estimate_used`, `sample_pack_view`, `sample_pack_download`,
 `form_submit {request_type}`, `form_error {reason, request_type}`, `readiness_start`, `readiness_complete {band, weakest_area}`.
-Never send what a visitor typed. Completion counts are a separate anonymous Supabase row (see above), not a change to this event.
+Never send what a visitor typed. Completion counts are a separate anonymous database row (see above), not a change to this event.
 
 ## Leak scan
 

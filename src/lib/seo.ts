@@ -116,6 +116,16 @@ export const routeSeo = {
     description:
       "Your programme reports Green. These 12 questions test whether the evidence agrees.",
   },
+  "/readiness-report": {
+    title: "Go-Live Readiness Report",
+    description:
+      "A scored PDF report for e-invoicing go-lives in the UAE and Saudi Arabia: about 40 questions, seven areas, red flags and a 30-day fix list. USD 149.",
+  },
+  "/readiness-pack": {
+    title: "Go-Live Readiness Pack",
+    description:
+      "Editable workbooks and a guide for the last 12 weeks before an e-invoicing go-live in Saudi Arabia or the UAE: checklist, runbook, RAID and Go/No-Go. USD 249.",
+  },
 } as const satisfies Record<string, { title: string; description: string; image?: string }>;
 
 export type SeoRoute = keyof typeof routeSeo;

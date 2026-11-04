@@ -2,12 +2,12 @@ import type { NextConfig } from "next";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://checkout.razorpay.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://diagnostic.chisokulabs.com",
-  "frame-src https://calendly.com https://*.calendly.com",
+  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://diagnostic.chisokulabs.com https://api.razorpay.com https://checkout.razorpay.com https://lumberjack.razorpay.com",
+  "frame-src https://calendly.com https://*.calendly.com https://api.razorpay.com https://checkout.razorpay.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self' mailto: https://calendly.com",
@@ -26,6 +26,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // A self-contained server (.next/standalone/server.js) for Azure App Service; Vercel ignores it.
+  output: "standalone",
   experimental: {
     // Measured in E1.3 (Lighthouse mobile, 3-run median on /): off 96 / TBT 69 ms vs on 94 / TBT 164 ms.
     optimizeCss: false,
@@ -36,6 +38,12 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: securityHeaders,
       },
+      // Razorpay Checkout opens the card bank page (3-D Secure) in a popup and needs to talk to it; "same-origin"
+      // cuts that link and the popup stays blank. Only the checkout pages relax it.
+      ...["/readiness-report", "/readiness-pack", "/readiness-pack/upgrade"].map((source) => ({
+        source,
+        headers: [{ key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" }],
+      })),
     ];
   },
   async redirects() {

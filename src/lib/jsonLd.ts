@@ -20,6 +20,27 @@ export function organizationJsonLd(): JsonLd {
   };
 }
 
+/** Product + Offer for a self-serve product (paid funnel brief, section 3). No reviews or ratings. */
+export function productJsonLd(product: { name: string; description: string; path: string; amountCents: number }): JsonLd {
+  const url = `${siteUrl}${product.path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    url,
+    brand: { "@type": "Organization", name: siteConfig.name },
+    offers: {
+      "@type": "Offer",
+      url,
+      price: (product.amountCents / 100).toFixed(2),
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+      seller: { "@type": "Organization", name: siteConfig.name, legalName: siteConfig.legalName },
+    },
+  };
+}
+
 export function websiteJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",

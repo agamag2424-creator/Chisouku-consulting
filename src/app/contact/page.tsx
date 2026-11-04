@@ -8,7 +8,7 @@ import { calendlyLink, siteConfig } from "../../lib/siteConfig";
 
 // Contact Us (Razorpay policy content) plus the existing programme form (PRD 11, E9.1).
 const title = "Contact Us";
-const lastUpdated = "2 November 2026";
+const lastUpdated = "4 November 2026";
 
 type Props = { searchParams?: Promise<{ request?: string | string[] }> };
 
@@ -54,7 +54,7 @@ export default async function ContactPage({ searchParams }: Props) {
           <List
             items={[
               "Go-Live Readiness Report: USD 149.",
-              "Go-Live Readiness Pack: USD 249. If you've bought the report, its USD 149 is credited towards the Pack.",
+              "Go-Live Readiness Pack: USD 249. If you've bought the report, its USD 149 is credited towards the Pack if you buy the Pack within 60 days of your report being delivered.",
             ]}
           />
           <div className="flex flex-col gap-3 border-t border-line pt-6 text-[15px] text-ink">
