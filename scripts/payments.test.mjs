@@ -14,7 +14,7 @@ registerHooks({
   },
 });
 
-const { products, formatUsd, REPORT_CREDIT_DAYS } = await import("../src/lib/payments/pricing.ts");
+const { products, formatUsd, REPORT_CREDIT_DAYS, chargeCurrency } = await import("../src/lib/payments/pricing.ts");
 const razorpay = await import("../src/lib/payments/razorpay.ts");
 const orders = await import("../src/lib/payments/orders.ts");
 const { handleRazorpayEvent } = await import("../src/lib/payments/webhook.ts");
@@ -133,6 +133,44 @@ describe("price config", () => {
     assert.equal(db.tables.orders[0].email, "buyer@example.com");
     assert.equal(db.tables.orders[0].readiness_band, "partly_ready");
     assert.equal(db.tables.orders[0].utm_source, "linkedin");
+  });
+});
+
+describe("charge currency", () => {
+  test("USD everywhere, except INR on a test-mode preview that asks for it", () => {
+    assert.equal(chargeCurrency({}), "USD");
+    assert.equal(chargeCurrency({ VERCEL_ENV: "preview" }), "USD");
+    assert.equal(chargeCurrency({ VERCEL_ENV: "preview", RAZORPAY_TEST_CURRENCY: "INR" }), "INR");
+    assert.equal(chargeCurrency({ VERCEL_ENV: "production", RAZORPAY_TEST_CURRENCY: "INR" }), "USD");
+    assert.equal(chargeCurrency({ VERCEL_ENV: "preview", RAZORPAY_MODE: "live", RAZORPAY_TEST_CURRENCY: "INR" }), "USD");
+  });
+
+  test("an INR test order is stored and paid in INR, and the webhook accepts the matching payment", async () => {
+    const db = fakeDb();
+    let sentCurrency = null;
+    const response = await handleCreateOrder(
+      new Request("https://example.test/api/checkout/create-order", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ product: "report", email: "buyer@example.com" }),
+      }),
+      {
+        db,
+        razorpay: { keyId: "rzp_test_abc", keySecret: "secret", webhookSecret: null, mode: "test" },
+        now: NOW,
+        currency: "INR",
+        createRazorpayOrder: async (_config, order) => ((sentCurrency = order.currency), { id: "order_inr", amount: order.amount, currency: order.currency, status: "created" }),
+      },
+    );
+    assert.equal(sentCurrency, "INR");
+    assert.equal((await response.json()).currency, "INR");
+    const sent = [];
+    const outcome = await handleRazorpayEvent(
+      { event: "payment.captured", payload: { payment: { entity: { id: "pay_inr", order_id: "order_inr", amount: 14900, currency: "INR" } } } },
+      deps(db, sent),
+    );
+    assert.equal(outcome, "paid");
+    assert.equal(db.tables.orders[0].status, "paid");
   });
 });
 

@@ -20,6 +20,8 @@ export type CreateOrderDeps = {
   db: Db | null;
   razorpay: RazorpayConfig | null;
   now: Date;
+  /** From chargeCurrency(); USD unless a test preview charges in INR. */
+  currency?: string;
   createRazorpayOrder: (
     config: RazorpayConfig,
     order: { amount: number; currency: string; receipt: string; notes: Record<string, string> },
@@ -69,9 +71,10 @@ export async function handleCreateOrder(request: Request, deps: CreateOrderDeps)
     if (value) notes[key] = value;
   }
 
+  const currency = deps.currency ?? CURRENCY;
   let razorpayOrder: RazorpayOrder;
   try {
-    razorpayOrder = await deps.createRazorpayOrder(deps.razorpay, { amount, currency: CURRENCY, receipt: randomUUID(), notes });
+    razorpayOrder = await deps.createRazorpayOrder(deps.razorpay, { amount, currency, receipt: randomUUID(), notes });
   } catch {
     console.error("[checkout] Razorpay order creation failed");
     return json({ error: "checkout_unavailable" }, 502);
@@ -81,7 +84,7 @@ export async function handleCreateOrder(request: Request, deps: CreateOrderDeps)
     razorpay_order_id: razorpayOrder.id,
     product,
     amount_cents: amount,
-    currency: CURRENCY,
+    currency,
     email,
     assessment_id: assessmentId,
     readiness_band: readinessBand,
@@ -95,7 +98,7 @@ export async function handleCreateOrder(request: Request, deps: CreateOrderDeps)
     razorpayOrderId: razorpayOrder.id,
     keyId: deps.razorpay.keyId,
     amount,
-    currency: CURRENCY,
+    currency,
     productName: products[product].name,
     email,
   });

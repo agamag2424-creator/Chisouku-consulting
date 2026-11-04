@@ -1,3 +1,4 @@
+import { chargeCurrency } from "../../../../lib/payments/pricing";
 import { createRazorpayOrder, razorpayConfig } from "../../../../lib/payments/razorpay";
 import { getDb } from "../../../../lib/server/db";
 import { handleCreateOrder } from "../../../../lib/server/routes/checkout";
@@ -12,6 +13,7 @@ export async function POST(request: Request): Promise<Response> {
     db: getDb(),
     razorpay: razorpayConfig(process.env),
     now: new Date(),
+    currency: chargeCurrency(process.env),
     createRazorpayOrder,
   });
 }

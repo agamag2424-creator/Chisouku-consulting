@@ -2,7 +2,6 @@ import type { Email } from "../email/send";
 import { opsReportAlert, opsReviewAlert, packDownload, reportConfirmation } from "../email/templates";
 import type { Db } from "../server/db";
 import { downloadExpiry, newDownloadToken, upgradeEligibility, type Order } from "./orders";
-import { CURRENCY } from "./pricing";
 import { markPaid, markRefunded, orderById, orderByRazorpayId, recordEvent, setDownloadLink } from "./store";
 
 // Razorpay webhook events (brief section 4). Delivery happens only here, on `payment.captured`; the checkout callback
@@ -50,9 +49,9 @@ async function paymentCaptured(payment: PaymentEntity, deps: WebhookDeps): Promi
   const order = await orderByRazorpayId(deps.db, razorpayOrderId);
   if (!order) return "unknown_order";
 
-  // The amount comes from our own order row; anything else paid is a mismatch to look at by hand.
+  // The amount and currency come from our own order row; anything else paid is a mismatch to look at by hand.
   const reasons: string[] = [];
-  if (payment.amount !== order.amount_cents || payment.currency !== CURRENCY) reasons.push("amount or currency mismatch");
+  if (payment.amount !== order.amount_cents || payment.currency !== order.currency) reasons.push("amount or currency mismatch");
   let daysSinceReport: number | null = null;
   if (order.product === "pack_upgrade_100") {
     const report = order.source_report_order_id ? await orderById(deps.db, order.source_report_order_id) : null;
