@@ -27,12 +27,16 @@ echo "Step 2 of 6: creating the database server. This takes 5 to 10 minutes. Ple
 if [ "$(az group exists -n $RG)" != "true" ]; then az group create -n $RG -l centralindia -o none; fi
 LOCATION=centralindia
 SKU=""
+ATTEMPT=0
 # Azure can refuse the smallest size (or one zone) for a subscription, so try the small Burstable sizes, cheapest first,
 # with and without a zone. Each refusal comes back within seconds.
 for TRY_SKU in Standard_B1ms Standard_B2s Standard_B2ms; do
   for TRY_ZONE in none 1 2 3; do
     ZONE_ARG=""
     if [ "$TRY_ZONE" != "none" ]; then ZONE_ARG="--zone $TRY_ZONE"; fi
+    # Azure keeps a refused server's name for a while, so every attempt uses a fresh name.
+    ATTEMPT=$((ATTEMPT + 1))
+    SERVER=chisokulabs-db-$SUFFIX-$ATTEMPT
     echo "Trying size $TRY_SKU (zone: $TRY_ZONE)..."
     if az postgres flexible-server create -g $RG -n $SERVER -l $LOCATION $ZONE_ARG \
         --tier Burstable --sku-name $TRY_SKU --storage-size 32 --version 16 \
@@ -194,6 +198,7 @@ echo "AZURE_STORAGE_KEY=$KEY"
 echo "PACK_CONTAINER=pack"
 echo "PACK_BLOB_PATH=test-pack.zip"
 echo "REGION=$LOCATION SIZE=$SKU"
+echo "SERVERS_IN_GROUP=$(az postgres flexible-server list -g $RG --query "[].[name,state]" -o tsv | tr '\t\n' ': ')"
 echo "===================== COPY TO HERE ====================="
 echo ""
 echo "Send everything between the two lines to Claude."
