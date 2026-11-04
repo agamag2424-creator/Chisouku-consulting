@@ -26,6 +26,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // A self-contained server (.next/standalone/server.js) for Azure App Service; Vercel ignores it.
+  output: "standalone",
   experimental: {
     // Measured in E1.3 (Lighthouse mobile, 3-run median on /): off 96 / TBT 69 ms vs on 94 / TBT 164 ms.
     optimizeCss: false,
