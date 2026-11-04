@@ -155,3 +155,15 @@ longer used.
   them is ever exposed; then update Vercel and redeploy.
 - Nothing personal is stored for the readiness check. Orders hold the buyer's email and campaign tags only; card
   details stay with Razorpay.
+
+## 9. Website hosting (Azure App Service)
+
+The site runs on Azure App Service (Linux, Node 22, B1, Central India) in `rg-chisokulabs-website`, because Vercel's
+free plan does not allow a site that takes payments.
+
+- **Setup:** `scripts/azure/setup-webapp.sh` (Cloud Shell) creates the plan, the web app and the GitHub deploy identity,
+  and writes the site's settings into the web app (Azure portal → the web app → **Settings → Environment variables**).
+- **Billing guard:** the subscription's "Billing guard: only approved resource types" policy has an exemption,
+  `allow-website-hosting`, for this resource group only. The Central-India-only guard still applies.
+- **Deploys:** `.github/workflows/azure-deploy.yml` builds and deploys on every push to `main` (and to
+  `feat/paid-funnel` until the domain moves), signing in with GitHub OIDC; no Azure password is stored in GitHub.
