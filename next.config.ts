@@ -2,12 +2,12 @@ import type { NextConfig } from "next";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://checkout.razorpay.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://diagnostic.chisokulabs.com",
-  "frame-src https://calendly.com https://*.calendly.com",
+  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://diagnostic.chisokulabs.com https://api.razorpay.com https://checkout.razorpay.com https://lumberjack.razorpay.com",
+  "frame-src https://calendly.com https://*.calendly.com https://api.razorpay.com https://checkout.razorpay.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self' mailto: https://calendly.com",
