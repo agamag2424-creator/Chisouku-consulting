@@ -294,7 +294,7 @@ export function OfferClosing() {
   return (
     <section className="dark-band atmosphere-band px-[var(--content-padding-x-mobile)] py-16 min-[641px]:px-[var(--content-padding-x)] min-[641px]:py-24">
       <div className="mx-auto flex max-w-[var(--content-max-width)] flex-wrap items-end justify-between gap-8">
-        <h2 className="t-h2 max-w-[24ch] text-paper">Find out which of the three problems is yours</h2>
+        <h2 className="t-h2 max-w-[24ch] text-paper">Find out what to fix first</h2>
         <OfferCtas content="closing" inverse />
       </div>
     </section>

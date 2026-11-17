@@ -27,12 +27,12 @@ export const siteConfig = {
     title: "Founder and Director",
     linkedin: "https://www.linkedin.com/in/agamagrawwal",
     /** Set to "/images/founder/agam-agrawwal.webp" once the photo file is in public/. */
-    photo: null as string | null,
+    photo: "/images/founder/agam-agrawwal.webp" as string | null,
   },
   /** Sender for form emails; chisokulabs.com is verified in Resend. Replies go to the visitor. */
   formSender: "ChisokuLabs website <website@chisokulabs.com>",
   tagline: "PMO Health Check",
-  positioning: "RAID logs nobody acts on. Status that turns Red too late. Forums that cannot decide",
+  positioning: "An independent check of your PMO, scored on evidence",
   /** Organization and WebSite JSON-LD description. */
   schemaDescription:
     "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a £395 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
@@ -204,5 +204,6 @@ export const navLinks = [
   { href: "/pmo-health-audit", label: "Audit" },
   { href: "/pmo-self-check", label: "Self-check" },
   { href: "/method", label: "Method" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
 ] as const;

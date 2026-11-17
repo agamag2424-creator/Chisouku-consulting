@@ -47,7 +47,7 @@ export function Footer() {
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">
             <BrandMark className="h-9 w-9" inverted />
-            <span className="font-[family-name:var(--font-display)] text-[20px] font-bold tracking-[-0.03em] text-paper">
+            <span className="font-[family-name:var(--font-display)] text-[20px] font-semibold tracking-[-0.03em] text-paper">
               ChisokuLabs
             </span>
           </Link>

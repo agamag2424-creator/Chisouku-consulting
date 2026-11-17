@@ -22,11 +22,11 @@ export default function HowItWorksPdf() {
     <div data-pdf className="fixed inset-0 z-[999] overflow-auto bg-white">
       <article className="mx-auto w-[210mm] px-[16mm] py-[14mm] text-[11pt] leading-[1.45] text-ink">
         <header className="flex items-baseline justify-between border-b border-ink/20 pb-3">
-          <p className="font-[family-name:var(--font-display)] text-[16pt] font-bold">{siteConfig.name}</p>
+          <p className="font-[family-name:var(--font-display)] text-[16pt] font-semibold">{siteConfig.name}</p>
           <p className="text-[9pt] text-muted">{siteConfig.url.replace("https://", "")}</p>
         </header>
 
-        <h1 className="mt-6 font-[family-name:var(--font-display)] text-[22pt] font-bold leading-tight">How a PMO Health Check works</h1>
+        <h1 className="mt-6 font-[family-name:var(--font-display)] text-[22pt] font-semibold leading-tight">How a PMO Health Check works</h1>
         <p className="mt-2 text-[11pt] text-muted">
           {healthCheck.scope}. {healthCheck.timing}.
         </p>

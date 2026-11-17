@@ -20,7 +20,7 @@ export function ScorecardExcerpt({ className, showLink = true }: Props) {
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <p className="eyebrow">{s.eyebrow}</p>
-              <h3 className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.02em]">{s.title}</h3>
+              <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold tracking-[-0.02em]">{s.title}</h3>
               <p className="mt-1 text-[15px] text-muted">{s.organisation}</p>
             </div>
             <span className="shrink-0 rounded-[2px] border border-gold-ink/40 bg-[rgba(168,146,95,0.1)] px-2 py-1 label text-gold-ink">
@@ -59,7 +59,7 @@ export function ScorecardExcerpt({ className, showLink = true }: Props) {
             {s.side.map((item) => (
               <div key={item.label}>
                 <dt className="label text-muted">{item.label}</dt>
-                <dd className="mt-1 font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-ink">{item.value}</dd>
+                <dd className="mt-1 font-[family-name:var(--font-display)] text-xl font-semibold tracking-[-0.02em] text-ink">{item.value}</dd>
               </div>
             ))}
           </dl>

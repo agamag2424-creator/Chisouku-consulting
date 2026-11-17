@@ -28,7 +28,7 @@ export function DimensionOrbit({ className, flagged = [], centreTitle, stacked =
           <circle cx="210" cy="210" r={R} fill="none" stroke="rgba(17,24,32,0.14)" strokeWidth="1.5" />
           <circle cx="210" cy="210" r="66" fill="#111820" />
           <circle cx="210" cy="210" r="74" fill="none" stroke="rgba(0,166,200,0.45)" strokeWidth="2" />
-          <text x="210" y="206" textAnchor="middle" fill="#FFFDF8" fontFamily="var(--font-display), sans-serif" fontSize={centreTitle ? 12.5 : 15} fontWeight="700">
+          <text x="210" y="206" textAnchor="middle" fill="#FFFDF8" fontFamily="var(--font-display), sans-serif" fontSize={centreTitle ? 12.5 : 15} fontWeight="600">
             {centreTitle ?? dimensionOrbit.centreTitle}
           </text>
           <text x="210" y="226" textAnchor="middle" fill="#C7CED3" fontFamily="var(--font-body), sans-serif" fontSize="10" fontWeight="700">

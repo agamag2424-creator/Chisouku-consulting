@@ -3,6 +3,10 @@ import { expect, test } from "@playwright/test";
 
 const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
 
+/** Visible text of a part of the page without the calculator's GBP / USD switch (the one place "USD" may appear). */
+const textWithoutCurrencySwitch = (selector: string) =>
+  `(() => { const c = document.querySelector(${JSON.stringify(selector)}).cloneNode(true); c.querySelectorAll("[data-currency-switch]").forEach((n) => n.remove()); document.body.appendChild(c); const t = c.innerText; c.remove(); return t; })()`;
+
 for (const viewport of [
   { width: 1440, height: 900 },
   { width: 360, height: 800 },
@@ -26,7 +30,7 @@ for (const viewport of [
     await expect(audit).toContainText("£795 a day (list) or £395 a day (founding)");
     await expect(audit).toContainText("Paid 50/50");
     await expect(page.locator('[data-price-card="selfCheck"]')).toContainText("Free");
-    const text = await page.locator("main").innerText();
+    const text = (await page.evaluate(textWithoutCurrencySwitch("main"))) as string;
     expect(text).not.toMatch(/USD|US dollars|GBP \d|refund/i);
     await expect(page.locator("main")).toContainText("Prices exclude any taxes that may apply.");
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);

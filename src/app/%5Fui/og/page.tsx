@@ -30,11 +30,11 @@ export default async function OgPage({ searchParams }: { searchParams: Promise<{
       <div className="map-grid-texture pointer-events-none absolute inset-0 opacity-80" />
       <div className="relative flex items-center gap-4">
         <BrandMark className="h-12 w-12" />
-        <span className="font-[family-name:var(--font-display)] text-[30px] font-bold tracking-[-0.03em] text-ink">ChisokuLabs</span>
+        <span className="font-[family-name:var(--font-display)] text-[30px] font-semibold tracking-[-0.03em] text-ink">ChisokuLabs</span>
       </div>
       <div className="relative">
         <p className="label text-[20px] text-gold-ink">{card.eyebrow}</p>
-        <p className="mt-4 max-w-[1000px] font-[family-name:var(--font-display)] text-[58px] font-bold leading-[1.08] tracking-[-0.01em] text-ink">{card.title}</p>
+        <p className="mt-4 max-w-[1000px] font-[family-name:var(--font-display)] text-[58px] font-semibold leading-[1.08] tracking-[-0.01em] text-ink">{card.title}</p>
         <p className="mt-6 max-w-[920px] text-[26px] leading-[1.4] text-muted">{card.sub}</p>
       </div>
       <div className="relative h-[6px] w-[220px] bg-gold" />

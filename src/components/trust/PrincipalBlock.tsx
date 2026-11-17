@@ -29,7 +29,7 @@ function FounderPhoto({ className }: { className?: string }) {
       role="img"
       aria-label={founder.name}
       className={cn(
-        "flex aspect-square w-full max-w-[240px] items-center justify-center rounded-sheet bg-ink font-[family-name:var(--font-display)] text-6xl font-bold text-paper min-[1100px]:max-w-[320px]",
+        "flex aspect-square w-full max-w-[240px] items-center justify-center rounded-sheet bg-ink font-[family-name:var(--font-display)] text-6xl font-semibold text-paper min-[1100px]:max-w-[320px]",
         className,
       )}
     >
@@ -52,7 +52,7 @@ export function PrincipalBlock({ tone = "paper", id, heading = "Who does the wor
           <h2 className="t-h2 text-ink">{heading}</h2>
           <p className="t-body mt-5 text-ink" data-founder-line>
             <span className="font-[family-name:var(--font-display)] text-[22px] font-semibold">{founder.name}</span>,{" "}
-            <span className="font-semibold text-gold-ink">{founder.title}</span>. Every Health Check and Audit is carried out
+            <span className="font-semibold">{founder.title}</span>. Every Health Check and Audit is carried out
             and signed by me. {backgroundLine}
           </p>
           <a

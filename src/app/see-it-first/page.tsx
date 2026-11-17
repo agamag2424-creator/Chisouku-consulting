@@ -66,13 +66,13 @@ export default function SeeItFirstPage() {
           <div className="grid gap-4 border-b border-ink/10 p-5 min-[800px]:grid-cols-3 md:p-7">
             <div>
               <p className="label text-muted">Overall band</p>
-              <p className="mt-1 font-[family-name:var(--font-display)] text-2xl font-bold">
+              <p className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold">
                 {sampleSummary.band} <span className="text-[16px] text-muted">({sampleSummary.overall})</span>
               </p>
             </div>
             <div>
               <p className="label text-muted">Flagged</p>
-              <p className="mt-1 font-[family-name:var(--font-display)] text-xl font-bold">{sampleSummary.flagged.join(", ")}</p>
+              <p className="mt-1 font-[family-name:var(--font-display)] text-xl font-semibold">{sampleSummary.flagged.join(", ")}</p>
             </div>
             <p className="t-small text-ink">{sampleSummary.headline}</p>
           </div>

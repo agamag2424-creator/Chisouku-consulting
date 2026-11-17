@@ -34,20 +34,18 @@ export const findingsBoard = {
   eyebrow: "What we usually find",
   problemsLabel: "The three problems",
   items: [
-    { id: "01", label: "RAID logs nobody acts on", visual: "sheet", problem: true },
-    { id: "02", label: "Status that turns Red too late", visual: "reactive", problem: true },
-    { id: "03", label: "Governance forums that cannot actually decide", visual: "prep", problem: true },
-    { id: "04", label: "Late escalation", visual: "late", problem: false },
-    { id: "05", label: "Stale reporting", visual: "stale", problem: false },
-    { id: "06", label: "No benefits tracking", visual: "cycle", problem: false },
-    { id: "07", label: "Unclear decision rights", visual: "systems", problem: false },
-    { id: "08", label: "Capacity conflicts", visual: "conflict", problem: false },
+    { id: "01", label: "RAID logs nobody acts on", problem: true },
+    { id: "02", label: "Status that turns Red too late", problem: true },
+    { id: "03", label: "Governance forums that cannot actually decide", problem: true },
+    { id: "04", label: "Late escalation", problem: false },
+    { id: "05", label: "Stale reporting", problem: false },
+    { id: "06", label: "No benefits tracking", problem: false },
+    { id: "07", label: "Unclear decision rights", problem: false },
+    { id: "08", label: "Capacity conflicts", problem: false },
   ],
   alt:
     "What we usually find, eight signals. The three problems first: RAID logs nobody acts on, status that turns Red too late, and governance forums that cannot actually decide. Then late escalation, stale reporting, no benefits tracking, unclear decision rights and capacity conflicts.",
 } as const;
-
-export type FindingVisual = (typeof findingsBoard.items)[number]["visual"];
 
 /** The Health Check in five working days. Wording matches the offer table (inputs, outputs, timing). */
 export const healthCheckStrip = {

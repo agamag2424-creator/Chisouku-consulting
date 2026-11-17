@@ -112,7 +112,7 @@ export function ReportingCostCalculator({ className }: { className?: string }) {
                         type="number"
                         inputMode="numeric"
                         aria-label={`${f.label} (type a number)`}
-                        className="w-20 rounded-control border border-ink/20 bg-paper px-2 py-1 text-right font-[family-name:var(--font-display)] text-lg font-bold"
+                        className="w-20 rounded-control border border-ink/20 bg-paper px-2 py-1 text-right font-[family-name:var(--font-display)] text-lg font-semibold"
                         min={limits.min}
                         max={limits.max}
                         step={limits.step}
@@ -151,13 +151,13 @@ export function ReportingCostCalculator({ className }: { className?: string }) {
           <div className="mt-4 grid gap-4 sm:grid-cols-2" aria-live="polite">
             <div className="border border-ink/15 bg-paper p-4">
               <p className="label text-muted">Hours per year</p>
-              <p className="mt-2 font-[family-name:var(--font-display)] text-3xl font-bold tracking-[-0.03em] text-ink" data-result="hours">
+              <p className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-[-0.03em] text-ink" data-result="hours">
                 {result.hoursLabel}
               </p>
             </div>
             <div className="border border-ink bg-ink p-4 text-paper">
               <p className="label text-paper/75">Cost per year</p>
-              <p className="mt-2 font-[family-name:var(--font-display)] text-3xl font-bold tracking-[-0.03em]" data-result="cost">
+              <p className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-[-0.03em]" data-result="cost">
                 {result.costLabel}
               </p>
             </div>

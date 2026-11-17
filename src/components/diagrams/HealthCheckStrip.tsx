@@ -29,7 +29,7 @@ export function HealthCheckStrip({ className }: Props) {
               <span className="label text-muted">
                 0{index + 1}
               </span>
-              <span className="font-[family-name:var(--font-display)] text-[17px] font-bold tracking-[-0.02em]">{phase.name}</span>
+              <span className="font-[family-name:var(--font-display)] text-[17px] font-semibold tracking-[-0.02em]">{phase.name}</span>
             </div>
             <div className="mt-4 flex-1">
               <PhaseVisual type={phase.visual} />
