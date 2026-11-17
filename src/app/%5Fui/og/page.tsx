@@ -10,11 +10,11 @@ export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 const cards: Record<string, { eyebrow: string; title: string; sub: string }> = {
   home: { eyebrow: "PMO Health Check", title: headline.h1, sub: headline.sub },
-  "health-check": { eyebrow: `PMO Health Check · ${healthCheck.price}`, title: "One programme. Five working days. Evidence, not opinion.", sub: `${healthCheck.outputs}.` },
-  "health-audit": { eyebrow: "PMO Health Audit", title: "The whole portfolio, scored with evidence on ten dimensions.", sub: `${healthAudit.priceLine} ${healthAudit.cap}` },
-  "self-check": { eyebrow: "Free · 5 minutes", title: "PMO self-check: ten dimensions, scored in your browser.", sub: "The same ten dimensions the paid Health Check fills in with evidence." },
-  method: { eyebrow: "Method", title: "The PMO Health Scorecard: ten dimensions, scored on evidence.", sub: "Where the three problems show up, how evidence is checked, and the 30-day fix plan." },
-  "see-it-first": { eyebrow: "See it first", title: "A sample scorecard and a 30-day fix plan.", sub: "Sample. Fictional organisation." },
+  "health-check": { eyebrow: `PMO Health Check · ${healthCheck.price}`, title: "One programme. Five working days. Evidence, not opinion", sub: `${healthCheck.outputs}.` },
+  "health-audit": { eyebrow: "PMO Health Audit", title: "The whole portfolio, scored with evidence on ten dimensions", sub: `${healthAudit.priceLine} ${healthAudit.cap}` },
+  "self-check": { eyebrow: "Free · 5 minutes", title: "PMO self-check: ten dimensions, scored in your browser", sub: "The same ten dimensions the paid Health Check fills in with evidence." },
+  method: { eyebrow: "Method", title: "The PMO Health Scorecard: ten dimensions, scored on evidence", sub: "Where the three problems show up, how evidence is checked, and the 30-day fix plan." },
+  "see-it-first": { eyebrow: "See it first", title: "A sample scorecard and a 30-day fix plan", sub: "Sample. Fictional organisation." },
 };
 
 export default async function OgPage({ searchParams }: { searchParams: Promise<{ v?: string }> }) {
@@ -33,8 +33,8 @@ export default async function OgPage({ searchParams }: { searchParams: Promise<{
         <span className="font-[family-name:var(--font-display)] text-[30px] font-bold tracking-[-0.03em] text-ink">ChisokuLabs</span>
       </div>
       <div className="relative">
-        <p className="font-[family-name:var(--font-mono)] text-[20px] font-bold uppercase tracking-[0.14em] text-teal">{card.eyebrow}</p>
-        <p className="mt-4 max-w-[1000px] font-[family-name:var(--font-display)] text-[58px] font-extrabold leading-[1.06] tracking-[-0.03em] text-ink">{card.title}</p>
+        <p className="label text-[20px] text-gold-ink">{card.eyebrow}</p>
+        <p className="mt-4 max-w-[1000px] font-[family-name:var(--font-display)] text-[58px] font-bold leading-[1.08] tracking-[-0.01em] text-ink">{card.title}</p>
         <p className="mt-6 max-w-[920px] text-[26px] leading-[1.4] text-muted">{card.sub}</p>
       </div>
       <div className="relative h-[6px] w-[220px] bg-gold" />

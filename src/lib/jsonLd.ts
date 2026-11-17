@@ -17,6 +17,30 @@ export function organizationJsonLd(): JsonLd {
     description: siteConfig.schemaDescription,
     areaServed: [siteConfig.markets.primary, ...siteConfig.markets.others],
     logo: `${siteUrl}/brand/favicon-mark.png`,
+    identifier: { "@type": "PropertyValue", propertyID: "CIN", value: siteConfig.cin },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "190X/6/1, Kalindipuram",
+      addressLocality: "Prayagraj",
+      addressRegion: "Uttar Pradesh",
+      postalCode: "211011",
+      addressCountry: "IN",
+    },
+    founder: personJsonLd(),
+  };
+}
+
+/** The founder (change 1): linked to the Organization as `founder`. */
+export function personJsonLd(): JsonLd {
+  const { founder } = siteConfig;
+  return {
+    "@type": "Person",
+    "@id": `${siteUrl}/about#founder`,
+    name: founder.name,
+    jobTitle: founder.title,
+    sameAs: [founder.linkedin],
+    worksFor: { "@type": "Organization", name: siteConfig.name, url: siteUrl },
+    ...(founder.photo ? { image: `${siteUrl}${founder.photo}` } : {}),
   };
 }
 

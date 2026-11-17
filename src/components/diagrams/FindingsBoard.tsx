@@ -7,11 +7,8 @@ type Props = { className?: string };
 export function FindingsBoard({ className }: Props) {
   return (
     <figure className={cn("report-board paper-grain ink-corners", className)} aria-label={findingsBoard.alt}>
-      <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
+      <div className="border-b border-ink/10 px-5 py-4">
         <p className="eyebrow mb-0">{findingsBoard.eyebrow}</p>
-        <p className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.12em] text-muted">
-          {findingsBoard.count}
-        </p>
       </div>
       <ul className="grid sm:grid-cols-2 lg:grid-cols-4">
         {findingsBoard.items.map((item, index) => (
@@ -25,15 +22,9 @@ export function FindingsBoard({ className }: Props) {
               "lg:border-b-0 lg:border-r lg:[&:nth-child(4n)]:border-r-0 lg:[&:nth-child(n+5)]:border-t",
             )}
           >
-            <span
-              aria-hidden
-              className="pointer-events-none absolute -right-1 -top-3 font-[family-name:var(--font-display)] text-5xl font-bold leading-none text-ink/[0.05]"
-            >
-              {item.id}
-            </span>
             <MiniVisual type={item.visual} />
             {item.problem && (
-              <p className="relative mt-3 font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.12em] text-gold-ink">
+              <p className="relative mt-3 label text-gold-ink">
                 {findingsBoard.problemsLabel}
               </p>
             )}

@@ -46,7 +46,7 @@ export function MarketPage({ market }: { market: Market }) {
       </Section>
 
       <Section>
-        <SectionHead title="Start free. Pay only for evidence.">
+        <SectionHead title="Start free. Pay only for evidence">
           <p>
             {healthCheck.scope}, {healthCheck.price}. {healthCheck.timing}.
           </p>

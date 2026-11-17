@@ -6,11 +6,11 @@ const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "
 test("hero: headline option 1, subline, both CTAs and the UK line", async ({ page }) => {
   await page.goto(base + "/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "RAID logs nobody acts on. Status that turns Red too late. Forums that cannot decide.",
+    "RAID logs nobody acts on. Status that turns Red too late. Forums that cannot decide",
   );
   await expect(page.getByText("A fixed-price PMO Health Check finds which one is yours, with evidence, in five working days.")).toBeVisible();
   await expect(page.getByText("For UK organisations running a PMO")).toBeVisible();
-  const book = page.locator("main").getByRole("link", { name: "Book a 20-minute call" }).first();
+  const book = page.locator("main").getByRole("link", { name: "Arrange a 20-minute call" }).first();
   await expect(book).toHaveAttribute("href", /^https:\/\/calendly\.com\/chisokulabs\/discovery-call\?/);
   await expect(page.locator("main").getByText("Take the PMO self-check (5 minutes)").first()).toBeVisible();
 });
@@ -19,13 +19,13 @@ test("sections follow the PRD order", async ({ page }) => {
   await page.goto(base + "/");
   const headings = await page.locator("main h2").allTextContents();
   expect(headings).toEqual([
-    "Three problems we find in most PMOs.",
+    "Three problems we find in most PMOs",
     "What your PMO reporting costs today",
-    "The PMO Health Check, in five working days.",
-    "What the scorecard looks like.",
-    "Start free. Pay only for evidence.",
+    "The PMO Health Check, in five working days",
+    "What the scorecard looks like",
+    "Start free. Pay only for evidence",
     "Who does the work",
-    "Find out which of the three problems is yours.",
+    "Find out which of the three problems is yours",
   ]);
 });
 
@@ -40,9 +40,10 @@ test("offer wording and prices match the source of truth", async ({ page }) => {
   const ladder = main.locator("[data-ladder-step]");
   await expect(ladder).toHaveCount(3);
   await expect(ladder.nth(0)).toContainText("Free");
-  await expect(ladder.nth(1)).toContainText("USD 500");
-  await expect(ladder.nth(2)).toContainText("USD 5,000");
-  await expect(ladder.nth(2)).toContainText("USD 2,500 founding");
+  await expect(ladder.nth(1)).toContainText("£395");
+  await expect(ladder.nth(2)).toContainText("£3,950 list");
+  await expect(ladder.nth(2)).toContainText("£1,950 founding");
+  await expect(main.locator("[data-ladder-step]").nth(2)).not.toContainText("USD");
   await expect(main.getByText("11+ years in programme delivery. Employed at Yamaha, Etihad, HCLTech and Coforge.", { exact: false })).toBeVisible();
 });
 

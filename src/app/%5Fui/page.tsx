@@ -83,7 +83,7 @@ export default function UiPage() {
             <p className="t-h3 text-ink">Heading 3 22 / 20</p>
             <p className="t-body text-ink">Body 18 / 17, line height 1.6, measure capped at 70 characters so long paragraphs stay readable on wide screens.</p>
             <p className="t-small text-muted">Small 15</p>
-            <p className="t-data text-ink">T1, 3 of 5, USD 5,000</p>
+            <p className="t-data text-ink">T1, 3 of 5, £3,950</p>
           </div>
         </Demo>
 

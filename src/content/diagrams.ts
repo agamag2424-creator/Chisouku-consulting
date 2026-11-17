@@ -17,7 +17,7 @@ export const healthMap = {
   eyebrow: "PMO Health Map",
   title: "Where the three problems show up",
   centreTitle: "Your PMO",
-  centreSub: "WHAT WE READ AND WHERE IT BREAKS",
+  centreSub: "What we read and where it breaks",
   nodes: [
     { id: "raid", title: "RAID log", sub: "Risks, actions, owners", problem: "raid" },
     { id: "status", title: "Status pack", sub: "Weekly status, RAG", problem: "late-red" },
@@ -32,7 +32,6 @@ export const healthMap = {
 /** "What we usually find" board: the three problems first, then five common signals. */
 export const findingsBoard = {
   eyebrow: "What we usually find",
-  count: "08 signals",
   problemsLabel: "The three problems",
   items: [
     { id: "01", label: "RAID logs nobody acts on", visual: "sheet", problem: true },
@@ -70,7 +69,7 @@ export type StripVisual = (typeof healthCheckStrip.phases)[number]["visual"];
 /** The self-check's ten dimensions around the overall band. Dimension names come from content/pmoSelfCheck.ts. */
 export const dimensionOrbit = {
   centreTitle: "Overall band",
-  centreSub: "10 DIMENSIONS",
+  centreSub: "Ten dimensions",
   caption: "PMO Health Scorecard",
   alt:
     "The PMO Health Scorecard: ten dimensions around one overall band. Governance and decision rights, portfolio prioritisation, benefits realisation, risk and RAID, reporting and data quality, resource and capacity, stakeholder engagement, methods and tooling, financial control, and PMO value perception.",

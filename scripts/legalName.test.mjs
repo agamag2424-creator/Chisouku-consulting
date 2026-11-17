@@ -12,11 +12,11 @@ const retired = [
 const skip = new Set(["node_modules", ".next", ".git"]);
 const usesLegalName = [
   "src/components/layout/Footer.tsx",
+  "src/content/offer.ts",
   "src/app/privacy/page.tsx",
   "src/app/terms/page.tsx",
   "src/app/refund-policy/page.tsx",
   "src/app/shipping-policy/page.tsx",
-  "src/app/about/page.tsx",
   "src/app/contact/page.tsx",
   "src/lib/jsonLd.ts",
   "src/lib/llms.ts",
@@ -31,6 +31,7 @@ function* files(dir) {
   }
 }
 
+// The footer and About show it through companyLine in src/content/offer.ts.
 test("the legal name is one constant, used by the footer, privacy page, JSON-LD and llms", () => {
   assert.equal(siteConfig.legalName, "ChisokuLab Private Limited");
 

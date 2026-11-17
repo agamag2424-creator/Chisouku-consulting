@@ -16,7 +16,7 @@ export const canonicalAnswers = {
   method:
     "The PMO Health Scorecard scores ten dimensions, from governance and decision rights to PMO value perception. The free self-check scores them from one person's answers; the Health Check fills them in with evidence from your documents and three short interviews.",
   markets:
-    "The UK first. The UAE and Saudi Arabia too, remote by default, on site where agreed. Prices are in US dollars.",
+    "The UK first. The UAE and Saudi Arabia too, remote by default, on site where agreed.",
   policy:
     "No implementation fees, no software resale, no system integrator partnerships or referral fees. Client evidence is processed under a written data-handling policy and never used to train AI models. Neither the Health Check nor the Audit guarantees that a programme or portfolio will recover.",
 } as const;
@@ -103,7 +103,7 @@ export const faqItems: FaqItem[] = [
   {
     id: "where-we-work",
     question: "Where do you work?",
-    answer: "The UK first. The UAE and Saudi Arabia too, remote by default, on site where agreed. Prices are in US dollars.",
+    answer: "The UK first. The UAE and Saudi Arabia too, remote by default, on site where agreed.",
   },
 ];
 

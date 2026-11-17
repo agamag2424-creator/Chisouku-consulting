@@ -43,7 +43,7 @@ for (const viewport of [
     await expect(page.locator('[data-dimension="D"]')).toContainText("1.0");
     await expect(page.getByText("The PMO Health Check fills in this same scorecard", { exact: false })).toBeVisible();
     await expect(page.getByText("What the PMO Health Check would examine next")).toBeVisible();
-    await expect(page.getByRole("link", { name: "Book a 20-minute call" }).last()).toHaveAttribute("href", /utm_content=self_check_result/);
+    await expect(page.getByRole("link", { name: "Arrange a 20-minute call" }).last()).toHaveAttribute("href", /utm_content=self_check_result/);
     await expect(page.getByRole("link", { name: "About the PMO Health Check" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Print or save as PDF" })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);

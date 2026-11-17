@@ -19,6 +19,7 @@ const listed = [
   "/terms",
   "/refund-policy",
   "/shipping-policy",
+  "/payment-terms",
   "/pmo-self-check",
   "/pmo-self-check/methodology",
   "/pmo-uae",
@@ -44,11 +45,18 @@ for (const route of [...listed, ...unlisted]) {
     const blocks = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) => JSON.parse(text));
     const org = blocks.find((data) => data["@type"] === "Organization");
     expect(org.description).toBe(
-      "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a USD 500 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
+      "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a £395 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
     );
     expect(org.areaServed).toEqual(["United Kingdom", "United Arab Emirates", "Saudi Arabia"]);
     expect(org.legalName).toBe("ChisokuLab Private Limited");
-    expect(JSON.stringify(org)).not.toMatch(/founder/i);
+    expect(org.identifier).toMatchObject({ propertyID: "CIN", value: "U62099UP2025PTC237187" });
+    expect(org.address.addressLocality).toBe("Prayagraj");
+    expect(org.founder).toMatchObject({
+      "@type": "Person",
+      name: "Agam Agrawwal",
+      jobTitle: "Founder and Director",
+      sameAs: ["https://www.linkedin.com/in/agamagrawwal"],
+    });
     if (route === "/privacy") {
       await expect(page.getByText("Digital Personal Data Protection Act, 2023")).toBeVisible();
     }
@@ -61,10 +69,10 @@ test("llms.txt names the PMO offers and the published prices", async ({ request 
   for (const text of [short, full]) {
     expect(text).toContain("PMO Health Audit");
     expect(text).toContain("PMO Health Check");
-    expect(text).toContain("USD 5,000");
-    expect(text).toContain("USD 2,500");
-    expect(text).toContain("USD 500");
-    expect(text).not.toContain("USD 12,000");
+    expect(text).toContain("£3,950");
+    expect(text).toContain("£1,950");
+    expect(text).toContain("£395");
+    expect(text).not.toMatch(/USD|GBP \d/);
     expect(text).toContain("Legal name: ChisokuLab Private Limited");
     expect(text).not.toMatch(/Readiness Evidence Check|Go-Live Decision Review/);
   }

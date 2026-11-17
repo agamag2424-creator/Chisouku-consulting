@@ -75,7 +75,7 @@ export const routeSeo = {
       "Email hello@chisokulabs.com or call +91 9277482755. Registered office in Prayagraj, India. We reply within 2 business days.",
   },
   "/about": {
-    title: "About Us",
+    title: "About",
     description:
       "Fixed-price PMO Health Checks and Audits for UK organisations running a PMO, and in the UAE and Saudi Arabia. 11+ years in programme delivery.",
   },
@@ -93,6 +93,11 @@ export const routeSeo = {
     title: "Shipping and Delivery Policy",
     description:
       "We do not ship physical goods. How and when the PMO Health Check and the PMO Health Audit are delivered, and contact details.",
+  },
+  "/payment-terms": {
+    title: "Payment terms",
+    description:
+      "How the PMO Health Check and the PMO Health Audit are paid for, what happens if you cancel, and how work is delivered.",
   },
   "/privacy": {
     title: "Privacy Policy",

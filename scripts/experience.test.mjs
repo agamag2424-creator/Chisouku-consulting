@@ -23,7 +23,8 @@ test("principal copy says 11+ years and the repo does not say 10+ years or 10+ y
     if (retired.test(readFileSync(path, "utf8"))) hits.push(path);
   }
   assert.deepEqual(hits, []);
-  const principal = readFileSync("src/components/trust/PrincipalBlock.tsx", "utf8");
+  // The principal block shows backgroundLine from src/content/offer.ts.
+  const principal = readFileSync("src/content/offer.ts", "utf8");
   assert.match(principal, /11\+ years/);
   assert.doesNotMatch(principal, retired);
 });

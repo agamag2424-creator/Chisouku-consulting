@@ -52,7 +52,7 @@ export default function Home() {
           <div className="hero-actions mt-8">
             <Ctas placement="hero" />
           </div>
-          <p className="hero-meta mt-6 font-[family-name:var(--font-mono)] text-[12px] font-bold uppercase tracking-[0.14em] text-teal">
+          <p className="hero-meta mt-6 label text-gold-ink">
             {headline.market}
           </p>
         </div>
@@ -63,7 +63,7 @@ export default function Home() {
       <Section tone="paper" aria-labelledby="problems-h">
         <div className={split}>
           <h2 id="problems-h" className="t-h2 text-ink">
-            Three problems we find in most PMOs.
+            Three problems we find in most PMOs
           </h2>
           <p className="t-body text-muted">
             Actions sit in the RAID log with no owner and no date. Status stays Green until it is too late to change the
@@ -91,7 +91,7 @@ export default function Home() {
       <Section tone="paper" aria-labelledby="check-h">
         <div className={split}>
           <h2 id="check-h" className="t-h2 text-ink">
-            The PMO Health Check, in five working days.
+            The PMO Health Check, in five working days
           </h2>
           <dl className="grid gap-4 text-[17px]">
             <div>
@@ -115,7 +115,7 @@ export default function Home() {
       <Section aria-labelledby="sample-h">
         <div className={split}>
           <h2 id="sample-h" className="t-h2 text-ink">
-            What the scorecard looks like.
+            What the scorecard looks like
           </h2>
           <p className="t-body text-muted">
             Ten dimensions, each with a level and the evidence behind it. This excerpt is a sample for a fictional
@@ -129,7 +129,7 @@ export default function Home() {
       <Section tone="paper" aria-labelledby="ladder-h">
         <div className={split}>
           <h2 id="ladder-h" className="t-h2 text-ink">
-            Start free. Pay only for evidence.
+            Start free. Pay only for evidence
           </h2>
           <p className="t-body text-muted">{selfCheckPitch}</p>
         </div>
@@ -146,7 +146,7 @@ export default function Home() {
       <section className="dark-band atmosphere-band px-[var(--content-padding-x-mobile)] py-16 min-[641px]:px-[var(--content-padding-x)] min-[641px]:py-24" aria-labelledby="close-h">
         <div className="mx-auto flex max-w-[var(--content-max-width)] flex-wrap items-end justify-between gap-8">
           <h2 id="close-h" className="t-h2 max-w-[24ch] text-paper">
-            Find out which of the three problems is yours.
+            Find out which of the three problems is yours
           </h2>
           <Ctas placement="closing" inverse />
         </div>

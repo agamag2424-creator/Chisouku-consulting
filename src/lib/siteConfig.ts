@@ -2,9 +2,10 @@
  * Single source for offers, prices, markets and feature flags.
  * Pages, JSON-LD and llms.txt read these values; never repeat prices in JSX.
  *
- * Pricing (17 Nov 2026): the PMO Health Audit is list USD 5,000 and founding USD 2,500,
+ * Pricing (17 Nov 2026, in GBP from about USD 1 = GBP 0.75): the PMO Health Audit is £3,950 list and £1,950 founding,
  * capped at 5 working days. Extra days are quoted separately at the same day rate.
- * The PMO Health Check is a single price of USD 500, credited in full against the audit.
+ * with extra days at £795 (list) or £395 (founding). The PMO Health Check is a single price of £395, credited in full
+ * against the Audit.
  */
 export const siteConfig = {
   name: "ChisokuLabs",
@@ -16,31 +17,43 @@ export const siteConfig = {
   /** Registered office address (legal / policy pages). */
   address: "190X/6/1, Kalindipuram, Prayagraj, U.P. 211011, India",
   calendlyUrl: "https://calendly.com/chisokulabs/discovery-call",
+  /** Company Identification Number (Ministry of Corporate Affairs, India). */
+  cin: "U62099UP2025PTC237187",
+  /** Registered office, written out in full for the footer company line. */
+  registeredOffice: "190X/6/1, Kalindipuram, Prayagraj, Uttar Pradesh 211011, India",
+  /** The named consultant (change 1, 17 Nov 2026). Photo: square WebP, about 320 px shown. */
+  founder: {
+    name: "Agam Agrawwal",
+    title: "Founder and Director",
+    linkedin: "https://www.linkedin.com/in/agamagrawwal",
+    /** Set to "/images/founder/agam-agrawwal.webp" once the photo file is in public/. */
+    photo: null as string | null,
+  },
   /** Sender for form emails; chisokulabs.com is verified in Resend. Replies go to the visitor. */
   formSender: "ChisokuLabs website <website@chisokulabs.com>",
   tagline: "PMO Health Check",
-  positioning: "RAID logs nobody acts on. Status that turns Red too late. Forums that cannot decide.",
+  positioning: "RAID logs nobody acts on. Status that turns Red too late. Forums that cannot decide",
   /** Organization and WebSite JSON-LD description. */
   schemaDescription:
-    "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a USD 500 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
+    "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a £395 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
   heroSub: "A fixed-price PMO Health Check finds which one is yours, with evidence, in five working days.",
   footerTagline:
     "Fixed-price PMO Health Checks and Audits for organisations running a PMO. UK first; the UAE and Saudi Arabia too.",
   markets: { primary: "United Kingdom", others: ["United Arab Emirates", "Saudi Arabia"] },
   /** Homepage strip. Not a vendor list. */
   homeStrip: ["Governance", "RAID", "Reporting", "Cadence", "Portfolio"],
-  currency: "USD",
+  currency: "GBP",
   offers: {
     healthCheck: {
       name: "PMO Health Check",
       navLabel: "Health Check",
       days: 5,
       /** One price, paid in full on signature. No list/founding split. */
-      listPrice: 500,
+      listPrice: 395,
       foundingPrice: null,
       path: "/pmo-health-check",
       priceCaption: "Price",
-      payment: "USD 500, paid in full on signature",
+      payment: "£395, paid in full on signature",
       foundingApplies: false,
       serviceType: "PMO health check",
     },
@@ -48,8 +61,10 @@ export const siteConfig = {
       name: "PMO Health Audit",
       navLabel: "Audit",
       days: 5,
-      listPrice: 5000,
-      foundingPrice: 2500,
+      listPrice: 3950,
+      foundingPrice: 1950,
+      /** Extra days beyond the 5-day cap. Rounded GBP prices, so not list / 5. */
+      extraDay: { list: 795, founding: 395 },
       path: "/pmo-health-audit",
       priceCaption: "List price",
       payment: "Paid 50/50: half on signature, half on delivery",
@@ -69,13 +84,10 @@ export const siteConfig = {
 
 /** The approved credit (source-of-truth table). The Health Check fee is never described as refundable. */
 export const feeCreditSentence =
-  "The USD 500 Health Check fee is credited in full against the PMO Health Audit if the Audit is signed within 60 days.";
+  "The £395 Health Check fee is credited in full against the PMO Health Audit if the Audit is signed within 60 days.";
 
-/**
- * The audit is capped at 5 working days. Day rates follow the published prices:
- * USD 5,000 / 5 days and USD 2,500 / 5 days.
- */
-export const extraDaysSentence = `The Audit is capped at ${siteConfig.offers.healthAudit.days} working days. Extra days are quoted separately at ${formatPrice(siteConfig.offers.healthAudit.listPrice / siteConfig.offers.healthAudit.days)} a day (list) or ${formatPrice((siteConfig.offers.healthAudit.foundingPrice ?? siteConfig.offers.healthAudit.listPrice) / siteConfig.offers.healthAudit.days)} a day (founding).`;
+/** The Audit's 5-day cap and the extra-day rates, from config. */
+export const extraDaysSentence = `The Audit is capped at ${siteConfig.offers.healthAudit.days} working days. Extra days are quoted separately at ${formatPrice(siteConfig.offers.healthAudit.extraDay.list)} a day (list) or ${formatPrice(siteConfig.offers.healthAudit.extraDay.founding)} a day (founding).`;
 
 export type CalendlyContent =
   | "header"
@@ -120,6 +132,7 @@ export const routeLive = {
   "/terms": true,
   "/refund-policy": true,
   "/shipping-policy": true,
+  "/payment-terms": true,
   "/pmo-health-check": true,
   "/pmo-health-audit": true,
   "/see-it-first": true,
@@ -157,9 +170,9 @@ export function routeRenders(href: string, env: { NODE_ENV?: string; VERCEL_ENV?
   return isRouteLive(href) || env.NODE_ENV === "development" || env.VERCEL_ENV === "preview";
 }
 
-/** "USD 5,000": every displayed price goes through here. */
+/** "£3,950": every displayed price goes through here. Never "GBP 3,950". */
 export function formatPrice(amount: number): string {
-  return `${siteConfig.currency} ${amount.toLocaleString("en-US")}`;
+  return `£${amount.toLocaleString("en-GB")}`;
 }
 
 /** Founding-client prices show only while places remain. */
@@ -168,7 +181,7 @@ export function foundingActive(slotsRemaining: number = siteConfig.foundingSlots
 }
 
 export type OfferPriceLabel = {
-  /** "USD 5,000" or "USD 500" */
+  /** "£3,950" or "£395" */
   list: string;
   /** Founding-client price, or null when the offer has one price or no places remain. */
   founding: string | null;

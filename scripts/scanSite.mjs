@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 // Full-site scan (September port PRD, Story 7.1). Fetches every live route, llms.txt and llms-full.txt from a running
 // build and fails on any retired term, em dash, "Chisoku Guard", ten-plus years, "leading programmes", a wrong legal
-// name, "pilot", savings or benchmark claims, or "refund" near "Health Check".
+// name, "pilot", savings or benchmark claims, "refund" near "Health Check", "USD" outside the calculator's currency switch,
+// "Book a 20-minute call", "About Us", "08 signals", or an h1 to h3 that ends in a full stop.
 // Usage: SCAN_URL=http://localhost:3100 node scripts/scanSite.mjs   (exit code 1 on any hit)
 import { readFileSync } from "node:fs";
-import { findHits } from "./lib/retiredTerms.mjs";
+import { decode, findHits, headingsWithStops, withoutCurrencySwitch } from "./lib/retiredTerms.mjs";
 
 const base = (process.env.SCAN_URL ?? "http://localhost:3100").replace(/\/$/, "");
 
@@ -16,15 +17,6 @@ const extras = ["/llms.txt", "/llms-full.txt"];
 
 /** The Refund Policy's own name and links are allowed (review decision 2). */
 const allowedNames = /Refund and Cancellation Policy|Refund Policy/g;
-
-const decode = (s) =>
-  s
-    .replace(/&amp;/g, "&")
-    .replace(/&#x27;|&#39;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&nbsp;/g, " ");
 
 /** Visible text, the title, meta descriptions and JSON-LD of a page. Links' URLs are not text. */
 function readable(html) {
@@ -45,10 +37,11 @@ for (const path of [...routes, ...extras]) {
     console.log(`SKIP ${path}: HTTP ${response.status}`);
     continue;
   }
-  const raw = await response.text();
+  const raw = withoutCurrencySwitch(await response.text());
   // Web addresses are not wording (slugs such as /refund-policy); only the words around them count.
   const text = (path.endsWith(".txt") ? raw : readable(raw)).replace(/https?:\/\/[^\s)"']+/g, "").replace(allowedNames, "Policy");
   const hits = findHits(text);
+  if (!path.endsWith(".txt")) for (const h of headingsWithStops(raw)) hits.push({ label: "heading ends in a full stop", context: h });
   if (hits.length) {
     failed += hits.length;
     console.log(`\n${path}: ${hits.length} hit(s)`);

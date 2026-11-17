@@ -10,8 +10,11 @@ const root = new URL("..", import.meta.url).pathname;
 
 // September port PRD (17 Nov 2026): "What your PMO reporting costs today" is the calculator heading, and Yamaha,
 // Etihad, HCLTech and Coforge are named as employers (never clients) in the background line, so they are no longer
-// forbidden here. scripts/scanSite.mjs checks the new retired terms.
+// forbidden here. Change 1 (17 Nov 2026) names the founder, Agam Agrawwal, with his photo and LinkedIn, so his name is
+// no longer forbidden either. scripts/scanSite.mjs checks the new retired terms.
 export const forbidden = [
+  // The site uses the role address, never a personal one.
+  "agam@chisokulabs.com",
   "drag",
   "Automation Audit",
   "Singapore",
@@ -27,8 +30,6 @@ export const forbidden = [
   "Nagarro",
   "Quinnox",
   "Solutionara",
-  "Agrawwal",
-  "Agam",
   "guarantee",
   "SOC 2",
   "ISO 27001",

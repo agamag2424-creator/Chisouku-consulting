@@ -88,9 +88,10 @@ export function PmoHealthMap({ className }: Props) {
       />
       <div className="relative z-10 p-5 md:p-8">
         <p className="eyebrow">{healthMap.eyebrow}</p>
-        <h3 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-ink md:text-2xl">
+        {/* A titled figure, not a page heading: it sits beside the h1, so an h3 here would skip a level. */}
+        <p className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-ink md:text-2xl">
           {healthMap.title}
-        </h3>
+        </p>
 
         <svg
           viewBox="0 0 720 480"
@@ -149,7 +150,7 @@ export function PmoHealthMap({ className }: Props) {
             y="258"
             textAnchor="middle"
             fill={MUTED}
-            fontFamily="var(--font-mono), monospace"
+            fontFamily="var(--font-body), sans-serif"
             fontSize="9.5"
             fontWeight="700"
           >
@@ -164,7 +165,7 @@ export function PmoHealthMap({ className }: Props) {
                   y="16"
                   textAnchor="middle"
                   fill="#FFFDF8"
-                  fontFamily="var(--font-mono), monospace"
+                  fontFamily="var(--font-body), sans-serif"
                   fontSize="11"
                   fontWeight="700"
                 >
@@ -206,7 +207,7 @@ export function PmoHealthMap({ className }: Props) {
                     x="14"
                     y="47"
                     fill={accent ? "#C7CED3" : MUTED}
-                    fontFamily="var(--font-mono), monospace"
+                    fontFamily="var(--font-body), sans-serif"
                     fontSize="10"
                     fontWeight="600"
                   >
@@ -224,7 +225,7 @@ export function PmoHealthMap({ className }: Props) {
                         y="4"
                         textAnchor="middle"
                         fill="#FFFDF8"
-                        fontFamily="var(--font-mono), monospace"
+                        fontFamily="var(--font-body), sans-serif"
                         fontSize="11"
                         fontWeight="700"
                       >
@@ -256,7 +257,7 @@ export function PmoHealthMap({ className }: Props) {
                 </span>
                 <span
                   className={cn(
-                    "block font-[family-name:var(--font-mono)] text-[12px]",
+                    "block font-[family-name:var(--font-body)] text-[12px]",
                     n.id === "forum" ? "text-paper/75" : "text-muted",
                   )}
                 >
@@ -264,7 +265,7 @@ export function PmoHealthMap({ className }: Props) {
                 </span>
               </span>
               {n.problem && (
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold-ink font-[family-name:var(--font-mono)] text-[12px] font-bold text-paper">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold-ink font-[family-name:var(--font-body)] text-[12px] font-bold text-paper">
                   <span className="sr-only">Problem </span>
                   {problemNumber(n.problem)}
                 </span>
@@ -279,7 +280,7 @@ export function PmoHealthMap({ className }: Props) {
               <li key={p.id} className="flex items-start gap-2">
                 <span
                   aria-hidden
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-ink font-[family-name:var(--font-mono)] text-[11px] font-bold text-paper"
+                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-ink font-[family-name:var(--font-body)] text-[11px] font-bold text-paper"
                 >
                   {i + 1}
                 </span>

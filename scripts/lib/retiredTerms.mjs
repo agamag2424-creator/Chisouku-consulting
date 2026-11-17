@@ -34,11 +34,21 @@ export const styleTerms = [
   { label: "percentile or benchmark", pattern: /\b(percentile|benchmark(ed)?\s+against)\b/i },
 ];
 
+/** British tone and calmer style (changes 2 to 4, 17 Nov 2026). Prices are in pounds; the calculator's currency switch is the
+ * only place "USD" may appear, and scanSite.mjs removes that switch before scanning. */
+export const toneTerms = [
+  { label: "USD (prices are in pounds)", pattern: /\bUSD\b|US dollars?/ },
+  { label: "GBP before a number (write £395)", pattern: /\bGBP\s?\d/ },
+  { label: "Book a 20-minute call (write Arrange)", pattern: /book a 20-minute call/i },
+  { label: "About Us (write About)", pattern: /\babout us\b/i },
+  { label: "08 signals", pattern: /\b0?8\s+signals\b/i },
+];
+
 /** "refund" within 120 characters of "Health Check", either order (the Health Check is never described as refundable). */
 export const refundNearHealthCheck = { label: "refund near Health Check", pattern: /health check[^.]{0,120}\brefund|\brefund[^.]{0,120}health check/i };
 
 /** Every hit of the lists above in a piece of text, with a little context. */
-export function findHits(text, lists = [retiredTerms, styleTerms, [refundNearHealthCheck]]) {
+export function findHits(text, lists = [retiredTerms, styleTerms, toneTerms, [refundNearHealthCheck]]) {
   const hits = [];
   for (const list of lists) {
     for (const { label, pattern } of list) {
@@ -49,4 +59,24 @@ export function findHits(text, lists = [retiredTerms, styleTerms, [refundNearHea
     }
   }
   return hits;
+}
+
+/** HTML entities that appear in built pages. */
+export const decode = (s) =>
+  s
+    .replace(/&amp;/g, "&")
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ");
+
+/** The calculator's GBP / USD switch is the one place "USD" may appear. */
+export const withoutCurrencySwitch = (html) => html.replace(/<div[^>]*data-currency-switch[^>]*>[\s\S]*?<\/div>/g, " ");
+
+/** Text of every h1, h2 and h3 that ends in a full stop (house style: no full stop at the end of a heading). */
+export function headingsWithStops(html) {
+  return [...html.matchAll(/<h([1-3])\b[^>]*>([\s\S]*?)<\/h\1>/g)]
+    .map((m) => decode(m[2].replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim())
+    .filter((t) => t.endsWith("."));
 }

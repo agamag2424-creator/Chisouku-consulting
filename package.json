@@ -10,7 +10,9 @@
     "test:unit": "node --test scripts/*.test.mjs",
     "leak-scan": "node scripts/leak-scan.mjs",
     "test:e2e": "playwright test",
-    "scan": "node scripts/scanSite.mjs"
+    "scan": "node scripts/scanSite.mjs",
+    "lighthouse": "node scripts/lighthouseA11y.mjs",
+    "pdfs": "node scripts/makePdfs.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

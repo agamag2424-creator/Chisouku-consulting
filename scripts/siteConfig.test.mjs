@@ -5,17 +5,17 @@ import { test } from "node:test";
 import { formatPrice, foundingActive, isRouteLive, navLinks, offerPriceLabel, routeLive, routeRenders, siteConfig } from "../src/lib/siteConfig.ts";
 
 test("formatPrice uses the configured currency and grouping", () => {
-  assert.equal(formatPrice(12000), "USD 12,000");
+  assert.equal(formatPrice(12000), "£12,000");
 });
 
 test("offerPriceLabel shows the Health Check as one price and the Audit list and founding prices", () => {
-  assert.deepEqual(offerPriceLabel("healthCheck", 3), { list: "USD 500", founding: null });
-  assert.deepEqual(offerPriceLabel("healthAudit", 3), { list: "USD 5,000", founding: "USD 2,500" });
+  assert.deepEqual(offerPriceLabel("healthCheck", 3), { list: "£395", founding: null });
+  assert.deepEqual(offerPriceLabel("healthAudit", 3), { list: "£3,950", founding: "£1,950" });
 });
 
 test("offerPriceLabel hides the Audit founding price when 0 places remain", () => {
-  assert.deepEqual(offerPriceLabel("healthCheck", 0), { list: "USD 500", founding: null });
-  assert.deepEqual(offerPriceLabel("healthAudit", 0), { list: "USD 5,000", founding: null });
+  assert.deepEqual(offerPriceLabel("healthCheck", 0), { list: "£395", founding: null });
+  assert.deepEqual(offerPriceLabel("healthAudit", 0), { list: "£3,950", founding: null });
 });
 
 test("defaults come from config", () => {

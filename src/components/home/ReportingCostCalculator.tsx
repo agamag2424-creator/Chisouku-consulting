@@ -66,7 +66,7 @@ export function ReportingCostCalculator({ className }: { className?: string }) {
     <div className={cn("report-board paper-grain ink-corners overflow-hidden", className)} data-calculator="reporting-cost">
       <div className="flex flex-col gap-2 border-b border-ink/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="eyebrow mb-0">Reporting cost</p>
-        <p className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.12em] text-muted">
+        <p className="label text-muted">
           Your numbers, in your browser
         </p>
       </div>
@@ -75,7 +75,7 @@ export function ReportingCostCalculator({ className }: { className?: string }) {
         <div className="border-b border-ink/10 p-5 md:p-6 lg:border-b-0 lg:border-r">
           <fieldset className="mb-6">
             <legend className="form-label">Currency</legend>
-            <div className="inline-flex rounded-control border border-ink/20 p-1" role="radiogroup" aria-label="Currency">
+            <div className="inline-flex rounded-control border border-ink/20 p-1" role="radiogroup" aria-label="Currency" data-currency-switch>
               {(["GBP", "USD"] as const).map((c) => (
                 <button
                   key={c}
@@ -120,7 +120,7 @@ export function ReportingCostCalculator({ className }: { className?: string }) {
                         onChange={(e) => type(f.key, e.target.value)}
                         onBlur={() => commit(f.key)}
                       />
-                      <span className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.08em] text-muted">
+                      <span className="label text-muted">
                         {f.unit(currency)}
                       </span>
                     </span>
@@ -145,18 +145,18 @@ export function ReportingCostCalculator({ className }: { className?: string }) {
         </div>
 
         <div className="bg-[rgba(0,166,200,0.04)] p-5 md:p-6">
-          <p className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+          <p className="label text-muted">
             Every year, today
           </p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2" aria-live="polite">
             <div className="border border-ink/15 bg-paper p-4">
-              <p className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.14em] text-muted">Hours per year</p>
+              <p className="label text-muted">Hours per year</p>
               <p className="mt-2 font-[family-name:var(--font-display)] text-3xl font-bold tracking-[-0.03em] text-ink" data-result="hours">
                 {result.hoursLabel}
               </p>
             </div>
             <div className="border border-ink bg-ink p-4 text-paper">
-              <p className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.14em] text-paper/75">Cost per year</p>
+              <p className="label text-paper/75">Cost per year</p>
               <p className="mt-2 font-[family-name:var(--font-display)] text-3xl font-bold tracking-[-0.03em]" data-result="cost">
                 {result.costLabel}
               </p>
