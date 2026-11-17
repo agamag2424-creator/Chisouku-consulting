@@ -1,41 +1,32 @@
-// Unlisted market pages. Not part of the app build (tsconfig excludes scripts/e2e).
+// UAE and Saudi Arabia pages (September port PRD, Story 6.1): new addresses, the same ladder, indexed.
 import { expect, test } from "@playwright/test";
 
 const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
 
 const pages = [
-  {
-    path: "/go-live-readiness-uae",
-    h1: "PMO health in the UAE",
-    whyNow: "The UK is first. The UAE is by arrangement, remote by default.",
-  },
-  {
-    path: "/go-live-readiness-saudi-arabia",
-    h1: "PMO health in Saudi Arabia",
-    whyNow: "The UK is first. Work in Saudi Arabia is remote, and by arrangement.",
-  },
+  { path: "/pmo-uae", old: "/go-live-readiness-uae", h1: "PMO Health Check in the UAE" },
+  { path: "/pmo-saudi-arabia", old: "/go-live-readiness-saudi-arabia", h1: "PMO Health Check in Saudi Arabia" },
 ];
 
 for (const market of pages) {
-  test(`${market.path}: PMO copy, noindex, no go-live offer, no Service schema`, async ({ page }) => {
+  test(`${market.path}: the ladder and the three problems, indexed, prices in USD`, async ({ page, request }) => {
     const response = await page.goto(base + market.path);
     expect(response?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(market.h1);
-    await expect(page.getByText(market.whyNow)).toBeVisible();
-    await expect(page.getByText("Remote by default, on site by arrangement.")).toBeVisible();
+    await expect(page.locator("[data-ladder-step]")).toHaveCount(3);
     await expect(page.getByText("USD 500").first()).toBeVisible();
     await expect(page.getByText("USD 5,000").first()).toBeVisible();
-    await expect(page.getByText("USD 12,000")).toHaveCount(0);
+    await expect(page.getByText("RAID logs nobody acts on").first()).toBeVisible();
     const body = await page.locator("main").innerText();
-    expect(body).not.toMatch(/go-live|e-invoicing|READINESS-5|ZATCA|Fatoora/i);
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
-    const closing = page.locator("main > section").last();
-    await expect(closing.getByRole("link", { name: "Request a free briefing" })).toHaveAttribute(
-      "href",
-      "/contact?request=brief",
-    );
-    const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) => JSON.parse(text));
-    expect(ld.some((data) => data["@type"] === "Service")).toBe(false);
+    expect(body).not.toMatch(/go-live|readiness|e-invoicing|ZATCA|Fatoora|briefing/i);
+    const html = await (await request.get(base + market.path)).text();
+    expect(html).not.toMatch(/noindex/);
+  });
+
+  test(`${market.old} 301s to ${market.path}`, async ({ request }) => {
+    const response = await request.get(base + market.old, { maxRedirects: 0 });
+    expect(response.status()).toBe(301);
+    expect(response.headers()["location"]).toBe(market.path);
   });
 
   test(`${market.path}: fits 360px without horizontal scroll`, async ({ page }) => {
@@ -45,9 +36,16 @@ for (const market of pages) {
   });
 }
 
-test("homepage does not link the market pages or an e-invoicing band", async ({ page }) => {
-  await page.goto(base + "/");
-  await expect(page.getByRole("complementary", { name: "Regulatory dates" })).toHaveCount(0);
-  await expect(page.locator('a[href="/go-live-readiness-uae"]')).toHaveCount(0);
-  await expect(page.locator('a[href="/go-live-readiness-saudi-arabia"]')).toHaveCount(0);
+test("the three go-live guides are retired with 301s to the homepage", async ({ request }) => {
+  for (const guide of ["/guides/s4hana-go-no-go-checklist", "/guides/is-my-erp-ready-to-go-live", "/guides/independent-assurance-vs-si-readiness-review"]) {
+    const response = await request.get(base + guide, { maxRedirects: 0 });
+    expect(response.status(), guide).toBe(301);
+    expect(response.headers()["location"]).toBe("/");
+  }
+});
+
+test("/about links the market pages", async ({ page }) => {
+  await page.goto(base + "/about");
+  await expect(page.locator('main a[href="/pmo-uae"]')).toHaveCount(1);
+  await expect(page.locator('main a[href="/pmo-saudi-arabia"]')).toHaveCount(1);
 });

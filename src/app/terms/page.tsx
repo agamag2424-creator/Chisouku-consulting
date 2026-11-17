@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Body, List, Part } from "../../components/legal/LegalParts";
 import { Section } from "../../components/ui/Section";
 import { pageMetadata } from "../../lib/seo";
-import { siteConfig } from "../../lib/siteConfig";
+import { extraDaysSentence, siteConfig } from "../../lib/siteConfig";
+import { healthAudit, healthCheck } from "../../content/offer";
 
 // Terms of Service (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/terms");
@@ -30,22 +31,16 @@ export default function TermsPage() {
             <Body>Consulting services, priced as shown on the site:</Body>
             <List
               items={[
-                "PMO Health Check: USD 500, 5 working days, one programme. Paid in full on signature.",
-                "PMO Health Audit: 5 working days, USD 5,000 list price, founding-client rate USD 2,500. The audit is capped at 5 working days. Extra days are quoted separately at the same day rate: USD 1,000 a day at list price, USD 500 a day at the founding-client rate.",
-                "Founding-client rates and the fee credit apply as described on the site. The founding-client rate applies to the PMO Health Audit. The Health Check fee is a credit against the audit, and it is not a refund.",
-              ]}
-            />
-            <List
-              items={[
-                "Go-Live Readiness Report (USD 149): a scored PDF report generated from your answers to an online questionnaire. It is based only on what you tell us. We do not read your documents, data or invoices.",
-                "Go-Live Readiness Pack (USD 249). If you have already bought the Go-Live Readiness Report, its USD 149 is credited towards the Pack, so you pay USD 100: editable templates (.xlsx) and a PDF guide, delivered as a download.",
+                `PMO Health Check: ${healthCheck.scope.toLowerCase()}, ${healthCheck.timing.toLowerCase()}. ${healthCheck.payment} ${healthCheck.cancellation}`,
+                `PMO Health Audit: ${healthAudit.scope.toLowerCase()}. ${healthAudit.priceLine} ${healthAudit.cap} ${extraDaysSentence.replace("The Audit is capped at 5 working days. ", "")} ${healthAudit.payment}`,
+                `Founding-client rates and the fee credit apply as described on the site. The founding-client rate applies to the PMO Health Audit. ${healthCheck.credit}`,
+                "PMO self-check: free, online. Your answers stay in your browser and are not sent to us.",
               ]}
             />
             <Body>
               For each engagement we confirm the scope, dates and fee in writing (by email or a signed proposal) before
               work starts. If that written agreement conflicts with these terms, the written agreement applies.
             </Body>
-            <Body>Free briefing: a free one-page briefing on your programme, prepared from public information.</Body>
           </Part>
 
           <Part title="1.2 Prices and payment">
@@ -54,8 +49,7 @@ export default function TermsPage() {
                 "Prices are in US dollars unless we say otherwise.",
                 "Prices exclude applicable taxes.",
                 "Payments are processed by Razorpay. We never see or store your full card details.",
-                "Digital products are paid for in full at checkout.",
-                "The PMO Health Check (USD 500) is paid in full on signature. The PMO Health Audit is 50% on signature and 50% on delivery, unless a written agreement says otherwise.",
+                `The PMO Health Check is ${healthCheck.payment.charAt(0).toLowerCase()}${healthCheck.payment.slice(1)} The PMO Health Audit is paid 50/50, half on signature and half on delivery, unless a written agreement says otherwise.`,
                 "Your bank or card issuer may charge currency conversion or other fees. Those are your responsibility.",
               ]}
             />
@@ -73,12 +67,10 @@ export default function TermsPage() {
             />
           </Part>
 
-          <Part title="1.4 Licence for digital products">
+          <Part title="1.4 Intellectual property">
             <List
               items={[
-                "Each purchase gives one company a non-exclusive, non-transferable licence to use and adapt the materials for its own internal work.",
-                "You may not resell, redistribute or publish the materials, or share them outside your company.",
-                "We keep all intellectual property in our materials and our methods, including HEALTH-5.",
+                "We keep all intellectual property in our materials and our methods, including the PMO Health Scorecard.",
                 "For consulting, you own the deliverables we prepare for you once you have paid in full. We keep our underlying methods and templates.",
               ]}
             />
@@ -87,7 +79,7 @@ export default function TermsPage() {
           <Part title="1.5 Your responsibilities">
             <List
               items={[
-                "Give accurate information. Report scores depend entirely on your answers.",
+                "Give accurate information. Self-check results depend entirely on your answers.",
                 "For consulting, provide the people and documents we ask for on time. If inputs arrive late, the dates may move.",
                 "Do not misuse the site, for example by attempting unauthorised access or uploading harmful code.",
               ]}

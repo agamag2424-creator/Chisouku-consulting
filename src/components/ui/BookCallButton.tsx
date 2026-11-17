@@ -1,5 +1,6 @@
 import { calendlyLink, type CalendlyContent } from "../../lib/siteConfig";
 import { Button } from "./Button";
+import { ctas } from "../../content/offer";
 
 type BookCallButtonProps = {
   /** utm_content value. Analytics placement is recorded by CtaTracker, not as a query parameter. */
@@ -21,7 +22,7 @@ export function BookCallButton({ content, variant = "secondary", size = "lg", cl
       target="_blank"
       rel="noopener noreferrer"
     >
-      Book a 30-minute call
+      {ctas.primaryLabel}
     </Button>
   );
 }

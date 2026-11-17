@@ -15,7 +15,7 @@ test("consent is accepted only as boolean true", () => {
 test("the notification email records consent with a UTC timestamp", () => {
   const text = contactEmailText(
     {
-      requestLabel: "Free readiness brief",
+      requestLabel: "Pricing question",
       name: "Test Person",
       email: "test@example.com",
       company: "Acme",

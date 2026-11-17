@@ -1,6 +1,8 @@
-import { feeCreditSentence, siteConfig } from "./siteConfig";
+import { healthAudit as auditCopy, healthCheck as checkCopy, selfCheckPitch } from "../content/offer";
+import { extraDaysSentence, feeCreditSentence, siteConfig } from "./siteConfig";
 
-// Answer content. Single source for /faq, FAQPage JSON-LD and llms.txt. Prices and the fee credit come from config.
+// Answer content. Single source for /faq, FAQPage JSON-LD and llms.txt. Offer wording comes from content/offer.ts and
+// prices from siteConfig.
 
 const { healthCheck, healthAudit } = siteConfig.offers;
 
@@ -8,14 +10,15 @@ export const feeCreditAnswer = feeCreditSentence;
 
 /** Canonical one-paragraph answers: what ChisokuLabs does, offers, method, markets and policy. */
 export const canonicalAnswers = {
-  whatWeDo: `A fixed-price, independent check of how one programme or portfolio is governed, reported and run, with a 30-day fix plan. Led by a PMO lead with 11+ years running programmes.`,
-  offers: `${healthCheck.name}: ${healthCheck.days} working days, ${siteConfig.currency} ${healthCheck.listPrice.toLocaleString("en-US")}, one programme. ${healthAudit.name}: ${healthAudit.days} working days, list ${siteConfig.currency} ${healthAudit.listPrice.toLocaleString("en-US")}, founding-client rate ${siteConfig.currency} ${healthAudit.foundingPrice?.toLocaleString("en-US")}. The score is Healthy, Needs attention or At risk, with a 30-day fix plan. Extra days on the audit are quoted separately at the same day rate.`,
+  whatWeDo:
+    `Fixed-price PMO Health Checks and Audits. A ${checkCopy.price} PMO Health Check finds, with evidence and in five working days, whether RAID logs are acted on, whether status turns Red in time and whether governance forums decide. 11+ years in programme delivery.`,
+  offers: `Free PMO self-check, then ${healthCheck.name} (${checkCopy.price}), then ${healthAudit.name}. ${healthCheck.name}: ${checkCopy.scope.toLowerCase()}; ${checkCopy.inputs.toLowerCase()}; ${checkCopy.outputs.charAt(0).toLowerCase() + checkCopy.outputs.slice(1)}; ${checkCopy.timing.toLowerCase()}; ${checkCopy.payment} ${checkCopy.credit} ${healthAudit.name}: ${auditCopy.scope.toLowerCase()}; ${auditCopy.priceLine} ${auditCopy.cap} ${extraDaysSentence} ${auditCopy.payment}`,
   method:
-    "HEALTH-5 tests every critical status claim for Status, Owner, Evidence, Date and Action. Contradiction testing then checks the claims against each other, because the most expensive risks sit between projects, reports and forums, not inside any one of them.",
+    "The PMO Health Scorecard scores ten dimensions, from governance and decision rights to PMO value perception. The free self-check scores them from one person's answers; the Health Check fills them in with evidence from your documents and three short interviews.",
   markets:
-    "The UK first. The UAE by arrangement, remote by default, on site where agreed. Remote work elsewhere is by arrangement.",
+    "The UK first. The UAE and Saudi Arabia too, remote by default, on site where agreed. Prices are in US dollars.",
   policy:
-    "No implementation fees, no software resale, no system integrator partnerships or referral fees. Client evidence is processed under a written data-handling policy and never used to train AI models. The audit does not guarantee that a programme or portfolio will recover.",
+    "No implementation fees, no software resale, no system integrator partnerships or referral fees. Client evidence is processed under a written data-handling policy and never used to train AI models. Neither the Health Check nor the Audit guarantees that a programme or portfolio will recover.",
 } as const;
 
 export type FaqItem = {
@@ -26,53 +29,60 @@ export type FaqItem = {
   related?: { href: string; label: string }[];
 };
 
-/** Shared verbatim by the FAQ item "Do you use AI on our data?" and /method ("How we use AI, safely"). */
+/** Shared verbatim by the FAQ item "Do you use AI on our data?" and /method ("How we use AI, safely"). Approved wording. */
 export const aiOnOurDataAnswer =
   "Yes, to extract claims and cross-check evidence, under the policy. AI processing runs only through providers contracted for zero data retention, and your data is never used to train AI models. Every finding is reviewed and signed by the principal; AI does not make the health recommendation.";
 
+/** The answer to "is this an accredited assessment" (research file, sections 3.3 and 4). */
+export const accreditationAnswer =
+  "No. The self-check and the PMO Health Check are informed by public material on PMO and portfolio maturity. Neither is an official or accredited assessment, and we are not an accredited assessor. The methodology note lists the public sources.";
+
 export const faqItems: FaqItem[] = [
   {
-    id: "head-of-pmo",
-    question: "How is this different from hiring a Head of PMO, or a freelance PMO at a day rate?",
-    answer:
-      "A Head of PMO is a hire. A day-rate PMO joins the team. We stay independent of delivery, test every critical claim on HEALTH-5, and leave you with a score and a 30-day fix plan. We do not take the delivery role.",
-    related: [{ href: "/method", label: "How HEALTH-5 works" }],
+    id: "price",
+    question: "How much does it cost?",
+    answer: `The ${healthCheck.name} is ${checkCopy.price}, ${checkCopy.payment.replace(`${checkCopy.price}, `, "")} The ${healthAudit.name} is ${auditCopy.priceLine} ${auditCopy.cap} ${extraDaysSentence} ${auditCopy.payment} The PMO self-check is free.`,
+    related: [{ href: "/pricing", label: "Pricing" }],
   },
   {
-    id: "why-independent",
-    question: "Why would we need an independent check?",
-    answer:
-      "Because leadership is asked to act on reports written by the people being judged on delivery. We don't assume anyone is misleading you. We check whether the evidence supports what is being reported.",
+    id: "fee-credit",
+    question: "Is the Health Check fee credited against the Audit?",
+    answer: `Yes. ${checkCopy.credit} ${checkCopy.cancellation}`,
   },
   {
-    id: "when-to-start",
-    question: "When should a check start?",
-    answer: "As soon as status reports and a RAID log exist. Earlier is more useful, because there is still time to act.",
-  },
-  {
-    id: "one-programme",
-    question: "Do you start with one programme?",
-    answer: `Yes. The ${healthCheck.name} is scoped to one programme, and is the usual starting point.`,
+    id: "timing",
+    question: "How long does the Health Check take?",
+    answer: `${checkCopy.timing}. It covers one programme and ends with a 45-minute readout.`,
     related: [{ href: healthCheck.path, label: healthCheck.name }],
   },
   {
-    id: "what-we-look-at",
-    question: "What do you look at?",
-    answer:
-      "Governance, reporting, RAID, cadence, prioritisation and the PMO operating model. The work is not limited to a single software platform.",
+    id: "documents",
+    question: "What do you need from us?",
+    answer: `${checkCopy.inputs}. We send the exact request on the day you sign.`,
   },
   {
-    id: "team-time",
-    question: "What do you need from our team?",
+    id: "confidentiality",
+    question: "How do you keep our documents confidential?",
     answer:
-      "Documents on day one. The Health Check includes one sponsor and two team interviews (45 minutes each, remote).",
-  },
-  {
-    id: "protect-documents",
-    question: "How do you protect our documents?",
-    answer:
-      "Under a written data-handling policy. Evidence is shared under NDA, stored encrypted in a dedicated engagement workspace with access limited to the principal, and deleted within 30 days of the final readout unless you ask us to keep it.",
+      "Under a written data-handling policy. Evidence is shared under NDA, stored encrypted in a dedicated engagement workspace with access limited to the founder, and deleted within 30 days of the final readout unless you ask us to keep it.",
     related: [{ href: "/independence-and-data", label: "Independence and data handling" }],
+  },
+  {
+    id: "accredited",
+    question: "Is this an accredited assessment?",
+    answer: accreditationAnswer,
+    related: [{ href: "/pmo-self-check/methodology", label: "Methodology note" }],
+  },
+  {
+    id: "self-check",
+    question: "What is the free PMO self-check?",
+    answer: `${selfCheckPitch} It takes about five minutes, and your answers stay in your browser.`,
+    related: [{ href: "/pmo-self-check", label: "Take the PMO self-check" }],
+  },
+  {
+    id: "health-check-or-audit",
+    question: "Should we start with the Health Check or the Audit?",
+    answer: `Usually the Health Check, on one programme. ${checkCopy.partialView}`,
   },
   {
     id: "ai-on-our-data",
@@ -81,32 +91,19 @@ export const faqItems: FaqItem[] = [
     related: [{ href: "/independence-and-data#ai-use", label: "How AI is used" }],
   },
   {
+    id: "fixes",
+    question: "Do you implement or fix what you find?",
+    answer: "No. We stay independent, and we tell you who should own each fix.",
+  },
+  {
     id: "guarantee",
     question: "Do you guarantee that a programme or portfolio will recover?",
-    answer: "No. The audit does not guarantee that a programme or portfolio will recover.",
-  },
-  {
-    id: "why-publish-prices",
-    question: "Why are your prices public?",
-    answer:
-      "So you can judge the cost before you talk to us. The Health Check is one programme. The Audit list price covers one portfolio review, scoped on the call.",
-    related: [{ href: "/pricing", label: "Pricing" }],
-  },
-  {
-    id: "fee-credit",
-    question: "What is the fee credit?",
-    answer: feeCreditAnswer,
+    answer: "No. Neither the Health Check nor the Audit guarantees that a programme or portfolio will recover.",
   },
   {
     id: "where-we-work",
     question: "Where do you work?",
-    answer:
-      "The UK first. The UAE by arrangement, remote by default, on site where agreed. Remote work elsewhere is by arrangement.",
-  },
-  {
-    id: "fixes",
-    question: "Do you implement or fix what you find?",
-    answer: "No. We stay independent, and we tell you who should own each fix.",
+    answer: "The UK first. The UAE and Saudi Arabia too, remote by default, on site where agreed. Prices are in US dollars.",
   },
 ];
 
@@ -125,36 +122,41 @@ export const glossaryTerms: GlossaryTerm[] = [
     id: "pmo-health-check",
     term: "PMO Health Check",
     definition:
-      "A fixed-price check of one programme, delivered in 5 working days from the documents, for USD 500. You receive a Project Health Scorecard, the top findings, a 30-day fix plan and a 45-minute readout. The fee is credited in full against a PMO Health Audit signed within 60 days of the readout.",
+      `A fixed-price check of one programme for ${checkCopy.payment.charAt(0).toLowerCase()}${checkCopy.payment.slice(1)} ${checkCopy.timing}, you receive ${checkCopy.outputs.charAt(0).toLowerCase()}${checkCopy.outputs.slice(1)}. The fee is ${checkCopy.credit.charAt(0).toLowerCase()}${checkCopy.credit.slice(1)}`,
     related: { href: healthCheck.path, label: healthCheck.name },
   },
   {
     id: "pmo-health-audit",
     term: "PMO Health Audit",
     definition:
-      "A fixed-price audit of how a programme or portfolio is governed, reported and run, capped at 5 working days, at a list price of USD 5,000 or a founding-client rate of USD 2,500. Extra days are quoted separately at the same day rate. The score is Healthy, Needs attention or At risk, with a 30-day fix plan.",
+      `A fixed-price audit of ${auditCopy.scope.charAt(0).toLowerCase()}${auditCopy.scope.slice(1)}. ${auditCopy.priceLine} ${auditCopy.cap}`,
     related: { href: healthAudit.path, label: healthAudit.name },
   },
   {
-    id: "project-health-scorecard",
-    term: "Project Health Scorecard",
+    id: "pmo-health-scorecard",
+    term: "PMO Health Scorecard",
     definition:
-      "The scored deliverable from a Health Check or a Health Audit. It covers scope, schedule, risk, resourcing and stakeholder communications, and it records the evidence behind the score.",
+      "Ten dimensions, from governance and decision rights to PMO value perception, each scored from Ad hoc to Improving. The free self-check scores them from your answers; the Health Check fills them in with evidence.",
   },
   {
-    id: "healthy",
-    term: "Healthy",
-    definition: "The evidence supports the status being reported.",
+    id: "pmo-self-check",
+    term: "PMO self-check",
+    definition:
+      "A free, five-minute online check that scores the ten scorecard dimensions from one person's answers. The answers stay in the browser. It is not an official or accredited assessment.",
+    related: { href: "/pmo-self-check", label: "Take the PMO self-check" },
   },
   {
-    id: "needs-attention",
-    term: "Needs attention",
-    definition: "Named gaps, owners and dates that must be closed first.",
+    id: "levels",
+    term: "Levels: Ad hoc to Improving",
+    definition:
+      "The five levels each dimension is placed on: Ad hoc, Emerging, Defined, Measured and Improving. They describe what happens in practice, not what the policy says.",
+    related: { href: "/method", label: "Method" },
   },
   {
-    id: "at-risk",
-    term: "At risk",
-    definition: "What is missing, and the 30-day fix plan to recover.",
+    id: "flagged-dimension",
+    term: "Flagged dimension",
+    definition:
+      "A dimension scoring 2.0 or below. It is flagged whatever the overall band, because one weak area can hold a PMO back even when the average looks fine.",
   },
   {
     id: "raid-log",
@@ -163,29 +165,28 @@ export const glossaryTerms: GlossaryTerm[] = [
       "A register of risks, assumptions, issues and dependencies, each with an owner and, where it is an action, a due date. A log that is up to date is not the same as a log that has been acted on.",
   },
   {
-    id: "health-5",
-    term: "HEALTH-5",
-    definition:
-      "The ChisokuLabs test for every critical status claim: Status, Owner, Evidence, Date and Action. A claim reported Green with 2 of 5 is an assumption, not a fact.",
-    related: { href: "/method", label: "How HEALTH-5 works" },
-  },
-  {
-    id: "contradiction-testing",
-    term: "Contradiction testing",
-    definition:
-      "Checking status claims against each other across projects, reports and forums. The most expensive risks sit between them, not inside any one of them.",
-    related: { href: "/method", label: "How HEALTH-5 works" },
-  },
-  {
     id: "status-evidence",
     term: "Status evidence",
     definition:
-      "An artefact that shows whether a reported status is true: a status pack, a RAID log, governance minutes or a plan. The score rests on the artefact, not on the colour in the pack.",
+      "A document that shows whether a reported status is true: a status pack, a RAID log, governance minutes, a plan or a forecast. The score rests on the document, not on the colour in the pack.",
   },
   {
-    id: "governance",
-    term: "Governance",
+    id: "late-red",
+    term: "Status that turns Red too late",
     definition:
-      "The forums, owners and decisions that run a programme or portfolio. A forum that met is not the same as a forum that decided.",
+      "Status reported Green until the week it is too late to change the outcome. It usually means there is no written rule for what makes a status Amber or Red.",
+  },
+  {
+    id: "decision-forum",
+    term: "Decision forum",
+    definition:
+      "A steering committee or board that can start, change or stop work. A forum that met is not the same as a forum that decided.",
+  },
+  {
+    id: "fix-plan",
+    term: "30-day fix plan",
+    definition:
+      "The actions that close the top findings, each with an owner, a date and the evidence that shows it is done.",
+    related: { href: "/see-it-first", label: "See a sample fix plan" },
   },
 ];

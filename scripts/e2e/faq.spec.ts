@@ -3,16 +3,19 @@ import { expect, test } from "@playwright/test";
 
 const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
 
-test("faq: 13 questions, FAQPage JSON-LD from the same items, no old-offer terms", async ({ page }) => {
+test("faq: 12 questions, FAQPage JSON-LD from the same items, no old-offer terms", async ({ page }) => {
   const response = await page.goto(base + "/faq");
   expect(response?.status()).toBe(200);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("FAQ");
   const questions = await page.locator("main details > summary").allInnerTexts();
-  expect(questions).toHaveLength(13);
+  expect(questions).toHaveLength(12);
+  for (const id of ["price", "fee-credit", "timing", "documents", "confidentiality", "accredited"]) {
+    await expect(page.locator(`#${id}`)).toHaveCount(1);
+  }
 
   const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) => JSON.parse(text));
   const faq = ld.find((data) => data["@type"] === "FAQPage");
-  expect(faq?.mainEntity).toHaveLength(13);
+  expect(faq?.mainEntity).toHaveLength(12);
   for (const [index, entity] of faq.mainEntity.entries()) {
     expect(entity["@type"]).toBe("Question");
     expect(entity.name).toBe(questions[index].trim());
@@ -23,11 +26,13 @@ test("faq: 13 questions, FAQPage JSON-LD from the same items, no old-offer terms
 
   const html = await page.content();
   expect(html).toMatch(/PMO Health Audit/);
+  await page.locator("#accredited > summary").click();
+  await expect(page.locator("#accredited")).toContainText("No. The self-check and the PMO Health Check are informed by public material");
   expect(html).not.toMatch(/Diagnostic|Automation Audit|pack cycle|reporting drag|READINESS-5/i);
 });
 
 test("faq: an answer opens and its link works", async ({ page }) => {
   await page.goto(base + "/faq");
-  await page.locator("#protect-documents > summary").click();
-  await expect(page.locator("#protect-documents").getByRole("link", { name: "Independence and data handling" })).toBeVisible();
+  await page.locator("#confidentiality > summary").click();
+  await expect(page.locator("#confidentiality").getByRole("link", { name: "Independence and data handling" })).toBeVisible();
 });

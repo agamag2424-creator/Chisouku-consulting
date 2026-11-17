@@ -11,14 +11,22 @@ const redirects: [string, string, number][] = [
   ["/free-pmo-diagnostic", "/see-it-first", 308],
   ["/diagnostic-vs-audit", "/pricing", 308],
   ["/pmo-reporting-automation", "/method", 308],
-  ["/pmo-automation-gcc", "/go-live-readiness-uae", 308],
-  ["/pmo-automation-singapore", "/go-live-readiness-uae", 308],
+  ["/pmo-automation-gcc", "/pmo-uae", 308],
+  ["/pmo-automation-singapore", "/pmo-uae", 308],
   ["/case-studies/anything", "/see-it-first", 308],
   ["/ai-solutions/anything", "/pmo-health-audit", 308],
   ["/aeva", "/method", 308],
   ["/go-live-decision-review", "/pmo-health-audit", 301],
   ["/readiness-evidence-check", "/pmo-health-check", 301],
+  ["/readiness", "/pmo-self-check", 301],
+  ["/readiness/extra", "/pmo-self-check", 301],
 ];
+
+test("/readiness keeps the UTMs on the way to /pmo-self-check", async ({ request }) => {
+  const response = await request.get(base + "/readiness?utm_source=linkedin&utm_medium=email&utm_campaign=ep02", { maxRedirects: 0 });
+  expect(response.status()).toBe(301);
+  expect(response.headers()["location"]).toBe("/pmo-self-check?utm_source=linkedin&utm_medium=email&utm_campaign=ep02");
+});
 
 for (const [from, to, status] of redirects) {
   test(`${from} → ${status} ${to}`, async ({ request }) => {

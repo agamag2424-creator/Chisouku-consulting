@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "test:unit": "node --test scripts/*.test.mjs",
-    "leak-scan": "node scripts/leak-scan.mjs"
+    "leak-scan": "node scripts/leak-scan.mjs",
+    "test:e2e": "playwright test",
+    "scan": "node scripts/scanSite.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -27,6 +29,7 @@
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pg": "^8.23.1",

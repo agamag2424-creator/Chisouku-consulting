@@ -105,9 +105,6 @@ export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: 
     return (
       <div role="status" className="rounded-sheet border border-line bg-paper p-6 min-[641px]:p-8">
         <p className="t-h3 text-ink">Thanks. We&apos;ll reply within one business day.</p>
-        {fields.request_type === "brief" && (
-          <p className="t-body mt-3 text-ink">Your briefing arrives within two business days.</p>
-        )}
       </div>
     );
   }

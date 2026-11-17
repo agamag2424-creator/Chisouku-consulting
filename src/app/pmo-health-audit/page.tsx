@@ -1,44 +1,44 @@
 import { OfferLayout, offerMetadata, type OfferBlock } from "../../components/offers/OfferLayout";
+import { healthAudit, healthCheck } from "../../content/offer";
+import { dimensions } from "../../content/pmoSelfCheck";
 
-const lead =
-  "A 5 working day independent audit of how a programme or portfolio is governed, reported and run, with a 30-day fix plan.";
+// PMO Health Audit (September port PRD, Story 4.2): the Health Check is the way in, then the Audit.
+const lead = `Most clients start with the ${healthCheck.price} PMO Health Check on one programme. The Audit then covers ${healthAudit.scope.charAt(0).toLowerCase()}${healthAudit.scope.slice(1)}.`;
 
 export const metadata = offerMetadata("healthAudit");
 
 const blocks: readonly OfferBlock[] = [
   {
-    kind: "scope",
-    title: "Scope",
-    text: "Governance, reporting, RAID, cadence, prioritisation and the PMO operating model.",
-    core: ["Governance", "Reporting", "RAID", "Cadence", "Prioritisation", "PMO operating model"],
+    kind: "wayIn",
+    title: "The way in: the PMO Health Check",
+    text: `One programme, ${healthCheck.price}. ${healthCheck.timing}: ${healthCheck.outputs.charAt(0).toLowerCase()}${healthCheck.outputs.slice(1)}.`,
+    note: `${healthCheck.credit} ${healthCheck.partialView}`,
   },
   {
-    kind: "method",
-    title: "Method",
-    text: "HEALTH-5 for every critical claim, then contradiction testing across reports and forums.",
-    steps: ["HEALTH-5 for every critical claim", "Contradiction testing across reports and forums"],
+    kind: "scope",
+    title: "Scope",
+    text: `${healthAudit.scope}.`,
+    core: dimensions.map((d) => d.name),
   },
   {
     kind: "deliverables",
-    title: "Deliverables",
-    columns: 3,
+    title: "What you get",
+    columns: 4,
     items: [
-      { kind: "brief", text: "Audit brief (two pages, sponsor-ready)" },
-      { kind: "register", text: "Evidence register" },
-      { kind: "contradiction", text: "Contradiction map" },
-      { kind: "conditions", text: "Project Health Scorecard (Healthy / Needs attention / At risk) with owners and dates" },
-      { kind: "actions", text: "30-day fix plan" },
-      { kind: "readout", text: "Sponsor readout" },
+      { kind: "register", text: "The PMO Health Scorecard for the portfolio, filled in with evidence" },
+      { kind: "contradiction", text: "Where reports, RAID logs and forums disagree" },
+      { kind: "actions", text: "A 30-day fix plan with owners and dates" },
+      { kind: "readout", text: "A sponsor readout" },
     ],
   },
   {
     kind: "sequence",
-    title: "Timeline",
+    title: "Capped at 5 working days",
     steps: [
-      { from: 1, to: 1, text: "Kickoff and evidence request" },
-      { from: 2, to: 2, text: "Evidence review" },
-      { from: 3, to: 3, text: "Targeted interviews" },
-      { from: 4, to: 4, text: "Draft findings" },
+      { from: 1, to: 1, text: "Kickoff and document request" },
+      { from: 2, to: 2, text: "Evidence review across the portfolio" },
+      { from: 3, to: 3, text: "Interviews" },
+      { from: 4, to: 4, text: "Scorecard and fix plan written" },
       { from: 5, to: 5, text: "Sponsor readout" },
     ],
   },
@@ -46,5 +46,5 @@ const blocks: readonly OfferBlock[] = [
 ];
 
 export default function PmoHealthAuditPage() {
-  return <OfferLayout offer="healthAudit" lead={lead} blocks={blocks} />;
+  return <OfferLayout offer="healthAudit" eyebrow="The whole portfolio" lead={lead} blocks={blocks} />;
 }

@@ -1,4 +1,5 @@
 import { foundingClientStatement } from "../content/founding";
+import { healthAudit as auditCopy, healthCheck as checkCopy, ladder, selfCheckPitch } from "../content/offer";
 import { canonicalAnswers, faqItems, feeCreditAnswer, glossaryTerms } from "./aeoContent";
 import { routeSeo } from "./seo";
 import { extraDaysSentence, isRouteListed, siteConfig } from "./siteConfig";
@@ -6,7 +7,6 @@ import { extraDaysSentence, isRouteListed, siteConfig } from "./siteConfig";
 // /llms.txt and /llms-full.txt, built from the canonical answers and config. Public text only.
 
 const { healthCheck, healthAudit } = siteConfig.offers;
-const money = (value: number) => `${siteConfig.currency} ${value.toLocaleString("en-US")}`;
 const link = (path: string) => `${siteConfig.url}${path === "/" ? "" : path}`;
 
 /** Listed pages only, with their titles from the SEO map. */
@@ -25,8 +25,10 @@ export function buildLlmsTxt(): string {
     siteConfig.schemaDescription,
     ``,
     `## Offers`,
-    `- [${healthCheck.name}](${link(healthCheck.path)}): ${healthCheck.days} working days, ${money(healthCheck.listPrice)}, one programme. Paid in full on signature.`,
-    `- [${healthAudit.name}](${link(healthAudit.path)}): ${healthAudit.days} working days, list ${money(healthAudit.listPrice)}, founding-client rate ${money(healthAudit.foundingPrice ?? 0)}. Score: Healthy, Needs attention or At risk, with a 30-day fix plan.`,
+    `- Ladder: ${ladder.summary}.`,
+    `- [PMO self-check](${link("/pmo-self-check")}): free, about five minutes. ${selfCheckPitch} Answers stay in the browser.`,
+    `- [${healthCheck.name}](${link(healthCheck.path)}): ${checkCopy.scope}. ${checkCopy.inputs}. ${checkCopy.outputs}. ${checkCopy.timing}. ${checkCopy.payment}`,
+    `- [${healthAudit.name}](${link(healthAudit.path)}): ${auditCopy.scope}. ${auditCopy.priceLine} ${auditCopy.cap} ${auditCopy.payment}`,
     `- ${extraDaysSentence}`,
     `- Fee credit: ${feeCreditAnswer}`,
     ...(siteConfig.foundingSlotsRemaining > 0

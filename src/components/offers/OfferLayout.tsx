@@ -4,7 +4,6 @@ import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 import { JsonLdScript } from "../aeo/JsonLdScript";
 import { PrincipalBlock } from "../trust/PrincipalBlock";
-import { BookCallButton } from "../ui/BookCallButton";
 import { Button } from "../ui/Button";
 import { PriceBlock } from "../ui/PriceBlock";
 import { Section } from "../ui/Section";
@@ -12,6 +11,7 @@ import { Sheet } from "../ui/Sheet";
 import {
   DecisionWindow,
   DeliverableTiles,
+  OfferCtas,
   DocumentTiles,
   MethodFlow,
   NotList,
@@ -21,7 +21,6 @@ import {
   ScopeTiles,
   SectionHead,
   SpeedBars,
-  offerCta,
   type DeliverableKind,
   type FixedOffer,
   type RunStep,
@@ -46,9 +45,10 @@ export type OfferBlock =
       speedNote?: { text: string; usual: { label: string; fromDays: number; toDays: number } };
     }
   | { kind: "price" }
+  | { kind: "wayIn"; title: string; text: string; note: string }
   | { kind: "notIncluded"; title: string; items: readonly string[] };
 
-type OfferLayoutProps = { offer: FixedOffer; lead: string; blocks: readonly OfferBlock[] };
+type OfferLayoutProps = { offer: FixedOffer; lead: string; blocks: readonly OfferBlock[]; eyebrow?: string };
 
 /** Page metadata for an offer page, from the SEO map. */
 export function offerMetadata(offer: FixedOffer): Metadata {
@@ -56,7 +56,7 @@ export function offerMetadata(offer: FixedOffer): Metadata {
 }
 
 /** Offer page (E2.3): JSON-LD, ink hero, the blocks with alternating tones, closing band. */
-export function OfferLayout({ offer, lead, blocks }: OfferLayoutProps) {
+export function OfferLayout({ offer, lead, blocks, eyebrow }: OfferLayoutProps) {
   const { name, path } = siteConfig.offers[offer];
   let plain = 0; // paper and page alternate across plain blocks; the closing notes sit on tint
   return (
@@ -69,7 +69,7 @@ export function OfferLayout({ offer, lead, blocks }: OfferLayoutProps) {
           { name, path },
         ])}
       />
-      <OfferHero offer={offer} lead={lead} />
+      <OfferHero offer={offer} lead={lead} eyebrow={eyebrow} />
       {blocks.map((block) => {
         const tinted = block.kind === "notIncluded";
         const tone = tinted ? "tint" : plain++ % 2 === 0 ? "paper" : "page";
@@ -151,16 +151,24 @@ function Block({ offer, block }: { offer: FixedOffer; block: OfferBlock }) {
         <div className={priceGrid}>
           <div className="flex flex-col items-start gap-6">
             <h2 className="t-h2 text-ink">Price</h2>
-            <div className="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-              <Button href={offerCta.review.href} size="lg">
-                {offerCta.review.label}
-              </Button>
-              <BookCallButton
-                content={offer === "healthCheck" ? "health_check_price" : "health_audit_price"}
-              />
-            </div>
+            <OfferCtas content={offer === "healthCheck" ? "health_check_price" : "health_audit_price"} />
           </div>
           <PriceBlock offer={offer} className="p-6 min-[641px]:p-8" />
+        </div>
+      );
+    case "wayIn":
+      return (
+        <div className="grid gap-8 min-[900px]:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] min-[900px]:items-center min-[900px]:gap-16">
+          <h2 className="t-h2 text-ink">{block.title}</h2>
+          <div className="panel p-6 min-[641px]:p-8" data-way-in>
+            <p className="t-body text-ink">{block.text}</p>
+            <p className="t-small mt-4 text-muted">{block.note}</p>
+            <div className="mt-6">
+              <Button href={siteConfig.offers.healthCheck.path} variant="primary">
+                {siteConfig.offers.healthCheck.name}
+              </Button>
+            </div>
+          </div>
         </div>
       );
     case "notIncluded":

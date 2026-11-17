@@ -2,7 +2,6 @@
 // Shared by the form, the contact page (for the ?request= preset) and the API (for the email subject).
 export const requestTypes = {
   review: { label: "Discuss a Health Check", submit: "Send" },
-  brief: { label: "Free briefing", submit: "Request a free briefing" },
   pricing: { label: "Pricing question", submit: "Ask about pricing" },
 } as const;
 

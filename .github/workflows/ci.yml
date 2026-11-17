@@ -1,0 +1,81 @@
+# Checks every pull request (September port PRD, Epic 7 and review decision 5): types, lint, unit tests, build,
+# the full-site scan for retired terms and claims, the Playwright suite with screenshots, and the preview-only
+# diagram review page. Nothing here deploys; .github/workflows/azure-deploy.yml deploys on merge to main.
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit -p .
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Build (production)
+        run: npm run build
+
+      - name: Start the production build
+        run: |
+          npx next start -p 3100 > server.log 2>&1 &
+          for i in $(seq 1 30); do curl -s -o /dev/null http://localhost:3100/ && exit 0; sleep 1; done
+          cat server.log; exit 1
+
+      - name: Site scan (retired terms, em dashes, claims)
+        run: npm run scan
+        env:
+          SCAN_URL: http://localhost:3100
+
+      - name: Leak scan
+        run: npm run leak-scan
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright (production build)
+        run: npm run test:e2e
+        env:
+          HERO_URL: http://localhost:3100/
+
+      - name: Build and test the preview-only pages (/_ui/diagrams)
+        run: |
+          pkill -f "next start" || true
+          VERCEL_ENV=preview npm run build
+          VERCEL_ENV=preview npx next start -p 3100 > server.log 2>&1 &
+          for i in $(seq 1 30); do curl -s -o /dev/null http://localhost:3100/ && break; sleep 1; done
+          PREVIEW=1 HERO_URL=http://localhost:3100/ npx playwright test diagrams screens
+
+      - name: Keep the Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7

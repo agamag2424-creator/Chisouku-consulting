@@ -39,17 +39,20 @@ export default function PrivacyPage() {
             <Body>
               Messages and engagements: anything you send us by email, or share with us during an engagement.
             </Body>
-            <Body>Purchases: if you buy a report or pack, we collect:</Body>
+            <Body>Payments: if you pay for a PMO Health Check or a PMO Health Audit, we collect:</Body>
             <List
               items={[
                 "your name, email address and billing country;",
-                "the answers you give in the questionnaire;",
                 "the payment reference.",
               ]}
             />
             <Body>
+              PMO self-check: your answers stay in your browser. They are not stored and are not sent to us. Analytics
+              records only the result band, for example &quot;Defined&quot;.
+            </Body>
+            <Body>
               Analytics: anonymous website analytics, meaning pages visited, buttons clicked, device type, country and
-              referring site. No cookies are used for analytics.
+              referring site. We use Umami for this. No cookies are used for analytics.
             </Body>
           </Part>
 
@@ -57,7 +60,6 @@ export default function PrivacyPage() {
             <List
               items={[
                 "To reply to your enquiry.",
-                "To prepare a briefing you have asked for.",
                 "To provide the services you engage us for, under a written agreement.",
                 "To process payments, deliver your purchase, issue invoices and handle refunds.",
                 "To understand which pages and buttons are used, so we can improve the site.",
@@ -92,7 +94,9 @@ export default function PrivacyPage() {
           <Part title="Who processes it">
             <List
               items={[
-                "Vercel hosts this website and provides its analytics.",
+                "Microsoft Azure hosts this website.",
+                "Umami provides cookieless website analytics.",
+                "Vercel hosts review copies of the website.",
                 "Resend delivers form messages and purchase emails.",
                 "Calendly handles bookings, if you choose to book a call.",
                 "Razorpay processes payments.",

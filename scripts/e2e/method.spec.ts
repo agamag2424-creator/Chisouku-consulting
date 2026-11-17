@@ -1,7 +1,4 @@
-// Method page (E3). Not part of the app build (tsconfig excludes scripts/e2e).
-//
-// Run against a local production build (see hero.spec.ts):
-//   HERO_URL=http://localhost:3100/ npx -y @playwright/test@1.56.1 test scripts/e2e
+// Method page (September port PRD, Story 6.1). Not part of the app build (tsconfig excludes scripts/e2e).
 import { expect, test } from "@playwright/test";
 
 const url = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "") + "/method";
@@ -13,28 +10,20 @@ for (const viewport of [
   test.describe(viewport.name, () => {
     test.use({ viewport: { width: viewport.width, height: viewport.height } });
 
-    test("shows HEALTH-5 with the fictional programme and no old method", async ({ page }) => {
+    test("shows the PMO Health Scorecard, the five checks and no old method", async ({ page }) => {
       const response = await page.goto(url);
       expect(response?.status()).toBe(200);
-      await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-        "Every critical status claim tested for Status, Owner, Evidence, Date and Action (HEALTH-5), then cross-checked between reports and forums.",
-      );
+      await expect(page.getByRole("heading", { level: 1 })).toHaveText("The PMO Health Scorecard: ten dimensions, scored on evidence.");
+      for (const level of ["Ad hoc", "Emerging", "Defined", "Measured", "Improving"]) {
+        await expect(page.getByText(level, { exact: true }).first()).toBeVisible();
+      }
       for (const name of ["Status", "Owner", "Evidence", "Date", "Action"]) {
-        await expect(page.getByRole("heading", { level: 3, name, exact: true })).toBeVisible();
+        await expect(page.getByText(name, { exact: true }).first()).toBeVisible();
       }
-      await expect(page.getByText("What failure looks like").filter({ visible: true })).toHaveCount(5);
-      // Register (10 claims), contradiction types (4) and conditions (3), whichever layout is visible.
-      await expect(page.getByText("14 open actions", { exact: false }).filter({ visible: true }).first()).toBeVisible();
-      await expect(page.getByText("Forum met without deciding").filter({ visible: true })).toHaveCount(1);
-      for (const by of ["10 working days", "15 working days", "20 working days"]) {
-        await expect(page.getByText(by, { exact: true }).filter({ visible: true })).toHaveCount(1);
-      }
-      // E3.2 claim-flow diagram: one accessible SVG visible per width, with title and description.
-      const flow = page.getByRole("img", { name: "How one claim is tested" }).filter({ visible: true });
-      await expect(flow).toHaveCount(1);
-      await expect(flow).toHaveAccessibleDescription(/3 of 5 evidenced/);
+      await expect(page.getByRole("heading", { level: 2, name: "Where the three problems show up" })).toBeVisible();
+      await expect(page.getByRole("img", { name: /ten dimensions around one overall band/ })).toBeVisible();
       const body = await page.locator("main").innerText();
-      for (const old of ["Assess", "Architect", "Activate", "Accelerate", "AI Impact Model", "READINESS-5"]) {
+      for (const old of ["Assess", "Architect", "Activate", "Accelerate", "AI Impact Model", "READINESS-5", "HEALTH-5", "Needs attention"]) {
         expect(body).not.toContain(old);
       }
       await expect(page.getByRole("heading", { level: 2, name: "How we use AI, safely" })).toBeVisible();

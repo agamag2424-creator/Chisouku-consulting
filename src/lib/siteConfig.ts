@@ -18,15 +18,15 @@ export const siteConfig = {
   calendlyUrl: "https://calendly.com/chisokulabs/discovery-call",
   /** Sender for form emails; chisokulabs.com is verified in Resend. Replies go to the visitor. */
   formSender: "ChisokuLabs website <website@chisokulabs.com>",
-  tagline: "PMO Health Audit",
-  positioning: "Is your PMO giving leadership the truth, early enough to act?",
+  tagline: "PMO Health Check",
+  positioning: "RAID logs nobody acts on. Status that turns Red too late. Forums that cannot decide.",
   /** Organization and WebSite JSON-LD description. */
-  schemaDescription: "PMO Health Audit: an independent, fixed-price check of how your programmes are run.",
-  heroSub:
-    "A fixed-price, independent check of how one programme or portfolio is governed, reported and run, with a 30-day fix plan. Led by a PMO lead with 11+ years running programmes.",
+  schemaDescription:
+    "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a USD 500 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
+  heroSub: "A fixed-price PMO Health Check finds which one is yours, with evidence, in five working days.",
   footerTagline:
-    "A fixed-price, independent check of how one programme or portfolio is governed, reported and run. UK first; the UAE by arrangement.",
-  markets: { primary: "United Kingdom", secondary: "United Arab Emirates" },
+    "Fixed-price PMO Health Checks and Audits for organisations running a PMO. UK first; the UAE and Saudi Arabia too.",
+  markets: { primary: "United Kingdom", others: ["United Arab Emirates", "Saudi Arabia"] },
   /** Homepage strip. Not a vendor list. */
   homeStrip: ["Governance", "RAID", "Reporting", "Cadence", "Portfolio"],
   currency: "USD",
@@ -35,55 +35,52 @@ export const siteConfig = {
       name: "PMO Health Check",
       navLabel: "Health Check",
       days: 5,
-      /** One price. There is no list/founding split on the pilot. */
+      /** One price, paid in full on signature. No list/founding split. */
       listPrice: 500,
       foundingPrice: null,
       path: "/pmo-health-check",
       priceCaption: "Price",
-      payment: "USD 500 in full on signature",
+      payment: "USD 500, paid in full on signature",
       foundingApplies: false,
       serviceType: "PMO health check",
     },
     healthAudit: {
       name: "PMO Health Audit",
-      navLabel: "Health Audit",
+      navLabel: "Audit",
       days: 5,
       listPrice: 5000,
       foundingPrice: 2500,
       path: "/pmo-health-audit",
       priceCaption: "List price",
-      payment: "50% on signature, 50% on delivery",
+      payment: "Paid 50/50: half on signature, half on delivery",
       foundingApplies: true,
       serviceType: "PMO health audit",
     },
   },
   feeCreditDays: 60,
   foundingSlotsRemaining: 3,
-  /** The 12-question check stays reachable for old links. It is not linked or indexed. */
-  selfCheck: { live: true, url: null as string | null },
-  samplePackPath: "/documents/chisokulabs-go-live-decision-pack-illustrative.pdf",
-  slipEstimator: {
-    defaults: { people: 40, dayRate: 600, weeks: 4, parallelRunMonthly: 0 },
-    workingDaysPerWeek: 5,
-  },
   principalBlock: true,
+  /**
+   * Umami Cloud website ID (public; it appears in the page source anyway). Empty means no Umami script loads.
+   * Set it to the ID from cloud.umami.is (Settings, Websites) to switch analytics on in production.
+   */
+  umamiWebsiteId: "b053024b-1cdc-4ec9-b284-a6dceb5e5ece",
 } as const;
 
-/** The approved credit. It is a credit against the audit, and it is not a refund. */
+/** The approved credit (source-of-truth table). The Health Check fee is never described as refundable. */
 export const feeCreditSentence =
-  "The full USD 500 Health Check fee is credited against the PMO Health Audit if signed within 60 days of the Health Check readout. The credit is not a refund.";
+  "The USD 500 Health Check fee is credited in full against the PMO Health Audit if the Audit is signed within 60 days.";
 
 /**
  * The audit is capped at 5 working days. Day rates follow the published prices:
  * USD 5,000 / 5 days and USD 2,500 / 5 days.
  */
-export const extraDaysSentence =
-  "The audit is capped at 5 working days. Extra days are quoted separately at the same day rate: USD 1,000 a day at list price, USD 500 a day at the founding-client rate.";
+export const extraDaysSentence = `The Audit is capped at ${siteConfig.offers.healthAudit.days} working days. Extra days are quoted separately at ${formatPrice(siteConfig.offers.healthAudit.listPrice / siteConfig.offers.healthAudit.days)} a day (list) or ${formatPrice((siteConfig.offers.healthAudit.foundingPrice ?? siteConfig.offers.healthAudit.listPrice) / siteConfig.offers.healthAudit.days)} a day (founding).`;
 
 export type CalendlyContent =
   | "header"
   | "hero"
-  | "readiness_result"
+  | "self_check_result"
   | "pricing"
   | "health_check"
   | "health_audit"
@@ -128,23 +125,14 @@ export const routeLive = {
   "/see-it-first": true,
   "/pricing": true,
   "/independence-and-data": true,
-  "/go-live-readiness-uae": true,
-  "/go-live-readiness-saudi-arabia": true,
-  "/guides/s4hana-go-no-go-checklist": true,
-  "/guides/is-my-erp-ready-to-go-live": true,
-  "/guides/independent-assurance-vs-si-readiness-review": true,
-  "/readiness": true,
+  "/pmo-uae": true,
+  "/pmo-saudi-arabia": true,
+  "/pmo-self-check": true,
+  "/pmo-self-check/methodology": true,
 } as const;
 
 /** Live pages that stay reachable but are unlinked, noindexed and left out of the sitemap. */
-export const routeUnlisted = {
-  "/readiness": true,
-  "/go-live-readiness-uae": true,
-  "/go-live-readiness-saudi-arabia": true,
-  "/guides/s4hana-go-no-go-checklist": true,
-  "/guides/is-my-erp-ready-to-go-live": true,
-  "/guides/independent-assurance-vs-si-readiness-review": true,
-} as const;
+export const routeUnlisted = {} as const satisfies Partial<Record<string, true>>;
 
 export type SiteRoute = keyof typeof routeLive;
 
@@ -156,8 +144,8 @@ export function isRouteLive(href: string): boolean {
 
 /** True when a live route should appear in nav, footer, sitemap and llms.txt. */
 export function isRouteListed(href: string): boolean {
-  const path = href.split(/[?#]/)[0] as keyof typeof routeUnlisted;
-  return isRouteLive(href) && !routeUnlisted[path];
+  const path = href.split(/[?#]/)[0];
+  return isRouteLive(href) && !(path in routeUnlisted);
 }
 
 /**
@@ -197,11 +185,11 @@ export function offerPriceLabel(
   return { list: formatPrice(data.listPrice), founding };
 }
 
-/** Primary navigation. Short labels for the two offers. Nav shows only listed routes. */
+/** Primary navigation (September port PRD, Story 1.2). Nav shows only listed routes. */
 export const navLinks = [
-  { href: "/pmo-health-audit", label: "Health Audit" },
   { href: "/pmo-health-check", label: "Health Check" },
+  { href: "/pmo-health-audit", label: "Audit" },
+  { href: "/pmo-self-check", label: "Self-check" },
   { href: "/method", label: "Method" },
-  { href: "/see-it-first", label: "See it first" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
 ] as const;

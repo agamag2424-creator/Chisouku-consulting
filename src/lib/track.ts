@@ -1,19 +1,27 @@
 import { track as vercelTrack } from "@vercel/analytics";
 
+type Props = Record<string, string | number | boolean>;
+type UmamiWindow = Window & { umami?: { track: (event: string, data?: Props) => void } };
+
 /**
- * Analytics events (PRD 11) through Vercel Analytics: cta_click {id, page, placement}, sample_pack_view,
- * sample_pack_download, hero_view_toggle {view}, slip_estimate_used, form_submit {request_type}, form_error.
- * No cookies beyond Vercel Analytics defaults. Never send what a visitor typed.
+ * Analytics events: cta_click {id, page, placement}, calculator_used, self_check_complete {band}, form_submit
+ * {request_type}, form_error. Sent to Umami Cloud (production, cookieless) and Vercel Analytics (previews).
+ * No cookies. Never send what a visitor typed or answered.
  */
-export function track(event: string, props?: Record<string, string | number | boolean>): void {
+export function track(event: string, props?: Props): void {
   try {
     vercelTrack(event, props);
   } catch {
     // Analytics must never break the page.
   }
+  try {
+    (window as UmamiWindow).umami?.track(event, props);
+  } catch {
+    // Umami not loaded (no website ID, blocked, or not yet ready).
+  }
 }
 
-/** Stable CTA id from a link: "/contact?request=brief" → "contact-request-brief", "/" → "home". */
+/** Stable CTA id from a link: "/contact?request=pricing" → "contact-request-pricing", "/" → "home". */
 export function ctaIdFromHref(href: string): string {
   const id = href
     .replace(/^https?:\/\//, "")

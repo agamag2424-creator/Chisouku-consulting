@@ -9,8 +9,9 @@ const groups: { title: string; links: FooterLink[] }[] = [
   {
     title: "Site",
     links: [
-      { href: siteConfig.offers.healthAudit.path, label: siteConfig.offers.healthAudit.name },
       { href: siteConfig.offers.healthCheck.path, label: siteConfig.offers.healthCheck.name },
+      { href: siteConfig.offers.healthAudit.path, label: siteConfig.offers.healthAudit.name },
+      { href: "/pmo-self-check", label: "PMO self-check" },
       { href: "/method", label: "Method" },
       { href: "/see-it-first", label: "See it first" },
       { href: "/pricing", label: "Pricing" },
@@ -32,7 +33,7 @@ const groups: { title: string; links: FooterLink[] }[] = [
   },
 ];
 
-const linkClass = "text-paper/80 underline-offset-4 transition-colors hover:text-paper hover:underline";
+const linkClass = "text-paper/80 underline-offset-4 transition-colors hover:text-cyan hover:underline";
 
 /** The site's one dark surface (PRD E0.5). */
 export function Footer() {
@@ -41,7 +42,7 @@ export function Footer() {
     .filter((group) => group.links.length > 0);
 
   return (
-    <footer className="border-t border-paper/10 bg-ink text-paper/80">
+    <footer className="atmosphere-band border-t-2 border-gold/60 bg-charcoal text-paper/80">
       <div className="mx-auto grid max-w-[var(--content-max-width)] gap-10 px-[var(--content-padding-x-mobile)] py-14 min-[641px]:grid-cols-2 min-[1100px]:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))] md:px-[var(--content-padding-x)]">
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">
@@ -57,7 +58,7 @@ export function Footer() {
 
         {liveGroups.map((group) => (
           <nav key={group.title} aria-label={group.title} className="t-small">
-            <p className="mb-3 font-semibold text-paper">{group.title}</p>
+            <p className="mb-3 font-[family-name:var(--font-mono)] text-[12px] font-bold uppercase tracking-[0.14em] text-gold">{group.title}</p>
             <ul className="space-y-3">
               {group.links.map((link) => (
                 <li key={link.href}>
@@ -71,7 +72,7 @@ export function Footer() {
         ))}
 
         <div className="t-small">
-          <p className="mb-3 font-semibold text-paper">Contact</p>
+          <p className="mb-3 font-[family-name:var(--font-mono)] text-[12px] font-bold uppercase tracking-[0.14em] text-gold">Contact</p>
           <ul className="space-y-3">
             <li>
               <a href={`mailto:${siteConfig.email}`} className={linkClass}>

@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { offerPriceLabel, siteConfig } from "../../lib/siteConfig";
+import { ctas, primaryCtaHref } from "../../content/offer";
+import { offerPriceLabel, siteConfig, type CalendlyContent } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 import { EvidenceCell, type EvidenceState } from "../ui/EvidenceCell";
-import { BookCallButton } from "../ui/BookCallButton";
 import { Button } from "../ui/Button";
 import { Section } from "../ui/Section";
 import { Sheet } from "../ui/Sheet";
@@ -14,8 +14,28 @@ export type FixedOffer = "healthCheck" | "healthAudit";
 
 const CTA = {
   review: { href: "/contact?request=review", label: "Discuss your programme" },
-  brief: { href: "/contact?request=brief", label: "Request a free briefing" },
 } as const;
+
+/** The two calls to action from the source-of-truth table: book a 20-minute call, or take the free self-check. */
+export function OfferCtas({ content, inverse = false }: { content: CalendlyContent; inverse?: boolean }) {
+  return (
+    <div className="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
+      <Button
+        href={primaryCtaHref(content)}
+        variant={inverse ? "inverse" : "primary"}
+        size="lg"
+        ctaId="book_call"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {ctas.primaryLabel}
+      </Button>
+      <Button href={ctas.secondaryHref} variant={inverse ? "inverse-outline" : "secondary"} size="lg" ctaId="self_check">
+        {ctas.secondaryLabel}
+      </Button>
+    </div>
+  );
+}
 
 /** Heading beside its lead from 1100px; stacked below (as on the homepage). */
 export function SectionHead({ title, children }: { title: string; children?: ReactNode }) {
@@ -27,29 +47,24 @@ export function SectionHead({ title, children }: { title: string; children?: Rea
   );
 }
 
-/** Ink hero: name, lead, CTA; a white card with the days and prices from config. */
-export function OfferHero({ offer, lead }: { offer: FixedOffer; lead: string }) {
+/** Paper hero (September look): name, lead, both CTAs; a card with the days and prices from config. */
+export function OfferHero({ offer, lead, eyebrow }: { offer: FixedOffer; lead: string; eyebrow?: string }) {
   const data = siteConfig.offers[offer];
   const price = offerPriceLabel(offer);
   return (
     <Section
-      tone="ink"
+      className="report-cover"
       containerClassName="grid gap-12 min-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] min-[1100px]:items-center min-[1100px]:gap-16"
     >
       <div>
-        <h1 className="t-h1 text-paper">{data.name}</h1>
-        <p className="t-body mt-5 max-w-[58ch] text-paper/80">{lead}</p>
-        <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-          <Button href={CTA.review.href} variant="inverse" size="lg">
-            {CTA.review.label}
-          </Button>
-          <BookCallButton
-            content={offer === "healthCheck" ? "health_check" : "health_audit"}
-            variant="inverse-outline"
-          />
+        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+        <h1 className="t-h1 text-ink">{data.name}</h1>
+        <p className="t-body mt-5 max-w-[58ch] text-muted">{lead}</p>
+        <div className="mt-8">
+          <OfferCtas content={offer === "healthCheck" ? "health_check" : "health_audit"} />
         </div>
       </div>
-      <Sheet className="flex flex-col gap-6 p-6 text-ink shadow-2xl min-[641px]:p-8">
+      <Sheet className="glass-canvas ink-corners flex flex-col gap-6 p-6 text-ink min-[641px]:p-8">
         <p className="flex items-baseline gap-3">
           <span className="t-data text-[44px] leading-none tracking-[-0.03em]">{data.days}</span>
           <span className="t-small text-muted">working days</span>
@@ -72,7 +87,7 @@ export function OfferHero({ offer, lead }: { offer: FixedOffer; lead: string }) 
   );
 }
 
-/** "6–16 weeks from a go-live decision" as a window on a week scale ending at the decision. */
+/** A window of weeks on a scale ending at a decision date (e.g. "6 to 16 weeks before"). */
 export function DecisionWindow({ fromWeeks, toWeeks }: { fromWeeks: number; toWeeks: number }) {
   const scale = fromWeeks + 4;
   const at = (weeks: number) => `${((scale - weeks) / scale) * 100}%`;
@@ -274,23 +289,15 @@ export function NotList({ items }: { items: readonly string[] }) {
   );
 }
 
-/** Closing band shared with the homepage (approved E1.6 wording). */
+/** Closing band shared by the offer pages (same wording as the homepage close). */
 export function OfferClosing() {
   return (
-    <Section tone="ink">
-      <div className="flex flex-wrap items-end justify-between gap-8">
-        <h2 className="t-h2 max-w-[22ch] text-paper">Not sure what your status reports are telling you? Start with one programme.</h2>
-        <div className="flex w-full flex-col gap-3 min-[480px]:w-auto min-[480px]:flex-row min-[480px]:flex-wrap">
-          <Button href={CTA.review.href} variant="inverse" size="lg">
-            {CTA.review.label}
-          </Button>
-          <Button href={CTA.brief.href} variant="inverse-outline" size="lg">
-            {CTA.brief.label}
-          </Button>
-          <BookCallButton content="closing" variant="inverse-outline" />
-        </div>
+    <section className="dark-band atmosphere-band px-[var(--content-padding-x-mobile)] py-16 min-[641px]:px-[var(--content-padding-x)] min-[641px]:py-24">
+      <div className="mx-auto flex max-w-[var(--content-max-width)] flex-wrap items-end justify-between gap-8">
+        <h2 className="t-h2 max-w-[24ch] text-paper">Find out which of the three problems is yours.</h2>
+        <OfferCtas content="closing" inverse />
       </div>
-    </Section>
+    </section>
   );
 }
 

@@ -33,18 +33,18 @@ test("book_call in the header is nav and in the hero is the section number", asy
 });
 
 test("cta_click carries the CTA id, the page and its placement", async ({ page }) => {
-  await page.goto(base + "/", { waitUntil: "networkidle" });
-  const cta = page.locator('main [data-cta="contact-request-review"]').first();
+  await page.goto(base + "/pricing", { waitUntil: "networkidle" });
+  const cta = page.locator('main [data-cta="book_call"]').first();
   await cta.evaluate((node) => node.addEventListener("click", (event) => event.preventDefault(), { once: true }));
   await cta.click();
   expect(await events(page)).toContainEqual({
     name: "cta_click",
-    data: { id: "contact-request-review", page: "/", placement: "section-1" },
+    data: { id: "book_call", page: "/pricing", placement: "section-1" },
   });
 });
 
 test("every button-style link in main has a CTA id", async ({ page }) => {
-  for (const route of ["/", "/see-it-first", "/pricing", "/pmo-health-audit", "/go-live-readiness-uae"]) {
+  for (const route of ["/", "/see-it-first", "/pricing", "/pmo-health-audit", "/pmo-uae", "/pmo-self-check"]) {
     await page.goto(base + route);
     expect(await page.locator("main a[class*='rounded-control']:not([data-cta])").count(), route).toBe(0);
   }

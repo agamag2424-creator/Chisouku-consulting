@@ -51,3 +51,7 @@ pnpm-debug.log*
 
 .local-review/
 /test-results
+
+# Playwright
+/test-results/
+/playwright-report/

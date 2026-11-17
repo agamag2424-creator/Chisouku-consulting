@@ -2,11 +2,11 @@ import type { NextConfig } from "next";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://cloud.umami.is",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://diagnostic.chisokulabs.com",
+  "connect-src 'self' https://calendly.com https://*.calendly.com https://assets.calendly.com https://api.resend.com https://diagnostic.chisokulabs.com https://cloud.umami.is https://api-gateway.umami.dev",
   "frame-src https://calendly.com https://*.calendly.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
@@ -59,8 +59,8 @@ const nextConfig: NextConfig = {
         ["/free-pmo-diagnostic", "/see-it-first"],
         ["/diagnostic-vs-audit", "/pricing"],
         ["/pmo-reporting-automation", "/method"],
-        ["/pmo-automation-gcc", "/go-live-readiness-uae"],
-        ["/pmo-automation-singapore", "/go-live-readiness-uae"],
+        ["/pmo-automation-gcc", "/pmo-uae"],
+        ["/pmo-automation-singapore", "/pmo-uae"],
       ].map(([source, destination]) => ({ source, destination, permanent: true })),
       // Founder documents are no longer published (PRD L4, L8); old links land on the homepage.
       {
@@ -106,6 +106,25 @@ const nextConfig: NextConfig = {
       {
         source: "/readiness-evidence-check",
         destination: "/pmo-health-check",
+        statusCode: 301,
+      },
+      // Market pages moved off the retired go-live addresses; the three go-live guides are retired (Story 6.1,
+      // review decision 4). Both 301.
+      { source: "/go-live-readiness-uae", destination: "/pmo-uae", statusCode: 301 },
+      { source: "/go-live-readiness-saudi-arabia", destination: "/pmo-saudi-arabia", statusCode: 301 },
+      { source: "/guides/s4hana-go-no-go-checklist", destination: "/", statusCode: 301 },
+      { source: "/guides/is-my-erp-ready-to-go-live", destination: "/", statusCode: 301 },
+      { source: "/guides/independent-assurance-vs-si-readiness-review", destination: "/", statusCode: 301 },
+      // The old readiness check is replaced by the PMO self-check (September port PRD, Story 5.5). Query strings,
+      // including UTMs, are kept on the redirect.
+      {
+        source: "/readiness",
+        destination: "/pmo-self-check",
+        statusCode: 301,
+      },
+      {
+        source: "/readiness/:path*",
+        destination: "/pmo-self-check",
         statusCode: 301,
       },
       {

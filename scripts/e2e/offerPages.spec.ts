@@ -9,7 +9,8 @@ const pages = [
     h1: "PMO Health Check",
     list: "USD 500",
     founding: null,
-    steps: ["Scoping call and document request, plus the sponsor interview", "Evidence review and the two team interviews (45 minutes each, remote)", "Written findings and readout"],
+    steps: ["Documents arrive; the three interviews are booked", "Evidence review and the three short interviews", "Scorecard, top findings and the 30-day fix plan written", "45-minute readout"],
+    sequenceTitle: "Five working days after documents arrive",
     navLabel: "Health Check",
     content: "health_check",
   },
@@ -18,8 +19,9 @@ const pages = [
     h1: "PMO Health Audit",
     list: "USD 5,000",
     founding: "USD 2,500",
-    steps: ["Kickoff and evidence request", "Evidence review", "Targeted interviews", "Draft findings", "Sponsor readout"],
-    navLabel: "Health Audit",
+    steps: ["Kickoff and document request", "Evidence review across the portfolio", "Interviews", "Scorecard and fix plan written", "Sponsor readout"],
+    sequenceTitle: "Capped at 5 working days",
+    navLabel: "Audit",
     content: "health_audit",
   },
 ];
@@ -37,27 +39,25 @@ for (const offer of pages) {
         await expect(page.getByRole("heading", { level: 1 })).toHaveText(offer.h1);
         await expect(page.getByText(offer.list).first()).toBeVisible();
         if (offer.founding) await expect(page.getByText(offer.founding).first()).toBeVisible();
-        const sequence = page.locator("section", { has: page.getByRole("heading", { name: /^(How it runs|Timeline)$/ }) });
+        const sequence = page.locator("section", { has: page.getByRole("heading", { name: offer.sequenceTitle, exact: true }) });
         for (const step of offer.steps) await expect(sequence.getByText(step, { exact: true })).toBeVisible();
-        await expect(page.getByText("The credit is not a refund.")).toBeVisible();
+        await expect(page.getByText("credited in full against the PMO Health Audit if the Audit is signed within 60 days", { exact: false }).first()).toBeVisible();
+        expect(await page.locator("main").innerText()).not.toMatch(/refund/i);
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
         expect(overflow).toBeLessThanOrEqual(0);
       });
     }
 
-    test("books a 30-minute call beside Discuss your programme", async ({ page }) => {
+    test("hero: Book a 20-minute call, then the PMO self-check", async ({ page }) => {
       await page.goto(base + offer.path);
       const hero = page.locator("main > section").first();
-      const book = hero.getByRole("link", { name: "Book a 30-minute call" });
+      const book = hero.getByRole("link", { name: "Book a 20-minute call" });
       await expect(book).toHaveAttribute(
         "href",
         `https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=${offer.content}`,
       );
       await expect(book).toHaveAttribute("target", "_blank");
-      await expect(hero.getByRole("link", { name: "Discuss your programme" })).toHaveAttribute(
-        "href",
-        "/contact?request=review",
-      );
+      await expect(hero.getByText("Take the PMO self-check (5 minutes)")).toBeVisible();
     });
 
     test("is linked from the nav and has Service JSON-LD at the list price", async ({ page }) => {
@@ -69,7 +69,7 @@ for (const offer of pages) {
       const service = ld.map((json) => JSON.parse(json)).find((data) => data["@type"] === "Service");
       expect(service.name).toBe(offer.h1);
       expect(service.offers.price).toBe(offer.path.endsWith("check") ? 500 : 5000);
-      expect(service.areaServed).toEqual(["United Kingdom", "United Arab Emirates"]);
+      expect(service.areaServed).toEqual(["United Kingdom", "United Arab Emirates", "Saudi Arabia"]);
     });
   });
 }

@@ -6,7 +6,6 @@ const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "
 
 const presets = [
   { request: "review", checked: "Discuss a Health Check", submit: "Send" },
-  { request: "brief", checked: "Free briefing", submit: "Request a free briefing" },
   { request: "pricing", checked: "Pricing question", submit: "Ask about pricing" },
 ];
 
@@ -43,7 +42,7 @@ test("missing required fields show plain-language messages and focus the first o
 });
 
 test("keyboard-only submission reaches the server; without delivery it fails visibly with the email", async ({ page }) => {
-  await page.goto(`${base}/contact?request=brief`);
+  await page.goto(`${base}/contact?request=pricing`);
   await page.getByLabel("Name").focus();
   await page.keyboard.type("Test Person");
   await page.keyboard.press("Tab");
@@ -60,7 +59,7 @@ test("keyboard-only submission reaches the server; without delivery it fails vis
   await page.keyboard.press("Space");
   await page.keyboard.press("Tab"); // privacy link inside the label
   await page.keyboard.press("Tab"); // submit button
-  await expect(page.getByRole("button", { name: "Request a free briefing" })).toBeFocused();
+  await expect(page.getByRole("button", { name: "Ask about pricing" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("form").getByRole("alert")).toContainText("We could not send your message. Please email us at");
   await expect(page.getByText("Thanks. We'll reply within one business day.")).toHaveCount(0);
