@@ -46,7 +46,7 @@ export const siteConfig = {
     },
     healthAudit: {
       name: "PMO Health Audit",
-      navLabel: "Health Audit",
+      navLabel: "Audit",
       days: 5,
       listPrice: 5000,
       foundingPrice: 2500,
@@ -134,6 +134,8 @@ export const routeLive = {
   "/guides/is-my-erp-ready-to-go-live": true,
   "/guides/independent-assurance-vs-si-readiness-review": true,
   "/readiness": true,
+  /** Built in Epic 5 of the September port; live once the check works end to end. */
+  "/pmo-self-check": false,
 } as const;
 
 /** Live pages that stay reachable but are unlinked, noindexed and left out of the sitemap. */
@@ -197,11 +199,11 @@ export function offerPriceLabel(
   return { list: formatPrice(data.listPrice), founding };
 }
 
-/** Primary navigation. Short labels for the two offers. Nav shows only listed routes. */
+/** Primary navigation (September port PRD, Story 1.2). Nav shows only listed routes. */
 export const navLinks = [
-  { href: "/pmo-health-audit", label: "Health Audit" },
   { href: "/pmo-health-check", label: "Health Check" },
+  { href: "/pmo-health-audit", label: "Audit" },
+  { href: "/pmo-self-check", label: "Self-check" },
   { href: "/method", label: "Method" },
-  { href: "/see-it-first", label: "See it first" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
 ] as const;

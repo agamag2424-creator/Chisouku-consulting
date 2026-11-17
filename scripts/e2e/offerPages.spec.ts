@@ -19,7 +19,7 @@ const pages = [
     list: "USD 5,000",
     founding: "USD 2,500",
     steps: ["Kickoff and evidence request", "Evidence review", "Targeted interviews", "Draft findings", "Sponsor readout"],
-    navLabel: "Health Audit",
+    navLabel: "Audit",
     content: "health_audit",
   },
 ];
