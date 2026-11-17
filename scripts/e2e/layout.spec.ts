@@ -27,36 +27,17 @@ test("header and hero: Book a 30-minute call, then Discuss your programme", asyn
   await expect(heroDiscuss).toHaveAttribute("href", "/contact?request=review");
   const order = await hero.locator("a").evaluateAll((nodes) => nodes.map((node) => node.textContent?.trim()));
   expect(order.slice(0, 2)).toEqual(["Book a 30-minute call", "Discuss your programme"]);
-  const readiness = hero.getByRole("link", { name: "Take the 12-question readiness check" });
-  await expect(readiness).toHaveAttribute("href", "/readiness");
-  await expect(readiness).toHaveAttribute("data-cta-variant", "text");
+  await expect(hero.getByRole("link", { name: "Take the 12-question readiness check" })).toHaveCount(0);
   await expect(heroCall).toHaveAttribute("data-cta-variant", "inverse");
   await expect(heroDiscuss).toHaveAttribute("data-cta-variant", "inverse-outline");
 });
 
-test("hero readiness link stays inside the viewport at 390px", async ({ page }) => {
+test("hero calls stay inside the viewport at 390px", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(base + "/");
   const hero = page.locator("main > section").first();
-  const link = hero.getByRole("link", { name: "Take the 12-question readiness check" });
-  await expect(link).toBeVisible();
-  await expect(link).toHaveAttribute("href", "/readiness");
   await expect(hero.getByRole("link", { name: "Book a 30-minute call" })).toBeVisible();
   await expect(hero.getByRole("link", { name: "Discuss your programme" })).toBeVisible();
-  const lines = await link.evaluate((el) => {
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    return {
-      overflow: el.scrollWidth - el.clientWidth,
-      lines: [...range.getClientRects()].map((rect) => ({ x: rect.x, right: rect.right })),
-    };
-  });
-  expect(lines.overflow).toBeLessThanOrEqual(1);
-  expect(lines.lines.length).toBeGreaterThan(0);
-  for (const line of lines.lines) {
-    expect(line.x).toBeGreaterThanOrEqual(0);
-    expect(line.right).toBeLessThanOrEqual(390);
-  }
   expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(1);
 });
 
@@ -72,13 +53,15 @@ test("mobile menu: Book a 30-minute call opens the header Calendly link", async 
   await expect(call).toHaveAttribute("data-cta", "book_call");
 });
 
-test("footer: brand plus four link columns side by side at 1440", async ({ page }) => {
+test("footer: brand, Site, Legal and Contact, with no market or guide column", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(base + "/");
-  const headings = await page.locator("footer").getByText(/^(Site|Markets|Guides|Contact)$/).evaluateAll((nodes) =>
+  const headings = await page.locator("footer p").filter({ hasText: /^(Site|Legal|Contact)$/ }).evaluateAll((nodes) =>
     nodes.map((node) => Math.round(node.getBoundingClientRect().top)),
   );
-  expect(headings).toHaveLength(4);
+  expect(headings).toHaveLength(3);
   expect(new Set(headings).size).toBe(1);
+  await expect(page.locator("footer")).not.toContainText("Markets");
+  await expect(page.locator("footer")).not.toContainText("Guides");
   await expect(page.locator("footer")).toContainText("© 2026 ChisokuLab Private Limited. All rights reserved.");
 });

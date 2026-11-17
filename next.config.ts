@@ -42,6 +42,15 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Bare host → www. App code so Azure App Service does it (no Vercel domain setting).
+      // Host is matched exactly (port stripped). www, localhost, *.vercel.app and
+      // *.azurewebsites.net do not match. Path and query are kept. 308 is Next's permanent.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "chisokulabs\\.com" }],
+        destination: "https://www.chisokulabs.com/:path*",
+        permanent: true,
+      },
       // Old offer routes (PRD 4.2, E10.1); the pages are deleted.
       ...[
         ["/pmo-automation-audit", "/pmo-health-check"],

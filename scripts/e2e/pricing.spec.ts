@@ -1,7 +1,4 @@
-// Pricing and comparison (E5). Not part of the app build (tsconfig excludes scripts/e2e).
-//
-// Run against a local production build (see hero.spec.ts):
-//   HERO_URL=http://localhost:3100/ npx -y @playwright/test@1.56.1 test scripts/e2e
+// Pricing and comparison. Not part of the app build (tsconfig excludes scripts/e2e).
 import { expect, test } from "@playwright/test";
 
 const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
@@ -10,21 +7,26 @@ for (const viewport of [
   { width: 1440, height: 900 },
   { width: 360, height: 800 },
 ]) {
-  test(`pricing at ${viewport.width}px: prices, terms, comparison, FAQ, no horizontal scroll`, async ({ page }) => {
+  test(`pricing at ${viewport.width}px: published prices, comparison, FAQ, no horizontal scroll`, async ({ page }) => {
     await page.setViewportSize(viewport);
     expect((await page.goto(base + "/pricing"))?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pricing");
-    for (const price of ["USD 5,000", "USD 2,500", "USD 12,000", "USD 6,000", "From USD 6,000 / month", "From USD 3,000 / month"]) {
+    for (const price of ["USD 500", "USD 5,000", "USD 2,500"]) {
       await expect(page.getByText(price, { exact: true }).first()).toBeVisible();
     }
+    await expect(page.getByText("USD 12,000")).toHaveCount(0);
     await expect(page.getByText("50% on signature, 50% on delivery").first()).toBeVisible();
+    await expect(page.getByText("USD 500 in full on signature").first()).toBeVisible();
+    await expect(page.getByText("The credit is not a refund.").first()).toBeVisible();
     await expect(page.getByText("Founding-client places remaining: 3.", { exact: false }).first()).toBeVisible();
     const table = page.getByRole("table", { name: /How ChisokuLabs compares/ });
     await expect(table.locator('th[scope="row"]')).toHaveCount(6);
     await expect(page.getByText("Comparisons describe typical market practice, not specific firms.")).toBeVisible();
     await expect(page.locator("details")).toHaveCount(9);
-    await page.getByText("What if our programme is larger?").click();
-    await expect(page.getByText("Multi-entity reviews are quoted after a scoping call.", { exact: false })).toBeVisible();
+    await page.getByText("What if the portfolio is larger?").click();
+    await expect(page.locator("#larger-portfolio")).toContainText(
+      "Extra days are quoted separately at the same day rate:",
+    );
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(0);
   });
@@ -40,17 +42,18 @@ test("pricing top books a 30-minute call beside Discuss your programme", async (
     "https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=pricing",
   );
   await expect(book).toHaveAttribute("rel", "noopener noreferrer");
-  await expect(hero.getByRole("link", { name: "Request a free readiness brief" })).toHaveAttribute(
+  await expect(hero.getByRole("link", { name: "Request a free briefing" })).toHaveAttribute(
     "href",
     "/contact?request=brief",
   );
 });
 
-test("homepage shows the compact comparison (4 rows) and links to pricing", async ({ page }) => {
+test("homepage comparison uses the PMO columns and links to pricing", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(base + "/", { waitUntil: "networkidle" });
   const table = page.getByRole("table", { name: /How ChisokuLabs compares/ });
   await expect(table.locator('th[scope="row"]')).toHaveCount(4);
+  await expect(table.getByText("Every critical claim, HEALTH-5")).toBeVisible();
   await page.getByRole("main").getByRole("link", { name: "Pricing", exact: true }).click();
   await expect(page).toHaveURL(base + "/pricing");
 });

@@ -5,8 +5,8 @@ import { expect, test } from "@playwright/test";
 const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
 
 const presets = [
-  { request: "review", checked: "Discuss a review", submit: "Send" },
-  { request: "brief", checked: "Free readiness brief", submit: "Request my readiness brief" },
+  { request: "review", checked: "Discuss a Health Check", submit: "Send" },
+  { request: "brief", checked: "Free briefing", submit: "Request a free briefing" },
   { request: "pricing", checked: "Pricing question", submit: "Ask about pricing" },
 ];
 
@@ -60,7 +60,7 @@ test("keyboard-only submission reaches the server; without delivery it fails vis
   await page.keyboard.press("Space");
   await page.keyboard.press("Tab"); // privacy link inside the label
   await page.keyboard.press("Tab"); // submit button
-  await expect(page.getByRole("button", { name: "Request my readiness brief" })).toBeFocused();
+  await expect(page.getByRole("button", { name: "Request a free briefing" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("form").getByRole("alert")).toContainText("We could not send your message. Please email us at");
   await expect(page.getByText("Thanks. We'll reply within one business day.")).toHaveCount(0);
@@ -91,7 +91,7 @@ test("submitting without the consent tick shows an inline error and sends nothin
   await page.getByLabel("Name").fill("Test Person");
   await page.getByLabel("Work email").fill("test@example.com");
   await page.getByLabel("Company").fill("Acme");
-  await page.getByLabel("Country").selectOption("UAE");
+  await page.getByLabel("Country").selectOption("United Kingdom");
   await page.getByRole("button", { name: "Send" }).click();
   const error = page.locator("#pf-consent-error");
   await expect(error).toHaveText("Tick the box to agree before sending.");

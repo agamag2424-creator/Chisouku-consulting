@@ -10,7 +10,7 @@ test("independence-and-data: the full page renders", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Independence and data handling");
   for (const id of ["independence", "data-handling", "ai-use"]) await expect(page.locator(`#${id}`)).toBeVisible();
   await expect(page.getByText("Deleted within 30 days of the final readout unless you ask us to keep it")).toBeVisible();
-  await expect(page.getByText(/^Last updated: /)).toBeVisible();
+  await expect(page.getByText("Last updated: 17 November 2026")).toBeVisible();
   // No certification claims (PRD 8.6).
   const body = await page.locator("main").innerText();
   expect(body).not.toMatch(/SOC 2|ISO 27001|ISO\/IEC|certified|certification/i);

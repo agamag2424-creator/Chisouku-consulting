@@ -13,19 +13,20 @@ for (const viewport of [
   test.describe(viewport.name, () => {
     test.use({ viewport: { width: viewport.width, height: viewport.height } });
 
-    test("shows READINESS-5 with sample-pack examples and no old method", async ({ page }) => {
+    test("shows HEALTH-5 with the fictional programme and no old method", async ({ page }) => {
       const response = await page.goto(url);
       expect(response?.status()).toBe(200);
-      await expect(page.getByRole("heading", { level: 1 })).toHaveText("READINESS-5: how we test a go-live claim");
+      await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+        "Every critical status claim tested for Status, Owner, Evidence, Date and Action (HEALTH-5), then cross-checked between reports and forums.",
+      );
       for (const name of ["Status", "Owner", "Evidence", "Date", "Action"]) {
         await expect(page.getByRole("heading", { level: 3, name, exact: true })).toBeVisible();
       }
       await expect(page.getByText("What failure looks like").filter({ visible: true })).toHaveCount(5);
       // Register (10 claims), contradiction types (4) and conditions (3), whichever layout is visible.
-      await expect(page.getByText("SAR 2.1M unresolved", { exact: false }).filter({ visible: true }).first()).toBeVisible();
-      await expect(page.getByText("Pass rate on reduced scope").filter({ visible: true })).toHaveCount(1);
-      await expect(page.getByText("Headline status not traceable to workstream status").filter({ visible: true })).toHaveCount(1);
-      for (const by of ["D-10", "D-14", "D-7"]) {
+      await expect(page.getByText("14 open actions", { exact: false }).filter({ visible: true }).first()).toBeVisible();
+      await expect(page.getByText("Forum met without deciding").filter({ visible: true })).toHaveCount(1);
+      for (const by of ["10 working days", "15 working days", "20 working days"]) {
         await expect(page.getByText(by, { exact: true }).filter({ visible: true })).toHaveCount(1);
       }
       // E3.2 claim-flow diagram: one accessible SVG visible per width, with title and description.
@@ -33,7 +34,7 @@ for (const viewport of [
       await expect(flow).toHaveCount(1);
       await expect(flow).toHaveAccessibleDescription(/3 of 5 evidenced/);
       const body = await page.locator("main").innerText();
-      for (const old of ["Assess", "Architect", "Activate", "Accelerate", "AI Impact Model", "PMO"]) {
+      for (const old of ["Assess", "Architect", "Activate", "Accelerate", "AI Impact Model", "READINESS-5"]) {
         expect(body).not.toContain(old);
       }
       await expect(page.getByRole("heading", { level: 2, name: "How we use AI, safely" })).toBeVisible();
