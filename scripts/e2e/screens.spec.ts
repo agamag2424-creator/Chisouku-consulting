@@ -1,5 +1,7 @@
 // Screenshot tests for the September design (PRD Epic 1, review decision 5). Production build only.
-// Update after an intended design change: npm run test:e2e -- screens --update-snapshots
+// The reference images come from the CI machine (GitHub's Ubuntu runner): text wraps a few pixels differently on
+// other machines, so locally these run only with SCREENSHOTS=1. After an intended design change, take the
+// "actual" images from the failed CI run's playwright-report artifact as the new references.
 import { expect, test } from "@playwright/test";
 
 const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
@@ -14,6 +16,7 @@ const shots = [
 
 test.describe("screens", () => {
   test.skip(preview, "Screenshots are taken from the production build.");
+  test.skip(!process.env.CI && !process.env.SCREENSHOTS, "Reference images are from CI; set SCREENSHOTS=1 to run locally.");
   for (const shot of shots) {
     test(shot.name, async ({ page }) => {
       await page.setViewportSize({ width: shot.width, height: 900 });

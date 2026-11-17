@@ -54,7 +54,7 @@ the leak scan, Playwright (with screenshot tests) and the preview-only diagram p
 ```bash
 npm run build && npx next start -p 3100 &
 npm run scan                 # every live page, llms.txt and llms-full.txt: retired terms, em dashes, claims
-npm run test:e2e             # Playwright; add -- screens --update-snapshots after an intended design change
+npm run test:e2e             # Playwright; screenshot references come from CI (see scripts/e2e/screens.spec.ts)
 OG_URL=http://localhost:3100 node scripts/makeOgImages.mjs   # share images, from a preview build (/_ui/og)
 ```
 
