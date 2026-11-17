@@ -43,12 +43,12 @@ test("JSON-LD for a script tag escapes '<' so it cannot close the tag", async ()
   assert.deepEqual(JSON.parse(out), { name: "</script><script>alert(1)</script>" });
 });
 
-test("the readiness check is on in production", () => {
-  assert.equal(siteConfig.selfCheck.live, true);
-  assert.equal(routeLive["/readiness"], true);
-  assert.equal(isRouteLive("/readiness"), true);
-  assert.equal(routeRenders("/readiness", { NODE_ENV: "production", VERCEL_ENV: "production" }), true);
-  assert.equal(routeRenders("/readiness", { NODE_ENV: "production" }), true);
+test("the PMO self-check is live and listed; /readiness is a redirect, not a route", () => {
+  assert.equal(routeLive["/pmo-self-check"], true);
+  assert.equal(routeLive["/pmo-self-check/methodology"], true);
+  assert.equal(isRouteLive("/pmo-self-check?utm_source=email"), true);
+  assert.equal(routeRenders("/pmo-self-check", { NODE_ENV: "production" }), true);
+  assert.equal("/readiness" in routeLive, false);
 });
 
 test("a route that is not live renders only in development and on previews (fails closed)", () => {

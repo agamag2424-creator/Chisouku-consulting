@@ -8,16 +8,18 @@ type Props = {
   flagged?: readonly string[];
   /** Replaces "Overall band" in the centre, e.g. the band name on a result. */
   centreTitle?: string;
+  /** Drawing above the list at every width, for narrow columns such as the self-check result. */
+  stacked?: boolean;
 };
 
 const R = 150;
 
 /** The self-check's ten dimensions around the overall band (September "Diagnostic orbit", relabelled). */
-export function DimensionOrbit({ className, flagged = [], centreTitle }: Props) {
+export function DimensionOrbit({ className, flagged = [], centreTitle, stacked = false }: Props) {
   return (
     <figure className={cn("glass-canvas paper-grain ink-corners relative overflow-hidden p-5 md:p-6", className)}>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,166,200,0.12),transparent_58%)]" aria-hidden />
-      <div className="relative z-10 grid items-center gap-6 min-[900px]:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+      <div className={cn("relative z-10 grid items-center gap-6", !stacked && "min-[900px]:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]")}>
         <svg viewBox="0 0 420 420" className="mx-auto h-auto w-full max-w-[380px]" role="img" aria-label={dimensionOrbit.alt}>
           <circle cx="210" cy="210" r="182" fill="none" stroke="rgba(17,24,32,0.08)" />
           <g className="orbit-ring-slow">
@@ -49,7 +51,7 @@ export function DimensionOrbit({ className, flagged = [], centreTitle }: Props) 
         </svg>
         <figcaption>
           <p className="eyebrow">{dimensionOrbit.caption}</p>
-          <ol className="grid gap-x-4 gap-y-1.5 text-[15px] text-ink min-[480px]:grid-cols-2 min-[900px]:grid-cols-1">
+          <ol className={cn("grid gap-x-4 gap-y-1.5 text-[15px] text-ink min-[480px]:grid-cols-2", !stacked && "min-[900px]:grid-cols-1")}>
             {dimensions.map((d) => (
               <li key={d.id} className="flex gap-2">
                 <span className="w-4 shrink-0 font-[family-name:var(--font-mono)] text-[13px] font-bold text-teal">{d.id}</span>

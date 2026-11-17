@@ -19,10 +19,11 @@ const listed = [
   "/terms",
   "/refund-policy",
   "/shipping-policy",
+  "/pmo-self-check",
+  "/pmo-self-check/methodology",
 ];
 
 const unlisted = [
-  "/readiness",
   "/go-live-readiness-uae",
   "/go-live-readiness-saudi-arabia",
   "/guides/s4hana-go-no-go-checklist",

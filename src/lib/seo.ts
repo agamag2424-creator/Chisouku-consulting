@@ -118,9 +118,15 @@ export const routeSeo = {
     title: "Glossary",
     description: "PMO health terms: status evidence, RAID log, governance, HEALTH-5 and the Project Health Scorecard.",
   },
-  "/readiness": {
-    title: "Go-live readiness check",
-    description: "Your programme reports Green. These 12 questions test whether the evidence agrees.",
+  "/pmo-self-check": {
+    title: "PMO self-check: score your PMO on ten dimensions in five minutes",
+    description:
+      "A free, five-minute PMO self-check on the ten dimensions of the PMO Health Scorecard. Computed in your browser; nothing is sent.",
+  },
+  "/pmo-self-check/methodology": {
+    title: "PMO self-check methodology note",
+    description:
+      "How the PMO self-check was built and scored, the public material it is informed by, and why it is not an accredited assessment.",
   },
 } as const satisfies Record<string, { title: string; description: string; image?: string }>;
 

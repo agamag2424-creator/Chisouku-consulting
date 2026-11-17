@@ -1070,3 +1070,18 @@ footer :focus-visible,
     stroke-dashoffset: 0;
   }
 }
+
+/* Self-check result: print or save as PDF with the browser (PRD Story 5.3). */
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  .site-main {
+    padding-top: 0 !important;
+  }
+  body {
+    background: #fff;
+  }
+}

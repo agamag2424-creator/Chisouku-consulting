@@ -82,7 +82,7 @@ export const extraDaysSentence = `The Audit is capped at ${siteConfig.offers.hea
 export type CalendlyContent =
   | "header"
   | "hero"
-  | "readiness_result"
+  | "self_check_result"
   | "pricing"
   | "health_check"
   | "health_audit"
@@ -132,14 +132,12 @@ export const routeLive = {
   "/guides/s4hana-go-no-go-checklist": true,
   "/guides/is-my-erp-ready-to-go-live": true,
   "/guides/independent-assurance-vs-si-readiness-review": true,
-  "/readiness": true,
-  /** Built in Epic 5 of the September port; live once the check works end to end. */
-  "/pmo-self-check": false,
+  "/pmo-self-check": true,
+  "/pmo-self-check/methodology": true,
 } as const;
 
 /** Live pages that stay reachable but are unlinked, noindexed and left out of the sitemap. */
 export const routeUnlisted = {
-  "/readiness": true,
   "/go-live-readiness-uae": true,
   "/go-live-readiness-saudi-arabia": true,
   "/guides/s4hana-go-no-go-checklist": true,

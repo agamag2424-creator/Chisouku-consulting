@@ -108,6 +108,18 @@ const nextConfig: NextConfig = {
         destination: "/pmo-health-check",
         statusCode: 301,
       },
+      // The old readiness check is replaced by the PMO self-check (September port PRD, Story 5.5). Query strings,
+      // including UTMs, are kept on the redirect.
+      {
+        source: "/readiness",
+        destination: "/pmo-self-check",
+        statusCode: 301,
+      },
+      {
+        source: "/readiness/:path*",
+        destination: "/pmo-self-check",
+        statusCode: 301,
+      },
       {
         source: "/founder-track-record",
         destination: "/method",

@@ -18,7 +18,15 @@ const redirects: [string, string, number][] = [
   ["/aeva", "/method", 308],
   ["/go-live-decision-review", "/pmo-health-audit", 301],
   ["/readiness-evidence-check", "/pmo-health-check", 301],
+  ["/readiness", "/pmo-self-check", 301],
+  ["/readiness/extra", "/pmo-self-check", 301],
 ];
+
+test("/readiness keeps the UTMs on the way to /pmo-self-check", async ({ request }) => {
+  const response = await request.get(base + "/readiness?utm_source=linkedin&utm_medium=email&utm_campaign=ep02", { maxRedirects: 0 });
+  expect(response.status()).toBe(301);
+  expect(response.headers()["location"]).toBe("/pmo-self-check?utm_source=linkedin&utm_medium=email&utm_campaign=ep02");
+});
 
 for (const [from, to, status] of redirects) {
   test(`${from} → ${status} ${to}`, async ({ request }) => {
