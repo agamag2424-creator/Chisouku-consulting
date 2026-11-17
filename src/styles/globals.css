@@ -925,7 +925,7 @@ footer :focus-visible,
   border-bottom: 0;
 }
 
-.drag-slider {
+.cost-slider {
   appearance: none;
   height: 6px;
   border-radius: 999px;
@@ -934,7 +934,7 @@ footer :focus-visible,
   cursor: pointer;
 }
 
-.drag-slider::-webkit-slider-thumb {
+.cost-slider::-webkit-slider-thumb {
   appearance: none;
   width: 18px;
   height: 18px;
@@ -945,7 +945,7 @@ footer :focus-visible,
   cursor: pointer;
 }
 
-.drag-slider::-moz-range-thumb {
+.cost-slider::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;

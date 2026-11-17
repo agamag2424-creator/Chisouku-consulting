@@ -8,8 +8,10 @@ import { join, relative } from "node:path";
 
 const root = new URL("..", import.meta.url).pathname;
 
+// September port PRD (17 Nov 2026): "What your PMO reporting costs today" is the calculator heading, and Yamaha,
+// Etihad, HCLTech and Coforge are named as employers (never clients) in the background line, so they are no longer
+// forbidden here. scripts/scanSite.mjs checks the new retired terms.
 export const forbidden = [
-  "PMO reporting",
   "drag",
   "Automation Audit",
   "Singapore",
@@ -18,14 +20,11 @@ export const forbidden = [
   "DeliveryPulse",
   "Kaname",
   "AEVA",
-  "Yamaha",
-  "Etihad",
   "Dubai Airports",
   "Shawbrook",
   "Sun Life",
   "Siemens",
   "Nagarro",
-  "Coforge",
   "Quinnox",
   "Solutionara",
   "Agrawwal",

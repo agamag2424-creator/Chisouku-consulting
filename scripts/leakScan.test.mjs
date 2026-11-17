@@ -4,7 +4,10 @@ import { test } from "node:test";
 import { scan } from "./leak-scan.mjs";
 
 test("finds forbidden terms whole-word and case-insensitively, including inside URLs and hyphenated names", () => {
-  assert.deepEqual(scan("Our PMO Reporting pack").map((hit) => hit.term), ["PMO Reporting"]);
+  assert.deepEqual(scan("Our Automation Audit pack").map((hit) => hit.term), ["Automation Audit"]);
+  // Allowed since the September port PRD: the calculator heading and the employer names in the background line.
+  assert.equal(scan("What your PMO reporting costs today").length, 0);
+  assert.equal(scan("Employed at Yamaha, Etihad, HCLTech and Coforge.").length, 0);
   assert.deepEqual(scan("https://example.com/agam-agrawwal-cv").map((hit) => hit.term.toLowerCase()), ["agam", "agrawwal"]);
   assert.deepEqual(scan("https://calendly.com/agam-agrawwal").map((hit) => hit.term.toLowerCase()), ["agam", "agrawwal"]);
   assert.equal(scan("https://calendly.com/chisokulabs/discovery-call").length, 0);

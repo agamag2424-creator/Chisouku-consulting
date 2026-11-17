@@ -22,7 +22,7 @@ const fields: { key: Field; label: string; unit: (c: Currency) => string }[] = [
 ];
 
 /**
- * "What your PMO reporting costs today" (September "Estimate your reporting drag", Story 3.1). Everything is computed
+ * "What your PMO reporting costs today" (the September reporting-cost calculator, Story 3.1). Everything is computed
  * in the browser and nothing is sent; `calculator_used` fires once, with no values.
  */
 export function ReportingCostCalculator({ className }: { className?: string }) {
@@ -128,7 +128,7 @@ export function ReportingCostCalculator({ className }: { className?: string }) {
                   <input
                     id={inputId}
                     type="range"
-                    className="drag-slider w-full"
+                    className="cost-slider w-full"
                     min={limits.min}
                     max={limits.max}
                     step={limits.step}

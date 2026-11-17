@@ -4,7 +4,7 @@ import { Button } from "../ui/Button";
 import { Section } from "../ui/Section";
 
 // Background line from the source-of-truth table: "11+ years in programme delivery", employers never named as clients.
-// No photo or credentials (none are named unless Agam provides them). Hidden when siteConfig.principalBlock is false.
+// No photo or credentials (none are named unless the founder provides them). Hidden when siteConfig.principalBlock is false.
 const paragraph = `Every Health Check and Audit is carried out and signed by the founder. ${backgroundLine}`;
 
 /** "Who does the work", shared by the homepage and the offer pages. */

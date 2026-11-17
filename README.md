@@ -46,6 +46,21 @@ Completion storage is off until the PMO self-check ships. `POST /api/readiness-c
 write. The browser does not post. Table `readiness_completions` and its existing rows stay as they are. The schema is
 `db/migrations/001_paid_funnel.sql` (already applied). Do not drop or migrate that table to turn storage off.
 
+## Checks
+
+`.github/workflows/ci.yml` runs on every pull request: type check, lint, unit tests, production build, the site scan,
+the leak scan, Playwright (with screenshot tests) and the preview-only diagram page.
+
+```bash
+npm run build && npx next start -p 3100 &
+npm run scan                 # every live page, llms.txt and llms-full.txt: retired terms, em dashes, claims
+npm run test:e2e             # Playwright; add -- screens --update-snapshots after an intended design change
+OG_URL=http://localhost:3100 node scripts/makeOgImages.mjs   # share images, from a preview build (/_ui/og)
+```
+
+Analytics: Umami Cloud loads in production once `siteConfig.umamiWebsiteId` is set; Vercel Analytics covers previews.
+Events never carry what a visitor typed or answered.
+
 ## Content model
 
 - **`src/lib/siteConfig.ts`** is the single source for offers, prices, the founding rate and places remaining, the fee

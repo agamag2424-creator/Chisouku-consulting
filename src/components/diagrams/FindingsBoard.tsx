@@ -3,7 +3,7 @@ import { cn } from "../../lib/utils";
 
 type Props = { className?: string };
 
-/** "What we usually find" (September "Operating drag board", relabelled): the three problems first, then five signals. */
+/** "What we usually find" (the September signals board, relabelled): the three problems first, then five signals. */
 export function FindingsBoard({ className }: Props) {
   return (
     <figure className={cn("report-board paper-grain ink-corners", className)} aria-label={findingsBoard.alt}>

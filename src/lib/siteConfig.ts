@@ -60,6 +60,11 @@ export const siteConfig = {
   feeCreditDays: 60,
   foundingSlotsRemaining: 3,
   principalBlock: true,
+  /**
+   * Umami Cloud website ID (public; it appears in the page source anyway). Empty means no Umami script loads.
+   * Set it to the ID from cloud.umami.is (Settings, Websites) to switch analytics on in production.
+   */
+  umamiWebsiteId: "",
 } as const;
 
 /** The approved credit (source-of-truth table). The Health Check fee is never described as refundable. */

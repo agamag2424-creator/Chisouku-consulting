@@ -103,3 +103,16 @@ jobs:
           }
           expect_build /independence-and-data "17 November 2026" "17 October 2026|Readiness Evidence Check|Go-Live Decision Review"
           expect_build /pricing "PMO Health Check" "Readiness Evidence Check|Go-Live Decision Review|Continuous readiness|readiness brief"
+          expect_build /pmo-self-check "PMO self-check" "noindex"
+          # Redirects that must keep working (September port PRD, Story 7.2).
+          expect_redirect() {
+            target="$1"
+            status="$2"
+            location="$3"
+            got=$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' "$target")
+            echo "$target: $got"
+            [ "$got" = "$status $location" ] || { echo "Expected $status $location"; exit 1; }
+          }
+          expect_redirect "$url/go-live-decision-review" 301 "$url/pmo-health-audit"
+          expect_redirect "$url/readiness?utm_source=smoke&utm_campaign=deploy" 301 "$url/pmo-self-check?utm_source=smoke&utm_campaign=deploy"
+          expect_redirect "https://chisokulabs.com/" 308 "https://www.chisokulabs.com/"

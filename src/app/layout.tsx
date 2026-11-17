@@ -10,6 +10,7 @@ import { siteConfig } from "../lib/siteConfig";
 import { Analytics } from "@vercel/analytics/next";
 import { CtaTracker } from "../components/analytics/CtaTracker";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 
 // September 2026 type: Libre Franklin for headings, Source Sans 3 for text, IBM Plex Mono for labels and data.
 const libreFranklin = Libre_Franklin({
@@ -88,6 +89,10 @@ export default function RootLayout({
         </div>
         {/* The old-offer Service JSON-LD is gone; E8.4 adds Service and Offer blocks for the new offers. */}
         <Analytics />
+        {siteConfig.umamiWebsiteId && process.env.NODE_ENV === "production" && process.env.VERCEL_ENV !== "preview" && (
+          // Umami Cloud: cookieless page views and the events in lib/track.ts. Loads only when an ID is set.
+          <Script src="https://cloud.umami.is/script.js" data-website-id={siteConfig.umamiWebsiteId} strategy="afterInteractive" />
+        )}
         <CtaTracker />
         <SpeedInsights />
       </body>
