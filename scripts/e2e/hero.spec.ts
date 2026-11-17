@@ -6,8 +6,7 @@
 import { expect, test } from "@playwright/test";
 
 const url = process.env.HERO_URL ?? "http://localhost:3100/";
-const scores = ["3 of 5 evidenced", "2 of 5 evidenced", "0 of 5 evidenced"];
-const contradiction = "The 98% excludes 3 interfaces never tested end to end.";
+const contradiction = "The RAID log shows 14 open actions, 9 of them past their due date, while the status pack reports Green.";
 const summary = "Check complete: 1 of 3 claims has most of its evidence; 1 contradiction found";
 
 const visible = <T extends { filter: (o: { visible: boolean }) => T }>(locator: T) => locator.filter({ visible: true });
@@ -33,11 +32,12 @@ for (const viewport of [
       // The move happens on its own and ends in the PRD 7 evidenced state.
       await expect(hero).toHaveAttribute("data-view", "evidenced", { timeout: 4000 });
       await expect(asEvidenced).toHaveAttribute("aria-pressed", "true");
-      for (const score of scores) await expect(visible(hero.getByText(score))).toHaveCount(1);
+      await expect(visible(hero.getByText("3 of 5 evidenced"))).toHaveCount(1);
+      await expect(visible(hero.getByText("2 of 5 evidenced"))).toHaveCount(2);
       await expect(visible(hero.getByText(contradiction))).toHaveCount(1);
       expect(await visible(hero.getByText(/^(Reported: )?Green$/)).count()).toBe(0);
       await expect(hero.getByRole("status")).toHaveText(summary);
-      await expect(visible(hero.getByText("T1 SIT complete, 98% pass rate: what the evidence shows"))).toBeVisible();
+      await expect(visible(hero.getByText("T1 RAID log acted on: what the evidence shows"))).toBeVisible();
 
       // It does not move again.
       await page.waitForTimeout(2500);
@@ -55,10 +55,10 @@ for (const viewport of [
       await expect(visible(hero.getByText(/^(Reported: )?Green$/))).toHaveCount(3);
 
       // Picking a claim opens the evidenced view on that claim.
-      await visible(hero.getByRole("button", { name: "Rollback plan in place" })).click();
+      await visible(hero.getByRole("button", { name: "Governance forum decides" })).click();
       await expect(hero).toHaveAttribute("data-view", "evidenced");
-      await expect(visible(hero.getByText("C2 Rollback plan in place: what the evidence shows"))).toBeVisible();
-      await expect(visible(hero.getByRole("button", { name: "Rollback plan in place" }))).toHaveAttribute(
+      await expect(visible(hero.getByText("C2 Governance forum decides: what the evidence shows"))).toBeVisible();
+      await expect(visible(hero.getByRole("button", { name: "Governance forum decides" }))).toHaveAttribute(
         "aria-pressed",
         "true",
       );
@@ -74,7 +74,8 @@ test.describe("reduced motion", () => {
     const hero = page.locator(".ec").first();
     // CSS shows the evidenced view before hydration ("auto" under reduced motion).
     await expect(hero).toHaveAttribute("data-view", /auto|evidenced/);
-    for (const score of scores) await expect(visible(hero.getByText(score))).toHaveCount(1);
+    await expect(visible(hero.getByText("3 of 5 evidenced"))).toHaveCount(1);
+    await expect(visible(hero.getByText("2 of 5 evidenced"))).toHaveCount(2);
     await expect(visible(hero.getByText(contradiction))).toHaveCount(1);
     expect(await visible(hero.getByText(/^(Reported: )?Green$/)).count()).toBe(0);
     // After hydration the buttons agree and the switch still works.
@@ -91,7 +92,7 @@ test.describe("without JavaScript", () => {
     await page.goto(url);
     const table = page.locator(".ec table").first();
     await expect(table).toBeVisible();
-    await expect(table.getByText("SIT complete, 98% pass rate")).toBeVisible();
+    await expect(table.getByText("RAID log acted on")).toBeVisible();
     await expect(visible(table.getByText("Green", { exact: true }))).toHaveCount(3);
   });
 });

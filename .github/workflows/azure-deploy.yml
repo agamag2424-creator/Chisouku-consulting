@@ -37,7 +37,11 @@ jobs:
       - run: npm ci
 
       - name: Build
-        run: npm run build
+        # Turbopack fails in GitHub Actions while rewriting next/font Google CSS
+        # (ibm_plex_sans: "queries have exactly one entry"). Webpack downloads the
+        # same fonts and produces the standalone server Azure deploys. Vercel keeps
+        # its own build and is unaffected.
+        run: npx next build --webpack
         env:
           GOOGLE_SITE_VERIFICATION: sFP9aPJdlXb8tevdRl8QQsNKjQzTdYV5U7DdwHA8g1k
 

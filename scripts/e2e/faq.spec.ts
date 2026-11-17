@@ -22,7 +22,8 @@ test("faq: 13 questions, FAQPage JSON-LD from the same items, no old-offer terms
   }
 
   const html = await page.content();
-  expect(html).not.toMatch(/PMO|Diagnostic|Automation Audit|pack cycle|reporting drag/i);
+  expect(html).toMatch(/PMO Health Audit/);
+  expect(html).not.toMatch(/Diagnostic|Automation Audit|pack cycle|reporting drag|READINESS-5/i);
 });
 
 test("faq: an answer opens and its link works", async ({ page }) => {

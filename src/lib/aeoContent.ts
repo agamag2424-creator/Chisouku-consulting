@@ -132,7 +132,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     id: "pmo-health-audit",
     term: "PMO Health Audit",
     definition:
-      "A fixed-price audit of how a programme or portfolio is governed, reported and run, capped at 5 working days. List price USD 5,000. Founding-client rate USD 2,500. Extra days are quoted separately at the same day rate. The score is Healthy, Needs attention or At risk, with a 30-day fix plan.",
+      "A fixed-price audit of how a programme or portfolio is governed, reported and run, capped at 5 working days, at a list price of USD 5,000 or a founding-client rate of USD 2,500. Extra days are quoted separately at the same day rate. The score is Healthy, Needs attention or At risk, with a 30-day fix plan.",
     related: { href: healthAudit.path, label: healthAudit.name },
   },
   {

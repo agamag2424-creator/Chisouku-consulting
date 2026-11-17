@@ -13,7 +13,7 @@ import { routeRenders, siteConfig } from "../../lib/siteConfig";
 // live; until then the page renders only on previews and in development, and is a 404 in production.
 const path = "/independence-and-data";
 const title = "Independence and data handling";
-const lastUpdated = "17 October 2026";
+const lastUpdated = "17 November 2026";
 
 const renders = routeRenders(path);
 

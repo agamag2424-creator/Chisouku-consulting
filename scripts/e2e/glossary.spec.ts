@@ -8,7 +8,7 @@ test("glossary: at least 15 terms, each reachable by #slug, DefinedTermSet JSON-
   expect(response?.status()).toBe(200);
   const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) => JSON.parse(text));
   const set = ld.find((data) => data["@type"] === "DefinedTermSet");
-  expect(set.hasDefinedTerm.length).toBeGreaterThanOrEqual(15);
+  expect(set.hasDefinedTerm.length).toBe(11);
 
   for (const term of set.hasDefinedTerm) {
     expect(term["@type"]).toBe("DefinedTerm");
@@ -19,9 +19,10 @@ test("glossary: at least 15 terms, each reachable by #slug, DefinedTermSet JSON-
     expect(sentences).toBeLessThanOrEqual(3);
   }
 
-  await page.goto(base + "/glossary#rollback-point");
-  await expect(page.locator("#rollback-point")).toBeInViewport();
+  await page.goto(base + "/glossary#health-5");
+  await expect(page.locator("#health-5")).toBeInViewport();
 
   const html = await page.content();
-  expect(html).not.toMatch(/PMO|pack cycle|reporting drag|AI Impact Model/i);
+  expect(html).toMatch(/HEALTH-5/);
+  expect(html).not.toMatch(/pack cycle|reporting drag|AI Impact Model|READINESS-5/i);
 });

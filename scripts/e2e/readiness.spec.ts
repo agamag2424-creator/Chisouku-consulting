@@ -163,14 +163,14 @@ test("desktop shows one area, two questions, on the first step", async ({ page }
   expect(completed).toEqual([{ name: "readiness_complete", data: { band: "Ready to evidence", weakest_area: "none" } }]);
 });
 
-test("a production-like build returns 200, allows indexing, and lists /readiness in the sitemap", async ({ request }) => {
+test("a production-like build returns 200, noindexes /readiness, and leaves it out of the sitemap", async ({ request }) => {
   const response = await request.get(base + "/readiness");
   expect(response.status()).toBe(200);
   const html = await response.text();
-  expect(html).not.toMatch(/noindex/);
+  expect(html).toMatch(/noindex/);
   expect(html).toContain("Go-live readiness check");
   expect(html).toMatch(/<link rel="canonical" href="https:\/\/www\.chisokulabs\.com\/readiness"/);
   const xml = await (await request.get(base + "/sitemap.xml")).text();
   const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
-  expect(urls.some((url) => url.endsWith("/readiness"))).toBe(true);
+  expect(urls.some((url) => url.endsWith("/readiness"))).toBe(false);
 });

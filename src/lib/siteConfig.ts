@@ -27,10 +27,8 @@ export const siteConfig = {
   footerTagline:
     "A fixed-price, independent check of how one programme or portfolio is governed, reported and run. UK first; the UAE by arrangement.",
   markets: { primary: "United Kingdom", secondary: "United Arab Emirates" },
-  /** Homepage strip. Not a vendor list. Market pages keep their own platform copy. */
+  /** Homepage strip. Not a vendor list. */
   homeStrip: ["Governance", "RAID", "Reporting", "Cadence", "Portfolio"],
-  /** Still read by the unlisted market pages, which are not rewritten in this pass. */
-  platforms: ["SAP S/4HANA", "Oracle Fusion", "Microsoft Dynamics 365", "Salesforce", "Workday"],
   currency: "USD",
   offers: {
     healthCheck: {

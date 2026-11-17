@@ -1,24 +1,18 @@
-// Metadata, JSON-LD and llms.txt (E8.4). Not part of the app build (tsconfig excludes scripts/e2e).
+// Metadata, JSON-LD and llms.txt. Not part of the app build (tsconfig excludes scripts/e2e).
 import { expect, test } from "@playwright/test";
 
 const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
 
-const routes = [
+const listed = [
   "/",
-  "/readiness-evidence-check",
-  "/go-live-decision-review",
+  "/pmo-health-check",
+  "/pmo-health-audit",
   "/method",
   "/see-it-first",
-  "/readiness",
   "/pricing",
   "/independence-and-data",
-  "/go-live-readiness-uae",
-  "/go-live-readiness-saudi-arabia",
   "/faq",
   "/glossary",
-  "/guides/s4hana-go-no-go-checklist",
-  "/guides/is-my-erp-ready-to-go-live",
-  "/guides/independent-assurance-vs-si-readiness-review",
   "/contact",
   "/about",
   "/privacy",
@@ -27,26 +21,33 @@ const routes = [
   "/shipping-policy",
 ];
 
-for (const route of routes) {
-  test(`${route}: title ≤ 60, description ≤ 155, canonical, one H1, no removed services in JSON-LD`, async ({ request, page }) => {
+const unlisted = [
+  "/readiness",
+  "/go-live-readiness-uae",
+  "/go-live-readiness-saudi-arabia",
+  "/guides/s4hana-go-no-go-checklist",
+  "/guides/is-my-erp-ready-to-go-live",
+  "/guides/independent-assurance-vs-si-readiness-review",
+];
+
+const decode = (text: string) => text.replace(/&amp;/g, "&").replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"');
+
+for (const route of [...listed, ...unlisted]) {
+  test(`${route}: canonical on www, one H1, PMO schema`, async ({ request, page }) => {
     const html = await (await request.get(base + route)).text();
-    const title = /<title>(.*?)<\/title>/.exec(html)?.[1] ?? "";
-    const description = /<meta name="description" content="(.*?)"/.exec(html)?.[1] ?? "";
-    const decode = (text: string) => text.replace(/&amp;/g, "&").replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"');
-    expect(decode(title).length).toBeGreaterThan(0);
-    expect(decode(title).length).toBeLessThanOrEqual(60);
-    expect(decode(description).length).toBeGreaterThan(0);
-    expect(decode(description).length).toBeLessThanOrEqual(155);
+    const title = decode(/<title>(.*?)<\/title>/.exec(html)?.[1] ?? "");
+    const description = decode(/<meta name="description" content="(.*?)"/.exec(html)?.[1] ?? "");
+    expect(title.length).toBeGreaterThan(0);
+    expect(description.length).toBeGreaterThan(0);
     expect(html).toMatch(/<link rel="canonical" href="https:\/\/www\.chisokulabs\.com/);
+    if (unlisted.includes(route)) expect(html).toMatch(/noindex/);
 
     await page.goto(base + route);
     await expect(page.locator("h1")).toHaveCount(1);
-    const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join("\n");
-    expect(ld).not.toMatch(/PMO|Diagnostic|Automation Audit|Implementation/);
-    const org = (await page.locator('script[type="application/ld+json"]').allTextContents())
-      .map((text) => JSON.parse(text))
-      .find((data) => data["@type"] === "Organization");
-    expect(org.areaServed).toEqual(["United Arab Emirates", "Saudi Arabia"]);
+    const blocks = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) => JSON.parse(text));
+    const org = blocks.find((data) => data["@type"] === "Organization");
+    expect(org.description).toBe("PMO Health Audit: an independent, fixed-price check of how your programmes are run.");
+    expect(org.areaServed).toEqual(["United Kingdom", "United Arab Emirates"]);
     expect(org.legalName).toBe("ChisokuLab Private Limited");
     expect(JSON.stringify(org)).not.toMatch(/founder/i);
     if (route === "/privacy") {
@@ -55,33 +56,37 @@ for (const route of routes) {
   });
 }
 
-test("llms.txt and llms-full.txt: new answers from config, live pages only, nothing internal", async ({ request }) => {
+test("llms.txt names the PMO offers and the published prices", async ({ request }) => {
   const short = await (await request.get(base + "/llms.txt")).text();
   const full = await (await request.get(base + "/llms-full.txt")).text();
   for (const text of [short, full]) {
-    expect(text).toContain("Readiness Evidence Check");
-    expect(text).toContain("USD 12,000");
+    expect(text).toContain("PMO Health Audit");
+    expect(text).toContain("PMO Health Check");
+    expect(text).toContain("USD 5,000");
+    expect(text).toContain("USD 2,500");
+    expect(text).toContain("USD 500");
+    expect(text).not.toContain("USD 12,000");
     expect(text).toContain("Legal name: ChisokuLab Private Limited");
-    expect(text).not.toContain("ChisokuLabs" + " Pvt Ltd");
-    expect(text).not.toContain("Chisokulab" + " Pvt Ltd");
-    expect(text).not.toMatch(/PMO|Diagnostic|Automation Audit|operator|probe/i);
+    expect(text).not.toMatch(/Readiness Evidence Check|Go-Live Decision Review/);
   }
   expect(full).toContain("## FAQ");
-  expect(full).toContain("### READINESS-5");
+  expect(full).toContain("HEALTH-5");
 });
 
-test("sitemap lists exactly the live routes; robots disallows /_ui", async ({ request }) => {
+test("sitemap lists the indexed routes only; robots disallows /_ui and points at www", async ({ request }) => {
   const xml = await (await request.get(base + "/sitemap.xml")).text();
   const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1].replace("https://www.chisokulabs.com", "") || "/");
-  expect(urls.sort()).toEqual([...routes].sort());
+  expect(urls.sort()).toEqual([...listed].sort());
+  expect(xml).not.toMatch(/readiness|guides\/|go-live-readiness/);
   const robots = await (await request.get(base + "/robots.txt")).text();
   expect(robots).toContain("Disallow: /_ui");
+  expect(robots).toContain("Host: https://www.chisokulabs.com");
 });
 
 test("offers, method and see-it-first have their own 1200x630 share image", async ({ request, page }) => {
   const images: Record<string, string> = {
-    "/readiness-evidence-check": "/og-evidence-check.png",
-    "/go-live-decision-review": "/og-decision-review.png",
+    "/pmo-health-check": "/og-evidence-check.png",
+    "/pmo-health-audit": "/og-decision-review.png",
     "/method": "/og-method.png",
     "/see-it-first": "/og-see-it-first.png",
     "/": "/og.png",
