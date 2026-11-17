@@ -18,14 +18,14 @@ export const siteConfig = {
   calendlyUrl: "https://calendly.com/chisokulabs/discovery-call",
   /** Sender for form emails; chisokulabs.com is verified in Resend. Replies go to the visitor. */
   formSender: "ChisokuLabs website <website@chisokulabs.com>",
-  tagline: "PMO Health Audit",
-  positioning: "Is your PMO giving leadership the truth, early enough to act?",
+  tagline: "PMO Health Check",
+  positioning: "RAID logs nobody acts on. Status that turns Red too late. Forums that cannot decide.",
   /** Organization and WebSite JSON-LD description. */
-  schemaDescription: "PMO Health Audit: an independent, fixed-price check of how your programmes are run.",
-  heroSub:
-    "A fixed-price, independent check of how one programme or portfolio is governed, reported and run, with a 30-day fix plan. Led by a PMO lead with 11+ years running programmes.",
+  schemaDescription:
+    "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a USD 500 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
+  heroSub: "A fixed-price PMO Health Check finds which one is yours, with evidence, in five working days.",
   footerTagline:
-    "A fixed-price, independent check of how one programme or portfolio is governed, reported and run. UK first; the UAE by arrangement.",
+    "Fixed-price PMO Health Checks and Audits for organisations running a PMO. UK first; the UAE and Saudi Arabia too.",
   markets: { primary: "United Kingdom", secondary: "United Arab Emirates" },
   /** Homepage strip. Not a vendor list. */
   homeStrip: ["Governance", "RAID", "Reporting", "Cadence", "Portfolio"],
@@ -35,12 +35,12 @@ export const siteConfig = {
       name: "PMO Health Check",
       navLabel: "Health Check",
       days: 5,
-      /** One price. There is no list/founding split on the pilot. */
+      /** One price, paid in full on signature. No list/founding split. */
       listPrice: 500,
       foundingPrice: null,
       path: "/pmo-health-check",
       priceCaption: "Price",
-      payment: "USD 500 in full on signature",
+      payment: "USD 500, paid in full on signature",
       foundingApplies: false,
       serviceType: "PMO health check",
     },
@@ -52,7 +52,7 @@ export const siteConfig = {
       foundingPrice: 2500,
       path: "/pmo-health-audit",
       priceCaption: "List price",
-      payment: "50% on signature, 50% on delivery",
+      payment: "Paid 50/50: half on signature, half on delivery",
       foundingApplies: true,
       serviceType: "PMO health audit",
     },
@@ -69,16 +69,15 @@ export const siteConfig = {
   principalBlock: true,
 } as const;
 
-/** The approved credit. It is a credit against the audit, and it is not a refund. */
+/** The approved credit (source-of-truth table). The Health Check fee is never described as refundable. */
 export const feeCreditSentence =
-  "The full USD 500 Health Check fee is credited against the PMO Health Audit if signed within 60 days of the Health Check readout. The credit is not a refund.";
+  "The USD 500 Health Check fee is credited in full against the PMO Health Audit if the Audit is signed within 60 days.";
 
 /**
  * The audit is capped at 5 working days. Day rates follow the published prices:
  * USD 5,000 / 5 days and USD 2,500 / 5 days.
  */
-export const extraDaysSentence =
-  "The audit is capped at 5 working days. Extra days are quoted separately at the same day rate: USD 1,000 a day at list price, USD 500 a day at the founding-client rate.";
+export const extraDaysSentence = `The Audit is capped at ${siteConfig.offers.healthAudit.days} working days. Extra days are quoted separately at ${formatPrice(siteConfig.offers.healthAudit.listPrice / siteConfig.offers.healthAudit.days)} a day (list) or ${formatPrice((siteConfig.offers.healthAudit.foundingPrice ?? siteConfig.offers.healthAudit.listPrice) / siteConfig.offers.healthAudit.days)} a day (founding).`;
 
 export type CalendlyContent =
   | "header"

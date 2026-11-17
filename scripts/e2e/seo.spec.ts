@@ -46,7 +46,9 @@ for (const route of [...listed, ...unlisted]) {
     await expect(page.locator("h1")).toHaveCount(1);
     const blocks = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) => JSON.parse(text));
     const org = blocks.find((data) => data["@type"] === "Organization");
-    expect(org.description).toBe("PMO Health Audit: an independent, fixed-price check of how your programmes are run.");
+    expect(org.description).toBe(
+      "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a USD 500 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
+    );
     expect(org.areaServed).toEqual(["United Kingdom", "United Arab Emirates"]);
     expect(org.legalName).toBe("ChisokuLab Private Limited");
     expect(JSON.stringify(org)).not.toMatch(/founder/i);

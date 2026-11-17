@@ -1,64 +1,26 @@
 import type { Metadata } from "next";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
-import { ComparisonTable } from "../../components/compare/ComparisonTable";
-import { DayStrip } from "../../components/offers/DayStrip";
-import { OfferClosing, SectionHead, offerCta } from "../../components/offers/OfferSections";
+import { OfferClosing, OfferCtas, SectionHead } from "../../components/offers/OfferSections";
 import { Accordion } from "../../components/ui/Accordion";
-import { BookCallButton } from "../../components/ui/BookCallButton";
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
-import { Sheet } from "../../components/ui/Sheet";
 import { foundingClientStatement } from "../../content/founding";
+import { healthAudit, healthCheck, ladder, selfCheckPitch } from "../../content/offer";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { pageMetadata } from "../../lib/seo";
-import { extraDaysSentence, feeCreditSentence, offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
-import { cn } from "../../lib/utils";
-
-const feeCredit = feeCreditSentence;
+import { foundingActive, offerPriceLabel, siteConfig } from "../../lib/siteConfig";
 
 export const metadata: Metadata = pageMetadata("/pricing");
 
-const cards: readonly { offer: OfferKey; duration: string; includes: readonly string[] }[] = [
-  {
-    offer: "healthCheck",
-    duration: `${siteConfig.offers.healthCheck.days} working days, one programme`,
-    includes: [
-      "Status pack, RAID log, governance calendar and plan",
-      "One sponsor and two team interviews (45 minutes each, remote)",
-      "Project Health Scorecard scored on HEALTH-5",
-      "Top findings and a 30-day fix plan",
-      "45-minute readout",
-    ],
-  },
-  {
-    offer: "healthAudit",
-    duration: `${siteConfig.offers.healthAudit.days} working days`,
-    includes: [
-      "Governance, reporting, RAID, cadence, prioritisation and the PMO operating model",
-      "Evidence register and contradiction map",
-      "Project Health Scorecard (Healthy / Needs attention / At risk) with owners and dates",
-      "30-day fix plan",
-      "Sponsor readout",
-      extraDaysSentence,
-    ],
-  },
-];
-
-// Buying questions only. Answers use PRD wording: 6.2, 6.3, 8.6, 9.3, 9.6 and the 9.9 answer notes.
 const faq = [
   {
     id: "why-publish-prices",
     summary: "Why publish prices?",
-    content:
-      "So you can judge the cost before you talk to us. The Health Check is one programme. The Audit list price covers one portfolio review, scoped on the call.",
+    content: "So you can judge the cost before you talk to us. Prices are in US dollars, the same as in our emails.",
   },
-  {
-    id: "larger-portfolio",
-    summary: "What if the portfolio is larger?",
-    content: `Larger or multi-country reviews are quoted after a scoping call. ${extraDaysSentence}`,
-  },
-  { id: "fee-credit", summary: "What is the fee credit?", content: feeCredit },
-  ...(siteConfig.foundingSlotsRemaining > 0
+  { id: "fee-credit", summary: "Is the Health Check fee credited against the Audit?", content: `Yes. ${healthCheck.credit} ${healthCheck.cancellation}` },
+  { id: "extra-days", summary: "What if the Audit needs more than 5 days?", content: healthAudit.extraDays },
+  ...(foundingActive()
     ? [
         {
           id: "founding-rate",
@@ -68,86 +30,27 @@ const faq = [
       ]
     : []),
   {
-    id: "payment",
-    summary: "How is payment structured?",
-    content: `${siteConfig.offers.healthCheck.name}: ${siteConfig.offers.healthCheck.payment}. ${siteConfig.offers.healthAudit.name}: ${siteConfig.offers.healthAudit.payment}.`,
-  },
-  {
-    id: "one-programme",
-    summary: "Do you start with one programme?",
-    content: `Yes. The ${siteConfig.offers.healthCheck.name} is scoped to one programme, and is the usual starting point.`,
-  },
-  {
-    id: "team-time",
-    summary: "What do you need from our team?",
-    content:
-      "Documents on day one. The Health Check includes one sponsor and two team interviews (45 minutes each, remote).",
-  },
-  {
     id: "fixes",
     summary: "Do you implement or fix what you find?",
     content: "No. We stay independent, and we tell you who should own each fix.",
   },
-  {
-    id: "guarantee",
-    summary: "Do you guarantee that a programme or portfolio will recover?",
-    content: "No. The audit does not guarantee that a programme or portfolio will recover.",
-  },
 ];
 
-function PriceCard({ offer, duration, includes }: (typeof cards)[number]) {
-  const data = siteConfig.offers[offer];
-  const price = offerPriceLabel(offer);
-  const page = "path" in data ? data.path : null;
+/** A label-value row in a price card. */
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <Sheet
-      as="article"
-      className={cn("flex h-full flex-col gap-5 p-6 min-[641px]:p-8", offer === "healthAudit" && "border-2 border-ink")}
-    >
-      <div className="flex flex-col gap-1">
-        <h3 className="t-h3 text-ink">{data.name}</h3>
-        <p className="t-data text-[13px] text-muted">{duration}</p>
-      </div>
-      {"days" in data && <DayStrip days={data.days} />}
-      <dl className="flex flex-wrap gap-x-8 gap-y-4 border-y border-line py-5">
-        <div>
-          <dt className="text-[13px] text-muted">{data.priceCaption}</dt>
-          <dd className="t-data mt-1.5 text-[22px] text-ink">{price.list}</dd>
-        </div>
-        {price.founding && (
-          <div>
-            <dt className="text-[13px] text-muted">Founding-client rate</dt>
-            <dd className="t-data mt-1.5 text-[22px] text-teal">{price.founding}</dd>
-          </div>
-        )}
-      </dl>
-      <ul className="flex flex-col gap-2.5">
-        {includes.map((item) => (
-          <li key={item} className="t-small flex items-start gap-2.5 text-ink">
-            <svg viewBox="0 0 20 20" className="mt-0.5 size-4 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden focusable="false">
-              <path d="M4 10.5l4 4L16 6" />
-            </svg>
-            {item}
-          </li>
-        ))}
-      </ul>
-      <div className="mt-auto flex flex-col gap-4 pt-2">
-        <p className="text-[13px] text-muted">
-          <span className="font-semibold text-ink">Payment: </span>
-          {siteConfig.offers[offer].payment}
-        </p>
-        {page && (
-          <Button href={page} variant="text" className="self-start">
-            {data.name}
-          </Button>
-        )}
-      </div>
-    </Sheet>
+    <div className="grid gap-1 border-t border-line py-3 min-[641px]:grid-cols-[150px_minmax(0,1fr)] min-[641px]:gap-4">
+      <dt className="font-[family-name:var(--font-mono)] text-[12px] font-bold uppercase tracking-[0.1em] text-muted">{label}</dt>
+      <dd className="text-[16px] text-ink">{children}</dd>
+    </div>
   );
 }
 
+/** /pricing (September port PRD, Story 4.1): two paid items, the self-check shown as free. Prices from siteConfig. */
 export default function PricingPage() {
-  const foundingPlaces = siteConfig.foundingSlotsRemaining;
+  const check = siteConfig.offers.healthCheck;
+  const audit = siteConfig.offers.healthAudit;
+  const auditPrice = offerPriceLabel("healthAudit");
   return (
     <>
       <JsonLdScript
@@ -158,53 +61,86 @@ export default function PricingPage() {
         ])}
       />
 
-      <Section tone="ink">
-        <h1 className="t-h1 text-paper">Pricing</h1>
-        <p className="t-body mt-5 max-w-[58ch] text-paper/80">{feeCredit}</p>
-        <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-          <Button href={offerCta.review.href} variant="inverse" size="lg">
-            {offerCta.review.label}
-          </Button>
-          <BookCallButton content="pricing" variant="inverse-outline" />
-          <Button href={offerCta.brief.href} variant="inverse-outline" size="lg">
-            {offerCta.brief.label}
-          </Button>
+      <Section className="report-cover">
+        <p className="eyebrow">Pricing</p>
+        <h1 className="t-h1 max-w-[22ch] text-ink">Two fixed prices, and a free place to start.</h1>
+        <p className="t-body mt-5 max-w-[60ch] text-muted">
+          For UK organisations running a PMO. Prices are in US dollars. {ladder.summary}.
+        </p>
+        <div className="mt-8">
+          <OfferCtas content="pricing" />
         </div>
       </Section>
 
-      <Section tone="paper">
-        <SectionHead title="Prices" />
-        <ul className="mt-10 grid gap-5 min-[1100px]:grid-cols-2">
-          {cards.map((card) => (
-            <li key={card.offer}>
-              <PriceCard {...card} />
-            </li>
-          ))}
-        </ul>
-        <div className="mt-8 grid gap-6 min-[900px]:grid-cols-2 min-[900px]:gap-8">
-          <p className="t-small font-semibold text-ink">{feeCredit}</p>
-          {foundingPlaces > 0 && (
-            <div className="flex items-start gap-4">
-              <span aria-hidden className="mt-1 flex shrink-0 gap-1.5">
-                {Array.from({ length: foundingPlaces }, (_, place) => (
-                  <span key={place} className="size-3 rounded-full bg-teal" />
-                ))}
-              </span>
-              <p className="t-small text-muted">
-                Applies to the PMO Health Audit. {foundingClientStatement(foundingPlaces)}
+      <Section tone="paper" aria-labelledby="prices-h">
+        <h2 id="prices-h" className="sr-only">
+          Prices
+        </h2>
+        <ul className="grid gap-5 min-[1100px]:grid-cols-2">
+          <li>
+            <article className="panel flex h-full flex-col p-6 min-[641px]:p-8" data-price-card="healthCheck">
+              <p className="eyebrow">Start here</p>
+              <h3 className="t-h3 text-ink">{check.name}</h3>
+              <p className="mt-3 font-[family-name:var(--font-display)] text-4xl font-bold tracking-[-0.03em] text-ink">{healthCheck.price}</p>
+              <dl className="mt-6">
+                <Row label="Scope">{healthCheck.scope}</Row>
+                <Row label="What we need">{healthCheck.inputs}</Row>
+                <Row label="What you get">{healthCheck.outputs}</Row>
+                <Row label="Timing">{healthCheck.timing}</Row>
+                <Row label="Payment">{healthCheck.payment}</Row>
+                <Row label="Credit">
+                  {healthCheck.credit} {healthCheck.cancellation}
+                </Row>
+              </dl>
+              <div className="mt-auto pt-6">
+                <Button href={check.path} variant="text">
+                  {check.name}
+                </Button>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article className="panel flex h-full flex-col border-2 border-ink p-6 min-[641px]:p-8" data-price-card="healthAudit">
+              <p className="eyebrow">The whole portfolio</p>
+              <h3 className="t-h3 text-ink">{audit.name}</h3>
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-3 font-[family-name:var(--font-display)] text-4xl font-bold tracking-[-0.03em] text-ink">
+                {auditPrice.list}
+                <span className="text-[16px] font-semibold text-muted">list</span>
               </p>
-            </div>
-          )}
+              {auditPrice.founding && (
+                <p className="mt-1 text-[17px] font-semibold text-gold-ink">{auditPrice.founding} founding</p>
+              )}
+              <dl className="mt-6">
+                <Row label="Scope">{healthAudit.scope}</Row>
+                <Row label="Price">{healthAudit.priceLine}</Row>
+                <Row label="Length">{healthAudit.cap}</Row>
+                <Row label="Extra days">{healthAudit.extraDays.replace("The Audit is capped at 5 working days. ", "")}</Row>
+                <Row label="Payment">{healthAudit.payment}</Row>
+              </dl>
+              <div className="mt-auto pt-6">
+                <Button href={audit.path} variant="text">
+                  {audit.name}
+                </Button>
+              </div>
+            </article>
+          </li>
+        </ul>
+
+        <div className="mt-6 flex flex-col gap-4 rounded-sheet border border-dashed border-ink/25 p-6 min-[800px]:flex-row min-[800px]:items-center min-[800px]:justify-between" data-price-card="selfCheck">
+          <div>
+            <p className="t-h3 text-ink">
+              PMO self-check <span className="ml-2 text-gold-ink">Free</span>
+            </p>
+            <p className="t-small mt-1 max-w-[62ch] text-muted">{selfCheckPitch}</p>
+          </div>
+          <Button href="/pmo-self-check" variant="secondary" ctaId="self_check">
+            Take the PMO self-check
+          </Button>
         </div>
       </Section>
 
-      <Section tone="page">
-        <SectionHead title="Why not the usual options" />
-        <ComparisonTable className="mt-10" />
-      </Section>
-
-      <Section tone="paper">
-        <SectionHead title="FAQ" />
+      <Section aria-labelledby="pricing-faq">
+        <SectionHead title="Questions about price" />
         <Accordion items={faq} className="mt-8 max-w-[70ch]" />
       </Section>
 

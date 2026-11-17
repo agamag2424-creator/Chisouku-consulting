@@ -5,11 +5,11 @@ import { PmoHealthMap } from "../components/diagrams/PmoHealthMap";
 import { ScorecardExcerpt } from "../components/diagrams/ScorecardExcerpt";
 import { OfferLadder } from "../components/home/OfferLadder";
 import { ReportingCostCalculator } from "../components/home/ReportingCostCalculator";
+import { PrincipalBlock } from "../components/trust/PrincipalBlock";
 import { Button } from "../components/ui/Button";
 import { Section } from "../components/ui/Section";
-import { backgroundLine, ctas, headline, healthCheck, primaryCtaHref, selfCheckPitch } from "../content/offer";
+import { ctas, headline, healthCheck, primaryCtaHref, selfCheckPitch } from "../content/offer";
 import { pageMetadata } from "../lib/seo";
-import { cn } from "../lib/utils";
 
 export const metadata: Metadata = pageMetadata("/");
 
@@ -140,23 +140,7 @@ export default function Home() {
       </Section>
 
       {/* 7. About */}
-      <Section aria-labelledby="about-h" id="principal">
-        <div className={cn(split, "min-[1100px]:items-center")}>
-          <h2 id="about-h" className="t-h2 text-ink">
-            Who does the work
-          </h2>
-          <div>
-            <p className="t-body text-ink">
-              Every Health Check and Audit is carried out and signed by the founder. {backgroundLine}
-            </p>
-            <div className="mt-5">
-              <Button href="/about" variant="text">
-                About ChisokuLabs
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Section>
+      <PrincipalBlock tone="page" id="principal" />
 
       {/* 8. Final CTA band */}
       <section className="dark-band atmosphere-band px-[var(--content-padding-x-mobile)] py-16 min-[641px]:px-[var(--content-padding-x)] min-[641px]:py-24" aria-labelledby="close-h">

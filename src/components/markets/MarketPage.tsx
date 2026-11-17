@@ -10,6 +10,9 @@ import { Button } from "../ui/Button";
 import { Section } from "../ui/Section";
 import { Sheet } from "../ui/Sheet";
 
+/** Old briefing offer; this page is rewritten in Epic 6 of the September port. */
+const legacyBrief = { href: "/contact?request=brief", label: "Request a free briefing" } as const;
+
 const lead = (market: Market) =>
   `A fixed-price, independent check of how programmes in ${market.inName} are governed, reported and run.`;
 
@@ -34,8 +37,8 @@ export function MarketPage({ market }: { market: Market }) {
         <p className="t-body mt-5 max-w-[46ch] text-paper/80">{lead(market)}</p>
         <p className="t-small mt-4 max-w-[46ch] text-paper/70">{market.whyNow}</p>
         <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-          <Button href={offerCta.brief.href} variant="inverse" size="lg">
-            {offerCta.brief.label}
+          <Button href={legacyBrief.href} variant="inverse" size="lg">
+            {legacyBrief.label}
           </Button>
           <BookCallButton content="market_hero" variant="inverse-outline" />
           <Button href={offerCta.review.href} variant="inverse-outline" size="lg">
@@ -73,8 +76,8 @@ export function MarketPage({ market }: { market: Market }) {
             <p className="t-body mt-4 text-paper/75">Prepared from public information. We reply within two business days.</p>
           </div>
           <div className="flex w-full flex-col gap-3 min-[480px]:w-auto min-[480px]:flex-row min-[480px]:flex-wrap">
-            <Button href={offerCta.brief.href} variant="inverse" size="lg">
-              {offerCta.brief.label}
+            <Button href={legacyBrief.href} variant="inverse" size="lg">
+              {legacyBrief.label}
             </Button>
             <BookCallButton content="market_close" variant="inverse-outline" />
             <Button href={offerCta.review.href} variant="inverse-outline" size="lg">

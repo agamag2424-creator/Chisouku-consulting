@@ -236,7 +236,7 @@ export const guides: readonly Guide[] = [
           },
           {
             kind: "p",
-            text: "The PMO Health Check is one programme, 5 working days, USD 500, paid in full on signature. The PMO Health Audit is 5 working days, list price USD 5,000, founding-client rate USD 2,500, paid 50% on signature and 50% on delivery. The full Health Check fee is credited against the audit if the audit is signed within 60 days of the readout. The credit is not a refund.",
+            text: "The PMO Health Check and the PMO Health Audit have fixed prices; see the pricing page.",
           },
         ],
       },

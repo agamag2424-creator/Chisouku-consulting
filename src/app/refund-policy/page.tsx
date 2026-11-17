@@ -3,6 +3,7 @@ import { Body, List, Part } from "../../components/legal/LegalParts";
 import { Section } from "../../components/ui/Section";
 import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
+import { healthAudit, healthCheck } from "../../content/offer";
 
 // Refund and Cancellation Policy (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/refund-policy");
@@ -20,50 +21,23 @@ export default function RefundPolicyPage() {
       <Section tone="paper">
         <div className="flex max-w-[760px] flex-col gap-12">
           <Body>
-            We want you to be satisfied with what you buy. This policy explains when you can cancel and when you get
-            your money back.
+            This policy explains when you can cancel the PMO Health Check or the PMO Health Audit, and what happens to
+            your payment.
           </Body>
 
-          <Part title="2.1 Go-Live Readiness Report (digital)">
-            <Body>Price: USD 149.</Body>
+          <Part title="2.1 PMO Health Check">
+            <Body>Price: {healthCheck.payment}</Body>
             <Body>
-              When we refund: the report is generated from your own answers, so we refund it in full only if:
+              {healthCheck.cancellation} {healthCheck.credit}
             </Body>
-            <List
-              items={[
-                "the report is faulty (for example, incomplete or unreadable) and we can't send a corrected copy within 5 business days; or",
-                "it isn't delivered within 48 hours of payment.",
-              ]}
-            />
             <Body>
-              Cancellation: reports are generated within minutes of payment, so an order can&apos;t usually be cancelled
-              once paid. If yours hasn&apos;t been generated yet, email us and we&apos;ll cancel it and refund you in
-              full.
+              Rescheduling: you may move the start date once, at no charge, with at least 2 business days&apos; notice.
             </Body>
+            <Body>If we cannot deliver it, we return the fee in full.</Body>
           </Part>
 
-          <Part title="2.2 Go-Live Readiness Pack (digital)">
-            <Body>
-              Price: USD 249, or USD 100 if you&apos;ve already bought the report (its USD 149 is credited towards the
-              Pack).
-            </Body>
-            <Body>
-              After download: the files can&apos;t be returned once downloaded, so refunds are limited to these cases:
-            </Body>
-            <List
-              items={[
-                "you haven't downloaded the files, and you ask within 7 days of purchase;",
-                "the files are faulty or incomplete, and we can't send a working copy within 5 business days;",
-                "you were charged twice, or the files were never delivered.",
-              ]}
-            />
-            <Body>
-              Report credit: if the USD 149 report credit was applied, a Pack refund is the amount you actually paid
-              (USD 100). Refunding the Pack does not refund the report.
-            </Body>
-          </Part>
-
-          <Part title="2.3 Consulting (PMO Health Check, PMO Health Audit)">
+          <Part title="2.2 PMO Health Audit">
+            <Body>Price: {healthAudit.priceLine} {healthAudit.payment}</Body>
             <Body>Cancellation by you:</Body>
             <List
               items={[
@@ -76,14 +50,13 @@ export default function RefundPolicyPage() {
               Rescheduling: you may move the start date once, at no charge, with at least 2 business days&apos; notice.
             </Body>
             <Body>Cancellation by us: if we can&apos;t deliver, you get a full refund of any unearned fees.</Body>
+          </Part>
+
+          <Part title="2.3 If you are not satisfied">
             <Body>
-              Not satisfied: tell us within 5 business days of the readout and we will correct anything that doesn&apos;t
-              meet the agreed scope at no charge.
+              Tell us within 5 business days of the readout and we will correct anything that doesn&apos;t meet the agreed
+              scope at no charge.
             </Body>
-            <Body>
-              A Health Check fee already credited against a PMO Health Audit is not refunded a second time.
-            </Body>
-            <Body>Free briefing: this is free, so there is nothing to refund.</Body>
           </Part>
 
           <Part title="2.4 How to ask for a refund or cancellation">

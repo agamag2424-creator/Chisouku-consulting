@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
-import { OfferClosing, offerCta } from "../../components/offers/OfferSections";
+import { OfferClosing } from "../../components/offers/OfferSections";
 import { BookCallButton } from "../../components/ui/BookCallButton";
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
 import { Sheet } from "../../components/ui/Sheet";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { pageMetadata } from "../../lib/seo";
+
+/** Old briefing offer; this page is rewritten in Epic 6 of the September port. */
+const legacyBrief = { href: "/contact?request=brief", label: "Request a free briefing" } as const;
 const title = "See the work before you talk to us";
 const briefText =
   "Tell us the programme. Within two business days we send a one-page briefing prepared from public information: where the reporting and governance risks most likely sit, and the questions we would ask.";
@@ -49,8 +52,8 @@ export default function SeeItFirstPage() {
             <h2 className="t-h2 text-ink">Free briefing</h2>
             <p className="t-body text-ink">{briefText}</p>
             <div className="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-              <Button href={offerCta.brief.href} size="lg">
-                {offerCta.brief.label}
+              <Button href={legacyBrief.href} size="lg">
+                {legacyBrief.label}
               </Button>
               <BookCallButton content="see_it_first" />
             </div>

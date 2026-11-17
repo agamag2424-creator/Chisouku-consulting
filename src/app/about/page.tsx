@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Body, List, Part } from "../../components/legal/LegalParts";
 import { Section } from "../../components/ui/Section";
 import { pageMetadata } from "../../lib/seo";
-import { siteConfig } from "../../lib/siteConfig";
+import { extraDaysSentence, siteConfig } from "../../lib/siteConfig";
+import { healthAudit as healthAuditCopy, healthCheck as healthCheckCopy } from "../../content/offer";
 
 // About Us (Razorpay international-payments policy pages). Keeps existing site wording where it matches.
 export const metadata: Metadata = pageMetadata("/about");
@@ -45,8 +46,8 @@ export default function AboutPage() {
           <Part title="How you can work with us">
             <List
               items={[
-                "PMO Health Check: USD 500, 5 working days, one programme.",
-                "PMO Health Audit: 5 working days, list price USD 5,000, founding-client rate USD 2,500. Extra days are quoted separately at the same day rate.",
+                `PMO Health Check: ${healthCheckCopy.price}, ${healthCheckCopy.scope.toLowerCase()}, ${healthCheckCopy.timing.toLowerCase()}.`,
+                `PMO Health Audit: ${healthAuditCopy.scope.charAt(0).toLowerCase()}${healthAuditCopy.scope.slice(1)}. ${healthAuditCopy.priceLine} ${extraDaysSentence}`,
                 "A free one-page briefing on your programme, prepared from public information.",
               ]}
             />

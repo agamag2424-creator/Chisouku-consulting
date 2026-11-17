@@ -8,7 +8,7 @@ const check = siteConfig.offers.healthCheck;
 const audit = siteConfig.offers.healthAudit;
 
 export const ladder = {
-  summary: "Free PMO self-check, then PMO Health Check (USD 500), then PMO Health Audit",
+  summary: `Free PMO self-check, then PMO Health Check (${formatPrice(check.listPrice)}), then PMO Health Audit`,
   steps: [
     {
       key: "selfCheck",

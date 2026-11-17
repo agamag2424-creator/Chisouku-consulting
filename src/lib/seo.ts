@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { markets } from "../content/markets";
 import { packMethodNote } from "../content/samplePack";
-import { siteConfig } from "./siteConfig";
+import { formatPrice, siteConfig } from "./siteConfig";
 
 // Per-route titles and descriptions. Home title follows the approved offer wording.
 export const defaultTitle =
-  "PMO Health Audit: an independent, fixed-price check of how your programmes are run | ChisokuLabs";
+  "PMO Health Check: RAID logs, late Red status and forums that cannot decide | ChisokuLabs";
 
 export const defaultDescription = siteConfig.heroSub;
 
@@ -18,24 +18,27 @@ export const ogImage = {
 };
 
 const { healthCheck, healthAudit } = siteConfig.offers;
+const checkPrice = formatPrice(healthCheck.listPrice);
+const auditList = formatPrice(healthAudit.listPrice);
+const auditFounding = formatPrice(healthAudit.foundingPrice ?? healthAudit.listPrice);
 const marketDescription = (market: (typeof markets)[keyof typeof markets]) =>
   `A fixed-price, independent check of how programmes in ${market.inName} are governed, reported and run. ${market.whyNow}`;
 
 export const routeSeo = {
   "/": {
-    title: "PMO Health Audit: an independent, fixed-price check of how your programmes are run",
+    title: "PMO Health Check: RAID logs, late Red status and forums that cannot decide",
     description: siteConfig.heroSub,
   },
   [healthCheck.path]: {
     title: healthCheck.name,
     description:
-      "A five-day, USD 500 check of one programme: status pack, RAID log, governance calendar and plan, with a 30-day fix plan. The fee is credited against the PMO Health Audit if signed within 60 days.",
+      `A fixed-price check of one programme, ${checkPrice}. The PMO Health Scorecard filled in with evidence, the top findings, a 30-day fix plan and a 45-minute readout, five working days after documents arrive.`,
     image: "/og-evidence-check.png",
   },
   [healthAudit.path]: {
     title: healthAudit.name,
     description:
-      "A 5 working day independent audit of how a programme or portfolio is governed, reported and run. Founding-client rate USD 2,500.",
+      `The whole portfolio, scored with evidence on the ten PMO Health Scorecard dimensions. ${auditList} list, ${auditFounding} founding, capped at 5 working days. Most clients start with the ${checkPrice} Health Check.`,
     image: "/og-decision-review.png",
   },
   "/method": {
@@ -52,7 +55,7 @@ export const routeSeo = {
   "/pricing": {
     title: "Pricing",
     description:
-      "PMO Health Check, USD 500, credited against the PMO Health Audit (founding-client rate USD 2,500) if signed within 60 days.",
+      `PMO Health Check ${checkPrice}, paid in full on signature and credited against the Audit if signed within 60 days. PMO Health Audit ${auditList} list, ${auditFounding} founding. The PMO self-check is free.`,
   },
   "/independence-and-data": {
     title: "Independence and data handling",
@@ -64,7 +67,7 @@ export const routeSeo = {
   "/faq": {
     title: "FAQ",
     description:
-      "PMO Health Audit and Health Check: how the work differs from hiring a Head of PMO, timing, data handling, AI use, prices and the fee credit.",
+      "PMO Health Check and Audit: price, the fee credit, timing, the documents we need, confidentiality, and whether this is an accredited assessment.",
   },
   "/guides/s4hana-go-no-go-checklist": {
     title: "How to test a programme status claim",
@@ -94,17 +97,17 @@ export const routeSeo = {
   "/terms": {
     title: "Terms of Service",
     description:
-      "Terms that apply when you use chisokulabs.com or buy from ChisokuLabs: products, prices, licences, liability, governing law and contact.",
+      "Terms that apply when you use chisokulabs.com or buy from ChisokuLabs: services, prices, payment, liability, governing law and contact.",
   },
   "/refund-policy": {
     title: "Refund and Cancellation Policy",
     description:
-      "When you can cancel, when you get a refund for the Go-Live Readiness Report, Pack or consulting, and how to ask hello@chisokulabs.com.",
+      "What happens if you cancel the PMO Health Check or the PMO Health Audit, and how to ask hello@chisokulabs.com.",
   },
   "/shipping-policy": {
     title: "Shipping and Delivery Policy",
     description:
-      "We do not ship physical goods. Digital products and consulting are delivered electronically; timelines, re-sends and contact details.",
+      "We do not ship physical goods. How and when the PMO Health Check and the PMO Health Audit are delivered, and contact details.",
   },
   "/privacy": {
     title: "Privacy Policy",

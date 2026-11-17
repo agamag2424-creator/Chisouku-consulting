@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Body, List, Part } from "../../components/legal/LegalParts";
 import { Section } from "../../components/ui/Section";
 import { pageMetadata } from "../../lib/seo";
-import { siteConfig } from "../../lib/siteConfig";
+import { extraDaysSentence, siteConfig } from "../../lib/siteConfig";
+import { healthAudit, healthCheck } from "../../content/offer";
 
 // Shipping and Delivery Policy (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/shipping-policy");
@@ -19,52 +20,33 @@ export default function ShippingPolicyPage() {
 
       <Section tone="paper">
         <div className="flex max-w-[760px] flex-col gap-12">
-          <Body>We do not ship physical goods. Everything we sell is delivered electronically or as a service.</Body>
+          <Body>We do not ship physical goods. Everything we sell is a service, delivered remotely or on site.</Body>
 
-          <Part title="3.1 Digital products">
-            <Body>Go-Live Readiness Report:</Body>
-            <List
-              items={[
-                "delivered as a PDF to the email address you give at checkout;",
-                "usually within minutes, and always within 48 hours of payment.",
-              ]}
-            />
-            <Body>Go-Live Readiness Pack:</Body>
-            <List
-              items={[
-                "delivered as a download link (ZIP file containing .xlsx templates and a PDF guide);",
-                "sent by email and/or shown on the payment confirmation page within 48 hours of payment.",
-              ]}
-            />
-            <Body>The link stays active for 30 days. Email us if you need it re-sent.</Body>
-            <Body>Delivery and shipping charges: none.</Body>
-            <Body>Where we deliver: worldwide, wherever we are able to accept payment.</Body>
-          </Part>
-
-          <Part title="3.2 Consulting services">
+          <Part title="3.1 Consulting services">
             <Body>Delivered remotely (video calls, email and shared documents), or on site where agreed in writing.</Body>
             <Body>Typical durations:</Body>
             <List
               items={[
-                "PMO Health Check: 5 working days. A scoping call and document request on day 1, plus the sponsor interview; evidence review and two team interviews on days 2-4; written findings and a readout on day 5.",
-                "PMO Health Audit: 5 working days. Extra days are quoted separately at the same day rate.",
+                `PMO Health Check: ${healthCheck.timing.toLowerCase()}. ${healthCheck.outputs}.`,
+                `PMO Health Audit: ${healthAudit.cap.toLowerCase()} ${extraDaysSentence.replace("The Audit is capped at 5 working days. ", "")}`,
+                "Delivery and shipping charges: none.",
               ]}
             />
             <Body>The start date and deliverables are confirmed in writing before work begins.</Body>
             <Body>Timelines depend on your team providing documents and access on time.</Body>
           </Part>
 
-          <Part title="3.3 If something hasn't arrived">
+          <Part title="3.2 If a deliverable hasn't arrived">
             <List
               items={[
                 "Check your spam or junk folder first.",
-                `If it still hasn't arrived after 48 hours, email ${siteConfig.email} with your payment ID.`,
-                "We will re-send it, or refund you under our Refund and Cancellation Policy.",
+                `If it still hasn't arrived 2 business days after the readout, email ${siteConfig.email}.`,
+                "We will re-send it the same day.",
               ]}
             />
           </Part>
 
-          <Part title="3.4 Contact">
+          <Part title="3.3 Contact">
             <Body>
               {siteConfig.legalName}, {siteConfig.address} · {siteConfig.email}
             </Body>
