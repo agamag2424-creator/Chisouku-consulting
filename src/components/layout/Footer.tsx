@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandMark } from "../brand/BrandMark";
 import { isRouteListed, siteConfig } from "../../lib/siteConfig";
+import { companyLine } from "../../content/offer";
 
 type FooterLink = { href: string; label: string };
 
@@ -24,8 +25,7 @@ const groups: { title: string; links: FooterLink[] }[] = [
     title: "Legal",
     links: [
       { href: "/terms", label: "Terms" },
-      { href: "/refund-policy", label: "Refund Policy" },
-      { href: "/shipping-policy", label: "Shipping Policy" },
+      { href: "/payment-terms", label: "Payment terms" },
       { href: "/privacy", label: "Privacy" },
       { href: "/contact", label: "Contact" },
       { href: "/about", label: "About" },
@@ -47,7 +47,7 @@ export function Footer() {
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">
             <BrandMark className="h-9 w-9" inverted />
-            <span className="font-[family-name:var(--font-display)] text-[20px] font-bold tracking-[-0.03em] text-paper">
+            <span className="font-[family-name:var(--font-display)] text-[20px] font-semibold tracking-[-0.03em] text-paper">
               ChisokuLabs
             </span>
           </Link>
@@ -58,7 +58,7 @@ export function Footer() {
 
         {liveGroups.map((group) => (
           <nav key={group.title} aria-label={group.title} className="t-small">
-            <p className="mb-3 font-[family-name:var(--font-mono)] text-[12px] font-bold uppercase tracking-[0.14em] text-gold">{group.title}</p>
+            <p className="mb-3 label text-gold">{group.title}</p>
             <ul className="space-y-3">
               {group.links.map((link) => (
                 <li key={link.href}>
@@ -72,7 +72,7 @@ export function Footer() {
         ))}
 
         <div className="t-small">
-          <p className="mb-3 font-[family-name:var(--font-mono)] text-[12px] font-bold uppercase tracking-[0.14em] text-gold">Contact</p>
+          <p className="mb-3 label text-gold">Contact</p>
           <ul className="space-y-3">
             <li>
               <a href={`mailto:${siteConfig.email}`} className={linkClass}>
@@ -87,8 +87,11 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-paper/10 px-[var(--content-padding-x-mobile)] py-4 text-center text-[13px] text-paper/65">
-        © 2026 {siteConfig.legalName}. All rights reserved.
+      <div className="border-t border-paper/10 px-[var(--content-padding-x-mobile)] py-5 text-center text-[13px] text-paper/70">
+        <p className="mx-auto max-w-[110ch]" data-company-line>
+          {companyLine}
+        </p>
+        <p className="mt-2">© 2026 {siteConfig.legalName}. All rights reserved.</p>
       </div>
     </footer>
   );

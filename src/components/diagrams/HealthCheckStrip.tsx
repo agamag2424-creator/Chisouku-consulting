@@ -10,7 +10,7 @@ export function HealthCheckStrip({ className }: Props) {
     <figure className={cn("report-board paper-grain ink-corners", className)} aria-label={healthCheckStrip.alt}>
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-ink/10 px-5 py-4">
         <p className="eyebrow mb-0">{healthCheckStrip.eyebrow}</p>
-        <p className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.12em] text-muted">
+        <p className="label text-muted">
           {healthCheckStrip.title}
         </p>
       </div>
@@ -26,10 +26,10 @@ export function HealthCheckStrip({ className }: Props) {
             style={{ animationDelay: `${120 + index * 90}ms` }}
           >
             <div className="flex items-center justify-between gap-3">
-              <span className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+              <span className="label text-muted">
                 0{index + 1}
               </span>
-              <span className="font-[family-name:var(--font-display)] text-[17px] font-bold tracking-[-0.02em]">{phase.name}</span>
+              <span className="font-[family-name:var(--font-display)] text-[17px] font-semibold tracking-[-0.02em]">{phase.name}</span>
             </div>
             <div className="mt-4 flex-1">
               <PhaseVisual type={phase.visual} />
@@ -94,7 +94,7 @@ function PhaseVisual({ type }: { type: StripVisual }) {
           {["01", "02", "03"].map((n, i) => (
             <g key={n} transform={`translate(${28 + i * 52} 12)`}>
               <rect width="44" height="52" rx="3" fill={i === 0 ? "#111820" : "rgba(255,253,248,0.95)"} stroke="rgba(17,24,32,0.18)" />
-              <text x="22" y="31" textAnchor="middle" fill={i === 0 ? "#FFFDF8" : "#111820"} fontFamily="var(--font-mono), monospace" fontSize="12" fontWeight="700">
+              <text x="22" y="31" textAnchor="middle" fill={i === 0 ? "#FFFDF8" : "#111820"} fontFamily="var(--font-body), sans-serif" fontSize="12" fontWeight="700">
                 {n}
               </text>
             </g>

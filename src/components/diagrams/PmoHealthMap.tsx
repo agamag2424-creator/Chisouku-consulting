@@ -5,7 +5,11 @@ import {
 } from "../../content/diagrams";
 import { cn } from "../../lib/utils";
 
-type Props = { className?: string };
+type Props = {
+  className?: string;
+  /** Drawing only: no title above it and no numbered key below (the homepage hero, where the text beside it says the same). */
+  compact?: boolean;
+};
 
 const INK = "#111820";
 const MUTED = "#5F6A75";
@@ -70,7 +74,7 @@ const problemNumber = (id: ProblemId) =>
   threeProblems.findIndex((p) => p.id === id) + 1;
 
 /** PMO Health Map (September "PMO Operating Map", relabelled). Drawn map from 640px; a stacked list below that. */
-export function PmoHealthMap({ className }: Props) {
+export function PmoHealthMap({ className, compact = false }: Props) {
   return (
     <figure
       className={cn(
@@ -87,14 +91,22 @@ export function PmoHealthMap({ className }: Props) {
         aria-hidden
       />
       <div className="relative z-10 p-5 md:p-8">
-        <p className="eyebrow">{healthMap.eyebrow}</p>
-        <h3 className="font-[family-name:var(--font-display)] text-xl font-bold tracking-[-0.02em] text-ink md:text-2xl">
-          {healthMap.title}
-        </h3>
+        {!compact && (
+          <>
+            <p className="eyebrow">{healthMap.eyebrow}</p>
+            {/* A titled figure, not a page heading: an h3 here could skip a level. */}
+            <p className="font-[family-name:var(--font-display)] text-xl font-semibold tracking-[-0.02em] text-ink md:text-2xl">
+              {healthMap.title}
+            </p>
+          </>
+        )}
 
         <svg
           viewBox="0 0 720 480"
-          className="mt-4 hidden h-auto w-full min-[640px]:block"
+          className={cn(
+            "hidden h-auto w-full min-[640px]:block",
+            !compact && "mt-4",
+          )}
           role="img"
           aria-label={healthMap.alt}
         >
@@ -140,7 +152,7 @@ export function PmoHealthMap({ className }: Props) {
             fill={INK}
             fontFamily="var(--font-display), sans-serif"
             fontSize="20"
-            fontWeight="700"
+            fontWeight="600"
           >
             {healthMap.centreTitle}
           </text>
@@ -149,9 +161,9 @@ export function PmoHealthMap({ className }: Props) {
             y="258"
             textAnchor="middle"
             fill={MUTED}
-            fontFamily="var(--font-mono), monospace"
-            fontSize="9.5"
-            fontWeight="700"
+            fontFamily="var(--font-body), sans-serif"
+            fontSize="13"
+            fontWeight="600"
           >
             {healthMap.centreSub}
           </text>
@@ -164,7 +176,7 @@ export function PmoHealthMap({ className }: Props) {
                   y="16"
                   textAnchor="middle"
                   fill="#FFFDF8"
-                  fontFamily="var(--font-mono), monospace"
+                  fontFamily="var(--font-body), sans-serif"
                   fontSize="11"
                   fontWeight="700"
                 >
@@ -198,7 +210,7 @@ export function PmoHealthMap({ className }: Props) {
                     fill={accent ? "#FFFDF8" : INK}
                     fontFamily="var(--font-display), sans-serif"
                     fontSize="15"
-                    fontWeight="700"
+                    fontWeight="600"
                   >
                     {n.title}
                   </text>
@@ -206,8 +218,8 @@ export function PmoHealthMap({ className }: Props) {
                     x="14"
                     y="47"
                     fill={accent ? "#C7CED3" : MUTED}
-                    fontFamily="var(--font-mono), monospace"
-                    fontSize="10"
+                    fontFamily="var(--font-body), sans-serif"
+                    fontSize="13"
                     fontWeight="600"
                   >
                     {n.sub}
@@ -224,7 +236,7 @@ export function PmoHealthMap({ className }: Props) {
                         y="4"
                         textAnchor="middle"
                         fill="#FFFDF8"
-                        fontFamily="var(--font-mono), monospace"
+                        fontFamily="var(--font-body), sans-serif"
                         fontSize="11"
                         fontWeight="700"
                       >
@@ -251,12 +263,12 @@ export function PmoHealthMap({ className }: Props) {
               )}
             >
               <span>
-                <span className="block font-[family-name:var(--font-display)] text-[16px] font-bold">
+                <span className="block font-[family-name:var(--font-display)] text-[16px] font-semibold">
                   {n.title}
                 </span>
                 <span
                   className={cn(
-                    "block font-[family-name:var(--font-mono)] text-[12px]",
+                    "block font-[family-name:var(--font-body)] text-[12px]",
                     n.id === "forum" ? "text-paper/75" : "text-muted",
                   )}
                 >
@@ -264,7 +276,7 @@ export function PmoHealthMap({ className }: Props) {
                 </span>
               </span>
               {n.problem && (
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold-ink font-[family-name:var(--font-mono)] text-[12px] font-bold text-paper">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold-ink font-[family-name:var(--font-body)] text-[12px] font-bold text-paper">
                   <span className="sr-only">Problem </span>
                   {problemNumber(n.problem)}
                 </span>
@@ -273,21 +285,24 @@ export function PmoHealthMap({ className }: Props) {
           ))}
         </ul>
 
-        <figcaption className="mt-5 border-t border-ink/10 pt-4">
-          <ol className="grid gap-2 text-[15px] text-ink min-[900px]:grid-cols-3">
-            {threeProblems.map((p, i) => (
-              <li key={p.id} className="flex items-start gap-2">
-                <span
-                  aria-hidden
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-ink font-[family-name:var(--font-mono)] text-[11px] font-bold text-paper"
-                >
-                  {i + 1}
-                </span>
-                <span>{p.short}</span>
-              </li>
-            ))}
-          </ol>
-        </figcaption>
+        {/* Compact: the drawing's own label names the three problems, and the hero text says them too. */}
+        {!compact && (
+          <figcaption className="mt-5 border-t border-ink/10 pt-4">
+            <ol className="grid gap-2 text-[15px] text-ink min-[900px]:grid-cols-3">
+              {threeProblems.map((p, i) => (
+                <li key={p.id} className="flex items-start gap-2">
+                  <span
+                    aria-hidden
+                    className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-ink font-[family-name:var(--font-body)] text-[11px] font-bold text-paper"
+                  >
+                    {i + 1}
+                  </span>
+                  <span>{p.short}</span>
+                </li>
+              ))}
+            </ol>
+          </figcaption>
+        )}
       </div>
     </figure>
   );

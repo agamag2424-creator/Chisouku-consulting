@@ -46,7 +46,7 @@ export default function TermsPage() {
           <Part title="1.2 Prices and payment">
             <List
               items={[
-                "Prices are in US dollars unless we say otherwise.",
+                "Prices are in pounds sterling (GBP) unless we say otherwise.",
                 "Prices exclude applicable taxes.",
                 "Payments are processed by Razorpay. We never see or store your full card details.",
                 `The PMO Health Check is ${healthCheck.payment.charAt(0).toLowerCase()}${healthCheck.payment.slice(1)} The PMO Health Audit is paid 50/50, half on signature and half on delivery, unless a written agreement says otherwise.`,

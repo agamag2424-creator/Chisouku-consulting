@@ -1,7 +1,7 @@
 import { foundingClientStatement } from "../../content/founding";
 import { extraDaysSentence, feeCreditSentence, offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
-import { healthCheck } from "../../content/offer";
+import { healthCheck, taxLine } from "../../content/offer";
 
 type PriceBlockProps = {
   offer: OfferKey;
@@ -60,6 +60,8 @@ export function PriceBlock({
         <span className="font-semibold">Payment: </span>
         {data.payment}.
       </p>
+
+      {offer === "healthCheck" && <p className="mt-2 t-small text-muted">{taxLine}</p>}
 
       {feeCredit && (
         <p className="mt-4 border-t border-line pt-4 t-small text-ink">

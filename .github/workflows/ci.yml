@@ -1,5 +1,6 @@
 # Checks every pull request (September port PRD, Epic 7 and review decision 5): types, lint, unit tests, build,
-# the full-site scan for retired terms and claims, the Playwright suite with screenshots, and the preview-only
+# the full-site scan for retired terms and claims, Lighthouse accessibility, the Playwright suite with screenshots
+# (and the two "Before you book" PDFs checked with pdftotext), and the preview-only
 # diagram review page. Nothing here deploys; .github/workflows/azure-deploy.yml deploys on merge to main.
 name: CI
 
@@ -54,8 +55,15 @@ jobs:
       - name: Leak scan
         run: npm run leak-scan
 
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Install Chromium and pdftotext
+        run: |
+          npx playwright install --with-deps chromium
+          sudo apt-get install -y poppler-utils
+
+      - name: Lighthouse accessibility (home, About, pricing; 90 or more)
+        run: CHROME_PATH="$(node -e "console.log(require('playwright').chromium.executablePath())")" node scripts/lighthouseA11y.mjs
+        env:
+          LH_URL: http://localhost:3100
 
       - name: Playwright (production build)
         run: npm run test:e2e

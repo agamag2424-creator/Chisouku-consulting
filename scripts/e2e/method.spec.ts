@@ -13,7 +13,7 @@ for (const viewport of [
     test("shows the PMO Health Scorecard, the five checks and no old method", async ({ page }) => {
       const response = await page.goto(url);
       expect(response?.status()).toBe(200);
-      await expect(page.getByRole("heading", { level: 1 })).toHaveText("The PMO Health Scorecard: ten dimensions, scored on evidence.");
+      await expect(page.getByRole("heading", { level: 1 })).toHaveText("The PMO Health Scorecard: ten dimensions, scored on evidence");
       for (const level of ["Ad hoc", "Emerging", "Defined", "Measured", "Improving"]) {
         await expect(page.getByText(level, { exact: true }).first()).toBeVisible();
       }

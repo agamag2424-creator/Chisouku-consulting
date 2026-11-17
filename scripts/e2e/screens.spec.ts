@@ -11,6 +11,7 @@ const shots = [
   { name: "home-desktop", path: "/", width: 1280 },
   { name: "home-mobile", path: "/", width: 375 },
   { name: "pricing-desktop", path: "/pricing", width: 1280 },
+  { name: "about-desktop", path: "/about", width: 1280 },
   { name: "self-check-desktop", path: "/pmo-self-check", width: 1280 },
 ];
 

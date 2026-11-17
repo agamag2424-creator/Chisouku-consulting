@@ -9,6 +9,7 @@ const legalPaths = new Set([
   "/terms",
   "/refund-policy",
   "/shipping-policy",
+  "/payment-terms",
   "/contact",
   "/about",
 ]);

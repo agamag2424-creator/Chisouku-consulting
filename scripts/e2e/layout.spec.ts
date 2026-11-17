@@ -6,11 +6,11 @@ const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "
 const callUrl =
   "https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=";
 
-test("header and hero: Book a 20-minute call, then the PMO self-check", async ({ page }) => {
+test("header and hero: Arrange a 20-minute call, then the PMO self-check", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(base + "/");
 
-  const header = page.getByRole("banner").getByRole("link", { name: "Book a 20-minute call" });
+  const header = page.getByRole("banner").getByRole("link", { name: "Arrange a 20-minute call" });
   await expect(header).toBeVisible();
   await expect(header).toHaveAttribute("href", callUrl + "header");
   await expect(header).toHaveAttribute("target", "_blank");
@@ -18,7 +18,7 @@ test("header and hero: Book a 20-minute call, then the PMO self-check", async ({
   await expect(header).toHaveAttribute("data-cta", "book_call");
 
   const hero = page.locator("main > section").first();
-  const heroCall = hero.getByRole("link", { name: "Book a 20-minute call" });
+  const heroCall = hero.getByRole("link", { name: "Arrange a 20-minute call" });
   const heroSelfCheck = hero.getByText("Take the PMO self-check (5 minutes)");
   await expect(heroCall).toHaveAttribute("href", callUrl + "hero");
   await expect(heroCall).toHaveAttribute("target", "_blank");
@@ -26,7 +26,7 @@ test("header and hero: Book a 20-minute call, then the PMO self-check", async ({
   await expect(heroCall).toHaveAttribute("data-cta", "book_call");
   await expect(heroSelfCheck).toBeVisible();
   const order = await hero.locator(".hero-actions a, .hero-actions span").evaluateAll((nodes) => nodes.map((node) => node.textContent?.trim()));
-  expect(order.slice(0, 2)).toEqual(["Book a 20-minute call", "Take the PMO self-check (5 minutes)"]);
+  expect(order.slice(0, 2)).toEqual(["Arrange a 20-minute call", "Take the PMO self-check (5 minutes)"]);
   await expect(heroCall).toHaveAttribute("data-cta-variant", "primary");
 });
 
@@ -34,16 +34,16 @@ test("hero calls stay inside the viewport at 390px", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(base + "/");
   const hero = page.locator("main > section").first();
-  await expect(hero.getByRole("link", { name: "Book a 20-minute call" })).toBeVisible();
+  await expect(hero.getByRole("link", { name: "Arrange a 20-minute call" })).toBeVisible();
   await expect(hero.getByText("Take the PMO self-check (5 minutes)")).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(1);
 });
 
-test("mobile menu: Book a 20-minute call opens the header Calendly link", async ({ page }) => {
+test("mobile menu: Arrange a 20-minute call opens the header Calendly link", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(base + "/");
   await page.getByRole("button", { name: "Open menu" }).click();
-  const call = page.getByRole("dialog").getByRole("link", { name: "Book a 20-minute call" });
+  const call = page.getByRole("dialog").getByRole("link", { name: "Arrange a 20-minute call" });
   await expect(call).toBeVisible();
   await expect(call).toHaveAttribute("href", callUrl + "header");
   await expect(call).toHaveAttribute("target", "_blank");
@@ -62,4 +62,27 @@ test("footer: brand, Site, Legal and Contact, with no market or guide column", a
   await expect(page.locator("footer")).not.toContainText("Markets");
   await expect(page.locator("footer")).not.toContainText("Guides");
   await expect(page.locator("footer")).toContainText("© 2026 ChisokuLab Private Limited. All rights reserved.");
+  // Refund and Shipping are grouped under one "Payment terms" link; both pages stay (Razorpay needs them).
+  const legal = page.locator("footer");
+  await expect(legal.getByRole("link", { name: "Payment terms" })).toHaveAttribute("href", "/payment-terms");
+  await expect(legal.getByRole("link", { name: /Refund|Shipping/ })).toHaveCount(0);
+  await page.goto(base + "/payment-terms");
+  await expect(page.locator("main").getByRole("link", { name: /Refund and Cancellation Policy/ })).toHaveAttribute("href", "/refund-policy");
+  await expect(page.locator("main").getByRole("link", { name: /Shipping and Delivery Policy/ })).toHaveAttribute("href", "/shipping-policy");
+});
+
+const companyLine =
+  "ChisokuLabs is a trading name of ChisokuLab Private Limited, a company registered in India, CIN U62099UP2025PTC237187. Registered office: 190X/6/1, Kalindipuram, Prayagraj, Uttar Pradesh 211011, India.";
+
+test("footer company line is on every page, above the copyright", async ({ request }) => {
+  const config = await (await request.get(base + "/sitemap.xml")).text();
+  const paths = [...config.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1].replace("https://www.chisokulabs.com", "") || "/");
+  expect(paths.length).toBeGreaterThan(10);
+  for (const path of paths) {
+    const html = await (await request.get(base + path)).text();
+    const footer = html.slice(html.lastIndexOf("<footer"));
+    const text = footer.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
+    expect(text, path).toContain(companyLine);
+    expect(text.indexOf(companyLine), path).toBeLessThan(text.indexOf("© 2026"));
+  }
 });

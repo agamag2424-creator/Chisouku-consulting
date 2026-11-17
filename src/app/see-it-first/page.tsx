@@ -19,7 +19,7 @@ const statusStyle = {
 
 function SampleBadge() {
   return (
-    <span className="inline-block rounded-[2px] border border-gold-ink/40 bg-[rgba(168,146,95,0.1)] px-2 py-1 font-[family-name:var(--font-mono)] text-[12px] font-bold uppercase tracking-[0.1em] text-gold-ink">
+    <span className="inline-block rounded-[2px] border border-gold-ink/40 bg-[rgba(168,146,95,0.1)] px-2 py-1 label text-gold-ink">
       {sampleLabel}
     </span>
   );
@@ -65,14 +65,14 @@ export default function SeeItFirstPage() {
         <div className="artifact-sheet paper-grain ink-corners mt-8 overflow-hidden" data-sample="scorecard">
           <div className="grid gap-4 border-b border-ink/10 p-5 min-[800px]:grid-cols-3 md:p-7">
             <div>
-              <p className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.12em] text-muted">Overall band</p>
-              <p className="mt-1 font-[family-name:var(--font-display)] text-2xl font-bold">
+              <p className="label text-muted">Overall band</p>
+              <p className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold">
                 {sampleSummary.band} <span className="text-[16px] text-muted">({sampleSummary.overall})</span>
               </p>
             </div>
             <div>
-              <p className="font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.12em] text-muted">Flagged</p>
-              <p className="mt-1 font-[family-name:var(--font-display)] text-xl font-bold">{sampleSummary.flagged.join(", ")}</p>
+              <p className="label text-muted">Flagged</p>
+              <p className="mt-1 font-[family-name:var(--font-display)] text-xl font-semibold">{sampleSummary.flagged.join(", ")}</p>
             </div>
             <p className="t-small text-ink">{sampleSummary.headline}</p>
           </div>
@@ -80,7 +80,7 @@ export default function SeeItFirstPage() {
             <table className="w-full min-w-[720px] border-collapse text-left text-[15px]">
               <caption className="sr-only">{`Sample PMO Health Scorecard for ${sampleOrganisation.name}`}</caption>
               <thead>
-                <tr className="border-b border-ink/15 font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-[0.12em] text-muted">
+                <tr className="border-b border-ink/15 label text-muted">
                   <th scope="col" className="px-5 py-3 font-bold md:px-7">Dimension</th>
                   <th scope="col" className="px-3 py-3 font-bold">Level</th>
                   <th scope="col" className="px-3 py-3 font-bold">Evidence seen</th>
@@ -118,7 +118,7 @@ export default function SeeItFirstPage() {
         <ol className="mt-8 grid gap-3" data-sample="fix-plan">
           {sampleFixPlan.map((item, index) => (
             <li key={item.action} className="panel grid gap-3 p-5 min-[900px]:grid-cols-[150px_minmax(0,1.4fr)_minmax(0,0.6fr)_minmax(0,1fr)] min-[900px]:gap-6">
-              <p className="font-[family-name:var(--font-mono)] text-[13px] font-bold uppercase tracking-[0.08em] text-teal">
+              <p className="label text-gold-ink">
                 {String(index + 1).padStart(2, "0")} · {item.when}
               </p>
               <p className="text-[16px] font-semibold text-ink">{item.action}</p>

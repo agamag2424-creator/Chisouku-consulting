@@ -76,7 +76,7 @@ export function PmoSelfCheck() {
         }}
         data-step={dimension.id}
       >
-        <p className="font-[family-name:var(--font-mono)] text-[12px] font-bold uppercase tracking-[0.14em] text-teal">
+        <p className="label text-gold-ink">
           Dimension {stage.index + 1} of {dimensions.length}
         </p>
         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-ink/10" aria-hidden>
@@ -246,7 +246,7 @@ function Result({
         <h3 id="scores-h" className="t-h3 text-ink">Your scores by dimension</h3>
         <table className="mt-4 w-full max-w-[720px] border-collapse text-left text-[16px]">
           <thead>
-            <tr className="border-b border-ink/20 font-[family-name:var(--font-mono)] text-[12px] uppercase tracking-[0.1em] text-muted">
+            <tr className="border-b border-ink/20 label text-muted">
               <th scope="col" className="py-2 pr-4 font-bold">Dimension</th>
               <th scope="col" className="py-2 font-bold">Score</th>
             </tr>

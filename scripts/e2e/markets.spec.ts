@@ -9,13 +9,13 @@ const pages = [
 ];
 
 for (const market of pages) {
-  test(`${market.path}: the ladder and the three problems, indexed, prices in USD`, async ({ page, request }) => {
+  test(`${market.path}: the ladder and the three problems, indexed, prices in GBP`, async ({ page, request }) => {
     const response = await page.goto(base + market.path);
     expect(response?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(market.h1);
     await expect(page.locator("[data-ladder-step]")).toHaveCount(3);
-    await expect(page.getByText("USD 500").first()).toBeVisible();
-    await expect(page.getByText("USD 5,000").first()).toBeVisible();
+    await expect(page.getByText("£395").first()).toBeVisible();
+    await expect(page.getByText("£3,950").first()).toBeVisible();
     await expect(page.getByText("RAID logs nobody acts on").first()).toBeVisible();
     const body = await page.locator("main").innerText();
     expect(body).not.toMatch(/go-live|readiness|e-invoicing|ZATCA|Fatoora|briefing/i);

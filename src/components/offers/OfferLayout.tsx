@@ -4,6 +4,7 @@ import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 import { JsonLdScript } from "../aeo/JsonLdScript";
 import { PrincipalBlock } from "../trust/PrincipalBlock";
+import { BeforeYouBook } from "./BeforeYouBook";
 import { Button } from "../ui/Button";
 import { PriceBlock } from "../ui/PriceBlock";
 import { Section } from "../ui/Section";
@@ -46,6 +47,7 @@ export type OfferBlock =
     }
   | { kind: "price" }
   | { kind: "wayIn"; title: string; text: string; note: string }
+  | { kind: "beforeYouBook" }
   | { kind: "notIncluded"; title: string; items: readonly string[] };
 
 type OfferLayoutProps = { offer: FixedOffer; lead: string; blocks: readonly OfferBlock[]; eyebrow?: string };
@@ -156,6 +158,8 @@ function Block({ offer, block }: { offer: FixedOffer; block: OfferBlock }) {
           <PriceBlock offer={offer} className="p-6 min-[641px]:p-8" />
         </div>
       );
+    case "beforeYouBook":
+      return <BeforeYouBook />;
     case "wayIn":
       return (
         <div className="grid gap-8 min-[900px]:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] min-[900px]:items-center min-[900px]:gap-16">

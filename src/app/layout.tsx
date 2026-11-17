@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Libre_Franklin, Source_Sans_3 } from "next/font/google";
+import { IBM_Plex_Mono, Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import "../styles/globals.css";
 import { JsonLdScript } from "../components/aeo/JsonLdScript";
 import { Nav } from "../components/layout/Nav";
@@ -12,12 +12,12 @@ import { CtaTracker } from "../components/analytics/CtaTracker";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 
-// September 2026 type: Libre Franklin for headings, Source Sans 3 for text, IBM Plex Mono for labels and data.
-const libreFranklin = Libre_Franklin({
+// Type (change 4): Source Serif 4 for headings, Source Sans 3 for text, IBM Plex Mono for calculator and scorecard numbers.
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  weight: ["600", "700", "800"],
+  weight: ["600", "700"],
 });
 
 const sourceSans = Source_Sans_3({
@@ -77,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${libreFranklin.variable} ${sourceSans.variable} ${plexMono.variable}`}
+      className={`${sourceSerif.variable} ${sourceSans.variable} ${plexMono.variable}`}
     >
       <body className="antialiased">
         <JsonLdScript id="chisokulabs-org-ld-json" data={organizationJsonLd()} />

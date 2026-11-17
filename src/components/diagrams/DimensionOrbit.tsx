@@ -28,10 +28,10 @@ export function DimensionOrbit({ className, flagged = [], centreTitle, stacked =
           <circle cx="210" cy="210" r={R} fill="none" stroke="rgba(17,24,32,0.14)" strokeWidth="1.5" />
           <circle cx="210" cy="210" r="66" fill="#111820" />
           <circle cx="210" cy="210" r="74" fill="none" stroke="rgba(0,166,200,0.45)" strokeWidth="2" />
-          <text x="210" y="206" textAnchor="middle" fill="#FFFDF8" fontFamily="var(--font-display), sans-serif" fontSize={centreTitle ? 12.5 : 15} fontWeight="700">
+          <text x="210" y="206" textAnchor="middle" fill="#FFFDF8" fontFamily="var(--font-display), sans-serif" fontSize={centreTitle ? 12.5 : 15} fontWeight="600">
             {centreTitle ?? dimensionOrbit.centreTitle}
           </text>
-          <text x="210" y="226" textAnchor="middle" fill="#C7CED3" fontFamily="var(--font-mono), monospace" fontSize="10" fontWeight="700">
+          <text x="210" y="226" textAnchor="middle" fill="#C7CED3" fontFamily="var(--font-body), sans-serif" fontSize="10" fontWeight="700">
             {dimensionOrbit.centreSub}
           </text>
           {dimensions.map((d, i) => {
@@ -42,7 +42,7 @@ export function DimensionOrbit({ className, flagged = [], centreTitle, stacked =
             return (
               <g key={d.id} transform={`translate(${x.toFixed(1)} ${y.toFixed(1)})`}>
                 <circle r="19" fill={isFlagged ? "#F8E5E5" : "rgba(255,253,248,0.97)"} stroke={isFlagged ? "#B23B3B" : "rgba(17,24,32,0.25)"} strokeWidth={isFlagged ? 2 : 1.5} />
-                <text y="5" textAnchor="middle" fill={isFlagged ? "#B23B3B" : "#111820"} fontFamily="var(--font-mono), monospace" fontSize="14" fontWeight="700">
+                <text y="5" textAnchor="middle" fill={isFlagged ? "#B23B3B" : "#111820"} fontFamily="var(--font-body), sans-serif" fontSize="14" fontWeight="700">
                   {d.id}
                 </text>
               </g>
@@ -54,7 +54,7 @@ export function DimensionOrbit({ className, flagged = [], centreTitle, stacked =
           <ol className={cn("grid gap-x-4 gap-y-1.5 text-[15px] text-ink min-[480px]:grid-cols-2", !stacked && "min-[900px]:grid-cols-1")}>
             {dimensions.map((d) => (
               <li key={d.id} className="flex gap-2">
-                <span className="w-4 shrink-0 font-[family-name:var(--font-mono)] text-[13px] font-bold text-teal">{d.id}</span>
+                <span className="w-4 shrink-0 font-[family-name:var(--font-body)] text-[13px] font-bold text-teal">{d.id}</span>
                 <span>
                   {d.name}
                   {flagged.includes(d.id) && <span className="ml-1 font-semibold text-ev-miss">(flagged)</span>}

@@ -7,7 +7,7 @@ const pages = [
   {
     path: "/pmo-health-check",
     h1: "PMO Health Check",
-    list: "USD 500",
+    list: "£395",
     founding: null,
     steps: ["Documents arrive; the three interviews are booked", "Evidence review and the three short interviews", "Scorecard, top findings and the 30-day fix plan written", "45-minute readout"],
     sequenceTitle: "Five working days after documents arrive",
@@ -17,8 +17,8 @@ const pages = [
   {
     path: "/pmo-health-audit",
     h1: "PMO Health Audit",
-    list: "USD 5,000",
-    founding: "USD 2,500",
+    list: "£3,950",
+    founding: "£1,950",
     steps: ["Kickoff and document request", "Evidence review across the portfolio", "Interviews", "Scorecard and fix plan written", "Sponsor readout"],
     sequenceTitle: "Capped at 5 working days",
     navLabel: "Audit",
@@ -48,10 +48,10 @@ for (const offer of pages) {
       });
     }
 
-    test("hero: Book a 20-minute call, then the PMO self-check", async ({ page }) => {
+    test("hero: Arrange a 20-minute call, then the PMO self-check", async ({ page }) => {
       await page.goto(base + offer.path);
       const hero = page.locator("main > section").first();
-      const book = hero.getByRole("link", { name: "Book a 20-minute call" });
+      const book = hero.getByRole("link", { name: "Arrange a 20-minute call" });
       await expect(book).toHaveAttribute(
         "href",
         `https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=${offer.content}`,
@@ -68,7 +68,8 @@ for (const offer of pages) {
       const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
       const service = ld.map((json) => JSON.parse(json)).find((data) => data["@type"] === "Service");
       expect(service.name).toBe(offer.h1);
-      expect(service.offers.price).toBe(offer.path.endsWith("check") ? 500 : 5000);
+      expect(service.offers.price).toBe(offer.path.endsWith("check") ? 395 : 3950);
+      expect(service.offers.priceCurrency).toBe("GBP");
       expect(service.areaServed).toEqual(["United Kingdom", "United Arab Emirates", "Saudi Arabia"]);
     });
   });

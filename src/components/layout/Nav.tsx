@@ -78,7 +78,7 @@ export function Nav() {
         >
           <Link href="/" className="flex items-center gap-3" aria-label="ChisokuLabs home">
             <BrandMark className="h-9 w-9" />
-            <span className="font-[family-name:var(--font-display)] text-[20px] font-bold tracking-[-0.03em] text-ink">
+            <span className="font-[family-name:var(--font-display)] text-[20px] font-semibold tracking-[-0.03em] text-ink">
               ChisokuLabs
             </span>
           </Link>
@@ -133,7 +133,7 @@ export function Nav() {
           className="fixed inset-0 z-[200] flex flex-col bg-page text-ink"
         >
           <div className="flex h-20 items-center justify-between border-b border-line px-[var(--content-padding-x-mobile)]">
-            <span className="font-[family-name:var(--font-display)] text-[20px] font-bold tracking-[-0.03em]">
+            <span className="font-[family-name:var(--font-display)] text-[20px] font-semibold tracking-[-0.03em]">
               ChisokuLabs
             </span>
             <button
@@ -159,7 +159,7 @@ export function Nav() {
                       onClick={() => setOpen(false)}
                       aria-current={isActive(link.href) ? "page" : undefined}
                       className={cn(
-                        "block py-4 font-[family-name:var(--font-display)] text-[24px] font-bold tracking-[-0.02em]",
+                        "block py-4 font-[family-name:var(--font-display)] text-[24px] font-semibold tracking-[-0.02em]",
                         isActive(link.href) ? "text-ink" : "text-muted hover:text-ink",
                       )}
                     >

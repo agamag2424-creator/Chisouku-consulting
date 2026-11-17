@@ -167,29 +167,29 @@ body {
   .t-h1,
   .t-h2,
   .t-h3 {
-    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-display), Georgia, "Times New Roman", serif;
     text-wrap: balance;
   }
 
   .t-display {
     font-size: 36px;
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
   }
 
   .t-h1 {
     font-size: 32px;
-    font-weight: 700;
-    line-height: 1.12;
-    letter-spacing: -0.015em;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
   }
 
   .t-h2 {
     font-size: 26px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    line-height: 1.22;
+    letter-spacing: 0;
   }
 
   .t-h3 {
@@ -266,15 +266,21 @@ footer :focus-visible,
 
 
 /* September 2026 surfaces and diagram styles (ported from c2aa1d9). Accent text uses --color-teal (AA). */
+/* Calmer labels (change 4): sentence case, body font, small, gold or muted grey. Mono is for numbers only. */
 .eyebrow {
-  margin-bottom: 14px;
-  color: var(--color-teal);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  margin-bottom: 12px;
+  color: var(--color-gold-ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
   line-height: 1.4;
-  text-transform: uppercase;
+}
+
+.label {
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .glass-canvas,
@@ -1084,4 +1090,19 @@ footer :focus-visible,
   body {
     background: #fff;
   }
+}
+
+/* Screen-reader-only text (change 5): Tailwind's sr-only uses clip-path alone; the legacy clip and the explicit size
+   keep it hidden in browsers and views that ignore clip-path, and it is still read out. */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }

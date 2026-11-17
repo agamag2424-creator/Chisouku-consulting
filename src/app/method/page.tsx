@@ -44,7 +44,7 @@ export default function MethodPage() {
 
       <Section className="report-cover">
         <p className="eyebrow">Method</p>
-        <h1 className="t-h1 max-w-[22ch] text-ink">The PMO Health Scorecard: ten dimensions, scored on evidence.</h1>
+        <h1 className="t-h1 max-w-[22ch] text-ink">The PMO Health Scorecard: ten dimensions, scored on evidence</h1>
         <p className="t-body mt-5 max-w-[62ch] text-muted">
           The free self-check scores the ten dimensions from your own answers. The PMO Health Check fills the same ten in
           with evidence from your documents and three short interviews.
@@ -67,7 +67,7 @@ export default function MethodPage() {
             <dl className="mt-8 grid gap-3">
               {levels.map((level, index) => (
                 <div key={level} className="grid grid-cols-[28px_120px_minmax(0,1fr)] gap-3 border-t border-line pt-3">
-                  <dt className="font-[family-name:var(--font-mono)] text-[14px] font-bold text-teal">{index + 1}</dt>
+                  <dt className="font-[family-name:var(--font-body)] text-[14px] font-bold text-teal">{index + 1}</dt>
                   <dt className="font-semibold text-ink">{level}</dt>
                   <dd className="text-[16px] text-muted">{levelMeanings[level]}</dd>
                 </div>
@@ -98,7 +98,7 @@ export default function MethodPage() {
         <ol className="mt-10 grid gap-3 min-[900px]:grid-cols-5">
           {fiveChecks.map((check, index) => (
             <li key={check.name} className="panel p-5">
-              <p className="font-[family-name:var(--font-mono)] text-[12px] font-bold text-teal">0{index + 1}</p>
+              <p className="font-[family-name:var(--font-body)] text-[12px] font-bold text-teal">0{index + 1}</p>
               <p className="t-h3 mt-2 text-ink">{check.name}</p>
               <p className="t-small mt-2 text-muted">{check.text}</p>
             </li>

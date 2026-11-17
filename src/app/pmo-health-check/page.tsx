@@ -31,14 +31,10 @@ const blocks: readonly OfferBlock[] = [
   {
     kind: "sequence",
     title: "Five working days after documents arrive",
-    steps: [
-      { from: 1, to: 1, text: "Documents arrive; the three interviews are booked" },
-      { from: 2, to: 3, text: "Evidence review and the three short interviews" },
-      { from: 4, to: 4, text: "Scorecard, top findings and the 30-day fix plan written" },
-      { from: 5, to: 5, text: "45-minute readout" },
-    ],
+    steps: healthCheck.steps,
   },
   { kind: "price" },
+  { kind: "beforeYouBook" },
   {
     kind: "notIncluded",
     title: "What it is not",

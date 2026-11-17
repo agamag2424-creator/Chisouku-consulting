@@ -8,8 +8,8 @@ test("finds forbidden terms whole-word and case-insensitively, including inside 
   // Allowed since the September port PRD: the calculator heading and the employer names in the background line.
   assert.equal(scan("What your PMO reporting costs today").length, 0);
   assert.equal(scan("Employed at Yamaha, Etihad, HCLTech and Coforge.").length, 0);
-  assert.deepEqual(scan("https://example.com/agam-agrawwal-cv").map((hit) => hit.term.toLowerCase()), ["agam", "agrawwal"]);
-  assert.deepEqual(scan("https://calendly.com/agam-agrawwal").map((hit) => hit.term.toLowerCase()), ["agam", "agrawwal"]);
+  // Allowed since change 1 (17 Nov 2026): the founder is named, with his LinkedIn.
+  assert.equal(scan("Agam Agrawwal, Founder and Director. https://www.linkedin.com/in/agamagrawwal").length, 0);
   assert.equal(scan("https://calendly.com/chisokulabs/discovery-call").length, 0);
   assert.equal(scan(".drag-slider { }").length, 1);
   assert.equal(scan("dragon fruit").length, 0);
@@ -17,7 +17,7 @@ test("finds forbidden terms whole-word and case-insensitively, including inside 
 
 test("reviewed phrases are allowed: the role address passes, the old address is flagged, and negations of guarantee pass", () => {
   assert.equal(scan("Email hello@chisokulabs.com today").length, 0);
-  assert.deepEqual(scan("Email agam@chisokulabs.com today").map((hit) => hit.term.toLowerCase()), ["agam"]);
+  assert.deepEqual(scan("Email agam@chisokulabs.com today").map((hit) => hit.term.toLowerCase()), ["agam@chisokulabs.com"]);
   assert.equal(scan("The review does not guarantee go-live success.").length, 0);
   assert.equal(scan('{"id":"guarantee"} and \\"guarantee\\"').length, 0);
   assert.equal(scan("We guarantee success.").length, 1);
