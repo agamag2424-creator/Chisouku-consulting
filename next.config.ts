@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 
+// Snapshot branch only. This comment gives the September tree a new commit
+// so Vercel builds a preview. The September SHA already had a deployment
+// status, and that deployment is no longer available.
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com",
