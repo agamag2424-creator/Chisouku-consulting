@@ -26,7 +26,7 @@ export const siteConfig = {
   heroSub: "A fixed-price PMO Health Check finds which one is yours, with evidence, in five working days.",
   footerTagline:
     "Fixed-price PMO Health Checks and Audits for organisations running a PMO. UK first; the UAE and Saudi Arabia too.",
-  markets: { primary: "United Kingdom", secondary: "United Arab Emirates" },
+  markets: { primary: "United Kingdom", others: ["United Arab Emirates", "Saudi Arabia"] },
   /** Homepage strip. Not a vendor list. */
   homeStrip: ["Governance", "RAID", "Reporting", "Cadence", "Portfolio"],
   currency: "USD",
@@ -59,13 +59,6 @@ export const siteConfig = {
   },
   feeCreditDays: 60,
   foundingSlotsRemaining: 3,
-  /** The 12-question check stays reachable for old links. It is not linked or indexed. */
-  selfCheck: { live: true, url: null as string | null },
-  samplePackPath: "/documents/chisokulabs-go-live-decision-pack-illustrative.pdf",
-  slipEstimator: {
-    defaults: { people: 40, dayRate: 600, weeks: 4, parallelRunMonthly: 0 },
-    workingDaysPerWeek: 5,
-  },
   principalBlock: true,
 } as const;
 
@@ -127,23 +120,14 @@ export const routeLive = {
   "/see-it-first": true,
   "/pricing": true,
   "/independence-and-data": true,
-  "/go-live-readiness-uae": true,
-  "/go-live-readiness-saudi-arabia": true,
-  "/guides/s4hana-go-no-go-checklist": true,
-  "/guides/is-my-erp-ready-to-go-live": true,
-  "/guides/independent-assurance-vs-si-readiness-review": true,
+  "/pmo-uae": true,
+  "/pmo-saudi-arabia": true,
   "/pmo-self-check": true,
   "/pmo-self-check/methodology": true,
 } as const;
 
 /** Live pages that stay reachable but are unlinked, noindexed and left out of the sitemap. */
-export const routeUnlisted = {
-  "/go-live-readiness-uae": true,
-  "/go-live-readiness-saudi-arabia": true,
-  "/guides/s4hana-go-no-go-checklist": true,
-  "/guides/is-my-erp-ready-to-go-live": true,
-  "/guides/independent-assurance-vs-si-readiness-review": true,
-} as const;
+export const routeUnlisted = {} as const satisfies Partial<Record<string, true>>;
 
 export type SiteRoute = keyof typeof routeLive;
 
@@ -155,8 +139,8 @@ export function isRouteLive(href: string): boolean {
 
 /** True when a live route should appear in nav, footer, sitemap and llms.txt. */
 export function isRouteListed(href: string): boolean {
-  const path = href.split(/[?#]/)[0] as keyof typeof routeUnlisted;
-  return isRouteLive(href) && !routeUnlisted[path];
+  const path = href.split(/[?#]/)[0];
+  return isRouteLive(href) && !(path in routeUnlisted);
 }
 
 /**

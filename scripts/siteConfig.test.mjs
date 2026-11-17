@@ -27,7 +27,7 @@ test("defaults come from config", () => {
 });
 
 test("isRouteLive ignores query and hash, and rejects unknown paths", () => {
-  assert.equal(isRouteLive("/contact?request=brief"), routeLive["/contact"]);
+  assert.equal(isRouteLive("/contact?request=pricing"), routeLive["/contact"]);
   assert.equal(isRouteLive("/see-it-first#sample-pack"), routeLive["/see-it-first"]);
   assert.equal(isRouteLive("/not-a-route"), false);
 });

@@ -44,7 +44,7 @@ test("cta_click carries the CTA id, the page and its placement", async ({ page }
 });
 
 test("every button-style link in main has a CTA id", async ({ page }) => {
-  for (const route of ["/", "/see-it-first", "/pricing", "/pmo-health-audit", "/go-live-readiness-uae"]) {
+  for (const route of ["/", "/see-it-first", "/pricing", "/pmo-health-audit", "/pmo-uae", "/pmo-self-check"]) {
     await page.goto(base + route);
     expect(await page.locator("main a[class*='rounded-control']:not([data-cta])").count(), route).toBe(0);
   }

@@ -21,15 +21,11 @@ const listed = [
   "/shipping-policy",
   "/pmo-self-check",
   "/pmo-self-check/methodology",
+  "/pmo-uae",
+  "/pmo-saudi-arabia",
 ];
 
-const unlisted = [
-  "/go-live-readiness-uae",
-  "/go-live-readiness-saudi-arabia",
-  "/guides/s4hana-go-no-go-checklist",
-  "/guides/is-my-erp-ready-to-go-live",
-  "/guides/independent-assurance-vs-si-readiness-review",
-];
+const unlisted: string[] = [];
 
 const decode = (text: string) => text.replace(/&amp;/g, "&").replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"');
 
@@ -50,7 +46,7 @@ for (const route of [...listed, ...unlisted]) {
     expect(org.description).toBe(
       "Fixed-price PMO Health Checks and Audits: a free PMO self-check, a USD 500 PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio.",
     );
-    expect(org.areaServed).toEqual(["United Kingdom", "United Arab Emirates"]);
+    expect(org.areaServed).toEqual(["United Kingdom", "United Arab Emirates", "Saudi Arabia"]);
     expect(org.legalName).toBe("ChisokuLab Private Limited");
     expect(JSON.stringify(org)).not.toMatch(/founder/i);
     if (route === "/privacy") {
@@ -73,7 +69,8 @@ test("llms.txt names the PMO offers and the published prices", async ({ request 
     expect(text).not.toMatch(/Readiness Evidence Check|Go-Live Decision Review/);
   }
   expect(full).toContain("## FAQ");
-  expect(full).toContain("HEALTH-5");
+  expect(full).toContain("PMO self-check");
+  expect(full).not.toMatch(/HEALTH-5|Needs attention/);
 });
 
 test("sitemap lists the indexed routes only; robots disallows /_ui and points at www", async ({ request }) => {
@@ -86,10 +83,11 @@ test("sitemap lists the indexed routes only; robots disallows /_ui and points at
   expect(robots).toContain("Host: https://www.chisokulabs.com");
 });
 
-test("offers, method and see-it-first have their own 1200x630 share image", async ({ request, page }) => {
+test("offers, the self-check, method and see-it-first have their own 1200x630 share image", async ({ request, page }) => {
   const images: Record<string, string> = {
-    "/pmo-health-check": "/og-evidence-check.png",
-    "/pmo-health-audit": "/og-decision-review.png",
+    "/pmo-health-check": "/og-health-check.png",
+    "/pmo-health-audit": "/og-health-audit.png",
+    "/pmo-self-check": "/og-self-check.png",
     "/method": "/og-method.png",
     "/see-it-first": "/og-see-it-first.png",
     "/": "/og.png",

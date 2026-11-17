@@ -5,9 +5,8 @@ import { routeRenders } from "../../lib/siteConfig";
 
 const market = markets.uae;
 
-export const metadata = routeRenders(market.path)
-  ? { ...marketMetadata(market), robots: { index: false, follow: true } }
-  : { robots: { index: false, follow: false } };
+// Indexed and listed (September port PRD, Story 6.1): rewritten to the same ladder as the UK pages.
+export const metadata = routeRenders(market.path) ? marketMetadata(market) : { robots: { index: false, follow: false } };
 
 export default function UaeMarketPage() {
   if (!routeRenders(market.path)) notFound();

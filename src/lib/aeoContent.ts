@@ -139,19 +139,24 @@ export const glossaryTerms: GlossaryTerm[] = [
       "Ten dimensions, from governance and decision rights to PMO value perception, each scored from Ad hoc to Improving. The free self-check scores them from your answers; the Health Check fills them in with evidence.",
   },
   {
-    id: "healthy",
-    term: "Healthy",
-    definition: "The evidence supports the status being reported.",
+    id: "pmo-self-check",
+    term: "PMO self-check",
+    definition:
+      "A free, five-minute online check that scores the ten scorecard dimensions from one person's answers. The answers stay in the browser. It is not an official or accredited assessment.",
+    related: { href: "/pmo-self-check", label: "Take the PMO self-check" },
   },
   {
-    id: "needs-attention",
-    term: "Needs attention",
-    definition: "Named gaps, owners and dates that must be closed first.",
+    id: "levels",
+    term: "Levels: Ad hoc to Improving",
+    definition:
+      "The five levels each dimension is placed on: Ad hoc, Emerging, Defined, Measured and Improving. They describe what happens in practice, not what the policy says.",
+    related: { href: "/method", label: "Method" },
   },
   {
-    id: "at-risk",
-    term: "At risk",
-    definition: "What is missing, and the 30-day fix plan to recover.",
+    id: "flagged-dimension",
+    term: "Flagged dimension",
+    definition:
+      "A dimension scoring 2.0 or below. It is flagged whatever the overall band, because one weak area can hold a PMO back even when the average looks fine.",
   },
   {
     id: "raid-log",
@@ -160,29 +165,28 @@ export const glossaryTerms: GlossaryTerm[] = [
       "A register of risks, assumptions, issues and dependencies, each with an owner and, where it is an action, a due date. A log that is up to date is not the same as a log that has been acted on.",
   },
   {
-    id: "health-5",
-    term: "HEALTH-5",
-    definition:
-      "The ChisokuLabs test for every critical status claim: Status, Owner, Evidence, Date and Action. A claim reported Green with 2 of 5 is an assumption, not a fact.",
-    related: { href: "/method", label: "How HEALTH-5 works" },
-  },
-  {
-    id: "contradiction-testing",
-    term: "Contradiction testing",
-    definition:
-      "Checking status claims against each other across projects, reports and forums. The most expensive risks sit between them, not inside any one of them.",
-    related: { href: "/method", label: "How HEALTH-5 works" },
-  },
-  {
     id: "status-evidence",
     term: "Status evidence",
     definition:
-      "An artefact that shows whether a reported status is true: a status pack, a RAID log, governance minutes or a plan. The score rests on the artefact, not on the colour in the pack.",
+      "A document that shows whether a reported status is true: a status pack, a RAID log, governance minutes, a plan or a forecast. The score rests on the document, not on the colour in the pack.",
   },
   {
-    id: "governance",
-    term: "Governance",
+    id: "late-red",
+    term: "Status that turns Red too late",
     definition:
-      "The forums, owners and decisions that run a programme or portfolio. A forum that met is not the same as a forum that decided.",
+      "Status reported Green until the week it is too late to change the outcome. It usually means there is no written rule for what makes a status Amber or Red.",
+  },
+  {
+    id: "decision-forum",
+    term: "Decision forum",
+    definition:
+      "A steering committee or board that can start, change or stop work. A forum that met is not the same as a forum that decided.",
+  },
+  {
+    id: "fix-plan",
+    term: "30-day fix plan",
+    definition:
+      "The actions that close the top findings, each with an owner, a date and the evidence that shows it is done.",
+    related: { href: "/see-it-first", label: "See a sample fix plan" },
   },
 ];

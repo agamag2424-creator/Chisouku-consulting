@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { ComparisonTable } from "../../components/compare/ComparisonTable";
-import { EvidenceCheckHero } from "../../components/hero/EvidenceCheckHero";
 import { Accordion } from "../../components/ui/Accordion";
 import { Button } from "../../components/ui/Button";
 import { Callout } from "../../components/ui/Callout";
@@ -73,15 +71,9 @@ export default function UiPage() {
         <header>
           <h1 className="t-h1 text-ink">UI components</h1>
           <p className="t-body mt-3 text-muted">
-            Internal reference for the decision-instrument system (E0.3). Not indexed, not in the sitemap.
+            Internal reference for the September design system. Diagrams are on /_ui/diagrams. Not indexed, not in the sitemap.
           </p>
         </header>
-
-        <Demo title="Hero Evidence Check">
-          <div className="max-w-[720px]">
-            <EvidenceCheckHero />
-          </div>
-        </Demo>
 
         <Demo title="Type scale">
           <div className="grid gap-3">
@@ -140,7 +132,7 @@ export default function UiPage() {
           <div className="grid gap-8">
             <DataTable
               id="ui-claims"
-              caption="Status claims scored on HEALTH-5. Illustrative example. Fictional programme."
+              caption="Status claims checked for status, owner, evidence, date and action. Illustrative example. Fictional programme."
               columns={[
                 { key: "id", header: "ID", rowHeader: true },
                 { key: "claim", header: "Claim as reported" },
@@ -181,13 +173,6 @@ export default function UiPage() {
             <PriceBlock offer="healthCheck" />
             <PriceBlock offer="healthAudit" />
             <PriceBlock offer="healthAudit" foundingSlotsRemaining={0} />
-          </div>
-        </Demo>
-
-        <Demo title="Comparison table">
-          <div className="grid gap-10">
-            <ComparisonTable id="ui-comparison" />
-            <ComparisonTable id="ui-comparison-compact" rows={4} />
           </div>
         </Demo>
 

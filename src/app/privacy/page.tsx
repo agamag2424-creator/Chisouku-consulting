@@ -60,7 +60,6 @@ export default function PrivacyPage() {
             <List
               items={[
                 "To reply to your enquiry.",
-                "To prepare a briefing you have asked for.",
                 "To provide the services you engage us for, under a written agreement.",
                 "To process payments, deliver your purchase, issue invoices and handle refunds.",
                 "To understand which pages and buttons are used, so we can improve the site.",

@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 const base = (process.env.HERO_URL ?? "http://localhost:3100/").replace(/\/$/, "");
 
-test("glossary: at least 15 terms, each reachable by #slug, DefinedTermSet JSON-LD", async ({ page }) => {
+test("glossary: 11 terms, each reachable by #slug, DefinedTermSet JSON-LD", async ({ page }) => {
   const response = await page.goto(base + "/glossary");
   expect(response?.status()).toBe(200);
   const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((text) => JSON.parse(text));
@@ -19,10 +19,11 @@ test("glossary: at least 15 terms, each reachable by #slug, DefinedTermSet JSON-
     expect(sentences).toBeLessThanOrEqual(3);
   }
 
-  await page.goto(base + "/glossary#health-5");
-  await expect(page.locator("#health-5")).toBeInViewport();
+  await page.goto(base + "/glossary#pmo-health-scorecard");
+  await expect(page.locator("#pmo-health-scorecard")).toBeInViewport();
 
   const html = await page.content();
-  expect(html).toMatch(/HEALTH-5/);
+  expect(html).toMatch(/PMO Health Scorecard/);
+  expect(html).not.toMatch(/HEALTH-5|Needs attention/);
   expect(html).not.toMatch(/pack cycle|reporting drag|AI Impact Model|READINESS-5/i);
 });

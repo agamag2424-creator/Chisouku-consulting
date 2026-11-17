@@ -1,26 +1,22 @@
 import type { Metadata } from "next";
 import type { Market } from "../../content/markets";
+import { headline, healthCheck, threeProblemsLine } from "../../content/offer";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { pageMetadata } from "../../lib/seo";
 import { JsonLdScript } from "../aeo/JsonLdScript";
-import { OfferPanels } from "../home/OfferPanels";
-import { SectionHead, offerCta } from "../offers/OfferSections";
-import { BookCallButton } from "../ui/BookCallButton";
-import { Button } from "../ui/Button";
+import { FindingsBoard } from "../diagrams/FindingsBoard";
+import { OfferLadder } from "../home/OfferLadder";
+import { OfferClosing, OfferCtas, SectionHead } from "../offers/OfferSections";
 import { Section } from "../ui/Section";
-import { Sheet } from "../ui/Sheet";
-
-/** Old briefing offer; this page is rewritten in Epic 6 of the September port. */
-const legacyBrief = { href: "/contact?request=brief", label: "Request a free briefing" } as const;
 
 const lead = (market: Market) =>
-  `A fixed-price, independent check of how programmes in ${market.inName} are governed, reported and run.`;
+  `${headline.sub} For organisations in ${market.inName} running a PMO.`;
 
 export function marketMetadata(market: Market): Metadata {
   return pageMetadata(market.path);
 }
 
-/** Unlisted market page. Same offer as the rest of the site. No vendor strip and no countdown. */
+/** UAE and Saudi Arabia pages: the same ladder and the same three problems as the UK pages. */
 export function MarketPage({ market }: { market: Market }) {
   return (
     <>
@@ -32,60 +28,33 @@ export function MarketPage({ market }: { market: Market }) {
         ])}
       />
 
-      <Section tone="ink">
-        <h1 className="t-h1 max-w-[16ch] text-paper">{market.name}</h1>
-        <p className="t-body mt-5 max-w-[46ch] text-paper/80">{lead(market)}</p>
-        <p className="t-small mt-4 max-w-[46ch] text-paper/70">{market.whyNow}</p>
-        <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
-          <Button href={legacyBrief.href} variant="inverse" size="lg">
-            {legacyBrief.label}
-          </Button>
-          <BookCallButton content="market_hero" variant="inverse-outline" />
-          <Button href={offerCta.review.href} variant="inverse-outline" size="lg">
-            {offerCta.review.label}
-          </Button>
+      <Section className="report-cover">
+        <p className="eyebrow">{market.country.name}</p>
+        <h1 className="t-h1 max-w-[20ch] text-ink">{market.name}</h1>
+        <p className="t-body mt-5 max-w-[56ch] text-muted">{lead(market)}</p>
+        <p className="t-small mt-3 max-w-[56ch] text-muted">{market.delivery}</p>
+        <div className="mt-8">
+          <OfferCtas content="market_hero" />
         </div>
       </Section>
 
       <Section tone="paper">
-        <SectionHead title="How you can start" />
-        <ul className="mt-10 grid gap-4 min-[900px]:grid-cols-3">
-          {market.programmes.map((item) => (
-            <li key={item.title}>
-              <Sheet className="flex h-full flex-col gap-2 p-6">
-                <span aria-hidden className="mb-2 block h-1 w-10 rounded-full bg-teal" />
-                <h3 className="t-h3 text-ink">{item.title}</h3>
-                <p className="t-small text-muted">{item.text}</p>
-              </Sheet>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      <Section tone="page">
-        <SectionHead title="How an engagement runs">
-          <p>Remote by default, on site by arrangement.</p>
+        <SectionHead title="Three problems we find in most PMOs">
+          <p>{threeProblemsLine}</p>
         </SectionHead>
-        <OfferPanels />
+        <FindingsBoard className="mt-10" />
       </Section>
 
-      <Section tone="ink">
-        <div className="flex flex-wrap items-end justify-between gap-8">
-          <div>
-            <h2 className="t-h2 max-w-[20ch] text-paper">A free one-page briefing on your programme</h2>
-            <p className="t-body mt-4 text-paper/75">Prepared from public information. We reply within two business days.</p>
-          </div>
-          <div className="flex w-full flex-col gap-3 min-[480px]:w-auto min-[480px]:flex-row min-[480px]:flex-wrap">
-            <Button href={legacyBrief.href} variant="inverse" size="lg">
-              {legacyBrief.label}
-            </Button>
-            <BookCallButton content="market_close" variant="inverse-outline" />
-            <Button href={offerCta.review.href} variant="inverse-outline" size="lg">
-              {offerCta.review.label}
-            </Button>
-          </div>
-        </div>
+      <Section>
+        <SectionHead title="Start free. Pay only for evidence.">
+          <p>
+            {healthCheck.scope}, {healthCheck.price}. {healthCheck.timing}.
+          </p>
+        </SectionHead>
+        <OfferLadder className="mt-10" />
       </Section>
+
+      <OfferClosing />
     </>
   );
 }

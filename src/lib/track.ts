@@ -13,7 +13,7 @@ export function track(event: string, props?: Record<string, string | number | bo
   }
 }
 
-/** Stable CTA id from a link: "/contact?request=brief" → "contact-request-brief", "/" → "home". */
+/** Stable CTA id from a link: "/contact?request=pricing" → "contact-request-pricing", "/" → "home". */
 export function ctaIdFromHref(href: string): string {
   const id = href
     .replace(/^https?:\/\//, "")

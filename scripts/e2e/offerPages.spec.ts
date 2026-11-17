@@ -69,7 +69,7 @@ for (const offer of pages) {
       const service = ld.map((json) => JSON.parse(json)).find((data) => data["@type"] === "Service");
       expect(service.name).toBe(offer.h1);
       expect(service.offers.price).toBe(offer.path.endsWith("check") ? 500 : 5000);
-      expect(service.areaServed).toEqual(["United Kingdom", "United Arab Emirates"]);
+      expect(service.areaServed).toEqual(["United Kingdom", "United Arab Emirates", "Saudi Arabia"]);
     });
   });
 }

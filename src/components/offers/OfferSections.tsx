@@ -87,7 +87,7 @@ export function OfferHero({ offer, lead, eyebrow }: { offer: FixedOffer; lead: s
   );
 }
 
-/** "6–16 weeks from a go-live decision" as a window on a week scale ending at the decision. */
+/** A window of weeks on a scale ending at a decision date (e.g. "6 to 16 weeks before"). */
 export function DecisionWindow({ fromWeeks, toWeeks }: { fromWeeks: number; toWeeks: number }) {
   const scale = fromWeeks + 4;
   const at = (weeks: number) => `${((scale - weeks) / scale) * 100}%`;

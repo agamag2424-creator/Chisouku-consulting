@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { markets } from "../content/markets";
-import { packMethodNote } from "../content/samplePack";
 import { formatPrice, siteConfig } from "./siteConfig";
 
 // Per-route titles and descriptions. Home title follows the approved offer wording.
@@ -9,7 +8,7 @@ export const defaultTitle =
 
 export const defaultDescription = siteConfig.heroSub;
 
-/** The default share image: the hero headline on ink (public/og.png). Offers, method and see-it-first have their own. */
+/** The default share image: the hero headline on paper (public/og.png). Offers, the self-check, method and see-it-first have their own. */
 export const ogImage = {
   url: "/og.png",
   width: 1200,
@@ -22,7 +21,7 @@ const checkPrice = formatPrice(healthCheck.listPrice);
 const auditList = formatPrice(healthAudit.listPrice);
 const auditFounding = formatPrice(healthAudit.foundingPrice ?? healthAudit.listPrice);
 const marketDescription = (market: (typeof markets)[keyof typeof markets]) =>
-  `A fixed-price, independent check of how programmes in ${market.inName} are governed, reported and run. ${market.whyNow}`;
+  `For organisations in ${market.inName} running a PMO: a free self-check, a ${checkPrice} PMO Health Check of one programme, and a PMO Health Audit of the whole portfolio. ${market.delivery}`;
 
 export const routeSeo = {
   "/": {
@@ -33,23 +32,24 @@ export const routeSeo = {
     title: healthCheck.name,
     description:
       `A fixed-price check of one programme, ${checkPrice}. The PMO Health Scorecard filled in with evidence, the top findings, a 30-day fix plan and a 45-minute readout, five working days after documents arrive.`,
-    image: "/og-evidence-check.png",
+    image: "/og-health-check.png",
   },
   [healthAudit.path]: {
     title: healthAudit.name,
     description:
       `The whole portfolio, scored with evidence on the ten PMO Health Scorecard dimensions. ${auditList} list, ${auditFounding} founding, capped at 5 working days. Most clients start with the ${checkPrice} Health Check.`,
-    image: "/og-decision-review.png",
+    image: "/og-health-audit.png",
   },
   "/method": {
-    title: "HEALTH-5: how we test a programme status claim",
-    description: packMethodNote,
+    title: "Method: the PMO Health Scorecard, ten dimensions scored on evidence",
+    description:
+      "Ten dimensions on five levels, from governance and decision rights to PMO value perception. Where the three problems show up, how evidence is checked, and the 30-day fix plan.",
     image: "/og-method.png",
   },
   "/see-it-first": {
-    title: "See the work before you talk to us",
+    title: "See it first: a sample PMO Health Scorecard and 30-day fix plan",
     description:
-      "Request a free one-page briefing on your programme, prepared from public information. We reply within two business days.",
+      "A sample PMO Health Scorecard and a sample 30-day fix plan for a fictional organisation: what a PMO Health Check gives you.",
     image: "/og-see-it-first.png",
   },
   "/pricing": {
@@ -69,21 +69,6 @@ export const routeSeo = {
     description:
       "PMO Health Check and Audit: price, the fee credit, timing, the documents we need, confidentiality, and whether this is an accredited assessment.",
   },
-  "/guides/s4hana-go-no-go-checklist": {
-    title: "How to test a programme status claim",
-    description:
-      "HEALTH-5 tests whether a status claim is current, owned, evidenced, dated and actioned. A claim that fails any element is not treated as true.",
-  },
-  "/guides/is-my-erp-ready-to-go-live": {
-    title: "Is the status being reported supported by evidence?",
-    description:
-      "A Green status is supported only when the claims behind it pass HEALTH-5 and the reports do not contradict each other.",
-  },
-  "/guides/independent-assurance-vs-si-readiness-review": {
-    title: "An independent check, or a PMO who joins the team",
-    description:
-      "A Head of PMO is a hire. A day-rate PMO joins the team. An independent check stays outside delivery and leaves a score and a 30-day fix plan.",
-  },
   "/contact": {
     title: "Contact Us",
     description:
@@ -92,7 +77,7 @@ export const routeSeo = {
   "/about": {
     title: "About Us",
     description:
-      "ChisokuLabs provides a fixed-price, independent check of how programmes and portfolios are governed, reported and run. The UK is first; the UAE is by arrangement.",
+      "Fixed-price PMO Health Checks and Audits for UK organisations running a PMO, and in the UAE and Saudi Arabia. 11+ years in programme delivery.",
   },
   "/terms": {
     title: "Terms of Service",
@@ -116,12 +101,13 @@ export const routeSeo = {
   },
   "/glossary": {
     title: "Glossary",
-    description: "PMO health terms: status evidence, RAID log, governance, HEALTH-5 and the Project Health Scorecard.",
+    description: "PMO health terms: the PMO Health Scorecard, its five levels, RAID log, status evidence, decision forum and the 30-day fix plan.",
   },
   "/pmo-self-check": {
     title: "PMO self-check: score your PMO on ten dimensions in five minutes",
     description:
       "A free, five-minute PMO self-check on the ten dimensions of the PMO Health Scorecard. Computed in your browser; nothing is sent.",
+    image: "/og-self-check.png",
   },
   "/pmo-self-check/methodology": {
     title: "PMO self-check methodology note",
