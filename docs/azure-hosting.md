@@ -14,8 +14,11 @@ Microsoft for Startups credits. Vercel's free plan does not allow a site that ta
 
 **Deploys.** `.github/workflows/azure-deploy.yml` runs on every push to `main`: it builds the standalone server
 (`output: "standalone"` in `next.config.ts`), signs in to Azure with GitHub OIDC (app registration
-`chisokulabs-github-deploy`, role Website Contributor on the web app only; no password stored in GitHub), deploys, and
-checks a few pages. Vercel still builds previews for pull requests. It is not the host for either public hostname.
+`chisokulabs-github-deploy`, role Website Contributor on the web app only; no password stored in GitHub), deploys with
+`az webapp deploy --clean true`, and checks a few pages. Clean is required. Next.js keeps a route cache on disk under
+`.next/server/route-cache`, keyed by the route path, and a zip deploy otherwise leaves the previous build's HTML in
+place. That is why, after #119, `/pricing` and `/independence-and-data` still showed the 4 November pages while `/`
+showed the new build. Vercel still builds previews for pull requests. It is not the host for either public hostname.
 
 **Settings.** The site's settings (database, file store, Resend, Razorpay, admin token) live in Azure portal → the web
 app → **Settings → Environment variables**, not in GitHub or Vercel. Change them there; the app restarts by itself.

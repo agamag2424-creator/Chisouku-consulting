@@ -90,12 +90,10 @@ test("mobile shows one question, keeps answers, and scores all Partly as 6", asy
   await page.screenshot({ path: `${shots}/readiness-results-390.png` });
 
   const book = page.locator("main").getByRole("link", { name: "Book a 30-minute call" });
-  const brief = page.locator("main").getByRole("link", { name: "Request a free readiness brief" });
+  await expect(page.getByRole("link", { name: "Request a free readiness brief" })).toHaveCount(0);
   await expect(book).toHaveAttribute("href", /utm_content=readiness_result/);
   await expect(book).toHaveAttribute("target", "_blank");
   await expect(book).toHaveAttribute("data-cta", "book_call");
-  await expect(brief).toHaveAttribute("href", "/contact?request=brief");
-  await expect(brief).toHaveAttribute("data-cta", "readiness_brief");
 
   const sent = await events(page);
   const started = sent.filter((event) => event.name === "readiness_start");
@@ -108,14 +106,8 @@ test("mobile shows one question, keeps answers, and scores all Partly as 6", asy
 
   await book.evaluate((node) => node.addEventListener("click", (event) => event.preventDefault(), { once: true }));
   await book.click();
-  await brief.evaluate((node) => node.addEventListener("click", (event) => event.preventDefault(), { once: true }));
-  await brief.click();
   const clicks = (await events(page)).filter((event) => event.name === "cta_click");
   expect(clicks).toContainEqual({ name: "cta_click", data: { id: "book_call", page: "/readiness", placement: "section-1" } });
-  expect(clicks).toContainEqual({
-    name: "cta_click",
-    data: { id: "readiness_brief", page: "/readiness", placement: "section-1" },
-  });
 });
 
 test("desktop shows one area, two questions, on the first step", async ({ page }) => {

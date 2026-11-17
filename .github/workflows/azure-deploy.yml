@@ -57,10 +57,21 @@ jobs:
           tenant-id: ${{ env.AZURE_TENANT_ID }}
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
-      - uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: site.zip
+      - name: Deploy
+        # OneDeploy keeps files the new zip does not contain. Next.js stores a
+        # route cache under .next/server/route-cache, keyed by the route path,
+        # and writes it at runtime. After #119 that cache still held the 4 Nov
+        # Turbopack HTML, so /pricing and /independence-and-data kept serving
+        # the previous build. --clean removes wwwroot before the new package.
+        run: |
+          az webapp deploy \
+            --resource-group rg-chisokulabs-website \
+            --name "$AZURE_WEBAPP_NAME" \
+            --src-path site.zip \
+            --type zip \
+            --clean true \
+            --restart true \
+            --async false
 
       - name: Smoke test
         run: |
@@ -74,3 +85,21 @@ jobs:
           for path in /readiness /pricing /terms /robots.txt /sitemap.xml; do
             echo "$path: $(curl -s -o /dev/null -w '%{http_code}' "$url$path")"
           done
+          # A 200 is not enough: the previous deploy kept serving the 4 Nov HTML.
+          expect_build() {
+            path="$1"
+            needle="$2"
+            banned="$3"
+            for i in $(seq 1 18); do
+              body=$(curl -fsS "$url$path" || true)
+              if printf '%s' "$body" | grep -Fq "$needle" && ! printf '%s' "$body" | grep -Eq "$banned"; then
+                echo "$path: this build"
+                return 0
+              fi
+              sleep 10
+            done
+            echo "$path: still serving the previous build"
+            exit 1
+          }
+          expect_build /independence-and-data "17 November 2026" "17 October 2026|Readiness Evidence Check|Go-Live Decision Review"
+          expect_build /pricing "PMO Health Check" "Readiness Evidence Check|Go-Live Decision Review|Continuous readiness|readiness brief"

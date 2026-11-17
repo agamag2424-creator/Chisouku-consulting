@@ -171,7 +171,6 @@ export function SlipCostEstimator() {
           and business disruption. Not a forecast for your programme.
         </p>
         <div className="flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap min-[480px]:items-center min-[480px]:gap-5">
-          <Button href="/contact?request=brief">Request a free readiness brief</Button>
           <BookCallButton content="estimator" size="md" />
           <Button href="/contact?request=review" variant="text">
             Discuss your programme
