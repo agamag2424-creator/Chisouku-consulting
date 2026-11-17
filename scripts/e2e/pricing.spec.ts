@@ -32,11 +32,11 @@ for (const viewport of [
   });
 }
 
-test("pricing top books a 30-minute call beside Discuss your programme", async ({ page }) => {
+test("pricing top books a 20-minute call beside Discuss your programme", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(base + "/pricing");
   const hero = page.locator("main > section").first();
-  const book = hero.getByRole("link", { name: "Book a 30-minute call" });
+  const book = hero.getByRole("link", { name: "Book a 20-minute call" });
   await expect(book).toHaveAttribute(
     "href",
     "https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=pricing",
@@ -46,14 +46,4 @@ test("pricing top books a 30-minute call beside Discuss your programme", async (
     "href",
     "/contact?request=brief",
   );
-});
-
-test("homepage comparison uses the PMO columns and links to pricing", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto(base + "/", { waitUntil: "networkidle" });
-  const table = page.getByRole("table", { name: /How ChisokuLabs compares/ });
-  await expect(table.locator('th[scope="row"]')).toHaveCount(4);
-  await expect(table.getByText("Every critical claim, HEALTH-5")).toBeVisible();
-  await page.getByRole("main").getByRole("link", { name: "Pricing", exact: true }).click();
-  await expect(page).toHaveURL(base + "/pricing");
 });

@@ -33,13 +33,13 @@ test("book_call in the header is nav and in the hero is the section number", asy
 });
 
 test("cta_click carries the CTA id, the page and its placement", async ({ page }) => {
-  await page.goto(base + "/", { waitUntil: "networkidle" });
+  await page.goto(base + "/pmo-health-check", { waitUntil: "networkidle" });
   const cta = page.locator('main [data-cta="contact-request-review"]').first();
   await cta.evaluate((node) => node.addEventListener("click", (event) => event.preventDefault(), { once: true }));
   await cta.click();
   expect(await events(page)).toContainEqual({
     name: "cta_click",
-    data: { id: "contact-request-review", page: "/", placement: "section-1" },
+    data: { id: "contact-request-review", page: "/pmo-health-check", placement: "section-1" },
   });
 });
 

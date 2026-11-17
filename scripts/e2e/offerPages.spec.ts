@@ -45,10 +45,10 @@ for (const offer of pages) {
       });
     }
 
-    test("books a 30-minute call beside Discuss your programme", async ({ page }) => {
+    test("books a 20-minute call beside Discuss your programme", async ({ page }) => {
       await page.goto(base + offer.path);
       const hero = page.locator("main > section").first();
-      const book = hero.getByRole("link", { name: "Book a 30-minute call" });
+      const book = hero.getByRole("link", { name: "Book a 20-minute call" });
       await expect(book).toHaveAttribute(
         "href",
         `https://calendly.com/chisokulabs/discovery-call?utm_source=chisokulabs&utm_medium=website&utm_campaign=discovery_call&utm_content=${offer.content}`,

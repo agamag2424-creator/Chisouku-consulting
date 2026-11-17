@@ -7,8 +7,9 @@ import { cn } from "../../lib/utils";
 import { calendlyLink, isRouteListed, navLinks } from "../../lib/siteConfig";
 import { BrandMark } from "../brand/BrandMark";
 import { Button } from "../ui/Button";
+import { ctas } from "../../content/offer";
 
-const CTA = { href: calendlyLink("header"), label: "Book a 30-minute call" } as const;
+const CTA = { href: calendlyLink("header"), label: ctas.primaryLabel } as const;
 
 // Links to routes that are not live yet are left out (siteConfig.routeLive).
 const liveNavLinks = navLinks.filter((link) => isRouteListed(link.href));

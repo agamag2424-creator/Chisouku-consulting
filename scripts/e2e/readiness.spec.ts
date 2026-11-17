@@ -84,7 +84,7 @@ test("mobile shows one question, keeps answers, and scores all Partly as 6", asy
   expect(await overflow()).toBeLessThanOrEqual(1);
   await page.screenshot({ path: `${shots}/readiness-results-390.png` });
 
-  const book = page.locator("main").getByRole("link", { name: "Book a 30-minute call" });
+  const book = page.locator("main").getByRole("link", { name: "Book a 20-minute call" });
   await expect(page.getByRole("link", { name: "Request a free readiness brief" })).toHaveCount(0);
   await expect(book).toHaveAttribute("href", /utm_content=readiness_result/);
   await expect(book).toHaveAttribute("target", "_blank");

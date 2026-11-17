@@ -20,9 +20,10 @@ for (const viewport of [
   });
 }
 
-test("homepage does not link a sample decision pack", async ({ page }) => {
+test("homepage sample scorecard links to /see-it-first", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(base + "/");
-  await expect(page.getByRole("link", { name: "See a full sample decision pack" })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Request a free briefing" }).first()).toBeVisible();
+  await expect(page.getByText("Sample. Fictional organisation.").first()).toBeVisible();
+  await page.getByRole("link", { name: "See the full sample scorecard and 30-day fix plan" }).click();
+  await expect(page).toHaveURL(base + "/see-it-first");
 });

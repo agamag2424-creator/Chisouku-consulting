@@ -56,7 +56,7 @@ export function weakestAreaLine(area: string): string {
 
 export const supportingLine = "Want a second view on these areas? Talk it through with us.";
 
-export const bookButton = "Book a 30-minute call";
+export const bookButton = "Book a 20-minute call";
 
 export const controls = {
   back: "Back",
