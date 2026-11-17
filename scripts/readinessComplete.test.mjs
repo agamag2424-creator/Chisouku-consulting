@@ -1,4 +1,4 @@
-// POST /api/readiness-complete, stored in Azure Database for PostgreSQL. Run: npm run test:unit
+// POST /api/readiness-complete. Storage is off until the PMO self-check ships. Run: npm run test:unit
 // Node needs a file extension on relative imports. The source uses the extensionless
 // style the Next.js build resolves, so this file adds .ts while the tests load it.
 import assert from "node:assert/strict";
@@ -64,44 +64,40 @@ describe("POST /api/readiness-complete", () => {
     assert.equal(config.connectionString.includes("sslmode"), false);
   });
 
-  test("bad input is a 400 and nothing is written", async () => {
+  test("bad input is a 204 and nothing is written", async () => {
     const db = recordingDb();
-    assert.equal((await handleCompletion(completionRequest(null, { broken: true }), db)).status, 400);
-    assert.equal((await handleCompletion(completionRequest({ score_band: "excellent" }), db)).status, 400);
+    assert.equal((await handleCompletion(completionRequest(null, { broken: true }), db)).status, 204);
+    assert.equal((await handleCompletion(completionRequest({ score_band: "excellent" }), db)).status, 204);
     assert.equal(db.calls.length, 0);
   });
 
-  test("the stored row has no personal data", async () => {
-    const db = recordingDb();
-    const personal = {
-      score_band: "partly_ready",
-      utm_source: "linkedin",
-      utm_medium: "social",
-      utm_campaign: "person%40example.com",
-      referrer_host: "https://www.linkedin.com/in/someone?email=person@example.com&name=Example+Person",
-      name: "Example Person",
-      email: "person@example.com",
-      ip: "203.0.113.8",
-      answers: ["yes", "partly", "no", "yes", "partly", "no", "yes", "partly", "no", "yes", "partly", "no"],
-      weakest_area: "Scope and go-live date",
-      message: "Example Person, person@example.com, 203.0.113.8",
-    };
-
-    const response = await handleCompletion(completionRequest(personal), db);
-    assert.equal(response.status, 204);
-    assert.equal(db.calls.length, 1);
-
-    const [{ text, params }] = db.calls;
-    assert.match(text, /insert into readiness_completions \(score_band, utm_source, utm_medium, utm_campaign, referrer_host\)/);
-    assert.deepEqual(params, ["partly_ready", "linkedin", "social", null, "www.linkedin.com"]);
-    const sent = JSON.stringify(params);
-    for (const secret of ["person@example.com", "Example Person", "203.0.113.8", "answers", "Scope and go-live date"]) {
-      assert.equal(sent.includes(secret), false);
+  test("a configured database is not written, even when DATABASE_URL is set", async () => {
+    const previous = process.env.DATABASE_URL;
+    process.env.DATABASE_URL =
+      "postgres://website_app:secret@example.postgres.database.azure.com:5432/chisokulabs";
+    const db = recordingDb({ fail: true });
+    try {
+      assert.ok(databaseConfig(process.env));
+      const personal = {
+        score_band: "partly_ready",
+        utm_source: "linkedin",
+        utm_medium: "social",
+        utm_campaign: "person%40example.com",
+        referrer_host: "https://www.linkedin.com/in/someone?email=person@example.com&name=Example+Person",
+        name: "Example Person",
+        email: "person@example.com",
+        ip: "203.0.113.8",
+        answers: ["yes", "partly", "no", "yes", "partly", "no", "yes", "partly", "no", "yes", "partly", "no"],
+        weakest_area: "Scope and go-live date",
+        message: "Example Person, person@example.com, 203.0.113.8",
+      };
+      const response = await handleCompletion(completionRequest(personal), db);
+      assert.equal(response.status, 204);
+      assert.equal(await response.text(), "");
+      assert.equal(db.calls.length, 0);
+    } finally {
+      if (previous === undefined) delete process.env.DATABASE_URL;
+      else process.env.DATABASE_URL = previous;
     }
-  });
-
-  test("a database error is a 502, so the result screen is not affected", async () => {
-    const response = await handleCompletion(completionRequest({ score_band: "ready" }), recordingDb({ fail: true }));
-    assert.equal(response.status, 502);
   });
 });

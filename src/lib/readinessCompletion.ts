@@ -79,27 +79,11 @@ export function completionInsert(input: unknown): ReadinessCompletionInsert | nu
   };
 }
 
-/** Fire-and-forget. The result screen must not wait on this request. */
-export function postReadinessCompletion(scoreBand: BandId): void {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const row = completionInsert({
-      score_band: scoreBand,
-      utm_source: params.get("utm_source"),
-      utm_medium: params.get("utm_medium"),
-      utm_campaign: params.get("utm_campaign"),
-      referrer_host: document.referrer,
-    });
-    if (!row) return;
-    void fetch("/api/readiness-complete", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(row),
-      keepalive: true,
-    }).catch(() => {
-      // Counting is optional. The score is already on screen.
-    });
-  } catch {
-    // Counting must never break the check.
-  }
+/**
+ * No-op until the PMO self-check ships. The score stays in the browser.
+ * Do not POST /api/readiness-complete: that route no longer writes, and a request would only add noise.
+ * Vercel Analytics events are unchanged.
+ */
+export function postReadinessCompletion(): void {
+  // Storage is off. readiness_completions is left in place.
 }
