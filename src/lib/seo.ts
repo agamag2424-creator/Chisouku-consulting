@@ -115,9 +115,10 @@ export const routeSeo = {
     title: "Glossary",
     description: "PMO health terms: status evidence, RAID log, governance, HEALTH-5 and the Project Health Scorecard.",
   },
-  "/readiness": {
-    title: "Go-live readiness check",
-    description: "Your programme reports Green. These 12 questions test whether the evidence agrees.",
+  "/pmo-self-check": {
+    // TODO: replace this description when the researched question bank is added.
+    title: "PMO self-check",
+    description: "The questions for this check are not published yet.",
   },
 } as const satisfies Record<string, { title: string; description: string; image?: string }>;
 

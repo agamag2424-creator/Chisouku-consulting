@@ -9,7 +9,7 @@ const { healthCheck, healthAudit } = siteConfig.offers;
 const money = (value: number) => `${siteConfig.currency} ${value.toLocaleString("en-US")}`;
 const link = (path: string) => `${siteConfig.url}${path === "/" ? "" : path}`;
 
-/** Listed pages only, with their titles from the SEO map. */
+/** Listed pages only, with their titles from the SEO map. TODO: /pmo-self-check joins this list when it leaves routeUnlisted. */
 function keyPages(): string[] {
   return Object.entries(routeSeo)
     .filter(([path]) => isRouteListed(path))

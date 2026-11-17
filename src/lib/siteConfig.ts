@@ -59,8 +59,11 @@ export const siteConfig = {
   },
   feeCreditDays: 60,
   foundingSlotsRemaining: 3,
-  /** The 12-question check stays reachable for old links. It is not linked or indexed. */
-  selfCheck: { live: true, url: null as string | null },
+  /**
+   * The self-check route is live. It stays unlisted until the researched question bank
+   * replaces the placeholders in src/content/pmoSelfCheck.ts.
+   */
+  selfCheck: { live: true, url: "/pmo-self-check" },
   samplePackPath: "/documents/chisokulabs-go-live-decision-pack-illustrative.pdf",
   slipEstimator: {
     defaults: { people: 40, dayRate: 600, weeks: 4, parallelRunMonthly: 0 },
@@ -84,6 +87,7 @@ export type CalendlyContent =
   | "header"
   | "hero"
   | "readiness_result"
+  // TODO: add a self-check result value when the result screen and its Calendly CTA are built.
   | "pricing"
   | "health_check"
   | "health_audit"
@@ -133,12 +137,16 @@ export const routeLive = {
   "/guides/s4hana-go-no-go-checklist": true,
   "/guides/is-my-erp-ready-to-go-live": true,
   "/guides/independent-assurance-vs-si-readiness-review": true,
-  "/readiness": true,
+  "/pmo-self-check": true,
 } as const;
 
-/** Live pages that stay reachable but are unlinked, noindexed and left out of the sitemap. */
+/**
+ * Live pages that stay reachable but are unlinked, noindexed and left out of the sitemap.
+ * TODO: remove "/pmo-self-check" once the researched question bank is in. That lists it in
+ * the nav, footer, sitemap and llms.txt, because those surfaces use isRouteListed.
+ */
 export const routeUnlisted = {
-  "/readiness": true,
+  "/pmo-self-check": true,
   "/go-live-readiness-uae": true,
   "/go-live-readiness-saudi-arabia": true,
   "/guides/s4hana-go-no-go-checklist": true,
@@ -201,6 +209,8 @@ export function offerPriceLabel(
 export const navLinks = [
   { href: "/pmo-health-audit", label: "Health Audit" },
   { href: "/pmo-health-check", label: "Health Check" },
+  // TODO: this link stays hidden while /pmo-self-check is in routeUnlisted.
+  { href: "/pmo-self-check", label: "PMO self-check" },
   { href: "/method", label: "Method" },
   { href: "/see-it-first", label: "See it first" },
   { href: "/pricing", label: "Pricing" },

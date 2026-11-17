@@ -2,7 +2,7 @@
 // Run: npm run test:unit  (Node 22 strips the TypeScript types; no test dependency needed)
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { formatPrice, foundingActive, isRouteLive, navLinks, offerPriceLabel, routeLive, routeRenders, siteConfig } from "../src/lib/siteConfig.ts";
+import { formatPrice, foundingActive, isRouteListed, isRouteLive, navLinks, offerPriceLabel, routeLive, routeRenders, siteConfig } from "../src/lib/siteConfig.ts";
 
 test("formatPrice uses the configured currency and grouping", () => {
   assert.equal(formatPrice(12000), "USD 12,000");
@@ -43,12 +43,14 @@ test("JSON-LD for a script tag escapes '<' so it cannot close the tag", async ()
   assert.deepEqual(JSON.parse(out), { name: "</script><script>alert(1)</script>" });
 });
 
-test("the readiness check is on in production", () => {
+test("the self-check shell is live and unlisted until the question bank is in", () => {
   assert.equal(siteConfig.selfCheck.live, true);
-  assert.equal(routeLive["/readiness"], true);
-  assert.equal(isRouteLive("/readiness"), true);
-  assert.equal(routeRenders("/readiness", { NODE_ENV: "production", VERCEL_ENV: "production" }), true);
-  assert.equal(routeRenders("/readiness", { NODE_ENV: "production" }), true);
+  assert.equal(siteConfig.selfCheck.url, "/pmo-self-check");
+  assert.equal(routeLive["/pmo-self-check"], true);
+  assert.equal(isRouteLive("/pmo-self-check"), true);
+  assert.equal(isRouteListed("/pmo-self-check"), false);
+  assert.equal(routeRenders("/pmo-self-check", { NODE_ENV: "production", VERCEL_ENV: "production" }), true);
+  assert.equal(routeRenders("/pmo-self-check", { NODE_ENV: "production" }), true);
 });
 
 test("a route that is not live renders only in development and on previews (fails closed)", () => {

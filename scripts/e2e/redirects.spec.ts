@@ -18,6 +18,8 @@ const redirects: [string, string, number][] = [
   ["/aeva", "/method", 308],
   ["/go-live-decision-review", "/pmo-health-audit", 301],
   ["/readiness-evidence-check", "/pmo-health-check", 301],
+  ["/readiness", "/pmo-self-check", 301],
+  ["/readiness/extra", "/pmo-self-check", 301],
 ];
 
 for (const [from, to, status] of redirects) {
@@ -27,6 +29,14 @@ for (const [from, to, status] of redirects) {
     expect(response.headers()["location"]).toBe(to);
   });
 }
+
+test("/readiness keeps the query string on the way to /pmo-self-check", async ({ request }) => {
+  const response = await request.get(base + "/readiness?utm_source=newsletter&utm_content=self_check", {
+    maxRedirects: 0,
+  });
+  expect(response.status()).toBe(301);
+  expect(response.headers()["location"]).toBe("/pmo-self-check?utm_source=newsletter&utm_content=self_check");
+});
 
 function requestWithHost(
   pathAndQuery: string,

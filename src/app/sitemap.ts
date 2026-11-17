@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { isRouteListed, routeLive, siteConfig } from "../lib/siteConfig";
 
 // Listed routes only. Unlisted pages stay live and noindexed, and are not submitted here.
+// TODO: /pmo-self-check is omitted while it remains in routeUnlisted.
 const lastModified = new Date("2026-11-17");
 
 const legalPaths = new Set([

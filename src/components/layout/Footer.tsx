@@ -15,6 +15,8 @@ const groups: { title: string; links: FooterLink[] }[] = [
       { href: "/see-it-first", label: "See it first" },
       { href: "/pricing", label: "Pricing" },
       { href: "/faq", label: "FAQ" },
+      // TODO: this link stays hidden while /pmo-self-check is in routeUnlisted.
+      { href: "/pmo-self-check", label: "PMO self-check" },
       { href: "/glossary", label: "Glossary" },
       { href: "/independence-and-data", label: "Independence and data" },
     ],

@@ -22,7 +22,7 @@ const listed = [
 ];
 
 const unlisted = [
-  "/readiness",
+  "/pmo-self-check",
   "/go-live-readiness-uae",
   "/go-live-readiness-saudi-arabia",
   "/guides/s4hana-go-no-go-checklist",

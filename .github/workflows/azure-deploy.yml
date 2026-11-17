@@ -82,9 +82,15 @@ jobs:
             sleep 10
           done
           [ "$code" = 200 ] || { echo "Home page did not answer 200 (last: $code)"; exit 1; }
-          for path in /readiness /pricing /terms /robots.txt /sitemap.xml; do
+          for path in /pricing /terms /robots.txt /sitemap.xml; do
             echo "$path: $(curl -s -o /dev/null -w '%{http_code}' "$url$path")"
           done
+          shell=$(curl -s -o /dev/null -w '%{http_code}' "$url/pmo-self-check")
+          echo "/pmo-self-check: $shell"
+          [ "$shell" = 200 ] || { echo "PMO self-check did not answer 200 (last: $shell)"; exit 1; }
+          ready=$(curl -s -o /dev/null -w '%{http_code}' "$url/readiness?utm_source=smoke")
+          echo "/readiness: $ready"
+          [ "$ready" = 301 ] || { echo "/readiness did not answer 301 (last: $ready)"; exit 1; }
           # A 200 is not enough: the previous deploy kept serving the 4 Nov HTML.
           expect_build() {
             path="$1"

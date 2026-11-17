@@ -108,6 +108,17 @@ const nextConfig: NextConfig = {
         destination: "/pmo-health-check",
         statusCode: 301,
       },
+      // The old free tool. Query strings, including UTMs, are kept. Sub-paths land on the shell.
+      {
+        source: "/readiness",
+        destination: "/pmo-self-check",
+        statusCode: 301,
+      },
+      {
+        source: "/readiness/:path*",
+        destination: "/pmo-self-check",
+        statusCode: 301,
+      },
       {
         source: "/founder-track-record",
         destination: "/method",
