@@ -64,7 +64,7 @@ export const siteConfig = {
    * Umami Cloud website ID (public; it appears in the page source anyway). Empty means no Umami script loads.
    * Set it to the ID from cloud.umami.is (Settings, Websites) to switch analytics on in production.
    */
-  umamiWebsiteId: "",
+  umamiWebsiteId: "b053024b-1cdc-4ec9-b284-a6dceb5e5ece",
 } as const;
 
 /** The approved credit (source-of-truth table). The Health Check fee is never described as refundable. */
