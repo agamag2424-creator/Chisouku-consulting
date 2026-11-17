@@ -148,7 +148,7 @@ export function ReadinessCheck() {
     const weakest =
       scored.weakestAreaIndex === null ? NO_WEAKEST_AREA : areas[scored.weakestAreaIndex].name;
     track("readiness_complete", { band: bands[scored.band].label, weakest_area: weakest });
-    postReadinessCompletion(scored.band);
+    postReadinessCompletion();
     setPhase("results");
   }
 

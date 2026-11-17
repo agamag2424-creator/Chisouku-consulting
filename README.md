@@ -11,8 +11,8 @@ Production: [www.chisokulabs.com](https://www.chisokulabs.com). Requirements and
 - Next.js 16 (App Router, Turbopack), React 19, TypeScript
 - Tailwind CSS v4; design tokens in `src/styles/globals.css` (no hex values anywhere else)
 - Resend for the "Discuss your programme" form (`POST /api/audit-fit`)
-- Azure Database for PostgreSQL for anonymous `/readiness` completion counts (`POST /api/readiness-complete`). The site
-  runs without it.
+- Azure Database for PostgreSQL. `/api/readiness-complete` does not write while completion storage is off.
+  The `readiness_completions` table is left in place.
 - Azure App Service hosting (Linux, Node 22, Central India), deployed from `main` by
   `.github/workflows/azure-deploy.yml`; see `docs/azure-hosting.md`. Vercel Analytics is still in the code but records
   nothing off Vercel.
@@ -35,21 +35,16 @@ npm run leak-scan            # after a build
 | --- | --- |
 | `RESEND_API_KEY` | Delivers form messages (Production and Preview). Without it the form reports an error and shows the email address; it never reports a false success. |
 | `GOOGLE_SITE_VERIFICATION` | Google Search Console meta tag |
-| `DATABASE_URL` | Server-only. `postgres://website_app:…@<server>.postgres.database.azure.com:5432/chisokulabs`. TLS is always required. If it is missing, `POST /api/readiness-complete` returns 204 and writes nothing. |
+| `DATABASE_URL` | Server-only. `postgres://website_app:…@<server>.postgres.database.azure.com:5432/chisokulabs`. TLS is always required. `/api/readiness-complete` returns 204 and does not use this URL while completion storage is off. |
 
 Form emails are sent from `siteConfig.formSender` (the `chisokulabs.com` domain is verified in Resend), to
 `siteConfig.email`, with reply-to set to the visitor.
 
 ### Readiness completion count
 
-Each completed `/readiness` check adds one anonymous row to table `readiness_completions` in the Azure Postgres
-database. The row stores the score band (`not_ready`, `partly_ready` or `ready`), `utm_source`, `utm_medium`,
-`utm_campaign` and the referring host. It does not store an IP address, an email address, a name or the answers. The
-browser posts to `/api/readiness-complete` without waiting.
-
-The schema is `db/migrations/001_paid_funnel.sql` (already applied). The site signs in as `website_app`, which can only
-insert into this table and use the order tables. Count rows from Azure Cloud Shell:
-`psql "host=<server>.postgres.database.azure.com dbname=chisokulabs user=cladmin sslmode=require" -c "select count(*) from readiness_completions;"`
+Completion storage is off until the PMO self-check ships. `POST /api/readiness-complete` returns 204 and does not
+write. The browser does not post. Table `readiness_completions` and its existing rows stay as they are. The schema is
+`db/migrations/001_paid_funnel.sql` (already applied). Do not drop or migrate that table to turn storage off.
 
 ## Content model
 
