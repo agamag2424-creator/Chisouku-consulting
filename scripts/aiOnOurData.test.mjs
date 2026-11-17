@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
 const expected =
-  "Yes, to extract claims and cross-check evidence, under the policy. AI processing runs only through providers contracted for zero data retention, and your data is never used to train AI models. Every finding is reviewed and signed by the principal; AI does not make the go-live recommendation.";
+  "Yes, to extract claims and cross-check evidence, under the policy. AI processing runs only through providers contracted for zero data retention, and your data is never used to train AI models. Every finding is reviewed and signed by the principal; AI does not make the health recommendation.";
 
 const aeo = readFileSync(new URL("../src/lib/aeoContent.ts", import.meta.url), "utf8");
 const method = readFileSync(new URL("../src/app/method/page.tsx", import.meta.url), "utf8");

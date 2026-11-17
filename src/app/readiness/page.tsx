@@ -10,7 +10,9 @@ const path = "/readiness";
 // Live routes are indexed. A route that is switched off still fails closed, with noindex on the 404.
 const renders = routeRenders(path);
 
-export const metadata: Metadata = renders ? pageMetadata(path) : { robots: { index: false, follow: false } };
+export const metadata: Metadata = renders
+  ? { ...pageMetadata(path), robots: { index: false, follow: true } }
+  : { robots: { index: false, follow: false } };
 
 export default function ReadinessPage() {
   if (!renders) notFound();

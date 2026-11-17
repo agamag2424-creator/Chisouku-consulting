@@ -75,7 +75,7 @@ export async function POST(request: Request) {
         from: siteConfig.formSender,
         to: [siteConfig.email],
         reply_to: email,
-        subject: `[ChisokuLabs] ${requestLabel} — ${company}`,
+        subject: `[ChisokuLabs] ${requestLabel}: ${company}`,
         text: summary,
       }),
     });

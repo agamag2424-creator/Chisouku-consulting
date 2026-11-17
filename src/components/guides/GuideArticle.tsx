@@ -2,7 +2,7 @@ import type { Guide, GuideBlock } from "../../content/guides";
 import { breadcrumbJsonLd, howToJsonLd } from "../../lib/jsonLd";
 import { siteConfig } from "../../lib/siteConfig";
 import { JsonLdScript } from "../aeo/JsonLdScript";
-import { OfferClosing, offerCta } from "../offers/OfferSections";
+import { OfferClosing } from "../offers/OfferSections";
 import { Button } from "../ui/Button";
 import { Section } from "../ui/Section";
 import { Sheet } from "../ui/Sheet";
@@ -10,10 +10,9 @@ import { Sheet } from "../ui/Sheet";
 // Answer guide layout (E8.3): direct answer first, sections, optional checklist, sources, onward links.
 
 const related = [
-  { href: "/method", label: "How READINESS-5 works" },
-  { href: siteConfig.offers.evidenceCheck.path, label: siteConfig.offers.evidenceCheck.name },
-  { href: siteConfig.offers.decisionReview.path, label: siteConfig.offers.decisionReview.name },
-  { href: offerCta.samplePack.href, label: offerCta.samplePack.label },
+  { href: "/method", label: "How HEALTH-5 works" },
+  { href: siteConfig.offers.healthCheck.path, label: siteConfig.offers.healthCheck.name },
+  { href: siteConfig.offers.healthAudit.path, label: siteConfig.offers.healthAudit.name },
 ] as const;
 
 export function GuideArticle({ guide }: { guide: Guide }) {

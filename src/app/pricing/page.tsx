@@ -11,45 +11,36 @@ import { Sheet } from "../../components/ui/Sheet";
 import { foundingClientStatement } from "../../content/founding";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { pageMetadata } from "../../lib/seo";
-import { offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
+import { extraDaysSentence, feeCreditSentence, offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
-// PRD 9.6. Prices, days, founding places and fee credit come from config; "what's included" is the PRD 6.1 table.
-const feeCredit = `The full Evidence Check fee is credited against a Go-Live Decision Review signed within ${siteConfig.feeCreditDays} days of the Evidence Check report.`;
-const paymentTerms = "50% on signature, 50% on delivery";
+const feeCredit = feeCreditSentence;
 
 export const metadata: Metadata = pageMetadata("/pricing");
 
-const cards: readonly { offer: OfferKey; duration: string; includes: readonly string[]; payment: boolean }[] = [
+const cards: readonly { offer: OfferKey; duration: string; includes: readonly string[] }[] = [
   {
-    offer: "evidenceCheck",
-    duration: `${siteConfig.offers.evidenceCheck.days} business days`,
+    offer: "healthCheck",
+    duration: `${siteConfig.offers.healthCheck.days} working days, one programme`,
     includes: [
-      "Written review of one programme's readiness documents against READINESS-5 across the five domains",
-      "Contradiction map",
-      "Top risks",
-      "One-hour readout",
+      "Status pack, RAID log, governance calendar and plan",
+      "One sponsor and two team interviews (45 minutes each, remote)",
+      "Project Health Scorecard scored on HEALTH-5",
+      "Top findings and a 30-day fix plan",
+      "45-minute readout",
     ],
-    payment: true,
   },
   {
-    offer: "decisionReview",
-    duration: `${siteConfig.offers.decisionReview.days} business days`,
+    offer: "healthAudit",
+    duration: `${siteConfig.offers.healthAudit.days} working days`,
     includes: [
-      "Evidence register",
-      "Contradiction map",
-      "Structured interviews (only where evidence conflicts)",
-      "Decision recommendation (Go / Conditional Go / No-Go)",
-      "Dated decision conditions with owners",
+      "Governance, reporting, RAID, cadence, prioritisation and the PMO operating model",
+      "Evidence register and contradiction map",
+      "Project Health Scorecard (Healthy / Needs attention / At risk) with owners and dates",
+      "30-day fix plan",
       "Sponsor readout",
+      extraDaysSentence,
     ],
-    payment: true,
-  },
-  {
-    offer: "continuous",
-    duration: "Monthly, until go-live and hypercare",
-    includes: ["Weekly evidence register refresh", "Decision-condition tracking"],
-    payment: false,
   },
 ];
 
@@ -59,13 +50,12 @@ const faq = [
     id: "why-publish-prices",
     summary: "Why publish prices?",
     content:
-      "So you can judge the cost before you talk to us, and set it against what a slipped go-live would cost you. Each list price covers one programme, up to five workstreams.",
+      "So you can judge the cost before you talk to us. The Health Check is one programme. The Audit list price covers one portfolio review, scoped on the call.",
   },
   {
-    id: "larger-programme",
-    summary: "What if our programme is larger?",
-    content:
-      "Multi-entity reviews are quoted after a scoping call. The list price applies to one programme, up to five workstreams.",
+    id: "larger-portfolio",
+    summary: "What if the portfolio is larger?",
+    content: `Larger or multi-country reviews are quoted after a scoping call. ${extraDaysSentence}`,
   },
   { id: "fee-credit", summary: "What is the fee credit?", content: feeCredit },
   ...(siteConfig.foundingSlotsRemaining > 0
@@ -73,25 +63,25 @@ const faq = [
         {
           id: "founding-rate",
           summary: "What is the founding-client rate?",
-          content: foundingClientStatement(siteConfig.foundingSlotsRemaining),
+          content: `Applies to the PMO Health Audit. ${foundingClientStatement(siteConfig.foundingSlotsRemaining)}`,
         },
       ]
     : []),
   {
     id: "payment",
     summary: "How is payment structured?",
-    content: `${paymentTerms}, for the ${siteConfig.offers.evidenceCheck.name} and the ${siteConfig.offers.decisionReview.name}.`,
+    content: `${siteConfig.offers.healthCheck.name}: ${siteConfig.offers.healthCheck.payment}. ${siteConfig.offers.healthAudit.name}: ${siteConfig.offers.healthAudit.payment}.`,
   },
   {
-    id: "under-four-weeks",
-    summary: "We go live in under four weeks. Can you still help?",
-    content: `Yes. A ${siteConfig.offers.evidenceCheck.name}, scoped to the highest-risk domains.`,
+    id: "one-programme",
+    summary: "Do you start with one programme?",
+    content: `Yes. The ${siteConfig.offers.healthCheck.name} is scoped to one programme, and is the usual starting point.`,
   },
   {
     id: "team-time",
     summary: "What do you need from our team?",
     content:
-      "Documents on day one. Interviews only where the evidence conflicts, which keeps your team's time to a minimum.",
+      "Documents on day one. The Health Check includes one sponsor and two team interviews (45 minutes each, remote).",
   },
   {
     id: "fixes",
@@ -100,19 +90,19 @@ const faq = [
   },
   {
     id: "guarantee",
-    summary: "Do you guarantee a successful go-live?",
-    content: "No. The review does not guarantee go-live success.",
+    summary: "Do you guarantee that a programme or portfolio will recover?",
+    content: "No. The audit does not guarantee that a programme or portfolio will recover.",
   },
 ];
 
-function PriceCard({ offer, duration, includes, payment }: (typeof cards)[number]) {
+function PriceCard({ offer, duration, includes }: (typeof cards)[number]) {
   const data = siteConfig.offers[offer];
   const price = offerPriceLabel(offer);
   const page = "path" in data ? data.path : null;
   return (
     <Sheet
       as="article"
-      className={cn("flex h-full flex-col gap-5 p-6 min-[641px]:p-8", offer === "decisionReview" && "border-2 border-ink")}
+      className={cn("flex h-full flex-col gap-5 p-6 min-[641px]:p-8", offer === "healthAudit" && "border-2 border-ink")}
     >
       <div className="flex flex-col gap-1">
         <h3 className="t-h3 text-ink">{data.name}</h3>
@@ -121,7 +111,7 @@ function PriceCard({ offer, duration, includes, payment }: (typeof cards)[number
       {"days" in data && <DayStrip days={data.days} />}
       <dl className="flex flex-wrap gap-x-8 gap-y-4 border-y border-line py-5">
         <div>
-          <dt className="text-[13px] text-muted">List price</dt>
+          <dt className="text-[13px] text-muted">{data.priceCaption}</dt>
           <dd className="t-data mt-1.5 text-[22px] text-ink">{price.list}</dd>
         </div>
         {price.founding && (
@@ -142,12 +132,10 @@ function PriceCard({ offer, duration, includes, payment }: (typeof cards)[number
         ))}
       </ul>
       <div className="mt-auto flex flex-col gap-4 pt-2">
-        {payment && (
-          <p className="text-[13px] text-muted">
-            <span className="font-semibold text-ink">Payment: </span>
-            {paymentTerms}
-          </p>
-        )}
+        <p className="text-[13px] text-muted">
+          <span className="font-semibold text-ink">Payment: </span>
+          {siteConfig.offers[offer].payment}
+        </p>
         {page && (
           <Button href={page} variant="text" className="self-start">
             {data.name}
@@ -186,7 +174,7 @@ export default function PricingPage() {
 
       <Section tone="paper">
         <SectionHead title="Prices" />
-        <ul className="mt-10 grid gap-5 min-[1100px]:grid-cols-3">
+        <ul className="mt-10 grid gap-5 min-[1100px]:grid-cols-2">
           {cards.map((card) => (
             <li key={card.offer}>
               <PriceCard {...card} />
@@ -202,7 +190,9 @@ export default function PricingPage() {
                   <span key={place} className="size-3 rounded-full bg-teal" />
                 ))}
               </span>
-              <p className="t-small text-muted">{foundingClientStatement(foundingPlaces)}</p>
+              <p className="t-small text-muted">
+                Applies to the PMO Health Audit. {foundingClientStatement(foundingPlaces)}
+              </p>
             </div>
           )}
         </div>

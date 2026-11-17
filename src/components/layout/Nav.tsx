@@ -4,14 +4,14 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "../../lib/utils";
-import { calendlyLink, isRouteLive, navLinks } from "../../lib/siteConfig";
+import { calendlyLink, isRouteListed, navLinks } from "../../lib/siteConfig";
 import { BrandMark } from "../brand/BrandMark";
 import { Button } from "../ui/Button";
 
 const CTA = { href: calendlyLink("header"), label: "Book a 30-minute call" } as const;
 
 // Links to routes that are not live yet are left out (siteConfig.routeLive).
-const liveNavLinks = navLinks.filter((link) => isRouteLive(link.href));
+const liveNavLinks = navLinks.filter((link) => isRouteListed(link.href));
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 

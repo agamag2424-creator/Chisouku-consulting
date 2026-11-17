@@ -6,10 +6,11 @@ import { slipEstimate, slipLabel } from "../src/lib/slipEstimate.ts";
 
 const config = {
   workingDaysPerWeek: siteConfig.slipEstimator.workingDaysPerWeek,
-  comparisonPrice: siteConfig.offers.evidenceCheck.listPrice,
+  // The homepage calculator is hidden. This keeps the formula check on a USD 5,000 comparison.
+  comparisonPrice: 5000,
 };
 
-test("example values: USD 120,000 a week, 480,000 for 4 weeks, 0.2 working days for the Evidence Check", () => {
+test("example values: USD 120,000 a week, 480,000 for 4 weeks, 0.2 working days against USD 5,000", () => {
   const result = slipEstimate(siteConfig.slipEstimator.defaults, config);
   assert.equal(result.weeklyRunRate, 120000);
   assert.equal(result.totalCost, 480000);

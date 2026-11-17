@@ -110,7 +110,7 @@ function Checks({ x, y, gap }: { x: number; y: number; gap: number }) {
   return (
     <g>
       <text x={x + gap * 2} y={y - 34} textAnchor="middle" className={cn(text, "fill-muted")} fontSize="13">
-        READINESS-5
+        HEALTH-5
       </text>
       {claim.marks.map((mark, index) => {
         const cx = x + gap * index;

@@ -19,7 +19,7 @@ export const heroClaims: readonly HeroClaim[] = ["T1", "I1", "C2"].map(packClaim
 
 export const heroContradiction = {
   between: ["T1", "I1"] as const,
-  label: "The 98% excludes 3 interfaces never tested end to end.",
+  label: "The RAID log shows 14 open actions, 9 of them past their due date, while the status pack reports Green.",
 };
 
 export const heroCompletionSummary =
@@ -34,13 +34,13 @@ export function evidencedCount(marks: HeroClaim["marks"]): number {
 
 /** Interface wording for the hero card (PRD 9.12, IN-9). */
 export const heroCard = {
-  title: "Go-live readiness check",
+  title: "Programme health check",
   subtitle: "Three critical claims, all reported Green",
   views: { reported: "As reported", evidenced: "As evidenced" },
   reportedLabel: "claims reported Green",
   notCheckedLabel: "evidence not yet checked",
   evidencedLabel: "claims have most of their evidence",
-  contradictionLabel: "contradiction between workstreams",
+  contradictionLabel: "contradiction between reports",
   detailSuffix: "what the evidence shows",
 } as const;
 

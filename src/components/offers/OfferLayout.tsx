@@ -29,7 +29,7 @@ import {
 
 /** One block of an offer page, in page order. Copy is passed in verbatim from PRD 9.2 / 9.3. */
 export type OfferBlock =
-  | { kind: "forWhom"; title: string; text: string; window: { fromWeeks: number; toWeeks: number } }
+  | { kind: "forWhom"; title: string; text: string; window?: { fromWeeks: number; toWeeks: number } }
   | { kind: "documents"; title: string; text: string; items: readonly string[] }
   | { kind: "scope"; title: string; text: string; core: readonly string[]; optional?: { name: string; note: string } }
   | { kind: "method"; title: string; text: string; steps: readonly string[] }
@@ -38,7 +38,6 @@ export type OfferBlock =
       title: string;
       items: readonly { kind: DeliverableKind; text: string }[];
       columns?: 3 | 4;
-      samplePackLink?: boolean;
     }
   | {
       kind: "sequence";
@@ -47,7 +46,6 @@ export type OfferBlock =
       speedNote?: { text: string; usual: { label: string; fromDays: number; toDays: number } };
     }
   | { kind: "price" }
-  | { kind: "continuous"; text: string }
   | { kind: "notIncluded"; title: string; items: readonly string[] };
 
 type OfferLayoutProps = { offer: FixedOffer; lead: string; blocks: readonly OfferBlock[] };
@@ -73,7 +71,7 @@ export function OfferLayout({ offer, lead, blocks }: OfferLayoutProps) {
       />
       <OfferHero offer={offer} lead={lead} />
       {blocks.map((block) => {
-        const tinted = block.kind === "notIncluded" || block.kind === "continuous";
+        const tinted = block.kind === "notIncluded";
         const tone = tinted ? "tint" : plain++ % 2 === 0 ? "paper" : "page";
         return (
           <Section key={block.kind} tone={tone}>
@@ -98,7 +96,7 @@ function Block({ offer, block }: { offer: FixedOffer; block: OfferBlock }) {
           <SectionHead title={block.title}>
             <p>{block.text}</p>
           </SectionHead>
-          <DecisionWindow {...block.window} />
+          {block.window && <DecisionWindow {...block.window} />}
         </>
       );
     case "documents":
@@ -133,13 +131,6 @@ function Block({ offer, block }: { offer: FixedOffer; block: OfferBlock }) {
         <>
           <SectionHead title={block.title} />
           <DeliverableTiles items={block.items} columns={block.columns} />
-          {block.samplePackLink && (
-            <div className="mt-7">
-              <Button href={offerCta.samplePack.href} variant="text">
-                {offerCta.samplePack.label}
-              </Button>
-            </div>
-          )}
         </>
       );
     case "sequence":
@@ -165,21 +156,11 @@ function Block({ offer, block }: { offer: FixedOffer; block: OfferBlock }) {
                 {offerCta.review.label}
               </Button>
               <BookCallButton
-                content={offer === "evidenceCheck" ? "evidence_check_price" : "decision_review_price"}
+                content={offer === "healthCheck" ? "health_check_price" : "health_audit_price"}
               />
             </div>
           </div>
           <PriceBlock offer={offer} className="p-6 min-[641px]:p-8" />
-        </div>
-      );
-    case "continuous":
-      return (
-        <div className={priceGrid}>
-          <div className="flex flex-col gap-4">
-            <h2 className="t-h2 text-ink">{siteConfig.offers.continuous.name}</h2>
-            <p className="t-body text-ink">{block.text}</p>
-          </div>
-          <PriceBlock offer="continuous" showName={false} showTerms={false} className="p-6 min-[641px]:p-8" />
         </div>
       );
     case "notIncluded":

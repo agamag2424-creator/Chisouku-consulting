@@ -1,70 +1,71 @@
-import { siteConfig } from "./siteConfig";
+import { feeCreditSentence, siteConfig } from "./siteConfig";
 
-// Answer content (PRD 9.9, 10). Single source for /faq, FAQPage JSON-LD and llms.txt. Prices, platforms and the fee
-// credit come from config. New wording approved by the founder (IN-11, 17 Oct 2026).
+// Answer content. Single source for /faq, FAQPage JSON-LD and llms.txt. Prices and the fee credit come from config.
 
-const { evidenceCheck, decisionReview } = siteConfig.offers;
-const platformList = new Intl.ListFormat("en-GB", { type: "conjunction" }).format(siteConfig.platforms);
+const { healthCheck, healthAudit } = siteConfig.offers;
 
-export const feeCreditAnswer = `The full Evidence Check fee is credited against a Go-Live Decision Review signed within ${siteConfig.feeCreditDays} days of the Evidence Check report.`;
+export const feeCreditAnswer = feeCreditSentence;
 
 /** Canonical one-paragraph answers: what ChisokuLabs does, offers, method, markets and policy. */
 export const canonicalAnswers = {
-  whatWeDo: `Before leadership approves a major ERP or core-platform go-live, ${siteConfig.name} independently tests whether every critical readiness claim has the status, owner, evidence, date and action to defend that decision.`,
-  offers: `${evidenceCheck.name}: ${evidenceCheck.days} business days, ${siteConfig.currency} ${evidenceCheck.listPrice.toLocaleString("en-US")}. ${decisionReview.name}: ${decisionReview.days} business days, ${siteConfig.currency} ${decisionReview.listPrice.toLocaleString("en-US")}, ending in Go, Conditional Go or No-Go with the conditions, owners and dates behind it.`,
-  method: "READINESS-5 tests every critical claim for Status, Owner, Evidence, Date and Action. Contradiction testing then checks the claims against each other, because the most expensive risks sit between workstreams.",
-  markets: `ERP and core-platform programmes in the ${siteConfig.markets.primary} and ${siteConfig.markets.secondary}, on ${platformList}. Remote by default, on site by arrangement.`,
-  policy: "No implementation fees, no software resale, no system integrator partnerships or referral fees. Client evidence is processed under a written data-handling policy and never used to train AI models. The review does not guarantee go-live success.",
+  whatWeDo: `A fixed-price, independent check of how one programme or portfolio is governed, reported and run, with a 30-day fix plan. Led by a PMO lead with 11+ years running programmes.`,
+  offers: `${healthCheck.name}: ${healthCheck.days} working days, ${siteConfig.currency} ${healthCheck.listPrice.toLocaleString("en-US")}, one programme. ${healthAudit.name}: ${healthAudit.days} working days, list ${siteConfig.currency} ${healthAudit.listPrice.toLocaleString("en-US")}, founding-client rate ${siteConfig.currency} ${healthAudit.foundingPrice?.toLocaleString("en-US")}. The score is Healthy, Needs attention or At risk, with a 30-day fix plan. Extra days on the audit are quoted separately at the same day rate.`,
+  method:
+    "HEALTH-5 tests every critical status claim for Status, Owner, Evidence, Date and Action. Contradiction testing then checks the claims against each other, because the most expensive risks sit between projects, reports and forums, not inside any one of them.",
+  markets:
+    "The UK first. The UAE by arrangement, remote by default, on site where agreed. Remote work elsewhere is by arrangement.",
+  policy:
+    "No implementation fees, no software resale, no system integrator partnerships or referral fees. Client evidence is processed under a written data-handling policy and never used to train AI models. The audit does not guarantee that a programme or portfolio will recover.",
 } as const;
 
 export type FaqItem = {
   id: string;
   question: string;
-  /** First sentence answers the question directly; 90 words at most. */
+  /** First sentence answers the question directly. */
   answer: string;
   related?: { href: string; label: string }[];
 };
 
 /** Shared verbatim by the FAQ item "Do you use AI on our data?" and /method ("How we use AI, safely"). */
 export const aiOnOurDataAnswer =
-  "Yes, to extract claims and cross-check evidence, under the policy. AI processing runs only through providers contracted for zero data retention, and your data is never used to train AI models. Every finding is reviewed and signed by the principal; AI does not make the go-live recommendation.";
+  "Yes, to extract claims and cross-check evidence, under the policy. AI processing runs only through providers contracted for zero data retention, and your data is never used to train AI models. Every finding is reviewed and signed by the principal; AI does not make the health recommendation.";
 
-/** PRD 9.9, in order. */
 export const faqItems: FaqItem[] = [
   {
-    id: "si-readiness-review",
-    question: "How is this different from our system integrator's readiness review?",
+    id: "head-of-pmo",
+    question: "How is this different from hiring a Head of PMO, or a freelance PMO at a day rate?",
     answer:
-      "We are independent of delivery, and your system integrator is not: its review is part of delivery, and its final milestone depends on the date holding. We test every critical claim on READINESS-5, check the claims against each other, and give a Go, Conditional Go or No-Go with the conditions, owners and dates behind it.",
-    related: [{ href: "/method", label: "How READINESS-5 works" }],
+      "A Head of PMO is a hire. A day-rate PMO joins the team. We stay independent of delivery, test every critical claim on HEALTH-5, and leave you with a score and a 30-day fix plan. We do not take the delivery role.",
+    related: [{ href: "/method", label: "How HEALTH-5 works" }],
   },
   {
-    id: "trust-our-si",
-    question: "We trust our SI. Why would we need independent assurance?",
+    id: "why-independent",
+    question: "Why would we need an independent check?",
     answer:
-      "Because leadership is asked to approve the go-live on reports written by the people being judged on delivery. We don't assume anyone is misleading you. We check whether the evidence supports what is being reported.",
+      "Because leadership is asked to act on reports written by the people being judged on delivery. We don't assume anyone is misleading you. We check whether the evidence supports what is being reported.",
   },
   {
     id: "when-to-start",
-    question: "When should a review start?",
-    answer: "Six to sixteen weeks before the go-live decision. Earlier is fine.",
+    question: "When should a check start?",
+    answer: "As soon as status reports and a RAID log exist. Earlier is more useful, because there is still time to act.",
   },
   {
-    id: "under-four-weeks",
-    question: "We go live in under four weeks. Can you still help?",
-    answer: `Yes. A ${evidenceCheck.name}, scoped to the highest-risk domains.`,
-    related: [{ href: evidenceCheck.path, label: evidenceCheck.name }],
+    id: "one-programme",
+    question: "Do you start with one programme?",
+    answer: `Yes. The ${healthCheck.name} is scoped to one programme, and is the usual starting point.`,
+    related: [{ href: healthCheck.path, label: healthCheck.name }],
   },
   {
-    id: "platforms",
-    question: "Which platforms do you cover?",
-    answer: `${platformList}.`,
+    id: "what-we-look-at",
+    question: "What do you look at?",
+    answer:
+      "Governance, reporting, RAID, cadence, prioritisation and the PMO operating model. The work is not limited to a single software platform.",
   },
   {
     id: "team-time",
     question: "What do you need from our team?",
     answer:
-      "Documents on day one. Interviews only where the evidence conflicts, which keeps your team's time to a minimum.",
+      "Documents on day one. The Health Check includes one sponsor and two team interviews (45 minutes each, remote).",
   },
   {
     id: "protect-documents",
@@ -81,14 +82,14 @@ export const faqItems: FaqItem[] = [
   },
   {
     id: "guarantee",
-    question: "Do you guarantee a successful go-live?",
-    answer: "No. The review does not guarantee go-live success.",
+    question: "Do you guarantee that a programme or portfolio will recover?",
+    answer: "No. The audit does not guarantee that a programme or portfolio will recover.",
   },
   {
     id: "why-publish-prices",
     question: "Why are your prices public?",
     answer:
-      "So you can judge the cost before you talk to us, and set it against what a slipped go-live would cost you. Each list price covers one programme, up to five workstreams.",
+      "So you can judge the cost before you talk to us. The Health Check is one programme. The Audit list price covers one portfolio review, scoped on the call.",
     related: [{ href: "/pricing", label: "Pricing" }],
   },
   {
@@ -97,10 +98,10 @@ export const faqItems: FaqItem[] = [
     answer: feeCreditAnswer,
   },
   {
-    id: "saudi-arabia",
-    question: "Do you work in Saudi Arabia?",
-    answer: "Yes. Remote by default, on site by arrangement.",
-    related: [{ href: "/go-live-readiness-saudi-arabia", label: "Go-live readiness in Saudi Arabia" }],
+    id: "where-we-work",
+    question: "Where do you work?",
+    answer:
+      "The UK first. The UAE by arrangement, remote by default, on site where agreed. Remote work elsewhere is by arrangement.",
   },
   {
     id: "fixes",
@@ -118,105 +119,73 @@ export type GlossaryTerm = {
   related?: { href: string; label: string };
 };
 
-/** PRD 10 glossary, in the PRD's order. */
+/** PMO health glossary, in reading order. Go-live-only terms are not listed. */
 export const glossaryTerms: GlossaryTerm[] = [
   {
-    id: "go-live-readiness",
-    term: "Go-live readiness",
+    id: "pmo-health-check",
+    term: "PMO Health Check",
     definition:
-      "The state in which a programme can switch to the new system with known, accepted risk. It is shown by evidence for each critical claim, not by status colours.",
+      "A fixed-price check of one programme, delivered in 5 working days from the documents, for USD 500. You receive a Project Health Scorecard, the top findings, a 30-day fix plan and a 45-minute readout. The fee is credited in full against a PMO Health Audit signed within 60 days of the readout.",
+    related: { href: healthCheck.path, label: healthCheck.name },
   },
   {
-    id: "go-no-go-decision",
-    term: "Go/no-go decision",
+    id: "pmo-health-audit",
+    term: "PMO Health Audit",
     definition:
-      "The formal decision, usually taken by a steering committee, on whether to go live on the planned date. A ChisokuLabs review ends in Go, Conditional Go or No-Go.",
-    related: { href: "/go-live-decision-review", label: "Go-Live Decision Review" },
+      "A fixed-price audit of how a programme or portfolio is governed, reported and run, capped at 5 working days. List price USD 5,000. Founding-client rate USD 2,500. Extra days are quoted separately at the same day rate. The score is Healthy, Needs attention or At risk, with a 30-day fix plan.",
+    related: { href: healthAudit.path, label: healthAudit.name },
   },
   {
-    id: "conditional-go",
-    term: "Conditional Go",
+    id: "project-health-scorecard",
+    term: "Project Health Scorecard",
     definition:
-      "A decision to go live once named conditions are met, each with an owner and a date. If a condition is not met by its date, the decision is revisited.",
+      "The scored deliverable from a Health Check or a Health Audit. It covers scope, schedule, risk, resourcing and stakeholder communications, and it records the evidence behind the score.",
   },
   {
-    id: "cutover",
-    term: "Cutover",
-    definition:
-      "The planned sequence of steps that moves the business from the old system to the new one, including the final data load, the switch and the checks before users start work.",
+    id: "healthy",
+    term: "Healthy",
+    definition: "The evidence supports the status being reported.",
   },
   {
-    id: "rollback-point",
-    term: "Rollback point",
-    definition:
-      "The last agreed point in cutover at which the programme can return to the old system. It needs a tested rollback plan and a named person who can call it.",
+    id: "needs-attention",
+    term: "Needs attention",
+    definition: "Named gaps, owners and dates that must be closed first.",
   },
   {
-    id: "point-of-no-return",
-    term: "Point of no return",
-    definition:
-      "The moment in cutover after which returning to the old system is no longer practical. After it, problems are fixed forward.",
-  },
-  {
-    id: "hypercare",
-    term: "Hypercare",
-    definition:
-      "The period of heightened support straight after go-live, when the project team stays on to resolve issues quickly before handing over to normal support.",
-  },
-  {
-    id: "sit",
-    term: "SIT (system integration testing)",
-    definition:
-      "Testing that the new system and the systems it connects to exchange data correctly from end to end. It comes before UAT.",
-  },
-  {
-    id: "uat",
-    term: "UAT (user acceptance testing)",
-    definition:
-      "Testing by business users that the system supports their processes. A signed acceptance from each business area is a key piece of readiness evidence.",
-  },
-  {
-    id: "data-migration-reconciliation",
-    term: "Data migration reconciliation",
-    definition:
-      "Checking that the data loaded into the new system matches the source, by record counts, balances and key fields. The evidence is the reconciliation output, signed off by the data owner.",
-  },
-  {
-    id: "mock-load",
-    term: "Mock load",
-    definition:
-      "A rehearsal of the data migration with production-like data, run before cutover to test load times, errors and reconciliation.",
+    id: "at-risk",
+    term: "At risk",
+    definition: "What is missing, and the 30-day fix plan to recover.",
   },
   {
     id: "raid-log",
     term: "RAID log",
     definition:
-      "A register of risks, assumptions, issues and dependencies, each with an owner. It is a source for readiness claims, not proof of them.",
+      "A register of risks, assumptions, issues and dependencies, each with an owner and, where it is an action, a due date. A log that is up to date is not the same as a log that has been acted on.",
   },
   {
-    id: "readiness-claim",
-    term: "Readiness claim",
+    id: "health-5",
+    term: "HEALTH-5",
     definition:
-      "A statement that something is ready for go-live, such as “UAT is complete” or “cutover is rehearsed”. Every critical claim is tested on READINESS-5.",
-  },
-  {
-    id: "readiness-5",
-    term: "READINESS-5",
-    definition:
-      "The ChisokuLabs test for every critical readiness claim: Status, Owner, Evidence, Date and Action. A claim reported Green with 2 of 5 is an assumption, not a fact.",
-    related: { href: "/method", label: "How READINESS-5 works" },
+      "The ChisokuLabs test for every critical status claim: Status, Owner, Evidence, Date and Action. A claim reported Green with 2 of 5 is an assumption, not a fact.",
+    related: { href: "/method", label: "How HEALTH-5 works" },
   },
   {
     id: "contradiction-testing",
     term: "Contradiction testing",
     definition:
-      "Checking readiness claims against each other across workstreams, for example a reconciliation reported as passed while a business entity has not signed UAT. The most expensive risks sit between workstreams.",
-    related: { href: "/method", label: "How READINESS-5 works" },
+      "Checking status claims against each other across projects, reports and forums. The most expensive risks sit between them, not inside any one of them.",
+    related: { href: "/method", label: "How HEALTH-5 works" },
   },
   {
-    id: "decision-condition",
-    term: "Decision condition",
+    id: "status-evidence",
+    term: "Status evidence",
     definition:
-      "Something that must be true before go-live under a Conditional Go, with a named owner and an evidence-by date.",
+      "An artefact that shows whether a reported status is true: a status pack, a RAID log, governance minutes or a plan. The score rests on the artefact, not on the colour in the pack.",
+  },
+  {
+    id: "governance",
+    term: "Governance",
+    definition:
+      "The forums, owners and decisions that run a programme or portfolio. A forum that met is not the same as a forum that decided.",
   },
 ];

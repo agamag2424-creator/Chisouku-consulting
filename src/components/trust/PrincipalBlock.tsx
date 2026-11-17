@@ -3,9 +3,9 @@ import { Section } from "../ui/Section";
 
 // PRD 8.3 (IN-3 approved). No image, name or links (PRD L4). Hidden entirely when siteConfig.principalBlock is false.
 const paragraph =
-  "Every review is led and signed by a principal with 11+ years leading ERP and transformation programmes across aviation, banking and manufacturing, including multi-country go-lives.";
+  "Every audit is led and signed by a principal with 11+ years leading programmes and PMOs across aviation, banking and manufacturing.";
 
-const chips = ["11+ years", "Aviation", "Banking", "Manufacturing", "Multi-country go-lives"] as const;
+const chips = ["11+ years", "Aviation", "Banking", "Manufacturing"] as const;
 
 /** "Principal-led" section, shared by the homepage and the offer pages (E6.2). */
 export function PrincipalBlock({ tone = "paper", id }: { tone?: "page" | "paper"; id?: string }) {

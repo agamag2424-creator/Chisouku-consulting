@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { Market } from "../../content/markets";
-import { breadcrumbJsonLd, marketServiceJsonLd } from "../../lib/jsonLd";
+import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { pageMetadata } from "../../lib/seo";
 import { siteConfig } from "../../lib/siteConfig";
 import { JsonLdScript } from "../aeo/JsonLdScript";
@@ -25,7 +25,6 @@ export function marketMetadata(market: Market): Metadata {
 export function MarketPage({ market }: { market: Market }) {
   return (
     <>
-      <JsonLdScript id="market-service-ld-json" data={marketServiceJsonLd(market, lead(market))} />
       <JsonLdScript
         id="market-breadcrumb-ld-json"
         data={breadcrumbJsonLd([

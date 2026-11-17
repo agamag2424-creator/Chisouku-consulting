@@ -36,10 +36,13 @@ export const forbidden = [
 ];
 
 export const allowed = [
-  // Negations of "guarantee" (PRD 8.6 requires saying it plainly).
+  // Negations of "guarantee". The old phrases stay because the unlisted guides still say them.
   "does not guarantee go-live success",
   "Do you guarantee a successful go-live?",
   "Not a guarantee of go-live success",
+  "does not guarantee that a programme or portfolio will recover",
+  "Do you guarantee that a programme or portfolio will recover?",
+  "Not a guarantee that the programme will recover",
   // Element ids and JSON keys for the FAQ item above.
   '"guarantee"',
   '\\"guarantee\\"',

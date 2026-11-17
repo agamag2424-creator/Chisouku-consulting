@@ -76,7 +76,7 @@ const lifecycle = [
 const aiUse = [
   { does: true, text: "Extracts claims and cross-checks evidence" },
   { does: true, text: "Every finding is reviewed and signed by the principal" },
-  { does: false, text: "AI does not make the go-live recommendation" },
+  { does: false, text: "AI does not make the health recommendation" },
 ] as const;
 
 export default function IndependenceAndDataPage() {
@@ -94,7 +94,7 @@ export default function IndependenceAndDataPage() {
 
       <Section tone="ink">
         <h1 className="t-h1 max-w-[20ch] text-paper">{title}</h1>
-        <p className="t-body mt-5 max-w-[58ch] text-paper/80">No stake in your go-live date.</p>
+        <p className="t-body mt-5 max-w-[58ch] text-paper/80">No stake in your delivery.</p>
         <nav aria-label="On this page" className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
           <Button href="#independence" variant="inverse" size="lg">
             Independence

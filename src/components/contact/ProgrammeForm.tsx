@@ -9,10 +9,9 @@ import { cn } from "../../lib/utils";
 
 // "Discuss your programme" form (PRD 11, E9.1). Labels and options are PRD 11 wording; messages per BACKLOG E9.1.
 
-const countries = ["UAE", "Saudi Arabia", "Other GCC", "Other"] as const;
+const countries = ["United Kingdom", "United Arab Emirates", "Other"] as const;
+const lookedAt = ["One programme", "A portfolio", "Not sure yet", "Other"] as const;
 const roles = ["CIO/CTO", "Transformation Director", "Programme Sponsor", "Programme/PMO Director", "Other"] as const;
-const platforms = [...siteConfig.platforms, "Other"] as const;
-
 type Fields = {
   name: string;
   email: string;
@@ -107,7 +106,7 @@ export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: 
       <div role="status" className="rounded-sheet border border-line bg-paper p-6 min-[641px]:p-8">
         <p className="t-h3 text-ink">Thanks. We&apos;ll reply within one business day.</p>
         {fields.request_type === "brief" && (
-          <p className="t-body mt-3 text-ink">Your readiness brief arrives within two business days.</p>
+          <p className="t-body mt-3 text-ink">Your briefing arrives within two business days.</p>
         )}
       </div>
     );
@@ -177,15 +176,15 @@ export function ProgrammeForm({ initialRequest = "review" }: { initialRequest?: 
             ))}
           </select>
         </Field>
-        <Field label="Platform" htmlFor="pf-platform">
+        <Field label="What do you want looked at?" htmlFor="pf-platform">
           <select {...fieldProps("platform")} value={fields.platform} onChange={(e) => set("platform", e.target.value)} className={inputClass()}>
             <option value="">Choose…</option>
-            {platforms.map((item) => (
+            {lookedAt.map((item) => (
               <option key={item}>{item}</option>
             ))}
           </select>
         </Field>
-        <Field label="Go-live decision date" htmlFor="pf-decision_month">
+        <Field label="When would you want work to start?" htmlFor="pf-decision_month">
           <input {...fieldProps("decision_month")} type="month" value={fields.decision_month} onChange={(e) => set("decision_month", e.target.value)} className={inputClass()} />
         </Field>
       </div>

@@ -45,12 +45,12 @@ export function SlipCostEstimator() {
   };
   const result = slipEstimate(inputs, {
     workingDaysPerWeek: siteConfig.slipEstimator.workingDaysPerWeek,
-    comparisonPrice: siteConfig.offers.evidenceCheck.listPrice,
+    comparisonPrice: siteConfig.offers.healthCheck.listPrice,
   });
   const weeks = Number.isFinite(inputs.weeks) && inputs.weeks > 0 ? inputs.weeks : 0;
   const weekly = formatPrice(Math.round(result.weeklyRunRate));
   const total = formatPrice(Math.round(result.totalCost));
-  const price = offerPriceLabel("evidenceCheck");
+  const price = offerPriceLabel("healthCheck");
   const priceText = price.founding ? `${price.list} list, ${price.founding} founding-client rate` : price.list;
 
   // Announce the result once typing pauses, so screen readers are not flooded on every keystroke.
@@ -71,7 +71,7 @@ export function SlipCostEstimator() {
   };
 
   const bars = Math.min(Math.round(weeks), MAX_BARS);
-  const comparisonPrice = siteConfig.offers.evidenceCheck.listPrice;
+  const comparisonPrice = siteConfig.offers.healthCheck.listPrice;
   const comparisonWidth = result.totalCost > 0 ? Math.min(Math.max((comparisonPrice / result.totalCost) * 100, 0.8), 100) : 100;
 
   return (
@@ -153,7 +153,7 @@ export function SlipCostEstimator() {
             <span className="block h-full w-full bg-ink" />
           </span>
           <p className="mt-1 flex justify-between gap-3">
-            <span className="font-semibold text-teal">{siteConfig.offers.evidenceCheck.name}</span>
+            <span className="font-semibold text-teal">{siteConfig.offers.healthCheck.name}</span>
             <span className="t-data text-ink">{price.list}</span>
           </p>
           <span className="h-3.5 overflow-hidden rounded-full bg-faint">
@@ -163,7 +163,7 @@ export function SlipCostEstimator() {
 
         {result.comparisonDays !== null && (
           <p className="t-body text-ink">
-            {`A Readiness Evidence Check costs ${priceText}: about ${result.comparisonDays} working days of your programme's run-rate.`}
+            {`A ${siteConfig.offers.healthCheck.name} costs ${priceText}: about ${result.comparisonDays} working days of your programme's run-rate.`}
           </p>
         )}
         <p className="text-[13px] leading-normal text-muted">

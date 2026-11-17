@@ -1,4 +1,4 @@
-import { comparisonColumns, comparisonFootnote, comparisonRows } from "../../content/comparison";
+import { comparisonCaption, comparisonColumns, comparisonFootnote, comparisonRows } from "../../content/comparison";
 import { cn } from "../../lib/utils";
 
 type ComparisonTableProps = {
@@ -26,7 +26,7 @@ export function ComparisonTable({ rows = comparisonRows.length, id = "comparison
       >
         <table id={id} className="w-full min-w-[760px] border-collapse text-left max-[640px]:min-w-[680px]">
           <caption id={captionId} className="sr-only">
-            How ChisokuLabs compares with the usual go-live assurance options
+            {comparisonCaption}
           </caption>
           <thead>
             <tr className="border-b border-line">

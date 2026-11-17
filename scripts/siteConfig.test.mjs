@@ -8,23 +8,22 @@ test("formatPrice uses the configured currency and grouping", () => {
   assert.equal(formatPrice(12000), "USD 12,000");
 });
 
-test("offerPriceLabel shows list and founding prices while 3 places remain", () => {
-  assert.deepEqual(offerPriceLabel("evidenceCheck", 3), { list: "USD 5,000", founding: "USD 2,500" });
-  assert.deepEqual(offerPriceLabel("decisionReview", 3), { list: "USD 12,000", founding: "USD 6,000" });
-  assert.deepEqual(offerPriceLabel("continuous", 3), {
-    list: "From USD 6,000 / month",
-    founding: "From USD 3,000 / month",
-  });
+test("offerPriceLabel shows the Health Check as one price and the Audit list and founding prices", () => {
+  assert.deepEqual(offerPriceLabel("healthCheck", 3), { list: "USD 500", founding: null });
+  assert.deepEqual(offerPriceLabel("healthAudit", 3), { list: "USD 5,000", founding: "USD 2,500" });
 });
 
-test("offerPriceLabel hides founding prices when 0 places remain", () => {
-  assert.deepEqual(offerPriceLabel("evidenceCheck", 0), { list: "USD 5,000", founding: null });
-  assert.deepEqual(offerPriceLabel("continuous", 0), { list: "From USD 6,000 / month", founding: null });
+test("offerPriceLabel hides the Audit founding price when 0 places remain", () => {
+  assert.deepEqual(offerPriceLabel("healthCheck", 0), { list: "USD 500", founding: null });
+  assert.deepEqual(offerPriceLabel("healthAudit", 0), { list: "USD 5,000", founding: null });
 });
 
 test("defaults come from config", () => {
   assert.equal(foundingActive(), siteConfig.foundingSlotsRemaining > 0);
-  assert.deepEqual(offerPriceLabel("decisionReview"), offerPriceLabel("decisionReview", siteConfig.foundingSlotsRemaining));
+  assert.deepEqual(offerPriceLabel("healthAudit"), offerPriceLabel("healthAudit", siteConfig.foundingSlotsRemaining));
+  assert.equal(siteConfig.offers.healthAudit.days, 5);
+  assert.equal(siteConfig.offers.healthCheck.days, 5);
+  assert.equal(siteConfig.feeCreditDays, 60);
 });
 
 test("isRouteLive ignores query and hash, and rejects unknown paths", () => {

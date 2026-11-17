@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/siteConfig";
 // About Us (Razorpay international-payments policy pages). Keeps existing site wording where it matches.
 export const metadata: Metadata = pageMetadata("/about");
 
-const lastUpdated = "2 November 2026";
+const lastUpdated = "17 November 2026";
 
 export default function AboutPage() {
   return (
@@ -20,18 +20,18 @@ export default function AboutPage() {
       <Section tone="paper">
         <div className="flex max-w-[760px] flex-col gap-12">
           <Body>
-            {siteConfig.name} provides independent go-live decision assurance for ERP and core-platform programmes in
-            the UAE and Saudi Arabia.
+            {siteConfig.name} provides a fixed-price, independent check of how programmes and portfolios are governed,
+            reported and run. The UK is first; the UAE is by arrangement.
           </Body>
 
           <Body>
-            We help steering committees reach a go-live decision they can defend. The options are Go, Conditional Go or
-            No-Go, with the conditions, owners and dates behind each. We test the readiness evidence behind every
-            critical claim using our READINESS-5 method: Status, Owner, Evidence, Date, Action. We also check for
-            contradictions between workstreams.
+            We help sponsors and PMO leads see whether the status being reported is supported by evidence. The score is
+            Healthy, Needs attention or At risk, with owners, dates and a 30-day fix plan. We test every critical claim
+            using HEALTH-5: Status, Owner, Evidence, Date, Action. We also check for contradictions between reports and
+            forums.
           </Body>
 
-          <Part title="We have no stake in your go-live date">
+          <Part title="We have no stake in your delivery">
             <List
               items={[
                 "no implementation fees;",
@@ -45,10 +45,9 @@ export default function AboutPage() {
           <Part title="How you can work with us">
             <List
               items={[
-                "Readiness Evidence Check: 5 business days.",
-                "Go-Live Decision Review: 10 business days.",
-                "A free readiness brief on your programme, prepared from public information.",
-                "Self-serve options: the Go-Live Readiness Report and the Go-Live Readiness Pack.",
+                "PMO Health Check: USD 500, 5 working days, one programme.",
+                "PMO Health Audit: 5 working days, list price USD 5,000, founding-client rate USD 2,500. Extra days are quoted separately at the same day rate.",
+                "A free one-page briefing on your programme, prepared from public information.",
               ]}
             />
           </Part>

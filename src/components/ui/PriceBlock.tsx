@@ -1,12 +1,12 @@
 import { foundingClientStatement } from "../../content/founding";
-import { offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
+import { extraDaysSentence, feeCreditSentence, offerPriceLabel, siteConfig, type OfferKey } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 
 type PriceBlockProps = {
   offer: OfferKey;
   /** Defaults to config; overridable so the zero-slots state can be shown and tested. */
   foundingSlotsRemaining?: number;
-  /** Defaults to on for the Evidence Check and Decision Review (PRD 6.2). */
+  /** Defaults to on. The credit line applies to both offers. */
   showFeeCredit?: boolean;
   /** Off when a heading beside the block already names the offer. */
   showName?: boolean;
@@ -32,11 +32,11 @@ export function PriceBlock({
   return (
     <div className={cn("rounded-sheet border border-line bg-paper p-6", className)}>
       {showName && <p className="t-h3 text-ink">{data.name}</p>}
-      {"days" in data && <p className="mt-1 t-small text-muted">{`${data.days} business days`}</p>}
+      {"days" in data && <p className="mt-1 t-small text-muted">{`${data.days} working days`}</p>}
 
       <dl className={cn("flex flex-wrap gap-x-10 gap-y-4", (showName || "days" in data) && "mt-5")}>
         <div>
-          <dt className="t-small text-muted">List price</dt>
+          <dt className="t-small text-muted">{data.priceCaption}</dt>
           <dd className="t-data mt-1 text-[20px] text-ink">{list}</dd>
         </div>
         {founding && (
@@ -47,14 +47,16 @@ export function PriceBlock({
         )}
       </dl>
 
-      {founding && showTerms && (
+      {data.foundingApplies && (
+        <p className="mt-4 t-small text-muted">{extraDaysSentence}</p>
+      )}
+
+      {founding && showTerms && data.foundingApplies && (
         <p className="mt-4 t-small text-muted">{foundingClientStatement(foundingSlotsRemaining)}</p>
       )}
 
       {feeCredit && (
-        <p className="mt-4 border-t border-line pt-4 t-small text-ink">
-          {`The full Evidence Check fee is credited against a Go-Live Decision Review signed within ${siteConfig.feeCreditDays} days of the Evidence Check report.`}
-        </p>
+        <p className="mt-4 border-t border-line pt-4 t-small text-ink">{feeCreditSentence}</p>
       )}
     </div>
   );

@@ -106,7 +106,7 @@ export function EvidenceCheckHero({ className }: { className?: string }) {
           keep the table semantics when the display changes. */}
       <table role="table" className="w-full border-collapse text-left max-[640px]:block">
         <caption className="sr-only">
-          Readiness claims reported Green, checked on Status, Owner, Evidence, Date and Action
+          Status claims reported Green, checked on Status, Owner, Evidence, Date and Action
         </caption>
         <thead role="rowgroup" className="max-[640px]:sr-only">
           <tr role="row" className="text-[12px] font-semibold text-muted">

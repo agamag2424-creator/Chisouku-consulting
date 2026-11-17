@@ -8,7 +8,7 @@ import { siteConfig } from "../../lib/siteConfig";
 // Privacy Policy (Razorpay international-payments policy pages). Replaces the E9.3 version dated 17 October 2026.
 export const metadata: Metadata = pageMetadata("/privacy");
 
-const effectiveDate = "2 November 2026";
+const effectiveDate = "17 November 2026";
 
 export default function PrivacyPage() {
   return (
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       <Section tone="page">
         <h1 className="t-h1 text-ink">Privacy Policy</h1>
         <p className="mt-4 text-[14px] text-muted">
-          {`Effective date: ${effectiveDate} (replaces the version last updated 17 October 2026)`}
+          {`Effective date: ${effectiveDate} (replaces the version last updated 2 November 2026)`}
         </p>
       </Section>
 
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
           <Part title="What we collect">
             <Body>
               Enquiries: what you enter in the &quot;Discuss your programme&quot; form. That is your name, work email,
-              company, country, role, request type, platform, go-live decision date and message, plus your consent to be
+              company, country, role, request type, what you want looked at, when you would want work to start and message, plus your consent to be
               contacted about your request.
             </Body>
             <Body>
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
             <List
               items={[
                 "To reply to your enquiry.",
-                "To prepare a readiness brief you have asked for.",
+                "To prepare a briefing you have asked for.",
                 "To provide the services you engage us for, under a written agreement.",
                 "To process payments, deliver your purchase, issue invoices and handle refunds.",
                 "To understand which pages and buttons are used, so we can improve the site.",

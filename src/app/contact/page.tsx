@@ -1,6 +1,6 @@
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { ProgrammeForm } from "../../components/contact/ProgrammeForm";
-import { Body, List } from "../../components/legal/LegalParts";
+import { Body } from "../../components/legal/LegalParts";
 import { isRequestKey } from "../../content/contactForm";
 import { Section } from "../../components/ui/Section";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
@@ -8,7 +8,7 @@ import { calendlyLink, siteConfig } from "../../lib/siteConfig";
 
 // Contact Us (Razorpay policy content) plus the existing programme form (PRD 11, E9.1).
 const title = "Contact Us";
-const lastUpdated = "2 November 2026";
+const lastUpdated = "17 November 2026";
 
 type Props = { searchParams?: Promise<{ request?: string | string[] }> };
 
@@ -49,14 +49,8 @@ export default async function ContactPage({ searchParams }: Props) {
             delivery queries get the same response time.
           </Body>
           <Body>
-            Orders: for a refund, cancellation or a missing delivery, include your payment ID.
+            Orders: for a refund, cancellation or a missing delivery, include your payment ID and email {siteConfig.email}.
           </Body>
-          <List
-            items={[
-              "Go-Live Readiness Report: USD 149.",
-              "Go-Live Readiness Pack: USD 249. If you've bought the report, its USD 149 is credited towards the Pack.",
-            ]}
-          />
           <div className="flex flex-col gap-3 border-t border-line pt-6 text-[15px] text-ink">
             <p>
               Prefer to talk?{" "}
