@@ -9,7 +9,7 @@ type BookCallButtonProps = {
   className?: string;
 };
 
-/** Secondary booking CTA. "Discuss your programme" and the readiness brief stay the primary actions. */
+/** Booking CTA. Uses the discovery-call Calendly link. */
 export function BookCallButton({ content, variant = "secondary", size = "lg", className }: BookCallButtonProps) {
   return (
     <Button

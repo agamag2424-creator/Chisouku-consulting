@@ -199,7 +199,7 @@ export function PackIllustration() {
   );
 }
 
-/** Section 6: a one-page readiness brief; shapes only, no text. */
+/** Section 6: a one-page briefing; shapes only, no text. */
 export function BriefIllustration() {
   return (
     <div aria-hidden className="relative mb-2 h-[240px]">

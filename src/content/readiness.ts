@@ -58,8 +58,6 @@ export const supportingLine = "Want a second view on these areas? Talk it throug
 
 export const bookButton = "Book a 30-minute call";
 
-export const briefButton = "Request a free readiness brief";
-
 export const controls = {
   back: "Back",
   next: "Next",

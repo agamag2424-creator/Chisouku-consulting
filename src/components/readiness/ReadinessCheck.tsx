@@ -9,7 +9,6 @@ import {
   bandOrder,
   bands,
   bookButton,
-  briefButton,
   controls,
   helperLine,
   intro,
@@ -44,7 +43,6 @@ import { cn } from "../../lib/utils";
 import { Button } from "../ui/Button";
 import { Sheet } from "../ui/Sheet";
 
-const briefHref = "/contact?request=brief";
 const mobileQuery = "(max-width: 767px)";
 
 type Phase = "intro" | "questions" | "results";
@@ -487,9 +485,6 @@ function Results({
               rel="noopener noreferrer"
             >
               {bookButton}
-            </Button>
-            <Button href={briefHref} ctaId="readiness_brief" variant="secondary" size="lg" className="w-full sm:w-auto">
-              {briefButton}
             </Button>
           </div>
           <Button variant="text" className="min-h-11 self-start px-1" onClick={onStartAgain}>
