@@ -44,8 +44,8 @@ const nextConfig: NextConfig = {
     return [
       // Old offer routes (PRD 4.2, E10.1); the pages are deleted.
       ...[
-        ["/pmo-automation-audit", "/readiness-evidence-check"],
-        ["/implementation", "/go-live-decision-review"],
+        ["/pmo-automation-audit", "/pmo-health-check"],
+        ["/implementation", "/pmo-health-audit"],
         ["/sample-outputs", "/see-it-first"],
         ["/free-pmo-diagnostic", "/see-it-first"],
         ["/diagnostic-vs-audit", "/pricing"],
@@ -86,8 +86,18 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/ai-solutions/:path*",
-        destination: "/go-live-decision-review",
+        destination: "/pmo-health-audit",
         permanent: true,
+      },
+      {
+        source: "/go-live-decision-review",
+        destination: "/pmo-health-audit",
+        statusCode: 301,
+      },
+      {
+        source: "/readiness-evidence-check",
+        destination: "/pmo-health-check",
+        statusCode: 301,
       },
       {
         source: "/founder-track-record",

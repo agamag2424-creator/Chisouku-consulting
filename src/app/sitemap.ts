@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { routeLive, siteConfig } from "../lib/siteConfig";
+import { isRouteListed, routeLive, siteConfig } from "../lib/siteConfig";
 
-// PRD 10 (E8.5): the sitemap lists exactly the live routes. Bump the date when the site changes meaningfully.
-const lastModified = new Date("2026-11-02");
+// Listed routes only. Unlisted pages stay live and noindexed, and are not submitted here.
+const lastModified = new Date("2026-11-17");
 
 const legalPaths = new Set([
   "/privacy",
@@ -25,7 +25,7 @@ const priority = (path: string) =>
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return Object.entries(routeLive)
-    .filter(([, live]) => live)
+    .filter(([path, live]) => live && isRouteListed(path))
     .map(([path]) => ({
       url: `${siteConfig.url}${path === "/" ? "" : path}`,
       lastModified,

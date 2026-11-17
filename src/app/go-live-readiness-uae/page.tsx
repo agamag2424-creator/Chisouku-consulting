@@ -7,7 +7,7 @@ import { routeRenders } from "../../lib/siteConfig";
 export const dynamic = "force-dynamic";
 
 export const metadata = routeRenders("/go-live-readiness-uae")
-  ? marketMetadata(uaeMarket())
+  ? { ...marketMetadata(uaeMarket()), robots: { index: false, follow: true } }
   : { robots: { index: false, follow: false } };
 
 export default function UaeMarketPage() {

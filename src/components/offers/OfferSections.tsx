@@ -6,17 +6,15 @@ import { BookCallButton } from "../ui/BookCallButton";
 import { Button } from "../ui/Button";
 import { Section } from "../ui/Section";
 import { Sheet } from "../ui/Sheet";
-import { WeekStrip } from "../home/HomeVisuals";
 import { DayStrip } from "./DayStrip";
 
 // Offer page sections (PRD 9.2, 9.3) in the E1.6 visual language. Copy is passed in verbatim by each page.
 
-export type FixedOffer = "evidenceCheck" | "decisionReview";
+export type FixedOffer = "healthCheck" | "healthAudit";
 
 const CTA = {
   review: { href: "/contact?request=review", label: "Discuss your programme" },
-  brief: { href: "/contact?request=brief", label: "Request a free readiness brief" },
-  samplePack: { href: "/see-it-first#sample-pack", label: "See a full sample decision pack" },
+  brief: { href: "/contact?request=brief", label: "Request a free briefing" },
 } as const;
 
 /** Heading beside its lead from 1100px; stacked below (as on the homepage). */
@@ -46,23 +44,20 @@ export function OfferHero({ offer, lead }: { offer: FixedOffer; lead: string }) 
             {CTA.review.label}
           </Button>
           <BookCallButton
-            content={offer === "evidenceCheck" ? "evidence_check" : "decision_review"}
+            content={offer === "healthCheck" ? "health_check" : "health_audit"}
             variant="inverse-outline"
           />
-          <Button href={CTA.samplePack.href} variant="inverse-outline" size="lg">
-            {CTA.samplePack.label}
-          </Button>
         </div>
       </div>
       <Sheet className="flex flex-col gap-6 p-6 text-ink shadow-2xl min-[641px]:p-8">
         <p className="flex items-baseline gap-3">
           <span className="t-data text-[44px] leading-none tracking-[-0.03em]">{data.days}</span>
-          <span className="t-small text-muted">business days</span>
+          <span className="t-small text-muted">working days</span>
         </p>
         <DayStrip days={data.days} />
         <dl className="flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-5">
           <div>
-            <dt className="text-[13px] text-muted">List price</dt>
+            <dt className="text-[13px] text-muted">{data.priceCaption}</dt>
             <dd className="t-data mt-1.5 text-[26px] text-ink">{price.list}</dd>
           </div>
           {price.founding && (
@@ -284,7 +279,7 @@ export function OfferClosing() {
   return (
     <Section tone="ink">
       <div className="flex flex-wrap items-end justify-between gap-8">
-        <h2 className="t-h2 max-w-[18ch] text-paper">Six weeks from go-live? Start with the evidence.</h2>
+        <h2 className="t-h2 max-w-[22ch] text-paper">Not sure what your status reports are telling you? Start with one programme.</h2>
         <div className="flex w-full flex-col gap-3 min-[480px]:w-auto min-[480px]:flex-row min-[480px]:flex-wrap">
           <Button href={CTA.review.href} variant="inverse" size="lg">
             {CTA.review.label}
@@ -292,10 +287,9 @@ export function OfferClosing() {
           <Button href={CTA.brief.href} variant="inverse-outline" size="lg">
             {CTA.brief.label}
           </Button>
-          <BookCallButton content="six_weeks" variant="inverse-outline" />
+          <BookCallButton content="closing" variant="inverse-outline" />
         </div>
       </div>
-      <WeekStrip />
     </Section>
   );
 }

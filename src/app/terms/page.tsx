@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/siteConfig";
 // Terms of Service (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/terms");
 
-const lastUpdated = "2 November 2026";
+const lastUpdated = "17 November 2026";
 
 export default function TermsPage() {
   return (
@@ -27,25 +27,25 @@ export default function TermsPage() {
           </Body>
 
           <Part title="1.1 What we offer">
+            <Body>Consulting services, priced as shown on the site:</Body>
+            <List
+              items={[
+                "PMO Health Check: USD 500, 5 working days, one programme. Paid in full on signature.",
+                "PMO Health Audit: 5 working days, USD 5,000 list price, founding-client rate USD 2,500. The audit is capped at 5 working days. Extra days are quoted separately at the same day rate: USD 1,000 a day at list price, USD 500 a day at the founding-client rate.",
+                "Founding-client rates and the fee credit apply as described on the site. The founding-client rate applies to the PMO Health Audit. The Health Check fee is a credit against the audit, and it is not a refund.",
+              ]}
+            />
             <List
               items={[
                 "Go-Live Readiness Report (USD 149): a scored PDF report generated from your answers to an online questionnaire. It is based only on what you tell us. We do not read your documents, data or invoices.",
                 "Go-Live Readiness Pack (USD 249). If you have already bought the Go-Live Readiness Report, its USD 149 is credited towards the Pack, so you pay USD 100: editable templates (.xlsx) and a PDF guide, delivered as a download.",
               ]}
             />
-            <Body>Consulting services, priced as shown on the site:</Body>
-            <List
-              items={[
-                "Readiness Evidence Check: 5 business days, USD 5,000 list price.",
-                "Go-Live Decision Review: 10 business days, USD 12,000 list price.",
-                "Founding-client rates and the fee credit apply as described on the site.",
-              ]}
-            />
             <Body>
               For each engagement we confirm the scope, dates and fee in writing (by email or a signed proposal) before
               work starts. If that written agreement conflicts with these terms, the written agreement applies.
             </Body>
-            <Body>Free readiness brief: a free brief on your programme, prepared from public information.</Body>
+            <Body>Free briefing: a free one-page briefing on your programme, prepared from public information.</Body>
           </Part>
 
           <Part title="1.2 Prices and payment">
@@ -55,7 +55,7 @@ export default function TermsPage() {
                 "Prices exclude applicable taxes.",
                 "Payments are processed by Razorpay. We never see or store your full card details.",
                 "Digital products are paid for in full at checkout.",
-                "Consulting fees are paid as set out in the written agreement.. Unless agreed otherwise, 50% is due on signing and 50% at the readout",
+                "The PMO Health Check (USD 500) is paid in full on signature. The PMO Health Audit is 50% on signature and 50% on delivery, unless a written agreement says otherwise.",
                 "Your bank or card issuer may charge currency conversion or other fees. Those are your responsibility.",
               ]}
             />
@@ -78,7 +78,7 @@ export default function TermsPage() {
               items={[
                 "Each purchase gives one company a non-exclusive, non-transferable licence to use and adapt the materials for its own internal work.",
                 "You may not resell, redistribute or publish the materials, or share them outside your company.",
-                "We keep all intellectual property in our materials and our methods, including READINESS-5.",
+                "We keep all intellectual property in our materials and our methods, including HEALTH-5.",
                 "For consulting, you own the deliverables we prepare for you once you have paid in full. We keep our underlying methods and templates.",
               ]}
             />

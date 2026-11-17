@@ -3,51 +3,56 @@ import { markets } from "../content/markets";
 import { packMethodNote } from "../content/samplePack";
 import { siteConfig } from "./siteConfig";
 
-// Per-route titles and descriptions (PRD 10, E8.4): one map, so every page's metadata comes from here. Titles stay at
-// 60 characters or fewer with " | ChisokuLabs", descriptions at 155 or fewer (scripts/e2e/seo.spec.ts checks).
-export const defaultTitle = "Independent Go-Live Decision Assurance | ChisokuLabs";
+// Per-route titles and descriptions. Home title follows the approved offer wording.
+export const defaultTitle =
+  "PMO Health Audit: an independent, fixed-price check of how your programmes are run | ChisokuLabs";
 
-export const defaultDescription = `${siteConfig.tagline} for ERP and core-platform programmes in the UAE and Saudi Arabia.`;
+export const defaultDescription = siteConfig.heroSub;
 
-/** The default share image: the hero headline on ink (public/og.png). Offers, method and see-it-first have their own (E8.5). */
+/** The default share image: the hero headline on ink (public/og.png). Offers, method and see-it-first have their own. */
 export const ogImage = {
   url: "/og.png",
   width: 1200,
   height: 630,
-  alt: `ChisokuLabs: ${siteConfig.tagline.toLowerCase()}`,
+  alt: `${siteConfig.name}: ${siteConfig.schemaDescription}`,
 };
 
-const { evidenceCheck, decisionReview } = siteConfig.offers;
+const { healthCheck, healthAudit } = siteConfig.offers;
 const marketDescription = (market: (typeof markets)[keyof typeof markets]) =>
   `Independent go-live decision assurance for ERP and core-platform programmes in ${market.inName}. ${market.whyNow}`;
 
 export const routeSeo = {
   "/": {
-    title: "Independent Go-Live Decision Assurance",
-    description:
-      "Before leadership approves an ERP or core-platform go-live, we test whether every critical readiness claim has the evidence to defend that decision.",
+    title: "PMO Health Audit: an independent, fixed-price check of how your programmes are run",
+    description: siteConfig.heroSub,
   },
-  [evidenceCheck.path]: {
-    title: evidenceCheck.name,
-    description: `A five-day written review of your programme's readiness evidence. Fixed fee: ${siteConfig.currency} ${evidenceCheck.listPrice.toLocaleString("en-US")}.`,
+  [healthCheck.path]: {
+    title: healthCheck.name,
+    description:
+      "A five-day, USD 500 check of one programme: status pack, RAID log, governance calendar and plan, with a 30-day fix plan. The fee is credited against the PMO Health Audit if signed within 60 days.",
     image: "/og-evidence-check.png",
   },
-  [decisionReview.path]: {
-    title: decisionReview.name,
+  [healthAudit.path]: {
+    title: healthAudit.name,
     description:
-      "A ten-day independent review that gives your steering committee a defensible go-live decision: Go, Conditional Go or No-Go.",
+      "A 5 working day independent audit of how a programme or portfolio is governed, reported and run. Founding-client rate USD 2,500.",
     image: "/og-decision-review.png",
   },
-  "/method": { title: "READINESS-5: how we test a go-live claim", description: packMethodNote, image: "/og-method.png" },
+  "/method": {
+    title: "HEALTH-5: how we test a programme status claim",
+    description: packMethodNote,
+    image: "/og-method.png",
+  },
   "/see-it-first": {
     title: "See the work before you talk to us",
     description:
-      "View or download the full sample decision pack, no form. Or request a free readiness brief on your programme, prepared from public information.",
+      "Request a free one-page briefing on your programme, prepared from public information. We reply within two business days.",
     image: "/og-see-it-first.png",
   },
   "/pricing": {
     title: "Pricing",
-    description: `The full Evidence Check fee is credited against a Go-Live Decision Review signed within ${siteConfig.feeCreditDays} days of the Evidence Check report.`,
+    description:
+      "PMO Health Check, USD 500, credited against the PMO Health Audit (founding-client rate USD 2,500) if signed within 60 days.",
   },
   "/independence-and-data": {
     title: "Independence and data handling",
@@ -59,7 +64,7 @@ export const routeSeo = {
   "/faq": {
     title: "FAQ",
     description:
-      "Independent go-live decision assurance: how it differs from an SI readiness review, timing, platforms, data handling, AI use, prices and the fee credit.",
+      "PMO Health Audit and Health Check: how the work differs from hiring a Head of PMO, timing, data handling, AI use, prices and the fee credit.",
   },
   "/guides/s4hana-go-no-go-checklist": {
     title: "S/4HANA go/no-go checklist",
@@ -84,7 +89,7 @@ export const routeSeo = {
   "/about": {
     title: "About Us",
     description:
-      "ChisokuLabs provides independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia.",
+      "ChisokuLabs provides a fixed-price, independent check of how programmes and portfolios are governed, reported and run. The UK is first; the UAE is by arrangement.",
   },
   "/terms": {
     title: "Terms of Service",
@@ -108,13 +113,11 @@ export const routeSeo = {
   },
   "/glossary": {
     title: "Glossary",
-    description:
-      "Go-live readiness terms: go/no-go decision, Conditional Go, cutover, rollback point, hypercare, SIT, UAT, data migration reconciliation and READINESS-5.",
+    description: "PMO health terms: status evidence, RAID log, governance, HEALTH-5 and the Project Health Scorecard.",
   },
   "/readiness": {
     title: "Go-live readiness check",
-    description:
-      "Your programme reports Green. These 12 questions test whether the evidence agrees.",
+    description: "Your programme reports Green. These 12 questions test whether the evidence agrees.",
   },
 } as const satisfies Record<string, { title: string; description: string; image?: string }>;
 
@@ -125,7 +128,7 @@ export function pageMetadata(path: SeoRoute): Metadata {
   const entry: { title: string; description: string; image?: string } = routeSeo[path];
   const { title, description } = entry;
   const image = { ...ogImage, url: entry.image ?? ogImage.url, alt: `${title} | ${siteConfig.name}` };
-  const fullTitle = `${title} | ${siteConfig.name}`;
+  const fullTitle = path === "/" ? defaultTitle : `${title} | ${siteConfig.name}`;
   const url = path === "/" ? siteConfig.url : `${siteConfig.url}${path}`;
   return {
     title: { absolute: fullTitle },

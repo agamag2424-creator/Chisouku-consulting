@@ -1,6 +1,5 @@
 import { siteConfig } from "./siteConfig";
 import type { FaqItem } from "./aeoContent";
-import type { Market } from "../content/markets";
 
 const siteUrl = siteConfig.url;
 
@@ -14,7 +13,7 @@ export function organizationJsonLd(): JsonLd {
     legalName: siteConfig.legalName,
     url: siteUrl,
     email: siteConfig.email,
-    description: `${siteConfig.tagline}. ${siteConfig.positioning}`,
+    description: siteConfig.schemaDescription,
     areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
     logo: `${siteUrl}/brand/favicon-mark.png`,
   };
@@ -26,7 +25,7 @@ export function websiteJsonLd(): JsonLd {
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteUrl,
-    description: `${siteConfig.tagline}. ${siteConfig.positioning}`,
+    description: siteConfig.schemaDescription,
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
@@ -35,15 +34,15 @@ export function websiteJsonLd(): JsonLd {
   };
 }
 
-/** Service + Offer for one of the two fixed-fee offers, from config (E2). List price only; the founding rate is a promotion. */
-export function offerServiceJsonLd(offer: "evidenceCheck" | "decisionReview", description: string): JsonLd {
+/** Service + Offer for one of the two fixed-fee offers, from config. List price only; the founding rate is a promotion. */
+export function offerServiceJsonLd(offer: "healthCheck" | "healthAudit", description: string): JsonLd {
   const data = siteConfig.offers[offer];
   const url = `${siteUrl}${data.path}`;
   return {
     "@context": "https://schema.org",
     "@type": "Service",
     name: data.name,
-    serviceType: "Go-live readiness assurance",
+    serviceType: data.serviceType,
     description,
     provider: { "@type": "Organization", name: siteConfig.name, url: siteUrl },
     areaServed: [siteConfig.markets.primary, siteConfig.markets.secondary],
@@ -53,34 +52,8 @@ export function offerServiceJsonLd(offer: "evidenceCheck" | "decisionReview", de
       url,
       price: data.listPrice,
       priceCurrency: siteConfig.currency,
-      description: `${data.days} business days`,
+      description: `${data.days} working days`,
     },
-  };
-}
-
-/** Service for a market page (E7): the country served, and both fixed-fee offers at list price from config. */
-export function marketServiceJsonLd(market: Market, description: string): JsonLd {
-  const url = `${siteUrl}${market.path}`;
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: market.name,
-    serviceType: "Go-live readiness assurance",
-    description,
-    provider: { "@type": "Organization", name: siteConfig.name, url: siteUrl },
-    areaServed: { "@type": "Country", name: market.country.name, identifier: market.country.code },
-    url,
-    offers: (["evidenceCheck", "decisionReview"] as const).map((key) => {
-      const offer = siteConfig.offers[key];
-      return {
-        "@type": "Offer",
-        name: offer.name,
-        url: `${siteUrl}${offer.path}`,
-        price: offer.listPrice,
-        priceCurrency: siteConfig.currency,
-        description: `${offer.days} business days`,
-      };
-    }),
   };
 }
 
@@ -123,7 +96,7 @@ export function definedTermSetJsonLd(
   return {
     "@context": "https://schema.org",
     "@type": "DefinedTermSet",
-    name: "ChisokuLabs go-live readiness glossary",
+    name: "ChisokuLabs PMO health glossary",
     url: `${siteUrl}/glossary`,
     hasDefinedTerm: terms.map((term) => ({
       "@type": "DefinedTerm",

@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/siteConfig";
 // Shipping and Delivery Policy (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/shipping-policy");
 
-const lastUpdated = "2 November 2026";
+const lastUpdated = "17 November 2026";
 
 export default function ShippingPolicyPage() {
   return (
@@ -46,8 +46,8 @@ export default function ShippingPolicyPage() {
             <Body>Typical durations:</Body>
             <List
               items={[
-                "Readiness Evidence Check: 5 business days. A scoping call and document request on day 1, evidence review on days 2–4, and written findings and a readout on day 5.",
-                "Go-Live Decision Review: 10 business days.",
+                "PMO Health Check: 5 working days. A scoping call and document request on day 1, plus the sponsor interview; evidence review and two team interviews on days 2-4; written findings and a readout on day 5.",
+                "PMO Health Audit: 5 working days. Extra days are quoted separately at the same day rate.",
               ]}
             />
             <Body>The start date and deliverables are confirmed in writing before work begins.</Body>

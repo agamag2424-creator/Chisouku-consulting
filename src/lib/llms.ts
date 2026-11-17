@@ -1,21 +1,18 @@
 import { foundingClientStatement } from "../content/founding";
-import { markets } from "../content/markets";
-import { sampleLabel } from "../content/samplePack";
 import { canonicalAnswers, faqItems, feeCreditAnswer, glossaryTerms } from "./aeoContent";
 import { routeSeo } from "./seo";
-import { isRouteLive, siteConfig } from "./siteConfig";
+import { extraDaysSentence, isRouteListed, siteConfig } from "./siteConfig";
 
-// /llms.txt and /llms-full.txt (PRD 10, E8.4), built from the canonical answers and config. Public text only: nothing
-// here may be internal (backlog rule 14).
+// /llms.txt and /llms-full.txt, built from the canonical answers and config. Public text only.
 
-const { evidenceCheck, decisionReview, continuous } = siteConfig.offers;
+const { healthCheck, healthAudit } = siteConfig.offers;
 const money = (value: number) => `${siteConfig.currency} ${value.toLocaleString("en-US")}`;
 const link = (path: string) => `${siteConfig.url}${path === "/" ? "" : path}`;
 
-/** Live pages only, with their titles from the SEO map. */
+/** Listed pages only, with their titles from the SEO map. */
 function keyPages(): string[] {
   return Object.entries(routeSeo)
-    .filter(([path]) => isRouteLive(path))
+    .filter(([path]) => isRouteListed(path))
     .map(([path, { title, description }]) => `- [${title}](${link(path)}): ${description}`);
 }
 
@@ -25,32 +22,28 @@ export function buildLlmsTxt(): string {
     ``,
     `> ${canonicalAnswers.whatWeDo}`,
     ``,
-    `${siteConfig.tagline}. ${siteConfig.positioning}`,
+    siteConfig.schemaDescription,
     ``,
     `## Offers`,
-    `- [${evidenceCheck.name}](${link(evidenceCheck.path)}): ${evidenceCheck.days} business days, ${money(evidenceCheck.listPrice)}.`,
-    `- [${decisionReview.name}](${link(decisionReview.path)}): ${decisionReview.days} business days, ${money(decisionReview.listPrice)}. Ends in Go, Conditional Go or No-Go with the conditions, owners and dates behind it.`,
-    `- ${continuous.name}: from ${money(continuous.listPriceFromMonthly)} per month, until go-live and hypercare.`,
+    `- [${healthCheck.name}](${link(healthCheck.path)}): ${healthCheck.days} working days, ${money(healthCheck.listPrice)}, one programme. Paid in full on signature.`,
+    `- [${healthAudit.name}](${link(healthAudit.path)}): ${healthAudit.days} working days, list ${money(healthAudit.listPrice)}, founding-client rate ${money(healthAudit.foundingPrice ?? 0)}. Score: Healthy, Needs attention or At risk, with a 30-day fix plan.`,
+    `- ${extraDaysSentence}`,
     `- Fee credit: ${feeCreditAnswer}`,
     ...(siteConfig.foundingSlotsRemaining > 0
-      ? [
-          `- ${foundingClientStatement(siteConfig.foundingSlotsRemaining)}`,
-        ]
+      ? [`- Founding-client rate applies to the ${healthAudit.name} only. ${foundingClientStatement(siteConfig.foundingSlotsRemaining)}`]
       : []),
     ``,
     `## Method`,
     `- ${canonicalAnswers.method} [Method](${link("/method")})`,
     ``,
-    `## Markets`,
+    `## Where we work`,
     `- ${canonicalAnswers.markets}`,
-    ...Object.values(markets).map((market) => `- [${market.name}](${link(market.path)})`),
     ``,
     `## Independence and data`,
     `- ${canonicalAnswers.policy} [Independence and data handling](${link("/independence-and-data")})`,
     ``,
     `## Proof`,
     `- ${siteConfig.name} publishes no client names, testimonials or case studies.`,
-    `- The sample decision pack is labelled: "${sampleLabel}"`,
     ``,
     `## Key pages`,
     ...keyPages(),

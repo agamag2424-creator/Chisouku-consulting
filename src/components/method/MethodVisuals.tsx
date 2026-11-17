@@ -20,7 +20,7 @@ const elements: readonly { key: ElementKey; test: string; failure: string }[] = 
   },
   {
     key: "E",
-    test: "An artefact you can open: test log, reconciliation output, signed approval.",
+    test: "An artefact you can open: a status pack, a RAID log, minutes or a signed decision.",
     failure: "I1",
   },
   { key: "D", test: "When it will be true, not “soon”.", failure: "T2" },

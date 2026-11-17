@@ -8,10 +8,10 @@ import { readiness5 } from "../hero/evidenceCheckData";
 // Homepage section visuals (PRD 9.12). Static server components; wording in PRD 9.1 and 9.12.
 
 const workstreams = [
-  { name: "Testing", line: "Reports a pass rate." },
-  { name: "Migration", line: "Reports a reconciliation." },
-  { name: "Cutover", line: "Has a plan." },
-  { name: "System integrator", line: "Has an opinion, and a milestone tied to the date." },
+  { name: "RAID", line: "The log is up to date." },
+  { name: "Status", line: "The pack reports Green." },
+  { name: "Governance", line: "The forum met." },
+  { name: "Delivery team", line: "Has an opinion, and a date to protect." },
 ] as const;
 
 /** Section 2: four workstreams, each Green, joined to a go-live decision nobody owns. */
@@ -45,7 +45,7 @@ export function WorkstreamMap() {
         <span aria-hidden className="font-[family-name:var(--font-display)] text-[56px] font-extrabold leading-none text-teal">
           ?
         </span>
-        <span className="t-small font-semibold text-ink">The go-live decision</span>
+        <span className="t-small font-semibold text-ink">The whole picture</span>
       </div>
       {column(workstreams.slice(2), "right")}
     </div>
@@ -223,7 +223,7 @@ function Bar({ className }: { className?: string }) {
   return <span className={cn("block h-[7px] w-full rounded-full bg-faint", className)} />;
 }
 
-const independence = ["Implementation fees", "Software resold", "System integrator partnerships"] as const;
+const independence = ["Implementation fees", "Software resold", "Retainer"] as const;
 
 const dataLines = [
   {

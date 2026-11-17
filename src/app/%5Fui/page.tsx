@@ -140,7 +140,7 @@ export default function UiPage() {
           <div className="grid gap-8">
             <DataTable
               id="ui-claims"
-              caption="Readiness claims scored on READINESS-5. Illustrative example. Fictional programme."
+              caption="Status claims scored on HEALTH-5. Illustrative example. Fictional programme."
               columns={[
                 { key: "id", header: "ID", rowHeader: true },
                 { key: "claim", header: "Claim as reported" },
@@ -168,7 +168,7 @@ export default function UiPage() {
 
         <Demo title="Callout">
           <div className="grid gap-4">
-            <Callout title="Info">The review does not guarantee go-live success.</Callout>
+            <Callout title="Info">The audit does not guarantee that a programme or portfolio will recover.</Callout>
             <Callout tone="caution" title="Caution">
               Not a re-test of your system, not a regulatory certification.
             </Callout>
@@ -178,10 +178,9 @@ export default function UiPage() {
 
         <Demo title="Price block">
           <div className="grid gap-6 min-[641px]:grid-cols-2">
-            <PriceBlock offer="evidenceCheck" />
-            <PriceBlock offer="decisionReview" />
-            <PriceBlock offer="continuous" />
-            <PriceBlock offer="decisionReview" foundingSlotsRemaining={0} />
+            <PriceBlock offer="healthCheck" />
+            <PriceBlock offer="healthAudit" />
+            <PriceBlock offer="healthAudit" foundingSlotsRemaining={0} />
           </div>
         </Demo>
 

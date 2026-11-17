@@ -2,14 +2,14 @@ import type { EvidenceState } from "../components/ui/EvidenceCell";
 import type { RagStatus } from "../components/ui/RagBadge";
 
 /**
- * The illustrative go-live decision pack (fictional "Halcyon Group"), as data.
- * Single source for the hero (E1.2), the method page (E3) and the sample-pack page (E4).
- * Wording is the pack's own: docs/go-live-repositioning/assets/chisokulabs-go-live-decision-pack-illustrative.pdf
+ * Illustrative PMO examples for a fictional UK programme.
+ * Single source for the hero and the method page.
+ * No client name, no employer name, no e-invoicing, no country go-live.
  */
 
 export const sampleLabel = "Illustrative example. Fictional programme. Not a client engagement.";
 
-export type Domain = "Testing" | "Data migration" | "Integration" | "Cutover" | "Governance";
+export type Domain = "RAID" | "Status" | "Governance" | "Risk" | "Resourcing";
 
 export type Marks = readonly [EvidenceState, EvidenceState, EvidenceState, EvidenceState, EvidenceState];
 
@@ -18,22 +18,60 @@ export type PackClaim = {
   domain: Domain;
   claim: string;
   reported: RagStatus;
-  /** One state per READINESS-5 element: Status, Owner, Evidence, Date, Action. */
+  /** One state per HEALTH-5 element: Status, Owner, Evidence, Date, Action. */
   marks: Marks;
   finding: string;
 };
 
 export const packClaims: readonly PackClaim[] = [
-  { id: "T1", domain: "Testing", claim: "SIT complete, 98% pass rate", reported: "green", marks: ["present", "present", "partial", "present", "missing"], finding: "Pass rate excludes 3 interfaces deferred from SIT. No action recorded to close them." },
-  { id: "T2", domain: "Testing", claim: "UAT signed off by the business", reported: "green", marks: ["present", "present", "partial", "missing", "missing"], finding: "Sign-off from 4 of 6 entity process owners. Both KSA entities pending, no date." },
-  { id: "T3", domain: "Testing", claim: "No open Severity 1 defects", reported: "green", marks: ["present", "present", "missing", "present", "missing"], finding: "6 defects downgraded from Sev 1 to Sev 2 in the last 10 days with no change-board record." },
-  { id: "M1", domain: "Data migration", claim: "Mock 3 reconciliation passed", reported: "green", marks: ["present", "missing", "partial", "missing", "missing"], finding: "KSA open-item variance of SAR 2.1M unresolved. Ownership disputed between SI and client finance." },
-  { id: "M2", domain: "Data migration", claim: "Master data cleansing complete", reported: "green", marks: ["present", "present", "partial", "present", "missing"], finding: "3.8% duplicate vendor records remain. No signed data-quality threshold to judge against." },
-  { id: "I1", domain: "Integration", claim: "All 23 interfaces built and tested", reported: "green", marks: ["present", "present", "missing", "missing", "missing"], finding: "20 tested end to end. ZATCA e-invoicing, bank host-to-host and WMS tested only against mocks." },
-  { id: "C1", domain: "Cutover", claim: "Cutover plan approved, 2 rehearsals done", reported: "amber", marks: ["present", "present", "present", "present", "missing"], finding: "Rehearsal 2 ran 61 hours against a 52-hour business window. No re-plan agreed." },
-  { id: "C2", domain: "Cutover", claim: "Rollback plan in place", reported: "green", marks: ["partial", "missing", "missing", "missing", "missing"], finding: "Document exists. Rollback criteria and point of no return not agreed by anyone with authority." },
-  { id: "G1", domain: "Governance", claim: "Programme status Green", reported: "green", marks: ["missing", "present", "missing", "present", "missing"], finding: "3 of 5 workstream reports are Amber. The steering pack consolidates them as Green." },
-  { id: "G2", domain: "Governance", claim: "Hypercare resourcing confirmed", reported: "green", marks: ["present", "partial", "partial", "present", "missing"], finding: "SI roster confirmed for 4 weeks. Client super-users not released from day jobs; none named." },
+  {
+    id: "T1",
+    domain: "RAID",
+    claim: "RAID log acted on",
+    reported: "green",
+    marks: ["present", "present", "partial", "present", "missing"],
+    finding: "The log lists 14 open actions. Nine are past their due date, and nothing is recorded to close them.",
+  },
+  {
+    id: "T2",
+    domain: "Resourcing",
+    claim: "Resource plan matches the work",
+    reported: "green",
+    marks: ["present", "present", "partial", "missing", "missing"],
+    finding: "The plan names roles. There is no date for when those people are released to the work.",
+  },
+  {
+    id: "I1",
+    domain: "Status",
+    claim: "Status matches evidence",
+    reported: "green",
+    marks: ["present", "missing", "missing", "present", "missing"],
+    finding: "The status pack reports Green. The project reports behind it do not, and nothing ties the Green to those reports.",
+  },
+  {
+    id: "C2",
+    domain: "Governance",
+    claim: "Governance forum decides",
+    reported: "green",
+    marks: ["present", "present", "missing", "missing", "missing"],
+    finding: "The forum met. The minutes record a discussion, not a decision.",
+  },
+  {
+    id: "G1",
+    domain: "Status",
+    claim: "Status is current",
+    reported: "green",
+    marks: ["partial", "present", "missing", "present", "missing"],
+    finding: "The pack says “on track”. It does not say what is true this week.",
+  },
+  {
+    id: "M1",
+    domain: "Risk",
+    claim: "Critical risks have owners and dates",
+    reported: "green",
+    marks: ["present", "missing", "partial", "missing", "missing"],
+    finding: "Four critical risks have no named owner and no date.",
+  },
 ];
 
 export function packClaim(id: string): PackClaim {
@@ -42,73 +80,76 @@ export function packClaim(id: string): PackClaim {
   return claim;
 }
 
-/** The four contradiction types of PRD 9.4, one pack example each. */
+/** Four contradiction types, one fictional example each. */
 export const packContradictions = [
   {
-    type: "Pass rate on reduced scope",
+    type: "Actions overdue while the status pack reports Green",
     between: ["T1", "I1"],
-    text: "Testing reports SIT 98% passed. Integration shows 3 interfaces, including ZATCA e-invoicing, were never tested end to end. The 98% is measured on a reduced scope.",
+    text: "The RAID log shows 14 open actions, 9 of them past their due date, while the status pack reports Green.",
   },
   {
-    type: "Reconciliation passed while a business entity has not signed UAT",
-    between: ["M1", "T2"],
-    text: "Migration reports Mock 3 passed. KSA finance has not signed UAT and carries an unowned SAR 2.1M variance. KSA is not ready on the same evidence.",
+    type: "Forum met without deciding",
+    between: ["C2", "I1"],
+    text: "The status pack says governance is in place. The minutes show the forum met and discussed the risks, and did not decide them.",
   },
   {
-    type: "Cutover approved with no agreed rollback point",
-    between: ["C1", "C2"],
-    text: "Cutover reports the plan approved. Rehearsal 2 overran the window by 9 hours and no one has agreed when to roll back. The plan has no tested exit.",
+    type: "Risks listed without owners",
+    between: ["M1", "T1"],
+    text: "The RAID log lists the risks. Four critical risks have no named owner and no date, so the log is current and the actions are not.",
   },
   {
-    type: "Headline status not traceable to workstream status",
-    between: ["G1", "T3"],
-    text: "The steering pack reports Green. Workstream reports are Amber and Sev 1 defects were reclassified without a record. The headline status is not traceable to evidence.",
+    type: "Resource plan does not match the reported status",
+    between: ["T2", "I1"],
+    text: "The status pack reports the team is in place. The resource plan names roles whose people are not released, with no date.",
   },
 ] as const;
 
 export const packRecommendation = {
-  verdict: "Conditional Go",
+  verdict: "Needs attention",
   summary:
-    "The programme reports Green. The evidence supports go-live for the four UAE entities. It does not yet support KSA, and the cutover has no agreed exit.",
-  fallback:
-    "If any condition is not met by its date: go live with the UAE entities on D-day and move both KSA entities to Wave 1b. Do not proceed without condition 3 in any scenario.",
+    "The status pack reports Green. The evidence supports some of that status. It does not yet support the RAID actions, the governance decisions or the resource plan.",
+  fallback: "If a condition is not met by its evidence-by date, the score moves to At risk and the 30-day fix plan is revisited.",
 } as const;
 
 export const packConditions = [
   {
-    condition: "ZATCA e-invoicing, bank host-to-host and WMS interfaces pass end-to-end test with business sign-off.",
-    owner: "Integration Lead + KSA Finance Controller",
-    by: "D-10",
+    condition: "Close or re-date the nine overdue RAID actions, each with a named owner.",
+    owner: "PMO lead",
+    by: "10 working days",
   },
   {
-    condition: "KSA SAR 2.1M variance resolved, or accepted in writing against a documented threshold, with a named owner.",
-    owner: "Group Financial Controller",
-    by: "D-14",
+    condition: "Governance forum minutes record a decision on the open critical risks.",
+    owner: "Sponsor",
+    by: "15 working days",
   },
   {
-    condition: "Rollback criteria and point of no return agreed; rehearsal 3 completes inside the 52-hour window.",
-    owner: "Cutover Manager, approved by Sponsor",
-    by: "D-7",
+    condition: "Resource plan names who is released to the work, or the status pack stops reporting them as in place.",
+    owner: "Delivery lead",
+    by: "20 working days",
   },
 ] as const;
 
 /** Pack footer line on method and judgement. */
 export const packMethodNote =
-  "Every critical readiness claim tested for Status, Owner, Evidence, Date and Action (READINESS-5), then cross-checked between workstreams.";
-export const packJudgementNote = "ChisokuLabs forms the judgement; the review does not guarantee go-live success.";
+  "Every critical status claim tested for Status, Owner, Evidence, Date and Action (HEALTH-5), then cross-checked between reports and forums.";
+export const packJudgementNote =
+  "ChisokuLabs forms the judgement; the audit does not guarantee that a programme or portfolio will recover.";
 
-/** Page images of the pack PDF (public/images/sample-pack), rendered at 1600px from the PDF with pdftoppm. */
+/**
+ * Page images of the old go-live pack. The viewer is not rendered until a PMO sample exists.
+ * Kept so the old file URLs do not 404.
+ */
 export const packPages = [
   {
     src: "/images/sample-pack/page-1.png",
     width: 1600,
     height: 1133,
-    alt: "Sample decision pack, page 1, the decision brief: a Conditional Go recommendation for a fictional SAP S/4HANA programme, 22 of 50 readiness elements evidenced against a reported Green, evidence by domain, four contradictions between workstreams and three dated conditions with owners.",
+    alt: "Sample pack, page 1. Hidden until a PMO sample exists.",
   },
   {
     src: "/images/sample-pack/page-2.png",
     width: 1600,
     height: 1133,
-    alt: "Sample decision pack, page 2, the evidence register: ten claims as reported, each scored on Status, Owner, Evidence, Date and Action with a finding, followed by leadership actions for the next 21 days and what the review covers and does not.",
+    alt: "Sample pack, page 2. Hidden until a PMO sample exists.",
   },
 ] as const;

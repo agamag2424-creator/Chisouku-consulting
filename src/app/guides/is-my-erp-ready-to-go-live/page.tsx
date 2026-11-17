@@ -7,7 +7,9 @@ import { routeRenders } from "../../../lib/siteConfig";
 // Answer guide (PRD 4.1, E8.3).
 const guide = guideByPath("/guides/is-my-erp-ready-to-go-live");
 
-export const metadata = routeRenders(guide.path) ? pageMetadata(guide.path) : { robots: { index: false, follow: false } };
+export const metadata = routeRenders(guide.path)
+  ? { ...pageMetadata(guide.path), robots: { index: false, follow: true } }
+  : { robots: { index: false, follow: false } };
 
 export default function Guide() {
   if (!routeRenders(guide.path)) notFound();

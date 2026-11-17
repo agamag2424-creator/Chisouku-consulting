@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { BrandMark } from "../brand/BrandMark";
-import { guides } from "../../content/guides";
-import { isRouteLive, siteConfig } from "../../lib/siteConfig";
+import { isRouteListed, siteConfig } from "../../lib/siteConfig";
 
 type FooterLink = { href: string; label: string };
 
@@ -10,8 +9,8 @@ const groups: { title: string; links: FooterLink[] }[] = [
   {
     title: "Site",
     links: [
-      { href: siteConfig.offers.decisionReview.path, label: siteConfig.offers.decisionReview.name },
-      { href: siteConfig.offers.evidenceCheck.path, label: siteConfig.offers.evidenceCheck.name },
+      { href: siteConfig.offers.healthAudit.path, label: siteConfig.offers.healthAudit.name },
+      { href: siteConfig.offers.healthCheck.path, label: siteConfig.offers.healthCheck.name },
       { href: "/method", label: "Method" },
       { href: "/see-it-first", label: "See it first" },
       { href: "/pricing", label: "Pricing" },
@@ -31,14 +30,6 @@ const groups: { title: string; links: FooterLink[] }[] = [
       { href: "/about", label: "About" },
     ],
   },
-  {
-    title: "Markets",
-    links: [
-      { href: "/go-live-readiness-uae", label: "UAE" },
-      { href: "/go-live-readiness-saudi-arabia", label: "Saudi Arabia" },
-    ],
-  },
-  { title: "Guides", links: guides.map((guide) => ({ href: guide.path, label: guide.title })) },
 ];
 
 const linkClass = "text-paper/80 underline-offset-4 transition-colors hover:text-paper hover:underline";
@@ -46,12 +37,12 @@ const linkClass = "text-paper/80 underline-offset-4 transition-colors hover:text
 /** The site's one dark surface (PRD E0.5). */
 export function Footer() {
   const liveGroups = groups
-    .map((group) => ({ ...group, links: group.links.filter((link) => isRouteLive(link.href)) }))
+    .map((group) => ({ ...group, links: group.links.filter((link) => isRouteListed(link.href)) }))
     .filter((group) => group.links.length > 0);
 
   return (
     <footer className="border-t border-paper/10 bg-ink text-paper/80">
-      <div className="mx-auto grid max-w-[var(--content-max-width)] gap-10 px-[var(--content-padding-x-mobile)] py-14 min-[641px]:grid-cols-2 min-[1100px]:grid-cols-[minmax(0,1.4fr)_repeat(5,minmax(0,1fr))] md:px-[var(--content-padding-x)]">
+      <div className="mx-auto grid max-w-[var(--content-max-width)] gap-10 px-[var(--content-padding-x-mobile)] py-14 min-[641px]:grid-cols-2 min-[1100px]:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))] md:px-[var(--content-padding-x)]">
         <div>
           <Link href="/" className="mb-4 flex items-center gap-3" aria-label="ChisokuLabs home">
             <BrandMark className="h-9 w-9" inverted />
@@ -60,7 +51,7 @@ export function Footer() {
             </span>
           </Link>
           <p className="t-small max-w-[46ch]">
-            Independent go-live decision assurance for ERP and core-platform programmes in the UAE and Saudi Arabia.
+            {siteConfig.footerTagline}
           </p>
         </div>
 

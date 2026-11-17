@@ -24,8 +24,7 @@ import { aiOnOurDataAnswer } from "../../lib/aeoContent";
 import { breadcrumbJsonLd } from "../../lib/jsonLd";
 import { pageMetadata } from "../../lib/seo";
 
-// PRD 9.4. Headings and one-line tests are 9.4's; examples and their wording come from the sample pack.
-const title = "READINESS-5: how we test a go-live claim";
+// Headings and one-line tests; examples come from the fictional programme in the sample pack.
 
 export const metadata: Metadata = pageMetadata("/method");
 
@@ -45,14 +44,10 @@ export default function MethodPage() {
         containerClassName="grid gap-12 min-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] min-[1100px]:items-center min-[1100px]:gap-16"
       >
         <div>
-          <h1 className="t-h1 max-w-[20ch] text-paper">{title}</h1>
-          <p className="t-body mt-5 max-w-[58ch] text-paper/80">{packMethodNote}</p>
+          <h1 className="t-h1 max-w-[28ch] text-paper">{packMethodNote}</h1>
           <div className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
             <Button href={offerCta.review.href} variant="inverse" size="lg">
               {offerCta.review.label}
-            </Button>
-            <Button href={offerCta.samplePack.href} variant="inverse-outline" size="lg">
-              {offerCta.samplePack.label}
             </Button>
           </div>
         </div>
@@ -85,8 +80,11 @@ export default function MethodPage() {
       </Section>
 
       <Section tone="page">
-        <SectionHead title="From findings to a decision">
-          <p>Each condition names the evidence that closes it, its owner and the date that evidence is due.</p>
+        <SectionHead title="From findings to a 30-day fix plan">
+          <p>
+            The score is Healthy, Needs attention or At risk. Each condition names the evidence that closes it, its owner
+            and the date that evidence is due.
+          </p>
         </SectionHead>
         <div className="mt-10 grid gap-6 min-[1100px]:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
           <Sheet className="flex flex-col gap-4 border-2 border-teal p-6 min-[641px]:p-8">

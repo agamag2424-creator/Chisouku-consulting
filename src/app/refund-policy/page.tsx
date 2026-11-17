@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/siteConfig";
 // Refund and Cancellation Policy (Razorpay international-payments policy pages).
 export const metadata: Metadata = pageMetadata("/refund-policy");
 
-const lastUpdated = "2 November 2026";
+const lastUpdated = "17 November 2026";
 
 export default function RefundPolicyPage() {
   return (
@@ -63,7 +63,7 @@ export default function RefundPolicyPage() {
             </Body>
           </Part>
 
-          <Part title="2.3 Consulting (Readiness Evidence Check, Go-Live Decision Review)">
+          <Part title="2.3 Consulting (PMO Health Check, PMO Health Audit)">
             <Body>Cancellation by you:</Body>
             <List
               items={[
@@ -81,10 +81,9 @@ export default function RefundPolicyPage() {
               meet the agreed scope at no charge.
             </Body>
             <Body>
-              Fee credit: an Evidence Check fee already credited against a Go-Live Decision Review is not refunded a
-              second time.
+              A Health Check fee already credited against a PMO Health Audit is not refunded a second time.
             </Body>
-            <Body>Free readiness brief: this is free, so there is nothing to refund.</Body>
+            <Body>Free briefing: this is free, so there is nothing to refund.</Body>
           </Part>
 
           <Part title="2.4 How to ask for a refund or cancellation">

@@ -1,27 +1,27 @@
 import { foundingClientStatement } from "../../content/founding";
-import { offerPriceLabel, siteConfig } from "../../lib/siteConfig";
+import { extraDaysSentence, feeCreditSentence, offerPriceLabel, siteConfig } from "../../lib/siteConfig";
 import { cn } from "../../lib/utils";
 import { DayStrip } from "../offers/DayStrip";
 import { Button } from "../ui/Button";
 import { Sheet } from "../ui/Sheet";
 
-/** One-line outcomes are the first sentence of each offer page lead (PRD 9.2, 9.3). */
+/** Homepage section 5: the two offers. The Health Check is one price. Founding terms apply to the Audit only. */
 const panels = [
   {
-    key: "evidenceCheck",
-    outcome: "A five-day written review of your programme's readiness evidence.",
-    // PRD 9.2 "How it runs": the real sequence, so the strip marks its first and last day.
-    sequence: "Day 1 scoping call and document request. Days 2–4 evidence review. Day 5 written findings and readout.",
+    key: "healthCheck",
+    outcome:
+      "Review of the status pack, RAID log, governance calendar and plan. One sponsor and two team interviews (45 minutes each, remote). You receive a Project Health Scorecard with evidence, the top findings, a 30-day fix plan and a 45-minute readout.",
+    sequence:
+      "Day 1 scoping call and document request, plus the sponsor interview. Days 2-4 evidence review and the two team interviews (45 minutes each, remote). Day 5 written findings and readout.",
   },
   {
-    key: "decisionReview",
+    key: "healthAudit",
     outcome:
-      "A ten-day independent review that gives your steering committee a defensible go-live decision: Go, Conditional Go or No-Go, with the conditions, owners and dates behind it.",
-    sequence: null,
+      "Portfolio level: governance, reporting, RAID, cadence, prioritisation and the PMO operating model. You receive an audit brief, a Project Health Scorecard and a 30-day fix plan.",
+    sequence: extraDaysSentence,
   },
 ] as const;
 
-/** Homepage section 5: the two offers, prices from config, founding rate while places remain, fee credit once. */
 export function OfferPanels() {
   const foundingPlaces = siteConfig.foundingSlotsRemaining;
   return (
@@ -38,14 +38,16 @@ export function OfferPanels() {
             >
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                 <h3 className="t-h3 text-ink">{offer.name}</h3>
-                <p className="t-data text-[13px] text-muted">{`${offer.days} business days`}</p>
+                <p className="t-data text-[13px] text-muted">
+                  {key === "healthCheck" ? `${offer.days} working days, one programme` : `${offer.days} working days`}
+                </p>
               </div>
               <p className="t-body text-ink">{outcome}</p>
               <DayStrip days={offer.days} />
-              {sequence && <p className="text-[13px] leading-snug text-muted">{sequence}</p>}
+              <p className="text-[13px] leading-snug text-muted">{sequence}</p>
               <dl className="mt-auto flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-5">
                 <div>
-                  <dt className="text-[13px] text-muted">List price</dt>
+                  <dt className="text-[13px] text-muted">{offer.priceCaption}</dt>
                   <dd className="t-data mt-1.5 text-[24px] text-ink">{price.list}</dd>
                 </div>
                 {price.founding && (
@@ -55,6 +57,10 @@ export function OfferPanels() {
                   </div>
                 )}
               </dl>
+              <p className="text-[13px] text-muted">
+                <span className="font-semibold text-ink">Payment: </span>
+                {offer.payment}
+              </p>
               <div>
                 <Button href={offer.path} variant="text">
                   {offer.name}
@@ -81,9 +87,7 @@ export function OfferPanels() {
         </p>
       </div>
       <div className="mt-7 grid gap-6 min-[900px]:grid-cols-2 min-[900px]:gap-8">
-        <p className="t-small font-semibold text-ink">
-          {`The full Evidence Check fee is credited against a Go-Live Decision Review signed within ${siteConfig.feeCreditDays} days of the Evidence Check report.`}
-        </p>
+        <p className="t-small font-semibold text-ink">{feeCreditSentence}</p>
         {foundingPlaces > 0 && (
           <div className="flex items-start gap-4">
             <span aria-hidden className="mt-1 flex shrink-0 gap-1.5">
@@ -91,7 +95,9 @@ export function OfferPanels() {
                 <span key={place} className="size-3 rounded-full bg-teal" />
               ))}
             </span>
-            <p className="t-small text-muted">{foundingClientStatement(foundingPlaces)}</p>
+            <p className="t-small text-muted">
+              Applies to the PMO Health Audit. {foundingClientStatement(foundingPlaces)}
+            </p>
           </div>
         )}
       </div>

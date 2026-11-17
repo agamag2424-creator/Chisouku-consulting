@@ -301,7 +301,7 @@ export const guides: readonly Guide[] = [
           },
           {
             kind: "p",
-            text: "Either way, it takes days rather than weeks when the documents are shared on day one: five business days for a Readiness Evidence Check, ten for a Go-Live Decision Review, with interviews only where the evidence conflicts.",
+            text: "Either way, it takes days rather than weeks when the documents are shared on day one: 5 working days, with interviews only where the evidence conflicts.",
           },
         ],
       },
@@ -352,7 +352,7 @@ export const guides: readonly Guide[] = [
             head: ["", "SI readiness review", "Independent assurance"],
             rows: [
               ["Independent of delivery", "No", "Yes"],
-              ["Typical duration", "Part of delivery", "5–10 business days"],
+              ["Typical duration", "Part of delivery", "5 working days"],
               ["Price visible upfront", "Included in SI fees", "Yes, fixed fee"],
               ["Evidence tested claim by claim", "Self-reported", "Every critical claim, READINESS-5"],
               ["Contradictions across workstreams", "Rarely", "Always tested"],
