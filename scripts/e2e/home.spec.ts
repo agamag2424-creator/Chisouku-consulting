@@ -27,6 +27,8 @@ test("sections follow the PRD order", async ({ page }) => {
     "The PMO Health Check, in five working days",
     "What the scorecard looks like",
     "Start free. Pay only for evidence",
+    "Why not the usual options",
+    "No stake in your delivery",
     "Who does the work",
     "Find out what to fix first",
   ]);
@@ -105,4 +107,28 @@ test("the three problems are set out once, and the menu lists Pricing", async ({
   expect(text.match(/RAID logs nobody acts on/g)?.length).toBeLessThanOrEqual(2);
   await expect(page.locator("main [data-calculator]")).toHaveCount(0);
   await expect(page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Pricing", exact: true })).toHaveAttribute("href", "/pricing");
+});
+
+test("restored modules: the comparison table on home and pricing, and the Method tables", async ({ page }) => {
+  await page.goto(base + "/");
+  const table = page.getByRole("table", { name: "How ChisokuLabs compares with the usual options for a PMO problem" });
+  await expect(table).toBeVisible();
+  await expect(table.getByRole("columnheader", { name: "ChisokuLabs" })).toBeVisible();
+  await expect(table.getByRole("row", { name: /Typical duration/ })).toContainText("5 working days");
+  await expect(page.getByText("Comparisons describe typical market practice, not specific firms.").first()).toBeVisible();
+  await page.goto(base + "/pricing");
+  await expect(page.getByRole("table", { name: "How ChisokuLabs compares with the usual options for a PMO problem" })).toBeVisible();
+  await page.goto(base + "/method");
+  const scoring = page.getByRole("table", { name: /checked on Status, Owner, Evidence, Date and Action/ });
+  await expect(scoring.locator("tbody tr")).toHaveCount(6);
+  await expect(page.getByRole("table", { name: "Contradictions between reports in a fictional programme" }).locator("tbody tr")).toHaveCount(4);
+  await expect(page.getByText("Illustrative example. Fictional programme. Not a client engagement.").first()).toBeVisible();
+});
+
+test("every main page opens on the dark band", async ({ page }) => {
+  for (const path of ["/", "/pmo-health-check", "/pmo-health-audit", "/pricing", "/method", "/see-it-first", "/pmo-self-check", "/about", "/contact"]) {
+    await page.goto(base + path);
+    const bg = await page.locator("main > section").first().evaluate((el) => getComputedStyle(el).backgroundColor);
+    expect(bg, path).toBe("rgb(17, 24, 32)");
+  }
 });

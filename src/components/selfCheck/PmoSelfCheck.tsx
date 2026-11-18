@@ -45,17 +45,24 @@ export function PmoSelfCheck() {
   }, [stage, result.band]);
 
   if (stage.kind === "intro") {
+    // Beside the Start button, a preview of the result: one overall band and the ten dimensions (18 Nov 2026).
     return (
-      <div className="max-w-[68ch]">
-        <p className="t-body text-muted">
-          Fifteen questions across the ten dimensions of the PMO Health Scorecard. About five minutes. Answer for what
-          happens in practice today, not what the policy says. Choose &ldquo;{notSureLabel}&rdquo; when you do not know.
-        </p>
-        <p className="t-small mt-4 text-muted">Your answers stay in your browser. Nothing you choose is stored or sent.</p>
-        <div className="mt-8">
-          <Button size="lg" onClick={() => setStage({ kind: "step", index: 0 })}>
-            Start the self-check
-          </Button>
+      <div className="grid gap-10 min-[1100px]:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] min-[1100px]:items-center min-[1100px]:gap-14">
+        <div className="max-w-[68ch]">
+          <p className="t-body text-muted">
+            Fifteen questions across the ten dimensions of the PMO Health Scorecard. About five minutes. Answer for what
+            happens in practice today, not what the policy says. Choose &ldquo;{notSureLabel}&rdquo; when you do not know.
+          </p>
+          <p className="t-small mt-4 text-muted">Your answers stay in your browser. Nothing you choose is stored or sent.</p>
+          <div className="mt-8">
+            <Button size="lg" onClick={() => setStage({ kind: "step", index: 0 })}>
+              Start the self-check
+            </Button>
+          </div>
+        </div>
+        <div>
+          <p className="label mb-3 text-gold-ink">What you get: one overall band, and any dimension that needs attention</p>
+          <DimensionOrbit />
         </div>
       </div>
     );

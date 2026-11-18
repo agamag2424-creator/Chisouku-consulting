@@ -14,9 +14,9 @@ export const metadata: Metadata = pageMetadata("/about");
 export default function AboutPage() {
   return (
     <>
-      <Section tone="page">
-        <h1 className="t-h1 text-ink">About</h1>
-        <p className="t-body mt-5 max-w-[62ch] text-muted">
+      <Section tone="ink">
+        <h1 className="t-h1 text-paper">About</h1>
+        <p className="t-body mt-5 max-w-[62ch] text-paper/75">
           {siteConfig.name} runs fixed-price PMO Health Checks and Audits for UK organisations running a PMO, and for
           organisations in the UAE and Saudi Arabia.
         </p>

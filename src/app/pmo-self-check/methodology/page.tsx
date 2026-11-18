@@ -44,10 +44,10 @@ const sources: { name: string; href: string; note: string }[] = [
 export default function SelfCheckMethodologyPage() {
   return (
     <>
-      <Section className="report-cover">
+      <Section tone="ink">
         <p className="eyebrow">PMO self-check</p>
-        <h1 className="t-h1 max-w-[22ch] text-ink">Methodology note</h1>
-        <p className="t-body mt-5 max-w-[62ch] text-muted">
+        <h1 className="t-h1 max-w-[22ch] text-paper">Methodology note</h1>
+        <p className="t-body mt-5 max-w-[62ch] text-paper/75">
           How the self-check was built, how it is scored, and what it is not.
         </p>
       </Section>

@@ -46,7 +46,7 @@ export default function GlossaryPage() {
         <dl className="grid max-w-[960px] gap-x-12 min-[900px]:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
           {glossaryTerms.map((item) => (
             <div key={item.id} className="contents">
-              <dt id={item.id} className="scroll-mt-24 border-t border-line pt-6 font-[family-name:var(--font-display)] text-[20px] font-semibold text-ink min-[900px]:pb-6">
+              <dt id={item.id} className="scroll-mt-24 border-t border-line pt-6 font-[family-name:var(--font-body)] text-[20px] font-semibold text-ink min-[900px]:pb-6">
                 {item.term}
               </dt>
               <dd className="t-body pb-6 pt-2 text-ink min-[900px]:border-t min-[900px]:border-line min-[900px]:pt-6">

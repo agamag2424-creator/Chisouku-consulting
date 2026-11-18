@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { OfferClosing, OfferCtas, SectionHead } from "../../components/offers/OfferSections";
+import { ComparisonTable } from "../../components/compare/ComparisonTable";
 import { ReportingCostCalculator } from "../../components/home/ReportingCostCalculator";
 import { BeforeYouBook } from "../../components/offers/BeforeYouBook";
 import { Accordion } from "../../components/ui/Accordion";
@@ -63,14 +64,14 @@ export default function PricingPage() {
         ])}
       />
 
-      <Section className="report-cover">
+      <Section tone="ink">
         <p className="eyebrow">Pricing</p>
-        <h1 className="t-h1 max-w-[22ch] text-ink">Two fixed prices, and a free place to start</h1>
-        <p className="t-body mt-5 max-w-[60ch] text-muted">
+        <h1 className="t-h1 max-w-[22ch] text-paper">Two fixed prices, and a free place to start</h1>
+        <p className="t-body mt-5 max-w-[60ch] text-paper/75">
           For UK organisations running a PMO. {ladder.summary}.
         </p>
         <div className="mt-8">
-          <OfferCtas content="pricing" />
+          <OfferCtas content="pricing" inverse />
         </div>
       </Section>
 
@@ -83,7 +84,7 @@ export default function PricingPage() {
             <article className="panel flex h-full flex-col p-6 min-[641px]:p-8" data-price-card="healthCheck">
               <p className="eyebrow">Start here</p>
               <h3 className="t-h3 text-ink">{check.name}</h3>
-              <p className="mt-3 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-[-0.03em] text-ink">{healthCheck.price}</p>
+              <p className="mt-3 font-[family-name:var(--font-body)] text-4xl font-semibold tracking-[-0.03em] text-ink">{healthCheck.price}</p>
               <dl className="mt-6">
                 <Row label="Scope">{healthCheck.scope}</Row>
                 <Row label="What we need">{healthCheck.inputs}</Row>
@@ -105,7 +106,7 @@ export default function PricingPage() {
             <article className="panel flex h-full flex-col border-2 border-ink p-6 min-[641px]:p-8" data-price-card="healthAudit">
               <p className="eyebrow">The whole portfolio</p>
               <h3 className="t-h3 text-ink">{audit.name}</h3>
-              <p className="mt-3 flex flex-wrap items-baseline gap-x-3 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-[-0.03em] text-ink">
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-3 font-[family-name:var(--font-body)] text-4xl font-semibold tracking-[-0.03em] text-ink">
                 {auditPrice.list}{" "}
                 <span className="text-[16px] font-semibold text-muted">list</span>
               </p>
@@ -149,8 +150,13 @@ export default function PricingPage() {
         <BeforeYouBook />
       </Section>
 
+      <Section tone="page" aria-label="Why not the usual options">
+        <SectionHead title="Why not the usual options" />
+        <ComparisonTable className="mt-10" id="comparison-pricing" />
+      </Section>
+
       {/* Moved from the homepage (18 Nov 2026): someone weighing the price is the one who runs the numbers. */}
-      <Section>
+      <Section tone="paper">
         <SectionHead title="What your PMO reporting costs today">
           Put in your own numbers. Nothing you type leaves this page.
         </SectionHead>

@@ -51,7 +51,7 @@ export function PrincipalBlock({ tone = "paper", id, heading = "Who does the wor
         <div>
           <h2 className="t-h2 text-ink">{heading}</h2>
           <p className="t-body mt-5 text-ink" data-founder-line>
-            <span className="font-[family-name:var(--font-display)] text-[22px] font-semibold">{founder.name}</span>,{" "}
+            <span className="font-[family-name:var(--font-body)] text-[22px] font-semibold">{founder.name}</span>,{" "}
             <span className="font-semibold">{founder.title}</span>. Every Health Check and Audit is carried out
             and signed by me. {backgroundLine}
           </p>

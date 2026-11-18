@@ -28,13 +28,13 @@ export function MarketPage({ market }: { market: Market }) {
         ])}
       />
 
-      <Section className="report-cover">
+      <Section tone="ink">
         <p className="eyebrow">{market.country.name}</p>
-        <h1 className="t-h1 max-w-[20ch] text-ink">{market.name}</h1>
-        <p className="t-body mt-5 max-w-[56ch] text-muted">{lead(market)}</p>
-        <p className="t-small mt-3 max-w-[56ch] text-muted">{market.delivery}</p>
+        <h1 className="t-h1 max-w-[20ch] text-paper">{market.name}</h1>
+        <p className="t-body mt-5 max-w-[56ch] text-paper/75">{lead(market)}</p>
+        <p className="t-small mt-3 max-w-[56ch] text-paper/75">{market.delivery}</p>
         <div className="mt-8">
-          <OfferCtas content="market_hero" />
+          <OfferCtas content="market_hero" inverse />
         </div>
       </Section>
 
