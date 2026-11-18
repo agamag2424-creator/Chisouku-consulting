@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BrandMark } from "../brand/BrandMark";
 import { isRouteListed, siteConfig } from "../../lib/siteConfig";
-import { companyLine } from "../../content/offer";
+import { companyLine, dpiitFooterLine } from "../../content/offer";
 
 type FooterLink = { href: string; label: string };
 
@@ -90,6 +90,9 @@ export function Footer() {
       <div className="border-t border-paper/10 px-[var(--content-padding-x-mobile)] py-5 text-center text-[13px] text-paper/70">
         <p className="mx-auto max-w-[110ch]" data-company-line>
           {companyLine}
+        </p>
+        <p className="mt-2" data-dpiit-line>
+          {dpiitFooterLine}
         </p>
         <p className="mt-2">© 2026 {siteConfig.legalName}. All rights reserved.</p>
       </div>
