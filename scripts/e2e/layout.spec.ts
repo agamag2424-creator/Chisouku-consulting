@@ -27,7 +27,8 @@ test("header and hero: Arrange a 20-minute call, then the PMO self-check", async
   await expect(heroSelfCheck).toBeVisible();
   const order = await hero.locator(".hero-actions a, .hero-actions span").evaluateAll((nodes) => nodes.map((node) => node.textContent?.trim()));
   expect(order.slice(0, 2)).toEqual(["Arrange a 20-minute call", "Take the PMO self-check (5 minutes)"]);
-  await expect(heroCall).toHaveAttribute("data-cta-variant", "primary");
+  // The hero sits on the dark band, so its main call uses the light-on-dark style.
+  await expect(heroCall).toHaveAttribute("data-cta-variant", "inverse");
 });
 
 test("hero calls stay inside the viewport at 390px", async ({ page }) => {
