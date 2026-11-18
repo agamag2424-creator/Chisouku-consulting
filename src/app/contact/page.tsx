@@ -26,9 +26,9 @@ export default async function ContactPage({ searchParams }: Props) {
         ])}
       />
 
-      <Section tone="page">
-        <h1 className="t-h1 text-ink">{title}</h1>
-        <p className="mt-4 text-[14px] text-muted">{`Last updated: ${lastUpdated}`}</p>
+      <Section tone="ink">
+        <h1 className="t-h1 text-paper">{title}</h1>
+        <p className="mt-4 text-[14px] text-paper/75">{`Last updated: ${lastUpdated}`}</p>
       </Section>
 
       <Section tone="paper">

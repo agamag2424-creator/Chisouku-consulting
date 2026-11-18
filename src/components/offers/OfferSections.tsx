@@ -47,24 +47,24 @@ export function SectionHead({ title, children }: { title: string; children?: Rea
   );
 }
 
-/** Paper hero (September look): name, lead, both CTAs; a card with the days and prices from config. */
+/** Dark hero (18 Nov 2026): name, lead, both CTAs; a white card with the days and prices from config. */
 export function OfferHero({ offer, lead, eyebrow }: { offer: FixedOffer; lead: string; eyebrow?: string }) {
   const data = siteConfig.offers[offer];
   const price = offerPriceLabel(offer);
   return (
     <Section
-      className="report-cover"
+      tone="ink"
       containerClassName="grid gap-12 min-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] min-[1100px]:items-center min-[1100px]:gap-16"
     >
       <div>
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-        <h1 className="t-h1 text-ink">{data.name}</h1>
-        <p className="t-body mt-5 max-w-[58ch] text-muted">{lead}</p>
+        <h1 className="t-h1 text-paper">{data.name}</h1>
+        <p className="t-body mt-5 max-w-[58ch] text-paper/75">{lead}</p>
         <div className="mt-8">
-          <OfferCtas content={offer === "healthCheck" ? "health_check" : "health_audit"} />
+          <OfferCtas content={offer === "healthCheck" ? "health_check" : "health_audit"} inverse />
         </div>
       </div>
-      <Sheet className="glass-canvas ink-corners flex flex-col gap-6 p-6 text-ink min-[641px]:p-8">
+      <Sheet className="glass-canvas flex flex-col gap-6 p-6 text-ink min-[641px]:p-8">
         <p className="flex items-baseline gap-3">
           <span className="t-data text-[44px] leading-none tracking-[-0.03em]">{data.days}</span>
           <span className="t-small text-muted">working days</span>

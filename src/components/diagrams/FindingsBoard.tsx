@@ -6,7 +6,7 @@ type Props = { className?: string };
 /** "What we usually find" (the September signals board, relabelled): the three problems first, then five signals. */
 export function FindingsBoard({ className }: Props) {
   return (
-    <figure className={cn("report-board paper-grain ink-corners", className)} aria-label={findingsBoard.alt}>
+    <figure className={cn("report-board", className)} aria-label={findingsBoard.alt}>
       <div className="border-b border-ink/10 px-5 py-4">
         <p className="eyebrow mb-0">{findingsBoard.eyebrow}</p>
       </div>

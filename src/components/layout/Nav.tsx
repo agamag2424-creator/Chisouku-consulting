@@ -69,7 +69,7 @@ export function Nav() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-[100] border-b border-ink/10 bg-[rgba(247,244,238,0.92)] backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-[100] border-b border-line bg-white/95 backdrop-blur-xl">
         <div
           className={cn(
             "mx-auto flex h-20 max-w-[var(--content-max-width)] items-center justify-between gap-6",
@@ -159,7 +159,7 @@ export function Nav() {
                       onClick={() => setOpen(false)}
                       aria-current={isActive(link.href) ? "page" : undefined}
                       className={cn(
-                        "block py-4 font-[family-name:var(--font-display)] text-[24px] font-semibold tracking-[-0.02em]",
+                        "block py-4 font-[family-name:var(--font-body)] text-[24px] font-semibold tracking-[-0.02em]",
                         isActive(link.href) ? "text-ink" : "text-muted hover:text-ink",
                       )}
                     >

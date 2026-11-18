@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HealthCheckStrip } from "../components/diagrams/HealthCheckStrip";
 import { ScorecardExcerpt } from "../components/diagrams/ScorecardExcerpt";
+import { ComparisonTable } from "../components/compare/ComparisonTable";
 import { EvidenceCheckHero } from "../components/hero/EvidenceCheckHero";
+import { IndependenceBand } from "../components/home/IndependenceBand";
 import { OfferLadder } from "../components/home/OfferLadder";
 import { PrincipalBlock } from "../components/trust/PrincipalBlock";
 import { Button } from "../components/ui/Button";
@@ -36,8 +38,8 @@ function Ctas({ placement, inverse = false }: { placement: "hero" | "closing"; i
 }
 
 /**
- * Homepage. Seven sections (18 Nov 2026 review): hero, the three problems, the five days, the sample scorecard, prices,
- * who does the work, and the closing call. The three problems are named in the hero line and set out once in section 2.
+ * Homepage (18 Nov 2026): hero, the three problems, the five days, the sample scorecard, prices, the comparison with
+ * the usual options, independence, who does the work, and the closing call. The three problems are named in the hero line and set out once in section 2.
  * The reporting-cost calculator lives on /pricing.
  */
 export default function Home() {
@@ -89,7 +91,7 @@ export default function Home() {
       </Section>
 
       {/* 3. The Health Check in five working days */}
-      <Section tone="paper" aria-labelledby="check-h">
+      <Section tone="page" aria-labelledby="check-h">
         <div className={split}>
           <h2 id="check-h" className="t-h2 text-ink">
             The PMO Health Check, in five working days
@@ -113,7 +115,7 @@ export default function Home() {
       </Section>
 
       {/* 4. Sample scorecard excerpt */}
-      <Section aria-labelledby="sample-h">
+      <Section tone="paper" aria-labelledby="sample-h">
         <div className={split}>
           <h2 id="sample-h" className="t-h2 text-ink">
             What the scorecard looks like
@@ -127,7 +129,7 @@ export default function Home() {
       </Section>
 
       {/* 5. Prices */}
-      <Section tone="paper" aria-labelledby="ladder-h">
+      <Section tone="page" aria-labelledby="ladder-h">
         <div className={split}>
           <h2 id="ladder-h" className="t-h2 text-ink">
             Start free. Pay only for evidence
@@ -140,10 +142,23 @@ export default function Home() {
         </p>
       </Section>
 
-      {/* 6. Who does the work */}
-      <PrincipalBlock tone="page" id="principal" />
+      {/* 6. Why not the usual options */}
+      <Section tone="paper" aria-labelledby="compare-h">
+        <h2 id="compare-h" className="t-h2 text-ink">
+          Why not the usual options
+        </h2>
+        <ComparisonTable className="mt-10" />
+      </Section>
 
-      {/* 7. Closing call */}
+      {/* 7. Independence */}
+      <Section tone="tint" aria-labelledby="independence-h">
+        <IndependenceBand />
+      </Section>
+
+      {/* 8. Who does the work */}
+      <PrincipalBlock tone="paper" id="principal" />
+
+      {/* 9. Closing call */}
       <section className="dark-band atmosphere-band px-[var(--content-padding-x-mobile)] py-16 min-[641px]:px-[var(--content-padding-x)] min-[641px]:py-24" aria-labelledby="close-h">
         <div className="mx-auto flex max-w-[var(--content-max-width)] flex-wrap items-end justify-between gap-8">
           <h2 id="close-h" className="t-h2 max-w-[24ch] text-paper">

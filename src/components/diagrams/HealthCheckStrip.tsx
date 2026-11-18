@@ -7,7 +7,7 @@ type Props = { className?: string };
 export function HealthCheckStrip({ className }: Props) {
   const phases = healthCheckStrip.phases;
   return (
-    <figure className={cn("report-board paper-grain ink-corners", className)} aria-label={healthCheckStrip.alt}>
+    <figure className={cn("report-board", className)} aria-label={healthCheckStrip.alt}>
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-ink/10 px-5 py-4">
         <p className="eyebrow mb-0">{healthCheckStrip.eyebrow}</p>
         <p className="label text-muted">
@@ -29,7 +29,7 @@ export function HealthCheckStrip({ className }: Props) {
               <span className="label text-muted">
                 0{index + 1}
               </span>
-              <span className="font-[family-name:var(--font-display)] text-[17px] font-semibold tracking-[-0.02em]">{phase.name}</span>
+              <span className="font-[family-name:var(--font-body)] text-[17px] font-semibold tracking-[-0.02em]">{phase.name}</span>
             </div>
             <div className="mt-4 flex-1">
               <PhaseVisual type={phase.visual} />
@@ -53,7 +53,7 @@ function PhaseVisual({ type }: { type: StripVisual }) {
         <svg viewBox="0 0 200 80" className={common} aria-hidden>
           {[0, 1, 2, 3].map((i) => (
             <g key={i} transform={`translate(${30 + i * 36} ${14 + (i % 2) * 6})`}>
-              <rect width="30" height="40" rx="2" fill={i === 1 ? "rgba(0,166,200,0.15)" : "rgba(255,253,248,0.95)"} stroke="rgba(17,24,32,0.22)" />
+              <rect width="30" height="40" rx="2" fill={i === 1 ? "rgba(0,166,200,0.15)" : "#FFFFFF"} stroke="rgba(17,24,32,0.22)" />
               <path d="M6 12 H24 M6 19 H24 M6 26 H18" stroke="rgba(17,24,32,0.25)" />
             </g>
           ))}
@@ -93,8 +93,8 @@ function PhaseVisual({ type }: { type: StripVisual }) {
         <svg viewBox="0 0 200 80" className={common} aria-hidden>
           {["01", "02", "03"].map((n, i) => (
             <g key={n} transform={`translate(${28 + i * 52} 12)`}>
-              <rect width="44" height="52" rx="3" fill={i === 0 ? "#111820" : "rgba(255,253,248,0.95)"} stroke="rgba(17,24,32,0.18)" />
-              <text x="22" y="31" textAnchor="middle" fill={i === 0 ? "#FFFDF8" : "#111820"} fontFamily="var(--font-body), sans-serif" fontSize="12" fontWeight="700">
+              <rect width="44" height="52" rx="3" fill={i === 0 ? "#111820" : "#FFFFFF"} stroke="rgba(17,24,32,0.18)" />
+              <text x="22" y="31" textAnchor="middle" fill={i === 0 ? "#FFFFFF" : "#111820"} fontFamily="var(--font-body), sans-serif" fontSize="12" fontWeight="700">
                 {n}
               </text>
             </g>

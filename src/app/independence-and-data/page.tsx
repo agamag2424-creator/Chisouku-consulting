@@ -132,7 +132,7 @@ export default function IndependenceAndDataPage() {
                   {index + 1}
                 </span>
                 {step.icon}
-                <span className="font-[family-name:var(--font-display)] text-[19px] font-semibold text-ink">{step.stage}</span>
+                <span className="font-[family-name:var(--font-body)] text-[19px] font-semibold text-ink">{step.stage}</span>
               </span>
               <ul className="flex flex-col gap-2.5">
                 {step.items.map((item) => (

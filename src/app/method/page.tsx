@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLdScript } from "../../components/aeo/JsonLdScript";
 import { DimensionOrbit } from "../../components/diagrams/DimensionOrbit";
 import { PmoHealthMap } from "../../components/diagrams/PmoHealthMap";
+import { ContradictionTable, ScoringTable } from "../../components/method/EvidenceTables";
 import { OfferClosing, OfferCtas, SectionHead } from "../../components/offers/OfferSections";
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
@@ -42,15 +43,15 @@ export default function MethodPage() {
         ])}
       />
 
-      <Section className="report-cover">
+      <Section tone="ink">
         <p className="eyebrow">Method</p>
-        <h1 className="t-h1 max-w-[22ch] text-ink">The PMO Health Scorecard: ten dimensions, scored on evidence</h1>
-        <p className="t-body mt-5 max-w-[62ch] text-muted">
+        <h1 className="t-h1 max-w-[22ch] text-paper">The PMO Health Scorecard: ten dimensions, scored on evidence</h1>
+        <p className="t-body mt-5 max-w-[62ch] text-paper/75">
           The free self-check scores the ten dimensions from your own answers. The PMO Health Check fills the same ten in
           with evidence from your documents and three short interviews.
         </p>
         <div className="mt-8">
-          <OfferCtas content="health_check" />
+          <OfferCtas content="health_check" inverse />
         </div>
       </Section>
 
@@ -104,6 +105,30 @@ export default function MethodPage() {
             </li>
           ))}
         </ol>
+      </Section>
+
+      <Section aria-label="Scoring">
+        <SectionHead title="Every claim, scored on the five checks">
+          <p>
+            A claim reported Green with 2 of 5 checks evidenced is an assumption, not a fact. This is how a fictional
+            programme looks once each claim is checked.
+          </p>
+        </SectionHead>
+        <div className="mt-10">
+          <ScoringTable />
+        </div>
+      </Section>
+
+      <Section tone="paper" aria-label="Contradictions between reports">
+        <SectionHead title="Where the reports contradict each other">
+          <p>
+            We read the reports against each other. When the RAID log, the status pack and the minutes disagree, that is
+            usually where the real position is.
+          </p>
+        </SectionHead>
+        <div className="mt-10">
+          <ContradictionTable />
+        </div>
       </Section>
 
       <Section aria-labelledby="plan-h">

@@ -20,7 +20,7 @@ export function OfferLadder({ className }: { className?: string }) {
             Step {index + 1}
           </p>
           <h3 className="t-h3 mt-3 text-ink">{step.name}</h3>
-          <p className="mt-3 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-[-0.03em] text-ink">
+          <p className="mt-3 font-[family-name:var(--font-body)] text-3xl font-semibold tracking-[-0.03em] text-ink">
             {step.price}
             {step.key === "healthAudit" && <span className="text-[15px] font-semibold text-muted"> list</span>}
           </p>

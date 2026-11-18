@@ -78,14 +78,10 @@ export function PmoHealthMap({ className, compact = false }: Props) {
   return (
     <figure
       className={cn(
-        "glass-canvas paper-grain ink-corners relative overflow-hidden",
+        "glass-canvas relative overflow-hidden",
         className,
       )}
     >
-      <div
-        className="pointer-events-none absolute inset-0 map-grid-texture opacity-70"
-        aria-hidden
-      />
       <div
         className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-[rgba(0,166,200,0.12)] blur-3xl"
         aria-hidden
@@ -95,7 +91,7 @@ export function PmoHealthMap({ className, compact = false }: Props) {
           <>
             <p className="eyebrow">{healthMap.eyebrow}</p>
             {/* A titled figure, not a page heading: an h3 here could skip a level. */}
-            <p className="font-[family-name:var(--font-display)] text-xl font-semibold tracking-[-0.02em] text-ink md:text-2xl">
+            <p className="font-[family-name:var(--font-body)] text-xl font-semibold tracking-[-0.02em] text-ink md:text-2xl">
               {healthMap.title}
             </p>
           </>
@@ -150,7 +146,7 @@ export function PmoHealthMap({ className, compact = false }: Props) {
             y="232"
             textAnchor="middle"
             fill={INK}
-            fontFamily="var(--font-display), sans-serif"
+            fontFamily="var(--font-body), sans-serif"
             fontSize="20"
             fontWeight="600"
           >
@@ -175,7 +171,7 @@ export function PmoHealthMap({ className, compact = false }: Props) {
                   x="18"
                   y="16"
                   textAnchor="middle"
-                  fill="#FFFDF8"
+                  fill="#FFFFFF"
                   fontFamily="var(--font-body), sans-serif"
                   fontSize="11"
                   fontWeight="700"
@@ -200,15 +196,15 @@ export function PmoHealthMap({ className, compact = false }: Props) {
                     width={box.w}
                     height={box.h}
                     rx="6"
-                    fill={accent ? INK : "rgba(255,253,248,0.96)"}
+                    fill={accent ? INK : "#FFFFFF"}
                     stroke={accent ? INK : "rgba(17,24,32,0.2)"}
                     strokeWidth="1.5"
                   />
                   <text
                     x="14"
                     y="27"
-                    fill={accent ? "#FFFDF8" : INK}
-                    fontFamily="var(--font-display), sans-serif"
+                    fill={accent ? "#FFFFFF" : INK}
+                    fontFamily="var(--font-body), sans-serif"
                     fontSize="15"
                     fontWeight="600"
                   >
@@ -229,13 +225,13 @@ export function PmoHealthMap({ className, compact = false }: Props) {
                       <circle
                         r="11"
                         fill={GOLD}
-                        stroke="#FFFDF8"
+                        stroke="#FFFFFF"
                         strokeWidth="2"
                       />
                       <text
                         y="4"
                         textAnchor="middle"
-                        fill="#FFFDF8"
+                        fill="#FFFFFF"
                         fontFamily="var(--font-body), sans-serif"
                         fontSize="11"
                         fontWeight="700"
@@ -263,7 +259,7 @@ export function PmoHealthMap({ className, compact = false }: Props) {
               )}
             >
               <span>
-                <span className="block font-[family-name:var(--font-display)] text-[16px] font-semibold">
+                <span className="block font-[family-name:var(--font-body)] text-[16px] font-semibold">
                   {n.title}
                 </span>
                 <span

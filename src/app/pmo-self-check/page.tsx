@@ -12,10 +12,10 @@ export const metadata: Metadata = pageMetadata("/pmo-self-check");
 export default function PmoSelfCheckPage() {
   return (
     <>
-      <Section className="report-cover">
+      <Section tone="ink">
         <p className="eyebrow">Free, five minutes</p>
-        <h1 className="t-h1 max-w-[20ch] text-ink">PMO self-check</h1>
-        <p className="t-body mt-5 max-w-[60ch] text-muted">{selfCheckPitch}</p>
+        <h1 className="t-h1 max-w-[20ch] text-paper">PMO self-check</h1>
+        <p className="t-body mt-5 max-w-[60ch] text-paper/75">{selfCheckPitch}</p>
       </Section>
       <Section tone="paper">
         <PmoSelfCheck />

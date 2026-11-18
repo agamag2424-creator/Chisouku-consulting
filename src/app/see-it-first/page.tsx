@@ -38,14 +38,14 @@ export default function SeeItFirstPage() {
         ])}
       />
 
-      <Section className="report-cover">
+      <Section tone="ink">
         <p className="eyebrow">See it first</p>
-        <h1 className="t-h1 max-w-[22ch] text-ink">What a PMO Health Check gives you</h1>
-        <p className="t-body mt-5 max-w-[60ch] text-muted">
+        <h1 className="t-h1 max-w-[22ch] text-paper">What a PMO Health Check gives you</h1>
+        <p className="t-body mt-5 max-w-[60ch] text-paper/75">
           {healthCheck.outputs}. Below are a sample scorecard and a sample fix plan for a fictional organisation.
         </p>
         <div className="mt-8">
-          <OfferCtas content="see_it_first" />
+          <OfferCtas content="see_it_first" inverse />
         </div>
       </Section>
 
@@ -62,17 +62,17 @@ export default function SeeItFirstPage() {
           <SampleBadge />
         </div>
 
-        <div className="artifact-sheet paper-grain ink-corners mt-8 overflow-hidden" data-sample="scorecard">
+        <div className="artifact-sheet mt-8 overflow-hidden" data-sample="scorecard">
           <div className="grid gap-4 border-b border-ink/10 p-5 min-[800px]:grid-cols-3 md:p-7">
             <div>
               <p className="label text-muted">Overall band</p>
-              <p className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold">
+              <p className="mt-1 font-[family-name:var(--font-body)] text-2xl font-semibold">
                 {sampleSummary.band} <span className="text-[16px] text-muted">({sampleSummary.overall})</span>
               </p>
             </div>
             <div>
               <p className="label text-muted">Flagged</p>
-              <p className="mt-1 font-[family-name:var(--font-display)] text-xl font-semibold">{sampleSummary.flagged.join(", ")}</p>
+              <p className="mt-1 font-[family-name:var(--font-body)] text-xl font-semibold">{sampleSummary.flagged.join(", ")}</p>
             </div>
             <p className="t-small text-ink">{sampleSummary.headline}</p>
           </div>
