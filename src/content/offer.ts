@@ -110,6 +110,10 @@ export const founderLine = `${siteConfig.founder.name}, ${siteConfig.founder.tit
 /** Footer company line (change 1), small text above the copyright on every page. */
 export const companyLine = `${siteConfig.name} is a trading name of ${siteConfig.legalName}, a company registered in India, CIN ${siteConfig.cin}. Registered office: ${siteConfig.registeredOffice}.`;
 
+/** DPIIT recognition: a short line in the footer and one sentence on About. The number comes from siteConfig.dpiit. */
+export const dpiitFooterLine = `DPIIT-recognised startup · Certificate No. ${siteConfig.dpiit.certificateNo}`;
+export const dpiitSentence = `${siteConfig.legalName} is recognised as a startup by DPIIT, Government of India (Certificate No. ${siteConfig.dpiit.certificateNo}).`;
+
 export const ctas = {
   primaryLabel: "Arrange a 20-minute call",
   secondaryLabel: "Take the PMO self-check (5 minutes)",

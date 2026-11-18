@@ -21,6 +21,8 @@ export const siteConfig = {
   cin: "U62099UP2025PTC237187",
   /** Registered office, written out in full for the footer company line. */
   registeredOffice: "190X/6/1, Kalindipuram, Prayagraj, Uttar Pradesh 211011, India",
+  /** DPIIT startup recognition (Startup India, Government of India). Shown as text only: no emblem, logo or certificate image. */
+  dpiit: { certificateNo: "DIPP293919" },
   /** The named consultant (change 1, 17 Nov 2026). Photo: square WebP, about 320 px shown. */
   founder: {
     name: "Agam Agrawwal",

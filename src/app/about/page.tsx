@@ -3,7 +3,7 @@ import { Body, List, Part } from "../../components/legal/LegalParts";
 import { PrincipalBlock } from "../../components/trust/PrincipalBlock";
 import { Button } from "../../components/ui/Button";
 import { Section } from "../../components/ui/Section";
-import { companyLine, healthAudit as healthAuditCopy, healthCheck as healthCheckCopy, threeProblemsLine } from "../../content/offer";
+import { companyLine, dpiitSentence, healthAudit as healthAuditCopy, healthCheck as healthCheckCopy, threeProblemsLine } from "../../content/offer";
 import { markets } from "../../content/markets";
 import { pageMetadata } from "../../lib/seo";
 import { extraDaysSentence, siteConfig } from "../../lib/siteConfig";
@@ -71,6 +71,7 @@ export default function AboutPage() {
 
           <Part title="Company">
             <Body>{companyLine}</Body>
+            <Body>{dpiitSentence}</Body>
           </Part>
 
           <div>

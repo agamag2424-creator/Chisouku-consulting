@@ -84,5 +84,20 @@ test("footer company line is on every page, above the copyright", async ({ reque
     const text = footer.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
     expect(text, path).toContain(companyLine);
     expect(text.indexOf(companyLine), path).toBeLessThan(text.indexOf("© 2026"));
+    expect(text, path).toContain(dpiitLine);
+    expect(text.indexOf(dpiitLine), path).toBeLessThan(text.indexOf("© 2026"));
   }
+});
+
+const dpiitLine = "DPIIT-recognised startup · Certificate No. DIPP293919";
+
+test("DPIIT recognition: text only, in the footer and one sentence on About", async ({ page }) => {
+  await page.goto(base + "/about");
+  await expect(page.locator("main")).toContainText(
+    "ChisokuLab Private Limited is recognised as a startup by DPIIT, Government of India (Certificate No. DIPP293919).",
+  );
+  await expect(page.locator("footer [data-dpiit-line]")).toHaveText(dpiitLine);
+  // Text only: no emblem, logo or certificate image anywhere on the page.
+  await expect(page.locator("[data-dpiit-line] img, [data-dpiit-line] svg")).toHaveCount(0);
+  await expect(page.locator('img[alt*="DPIIT" i], img[alt*="Startup India" i], img[src*="emblem" i], img[src*="dpiit" i]')).toHaveCount(0);
 });
