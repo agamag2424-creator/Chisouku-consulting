@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { HealthCheckStrip } from "../components/diagrams/HealthCheckStrip";
-import { PmoHealthMap } from "../components/diagrams/PmoHealthMap";
 import { ScorecardExcerpt } from "../components/diagrams/ScorecardExcerpt";
+import { EvidenceCheckHero } from "../components/hero/EvidenceCheckHero";
 import { OfferLadder } from "../components/home/OfferLadder";
 import { PrincipalBlock } from "../components/trust/PrincipalBlock";
 import { Button } from "../components/ui/Button";
@@ -43,25 +44,29 @@ export default function Home() {
   return (
     <>
       {/* 1. Hero */}
+      {/* Dark band with the working evidence panel (the look of the pre-September site, restored 18 Nov 2026). */}
       <Section
-        className="report-cover"
-        containerClassName="grid gap-12 min-[1200px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] min-[1200px]:items-center min-[1200px]:gap-16"
+        tone="ink"
+        containerClassName="grid gap-12 min-[1200px]:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] min-[1200px]:items-center min-[1200px]:gap-16"
       >
         <div>
-          <p className="eyebrow hero-kicker">{headline.kicker}</p>
-          <h1 className="t-display hero-title max-w-[22ch] text-ink">{headline.h1}</h1>
-          <p className="hero-copy mt-6 max-w-[52ch] text-[18px] leading-[1.6] text-muted min-[641px]:text-[19px]">{headline.sub}</p>
+          <p className="hero-kicker mb-4 text-[15px] font-semibold text-gold">{headline.kicker}</p>
+          <h1 className="t-h1 hero-title max-w-[22ch] text-paper">{headline.h1}</h1>
+          <p className="hero-copy mt-6 max-w-[52ch] text-[18px] leading-[1.6] text-paper/75 min-[641px]:text-[19px]">{headline.sub}</p>
           <div className="hero-actions mt-8">
-            <Ctas placement="hero" />
+            <Ctas placement="hero" inverse />
           </div>
           <p className="hero-meta mt-5">
-            <Button href="/see-it-first" variant="text" ctaId="sample_report">
+            <Link
+              href="/see-it-first"
+              data-cta="sample_report"
+              className="text-[16px] font-semibold text-paper underline decoration-paper/40 underline-offset-4 hover:decoration-paper"
+            >
               {headline.sampleLink}
-            </Button>
+            </Link>
           </p>
         </div>
-        {/* On phones the headline and both calls fill the first screen; the map is left to larger screens. */}
-        <PmoHealthMap compact className="hero-map-reveal max-[639px]:hidden" />
+        <EvidenceCheckHero />
       </Section>
 
       {/* 2. The three problems */}
