@@ -23,6 +23,17 @@ test.describe("screens", () => {
       await page.setViewportSize({ width: shot.width, height: 900 });
       await page.goto(base + shot.path, { waitUntil: "networkidle" });
       await page.evaluate(() => document.fonts.ready);
+      // Lazy images (the founder photo) load only near the viewport: scroll through, then wait for every image.
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.body.scrollHeight; y += 600) {
+          window.scrollTo(0, y);
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+        window.scrollTo(0, 0);
+        await Promise.all(
+          [...document.images].map((img) => (img.complete ? null : new Promise((resolve) => img.addEventListener("load", resolve, { once: true })))),
+        );
+      });
       await expect(page).toHaveScreenshot(`${shot.name}.png`, { fullPage: true });
     });
   }
